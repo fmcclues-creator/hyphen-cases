@@ -4,7 +4,7 @@ html,body{margin:0;background:var(--ink);color:var(--fg);font-family:Tajawal,sys
 a{color:inherit}
 button,input{font:inherit}
 .wrap{max-width:960px;margin-inline:auto;padding-inline:20px}
-.nav{display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:14px;letter-spacing:3px;color:var(--muted)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:14px;color:var(--muted)}
 .nav b{color:#fff}
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding-block:40px 60px}
 .hero h1{font-family:Amiri,serif;font-size:clamp(44px,7vw,78px);line-height:1.05;margin:0 0 10px;text-wrap:balance}
@@ -17,10 +17,10 @@ button,input{font:inherit}
 .folder{aspect-ratio:3/4.1;max-width:360px;width:100%;margin-inline:auto;border-radius:8px 14px 14px 8px;background:#7a1f1a;padding:12px 14px 14px 24px;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.6);transform:rotate(-3deg)}
 .folder::before{content:"";position:absolute;inset:0 auto 0 0;width:22px;border-radius:8px 0 0 8px;background:linear-gradient(90deg,#1b1613,#2b2420 60%,#1b1613)}
 .sheet{height:100%;background:var(--paper);border:1.5px dashed #7a1f1a;outline:3px solid var(--paper);color:#5a1512;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;gap:6px}
-.sheet .dept{font-size:12px;font-weight:800;letter-spacing:1px;border-bottom:2px solid #5a1512}
+.sheet .dept{font-size:12px;font-weight:800;border-bottom:2px solid #5a1512}
 .sheet .name{font-family:Amiri,serif;font-size:56px;font-weight:700;color:#1b1613;line-height:1}
-.sheet .stamp{border:3px solid #a3261f;color:#a3261f;font-weight:800;letter-spacing:2px;padding:3px 12px;transform:rotate(-7deg);margin-top:10px}
-.sheet small{font-size:12px;letter-spacing:2px}
+.sheet .stamp{border:3px solid #a3261f;color:#a3261f;font-weight:800;padding:3px 12px;transform:rotate(-7deg);margin-top:10px}
+.sheet small{font-size:12px;}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-block:30px;border-top:1px solid var(--line)}
 .step{background:var(--panel);border-radius:16px;padding:18px;min-width:0}
 .step .n{width:34px;height:34px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:800;margin-bottom:10px}
@@ -49,14 +49,14 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .menu{display:flex;gap:22px;font-size:15px}
 .menu a{color:var(--muted);text-decoration:none}
 .menu a:hover{color:#fff}
-.kicker{color:var(--red2);font-size:14px;letter-spacing:3px;margin-bottom:6px}
+.kicker{color:var(--red2);font-size:14px;margin-bottom:6px}
 .cases{padding-block:30px;border-top:1px solid var(--line)}
 .cases h2,.about-strip h2{font-family:Amiri,serif;font-size:34px;margin:0 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .case{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:inherit;position:relative;min-height:150px}
 .case.on{border-color:var(--red)}
 .case.soon{opacity:.6}
-.case .tag{font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+.case .tag{font-size:12px;color:var(--muted);margin-bottom:10px}
 .case.on .tag{color:var(--ok)}
 .case b{display:block;font-size:22px;margin-bottom:4px}
 .case span{display:block;color:var(--muted);font-size:14px}
