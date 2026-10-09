@@ -8,7 +8,7 @@ export default function About() {
     <main className="wrap">
       <Header />
       <article className="prose">
-        <img src="/wordmark.svg" alt="HYPHEN" style={{ height: 34, width: "auto", marginBottom: 18 }} />
+        <img src="/wordmark.svg?v=2" alt="HYPHEN" style={{ height: 34, width: "auto", marginBottom: 18 }} />
         <h1>عن HYPHEN</h1>
         <p><b>HYPHEN Events</b> شركة كويتية في مجال الفعاليات. نخطّط وننفّذ الفعالية من الفكرة إلى آخر ضيف يطلع من الباب — للشركات والعلامات التجارية والجهات الحكومية والعوائل.</p>
 

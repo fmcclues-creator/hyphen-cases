@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header className="hdr">
       <Link href="/" className="brand" aria-label="HYPHEN Cases">
-        <img src="/wordmark.svg" alt="HYPHEN" />
+        <img src="/wordmark.svg?v=2" alt="HYPHEN" />
         <span>CASES</span>
       </Link>
       <nav className="menu">
