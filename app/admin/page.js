@@ -10,6 +10,7 @@ export default function Admin() {
   const [codes, setCodes] = useState([]);
   const [made, setMade] = useState([]);
   const [msg, setMsg] = useState("");
+  const [authed, setAuthed] = useState(false);
   const [resetCode, setResetCode] = useState("");
   const [promos, setPromos] = useState([]);
   const [pf, setPf] = useState({ code: "", percent: 20, amount: 0, maxUses: 100, days: 30, note: "" });
@@ -17,8 +18,8 @@ export default function Admin() {
 
   async function load() {
     const r = await fetch("/api/admin/codes", { headers: H }); const j = await r.json();
-    if (!j.ok) return setMsg("كلمة السر غلط");
-    setCodes(j.codes); setMsg("");
+    if (!j.ok) { setAuthed(false); return setMsg("كلمة السر غلط"); }
+    setAuthed(true); setCodes(j.codes); setMsg("");
     const p = await fetch("/api/admin/promos", { headers: H }).then((x) => x.json());
     if (p.ok) setPromos(p.promos);
   }
@@ -44,11 +45,12 @@ export default function Admin() {
     <main className="wrap">
       <nav className="nav"><span><b>HYPHEN</b> CASES · الإدارة</span></nav>
       <div className="card">
-        <label>كلمة سر الإدارة</label><input type="password" value={pw} onChange={(e) => setPw(e.target.value)} />
+        <label>كلمة سر الإدارة</label><input type="password" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && load()} />
         <div style={{ marginTop: 12 }}><button className="cta lite" onClick={load}>دخول / تحديث</button></div>
-        {msg && <div className="ok" style={{ marginTop: 10 }}>{msg}</div>}
+        {msg && <div className={authed ? "ok" : "err"} style={{ marginTop: 10 }}>{msg}</div>}
       </div>
 
+      {authed && <>
       <div className="card">
         <h2>رموز الفعاليات</h2>
         <p>ولّدوا رموزاً للفرق في الفعاليات الحضورية بدون دفع.</p>
@@ -95,6 +97,7 @@ export default function Admin() {
           </table>
         </div>
       )}
+      </>}
     </main>
   );
 }
