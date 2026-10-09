@@ -44,7 +44,7 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 /* header / footer */
 .hdr{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
-.brand img{height:18px;width:auto;filter:invert(1)}
+.brand img{height:20px;width:auto}
 .brand span{font-size:13px;letter-spacing:4px;color:var(--muted)}
 .menu{display:flex;gap:22px;font-size:15px}
 .menu a{color:var(--muted);text-decoration:none}
