@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { Header, Footer } from "./components/Site";
 
 export default function Home() {
   const price = process.env.PRICE_KWD || 6;
   return (
     <main className="wrap">
-      <nav className="nav"><span><b>HYPHEN</b> CASES</span><Link href="/play" style={{letterSpacing:0}}>عندي رمز</Link></nav>
+      <Header />
 
       <section className="hero">
         <div>
+          <div className="kicker">القضية الأولى</div>
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين يديكم، مقفل. عندكم ساعة وحدة، وخمسة مشتبهين.</p>
           <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك للفريق</span></Link>
@@ -22,14 +24,39 @@ export default function Home() {
         </div></div>
       </section>
 
-      <section className="steps">
+      <section className="steps" id="how">
         <div className="step"><div className="n">١</div><b>اشتروا رمز الفريق</b><span>رمز واحد لكل فريق، يوصلكم فوراً.</span></div>
         <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>افتحوا اللعبة من الموبايل واعرضوا الشاشة.</span></div>
         <div className="step"><div className="n">٣</div><b>افتحوا موبايل خالد</b><span>طلّعوا الرقم السري من ملف القضية.</span></div>
-        <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مكالمات… ومكالمة تجيكم.</span></div>
+        <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
       </section>
 
-      <footer><span>© HYPHEN Events · الكويت</span><span>@hyphen.events</span></footer>
+      <section className="cases" id="cases">
+        <h2>القضايا</h2>
+        <div className="grid">
+          <Link href="/buy" className="case on">
+            <div className="tag">متوفّرة</div>
+            <b>قضية خالد</b>
+            <span>اختفاء · ٥ مشتبهين · ساعة واحدة</span>
+            <em>{price} د.ك</em>
+          </Link>
+          <div className="case soon">
+            <div className="tag">قريباً</div>
+            <b>القضية الثانية</b>
+            <span>قاعدين نكتبها… تابعونا على إنستغرام.</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-strip">
+        <div>
+          <h2>من HYPHEN</h2>
+          <p>HYPHEN Events شركة كويتية تسوّي فعاليات وتجارب تفاعلية. «قضايا» هي ألعابنا للبيت: قضية كاملة بالكويتي، تجمع العايلة والربع حول التلفزيون لساعة تحقيق.</p>
+          <Link href="/about" className="more">اقرأ عنّا ←</Link>
+        </div>
+      </section>
+
+      <Footer />
     </main>
   );
 }

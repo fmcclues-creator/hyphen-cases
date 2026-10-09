@@ -27,3 +27,19 @@ create table if not exists plays (
   device text
 );
 create index if not exists codes_expires on codes(expires_at);
+
+-- v2: promo codes + discount tracking (run this block if the tables above already exist)
+create table if not exists promos (
+  code text primary key,
+  created_at timestamptz default now(),
+  percent int not null default 0,        -- e.g. 20 = 20% off
+  amount_kwd numeric(8,3) not null default 0, -- fixed discount, used if percent = 0
+  max_uses int not null default 100,
+  uses int not null default 0,
+  expires_at timestamptz,
+  active boolean not null default true,
+  note text
+);
+alter table orders add column if not exists promo text;
+alter table orders add column if not exists discount_kwd numeric(8,3) not null default 0;
+alter table promos enable row level security;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Header, Footer } from "../../components/Site";
 
 export default function Done({ searchParams }) {
   const code = searchParams?.code || "";
@@ -8,7 +9,7 @@ export default function Done({ searchParams }) {
   const wa = `https://wa.me/?text=${encodeURIComponent(`رمز فريقنا لقضية خالد: ${code}\n${play}`)}`;
   return (
     <main className="wrap">
-      <nav className="nav"><Link href="/" style={{textDecoration:"none"}}><b>HYPHEN</b> CASES</Link></nav>
+      <Header />
       <div className="card">
         <h2>تم الدفع ✅ القضية صارت لكم</h2>
         <p>افتحوا اللعبة على الموبايل، وشغّلوها على التلفزيون.</p>
@@ -25,6 +26,7 @@ export default function Done({ searchParams }) {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }
