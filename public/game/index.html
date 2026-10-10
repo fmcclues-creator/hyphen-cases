@@ -93,8 +93,12 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #file{background:#3a3129}
 .paper{flex:1;min-height:0;overflow:auto;background:var(--paper);color:var(--paper-ink);font-family:var(--doc);font-size:18px;line-height:1.8;padding:18px 18px 40px;margin-inline:auto;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative}
 .paper::before{content:"";position:absolute;inset-inline:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--tape) 0 20px,transparent 20px 28px);opacity:.7}
-.tabs{display:flex;gap:6px;padding:10px 16px 0;background:#3a3129;overflow-x:auto;scrollbar-width:none}
-.tabs button{padding:8px 14px;border-radius:10px 10px 0 0;background:var(--paper-2);color:var(--paper-muted);font-family:var(--doc);font-size:16px;white-space:nowrap}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px 0;background:#3a3129}
+.tabs button{padding:8px 12px;border-radius:10px 10px 0 0;background:var(--paper-2);color:var(--paper-muted);font-family:var(--doc);font-size:15px;white-space:nowrap}
+@media (max-width:420px){.tabs button{padding:7px 10px;font-size:14px}}
+/* landscape phones: tabs as a side column, paper keeps full height */
+.fileBody{flex:1;min-height:0;display:flex;flex-direction:column}
+@media (orientation:landscape) and (max-height:520px){.fileBody{flex-direction:row}.tabs{flex-direction:column;flex-wrap:nowrap;width:150px;padding:10px 10px 10px 0;gap:4px;overflow:auto}.tabs button{border-radius:10px 0 0 10px;text-align:right;white-space:normal;font-size:14px;padding:8px 10px}.paper{max-width:none;padding:14px 16px 30px}.paper-foot{padding:8px 12px}.paper-foot .btn{padding:10px;font-size:15px}}
 .tabs button.on{background:var(--paper);color:var(--paper-ink);font-weight:700}
 .doc h2{font-size:24px;margin:8px 0 6px;border-bottom:2px solid var(--paper-ink);padding-bottom:4px}
 .doc h3{font-size:19px;margin:16px 0 4px;color:var(--paper-ink)}
@@ -429,6 +433,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 <!-- ============ CASE FILE ============ -->
 <section class="screen" id="file">
   <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
+  <div class="fileBody">
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
     <button data-tab="t2">رسالة منيرة</button>
@@ -520,6 +525,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
       <h3>ملاحظة فنية من قسم الأدلة</h3>
       <div class="note-tech">الصوت في التسجيل <b>مولّد بالذكاء الاصطناعي</b> (نص إلى كلام) وليس صوتاً بشرياً. المتصل تعمّد إخفاء صوته الحقيقي. الرقم مسبق الدفع ولا يمكن تتبعه.</div>
     </div>
+  </div>
   </div>
   <div class="paper-foot"><button class="btn" id="toLock">📱 افتح موبايل خالد</button><button class="btn lite" id="backPhone" hidden>رجوع للموبايل</button></div>
 </section>
