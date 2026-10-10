@@ -12,7 +12,7 @@ export default function Home() {
           <div className="kicker">القضية الأولى</div>
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين يديكم، مقفل. عندكم ساعة وحدة، وخمسة مشتبهين.</p>
-          <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك للفريق</span></Link>
+          <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك</span></Link>
           <div className="facts"><span>⏱ ساعة واحدة</span><span>👥 ٢ – ٨ لاعبين</span><span>📺 على التلفزيون</span><span>🇰🇼 باللهجة الكويتية</span></div>
         </div>
         <div className="folder"><div className="sheet">
