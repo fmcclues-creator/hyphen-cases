@@ -428,7 +428,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ CASE FILE ============ -->
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
     <button data-tab="t2">رسالة منيرة</button>
@@ -445,7 +445,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
       <dl>
         <dt>المفقود</dt><dd>خالد، ٣٤ سنة، صاحب سلسلة مطاعم «Crazee Burger» (أسّسها سنة ٢٠١٩ وتوسّع فيها إلى عدة فروع).</dd>
         <dt>آخر ظهور</dt><dd>مساء الأربعاء، الساعة ٥:٣٠، عند خروجه من اجتماع في المكتب.</dd>
-        <dt>البلاغ</dt><dd>تقدّم به ناصر (مدير العمليات) الساعة ١٠:٤٠ مساء الأربعاء.</dd>
+        <dt>البلاغ</dt><dd>تقدّم به ناصر (شريك خالد وصديقه) الساعة ١٠:٤٠ مساء الأربعاء.</dd>
         <dt>الحالة</dt><dd>لم يعد إلى منزله. وُجدت سيارته في موقف المكتب، وموبايله على مكتبه داخل المكتب (محرز كدليل).</dd>
         <dt>ملاحظة</dt><dd>كان مقرراً أن يوقّع صباح الخميس الساعة ١١ أكبر صفقة في تاريخ المجموعة. موعد التوقيع <b>سرّي</b> ولا يعرفه إلا عدد قليل.</dd>
         <dt>تعليمات</dt><dd>طُلب من العائلة عدم إبلاغ أحد وعدم النشر على مواقع التواصل خلال الـ٤٨ ساعة الأولى، حفاظاً على سلامة المفقود وحتى لا يغيّر الخاطف مكانه أو ينقطع عن التواصل. تم إبلاغ خمسة أشخاص فقط لأخذ أقوالهم (المشتبهون المرفقون).</dd>
@@ -484,8 +484,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
       <div class="sus"><div class="av"><img src="img/p_salem.jpg" alt=""></div><div><b>سالم</b><small>شريك خالد في العمل، ٤٢ سنة</small><q>كنت طول الليل في المستشفى عند والدتي، ما غادرت.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_majed.jpg" alt=""></div><div><b>ماجد</b><small>موظف سابق، معاه من أول يوم (٧ سنين)، مفصول قبل أسبوع، ٣٥ سنة</small><q>مريت قرب المطعم الساعة ٧ أخذ مستحقاتي، وبعدين رحت أمشّي أموري.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_fahad.jpg" alt=""></div><div><b>فهد</b><small>مورّد اللحوم والعيش، ٥٢ سنة</small><q>خالد رفض يدفع لي فاتورتين ويقول البضاعة مو بالجودة. ما شفته من أسبوعين، وكنت في التوصيل الليلي.</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_nasser.jpg" alt=""></div><div><b>ناصر</b><small>شريك وصديق خالد، ٣٤ سنة</small><q>خالد رسل لي الساعة ٨:٠٧ يبيني أمر عليه بخصوص أوراق الصفقة. وصلت المكتب حوالي ٨:٤٥ وما لقيته، رسلت له وما رد، فقلت أكيد رجع البيت. الساعة ١٠:١٥ منيرة، بنت خالتي، رسلت لي إنه ما يرد عليها، فرجعت المكتب ١٠:٣٠ ولقيت سيارته بالموقف وموبايله على مكتبه. اتصلت بالشرطة على طول. سيارتي: لاند كروزر بيضاء، عليها لزاق دلّة على الزجاج الخلفي.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_abdul.jpg" alt=""></div><div><b>عبدالرحمن</b><small>صاحب مطاعم منافسة، ٤٥ سنة</small><q>ما قابلت خالد إلا يوم الأحد، وما أعرف شي عن اختفائه.</q></div></div>
-      <div class="sus"><div class="av"><img src="img/p_nasser.jpg" alt=""></div><div><b>ناصر</b><small>مدير العمليات، من أقدم الموظفين، ٣٤ سنة</small><q>خالد رسل لي الساعة ٨:٠٧ يبيني أمر عليه بخصوص أوراق الصفقة. وصلت المكتب حوالي ٨:٤٥ وما لقيته، رسلت له وما رد، فقلت أكيد رجع البيت. الساعة ١٠:١٥ منيرة، بنت خالتي، رسلت لي إنه ما يرد عليها، فرجعت المكتب ١٠:٣٠ ولقيت سيارته بالموقف وموبايله على مكتبه. اتصلت بالشرطة على طول. سيارتي: لاند كروزر بيضاء، عليها لزاق دلّة على الزجاج الخلفي.</q></div></div>
     </div>
     <div id="t6" hidden>
       <h2>مقابلات التحقيق</h2>
@@ -500,11 +500,11 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
         <div class="iv"><div class="ivh"><img src="img/p_fahad.jpg" alt=""><div><b>فهد</b><small>مورّد اللحوم والعيش · مقابلة مسجّلة · ٠:٢٤</small></div></div>
           <video controls preload="none" playsinline poster="video/iv_fahad.jpg" src="video/iv_fahad.mp4"></video>
           <div class="ivn">إدارة البحث والتحرّي · غرفة المقابلات ٢ · الخميس صباحاً</div></div>
+        <div class="iv"><div class="ivh"><img src="img/p_nasser.jpg" alt=""><div><b>ناصر</b><small>شريك وصديق خالد · مقابلة مسجّلة · ٠:٣١</small></div></div>
+          <video controls preload="none" playsinline poster="video/iv_nasser.jpg" src="video/iv_nasser.mp4"></video>
+          <div class="ivn">إدارة البحث والتحرّي · غرفة المقابلات ٢ · الخميس صباحاً</div></div>
         <div class="iv"><div class="ivh"><img src="img/p_abdul.jpg" alt=""><div><b>عبدالرحمن</b><small>صاحب مطاعم منافسة · مقابلة مسجّلة · ٠:٢٤</small></div></div>
           <video controls preload="none" playsinline poster="video/iv_abdul.jpg" src="video/iv_abdul.mp4"></video>
-          <div class="ivn">إدارة البحث والتحرّي · غرفة المقابلات ٢ · الخميس صباحاً</div></div>
-        <div class="iv"><div class="ivh"><img src="img/p_nasser.jpg" alt=""><div><b>ناصر</b><small>مدير العمليات · مقابلة مسجّلة · ٠:٣١</small></div></div>
-          <video controls preload="none" playsinline poster="video/iv_nasser.jpg" src="video/iv_nasser.mp4"></video>
           <div class="ivn">إدارة البحث والتحرّي · غرفة المقابلات ٢ · الخميس صباحاً</div></div>
       </div>
     </div>
@@ -662,8 +662,8 @@ const SUSPECTS=[
  {id:'salem',n:'سالم',r:'الشريك',a:'س'},
  {id:'majed',n:'ماجد',r:'الموظف المفصول',a:'م'},
  {id:'fahad',n:'فهد',r:'المورّد',a:'ف'},
- {id:'abdul',n:'عبدالرحمن',r:'المنافس',a:'ع'},
- {id:'nasser',n:'ناصر',r:'المدير',a:'ن'}];
+ {id:'nasser',n:'ناصر',r:'الشريك والصديق',a:'ن'},
+ {id:'abdul',n:'عبدالرحمن',r:'المنافس',a:'ع'}];
 const LOCS=[
  {id:'office',n:'المخزن الخلفي في المكتب'},
  {id:'abdul',n:'مستودع عبدالرحمن القديم'},
@@ -930,7 +930,8 @@ function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
 
 /* ================= SOLVE ================= */
-$('#toSolve').onclick=()=>show('solve');$('#backToPhone').onclick=()=>show('phone');
+function trySolve(){if(!S.unlocked)return sheet('<h3>🔒 مو بعد</h3><div class="h">قبل الاتهام لازم تفتحون <b>موبايل خالد</b> أولاً.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.notes)return sheet('<h3>🔒 مو بعد</h3><div class="h">فتحتوا الموبايل… بس باقي <b>الملاحظة المقفلة</b> في تطبيق الملاحظات. حلّوها أول، وبعدها تقدرون تتهمون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');show('solve')}
+$('#toSolve').onclick=trySolve;$('#toSolveFile').onclick=trySolve;$('#backToPhone').onclick=()=>show('phone');
 $('#pickWho').innerHTML=SUSPECTS.map(s=>`<button data-who="${s.id}"><span class="av">${AV(s.id)}</span><b>${s.n}</b><small>${s.r}</small></button>`).join('');
 $('#pickWhere').innerHTML=LOCS.map(l=>`<button data-where="${l.id}">📍 ${l.n}</button>`).join('');
 function sel(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-where]').forEach(b=>b.classList.toggle('on',b.dataset.where===S.where));$('#submit').disabled=!(S.who&&S.where)}
