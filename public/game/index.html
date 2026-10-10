@@ -415,7 +415,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ CASE FILE ============ -->
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
     <button data-tab="t2">رسالة منيرة</button>
@@ -511,7 +511,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ LOCK (3D) ============ -->
 <section class="screen" id="lock">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div style="position:relative;flex:1;min-height:0">
     <div class="lockbg"></div><div id="three"></div>
     <div class="lock-title">اسحبوا لتدوير الموبايل</div>
@@ -527,7 +527,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -604,7 +604,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ SOLVE ============ -->
 <section class="screen" id="solve">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div class="wrap">
     <h2>١. منو وراء اختفاء خالد؟</h2>
     <div class="pick" id="pickWho"></div>
@@ -757,7 +757,9 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-$('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={lock:0,phone:0,solve:0};save();show('file');setTimeout(()=>sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>'),400)};
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+$$('[data-rules]').forEach(b=>b.onclick=rules);
+$('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={lock:0,phone:0,solve:0};save();show('file');setTimeout(rules,400)};
 $$('#t6 video').forEach(v=>v.addEventListener('play',()=>$$('#t6 video').forEach(o=>{if(o!==v)o.pause()})));
 $$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));['t1','t2','t3','t4','t5','t6'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t6 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
 $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
