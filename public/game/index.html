@@ -1,4 +1,4 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><base href="/game/">
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><base href="/game/"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="قضية خالد"><meta name="theme-color" content="#0d1016"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png">
 <title>قضية خالد</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&family=Grand+Hotel&display=swap">
 <style>
@@ -21,12 +21,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .wrap{flex:1;min-height:0;display:flex;flex-direction:column;padding-inline:16px;padding-block:12px}
 
 /* ---------- top bar ---------- */
-.bar{display:flex;align-items:center;gap:8px;padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top,0px));background:var(--panel);border-bottom:1px solid var(--line);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 10px;padding-top:calc(8px + env(safe-area-inset-top,0px));background:var(--panel);border-bottom:1px solid var(--line);font-size:14px}
 .bar .timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;letter-spacing:.5px;min-width:64px}
 .bar .sp{flex:1}
 .chip{padding:6px 12px;border-radius:999px;background:var(--line);font-weight:500;white-space:nowrap}
 .chip.red{background:var(--tape);color:#fff}
 .chip.ghost{border:1px solid var(--line);background:transparent}
+@media (max-width:480px){.chip{padding:5px 9px;font-size:12px}.bar .timer{font-size:16px;min-width:52px}}
 
 /* ---------- splash: POWERED BY HYPHEN ---------- */
 #splash{background:#000;cursor:pointer}
@@ -370,9 +371,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .res small{color:var(--muted)}
 
 /* ---------- modal ---------- */
-.modal{position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:9}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:12px;z-index:9}
 .modal.on{display:flex}
-.sheet{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;width:100%;max-width:480px;display:flex;flex-direction:column;gap:10px;margin-bottom:env(safe-area-inset-bottom,0px)}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;width:100%;max-width:480px;max-height:calc(100% - 16px);overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:10px}
 .sheet h3{margin:0;font-size:18px}
 .sheet .h{background:#1c2331;border-radius:10px;padding:10px 12px;line-height:1.6}
 .sheet .h.lk{color:var(--muted)}
@@ -768,7 +769,7 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> على الآيفون اضغطوا زر المشاركة ثم <b>إضافة إلى الشاشة الرئيسية</b> وافتحوا اللعبة منها — تفتح بدون شريط سفاري. بعدها شغّلوا انعكاس الشاشة (AirPlay).</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={lock:0,phone:0,solve:0};save();show('file');setTimeout(rules,400)};
 $$('#t6 video').forEach(v=>v.addEventListener('play',()=>$$('#t6 video').forEach(o=>{if(o!==v)o.pause()})));
