@@ -13,6 +13,8 @@ export default function Admin() {
   const [authed, setAuthed] = useState(false);
   const [resetCode, setResetCode] = useState("");
   const [promos, setPromos] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [stats, setStats] = useState(null);
   const [pf, setPf] = useState({ code: "", percent: 20, amount: 0, maxUses: 100, days: 30, note: "" });
   const H = { authorization: `Bearer ${pw}`, "content-type": "application/json" };
 
@@ -22,6 +24,8 @@ export default function Admin() {
     setAuthed(true); setCodes(j.codes); setMsg("");
     const p = await fetch("/api/admin/promos", { headers: H }).then((x) => x.json());
     if (p.ok) setPromos(p.promos);
+    const o = await fetch("/api/admin/orders", { headers: H }).then((x) => x.json());
+    if (o.ok) { setOrders(o.orders); setStats(o.stats); }
   }
   async function gen() {
     const r = await fetch("/api/admin/codes", { method: "POST", headers: H, body: JSON.stringify({ count, days, maxUses, note }) });
@@ -51,6 +55,21 @@ export default function Admin() {
       </div>
 
       {authed && <>
+      <div className="card" style={{ maxWidth: 1100 }}>
+        <h2>الطلبات</h2>
+        {stats && <p>مدفوع: <b>{stats.paid}</b> · الإيراد: <b>{stats.revenue.toFixed(3)} د.ك</b> · غير مكتمل: {stats.pending}</p>}
+        {orders.length === 0 ? <p className="muted">ما فيه طلبات بعد.</p> : (
+          <table><thead><tr><th>التاريخ</th><th>الموبايل</th><th>الإيميل</th><th>المبلغ</th><th>كود خصم</th><th>الدفع</th><th>الحالة</th><th>الرمز</th><th>الاستخدام</th></tr></thead>
+            <tbody>{orders.map((o) => <tr key={o.id}>
+              <td style={{ whiteSpace: "nowrap" }}>{new Date(o.created_at).toLocaleString("ar-KW", { dateStyle: "short", timeStyle: "short" })}</td>
+              <td className="mono">{o.phone || "—"}</td><td className="mono" style={{ fontSize: 12 }}>{o.email || "—"}</td>
+              <td>{Number(o.amount_kwd).toFixed(3)}</td><td className="mono">{o.promo ? `${o.promo} (−${Number(o.discount_kwd).toFixed(3)})` : "—"}</td>
+              <td>{o.gateway}</td><td>{o.status === "paid" ? "✅ مدفوع" : o.status === "failed" ? "❌ فشل" : "⏳ معلّق"}</td>
+              <td className="mono">{o.code ? o.code.code : "—"}</td><td>{o.code ? `${o.code.uses}/${o.code.max_uses}` : "—"}</td>
+            </tr>)}</tbody>
+          </table>
+        )}
+      </div>
       <div className="card">
         <h2>رموز الفعاليات</h2>
         <p>ولّدوا رموزاً للفرق في الفعاليات الحضورية بدون دفع.</p>
