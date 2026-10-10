@@ -4,7 +4,7 @@ import { Header, Footer } from "../../components/Site";
 export default function Done({ searchParams }) {
   const code = searchParams?.code || "";
   const test = searchParams?.test === "1";
-  const game = process.env.NEXT_PUBLIC_GAME_URL || "/play";
+  const game = "/game";
   const play = `${game}#code=${code}`;
   const wa = `https://wa.me/?text=${encodeURIComponent(`رمز فريقنا لقضية خالد: ${code}\n${play}`)}`;
   return (

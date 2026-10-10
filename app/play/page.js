@@ -6,7 +6,7 @@ import { Header, Footer } from "../components/Site";
 // Lets someone who already has a code jump into the game.
 export default function Play() {
   const [code, setCode] = useState("");
-  const game = process.env.NEXT_PUBLIC_GAME_URL || "/";
+  const game = "/game";
   return (
     <main className="wrap">
       <Header />
