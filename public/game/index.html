@@ -312,6 +312,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .iv .ivh b{display:block;font-size:18px}.iv .ivh small{color:var(--paper-muted);font-size:13px}
 .iv video{width:100%;aspect-ratio:16/9;background:#000;border-radius:6px;display:block}
 .iv .ivn{font-family:var(--ui);font-size:12px;color:var(--paper-muted);margin-top:6px}
+.mug{display:flex;gap:12px;align-items:center;background:#fbf7ec;border:1px solid #d9cfb4;padding:10px;margin:8px 0 12px}.mug img{width:84px;height:84px;object-fit:cover;border-radius:6px;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}.mug b{display:block;font-size:20px}.mug small{display:block;color:var(--paper-muted);font-size:13px}
 .sus .av{overflow:hidden;padding:0}
 .sus .av img{width:100%;height:100%;object-fit:cover;border-radius:6px}
 .pick .av{overflow:hidden;padding:0}
@@ -428,6 +429,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     <div id="t1">
       <span class="stamp">سرّي</span>
       <h2>محضر بلاغ اختفاء</h2>
+      <div class="mug"><img src="img/p_khalid.jpg" alt="خالد"><div><b>خالد</b><small>المفقود · ٣٤ سنة</small><small>صورة من البطاقة المدنية</small></div></div>
       <dl>
         <dt>المفقود</dt><dd>خالد، ٣٤ سنة، صاحب مجموعة مطاعم خالد (ورثها عن والده وتوسّع فيها).</dd>
         <dt>آخر ظهور</dt><dd>مساء الأربعاء، الساعة ٥:٣٠، عند خروجه من اجتماع في المكتب.</dd>
@@ -471,7 +473,6 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
       <div class="sus"><div class="av"><img src="img/p_abdul.jpg" alt=""></div><div><b>عبدالرحمن</b><small>صاحب مطاعم منافسة، ٤٥ سنة</small><q>ما قابلت خالد إلا يوم الأحد، وما أعرف شي عن اختفائه.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_nasser.jpg" alt=""></div><div><b>ناصر</b><small>مدير العمليات، من أقدم الموظفين، ٣٤ سنة</small><q>خالد رسل لي الساعة ٨:٠٧ يبيني أمر عليه بخصوص أوراق الصفقة. وصلت المكتب حوالي ٨:٤٥ وما لقيته، رسلت له وما رد، فقلت أكيد رجع البيت. الساعة ١٠:١٥ منيرة، بنت خالتي، رسلت لي إنه ما يرد عليها، فرجعت المكتب ١٠:٣٠ ولقيت سيارته بالموقف وموبايله على مكتبه. اتصلت بالشرطة على طول. سيارتي: لاند كروزر بيضاء، عليها لزاق دلّة على الزجاج الخلفي.</q></div></div>
     </div>
-  </div>
     <div id="t6" hidden>
       <h2>مقابلات التحقيق</h2>
       <p>سُجّلت صباح الخميس في إدارة البحث والتحرّي. كل واحد منهم أدلى بأقواله بنفسه. قارنوا اللي يقولونه هنا مع اللي في الموبايل.</p>
@@ -662,7 +663,7 @@ const WRONG={
  loc:'الجاني صح، بس المكان غلط. فيه ملاحظة مقفلة في الموبايل تذكر مكان ومفاتيح.'};
 const HINTS={
  lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','قصاصة الجريدة: افتتاح الفرع الأول. خذوا اليوم ثم الشهر.','الجواب: <b>٢١٠٩</b> — ٢١ سبتمبر، يوم افتتاح أول فرع.'],
- phone:['قارنوا أقوال كل واحد في الملف مع اللي في الموبايل. الصور والخرائط فيها أوقات وأماكن. وفيه ملاحظتين مقفلات: وحدة رقمها «وقت آخر صورة»، والثانية «الطلبية بالترتيب» من صوتية خالد في قروب المطبخ. وفي الصور، المحذوفة مؤخراً تنجمع.','آخر صورة في الاستوديو مصوّرة الساعة ٨:٣٤ ← هذا رقم الملاحظة الأولى. الصوتية بالمطبخ: اسمعوا الأرقام بالترتيب اللي قالها ← الملاحظة الثانية. والصورتين الممزقتين المحذوفتين: اضغطوا «دمج».','الأجوبة: الملاحظة الأولى <b>٠٨٣٤</b>. ملاحظة حساب المخزن <b>٣٧٤٢</b>. وصورة الكاميرا المدموجة تبين سيارة ناصر عند المخزن ٩:١٤ م.'],
+ phone:['ابدأوا من الواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي في الموبايل. صورة المواقف فيها ساعة… ومنو سيارته واقفة يم سيارة خالد؟','فيه ملاحظتين مقفلات في تطبيق الملاحظات: الأولى رقمها وقت آخر صورة في الاستوديو، والثانية رقمها من الصوتية اللي سجّلها خالد في قروب المطبخ (الأرقام بالترتيب). وفي الصور، افتحوا «المحذوفة مؤخراً» واضغطوا دمج.','الأجوبة: الملاحظة الأولى <b>٠٨٣٤</b>، ملاحظة حساب المخزن <b>٣٧٤٢</b>. الصورة المدموجة: كاميرا المخزن ٩:١٤ م وفيها سيارة ناصر.'],
  solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ والفاتورة في ملاحظة المخزن باسم منو؟','الجواب: الجاني <b>ناصر</b>، والمكان <b>مخزن الشويخ الصناعية</b>.']};
 const HINT_WAIT=[0,5*60,10*60]; // seconds on this stage before each tier opens
 const HINT_PEN=[60,120,180];const HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
@@ -751,7 +752,7 @@ const CALLTX='خالد؟ خالد اسمع بسرعة، ما أقدر أطوّل
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function save(){try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem('khalid')||'null');if(d&&d.start&&!d.done)Object.assign(S,d)}catch(e){}}
-function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));S.screen=id;save();if(S.start&&['lock','phone','solve'].includes(id))stageAt(id==='lock'?'lock':id==='solve'?'solve':'phone');if(id==='lock'&&!threeReady)initThree()}
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(id==='lock'?'lock':id==='solve'?'solve':'phone');if(id==='lock'&&!threeReady)initThree()}
 function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
@@ -976,7 +977,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{await splash();await gate();
-if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();}}if(S.unlocked&&S.screen==='lock')S.screen='phone';show(S.screen==='intro'?'file':S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
+if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();}}if(S.unlocked&&S.screen==='lock')S.screen='phone';if(!S.screen||['intro','splash','gate','reveal'].includes(S.screen))S.screen='file';show(S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
 else show('intro');
 })();
 document.addEventListener('visibilitychange',save);
