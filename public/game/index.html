@@ -86,6 +86,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #intro .btn{width:100%;max-width:400px;padding:16px;font-size:19px;border-radius:14px;background:var(--tape);color:#fff;box-shadow:0 8px 24px rgba(196,56,45,.45)}
 #intro .meta{display:flex;justify-content:center;gap:14px;font-size:13px;color:#aab2c2;flex-wrap:wrap}
 #intro .meta span{display:flex;align-items:center;gap:5px}
+.tvtip{max-width:400px;background:#1c2331;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;color:#dfe3ea}
 #intro .brand{font-size:11px;color:#8e97a8}
 @media (min-height:900px){.folder{max-width:440px}}
 /* ---------- case file (paper) ---------- */
@@ -420,6 +421,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     </div></div>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
     <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 ٢ – ٨ محققين</span><span>📺 شغّلوه على التلفزيون</span></div>
+    <div class="tvtip" id="tvtip" hidden>📺 للعرض على التلفزيون بدون شريط سفاري: اضغطوا <b>مشاركة</b> ثم <b>إضافة إلى الشاشة الرئيسية</b>، وافتحوا اللعبة من الأيقونة. أو <b>aA</b> ← <b>إخفاء شريط الأدوات</b>.</div>
   </div></div>
 </section>
 
@@ -992,4 +994,5 @@ if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=fa
 else show('intro');
 })();
 document.addEventListener('visibilitychange',save);
+(function(){const ios=/iPhone|iPad/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);const standalone=window.navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;if(ios&&!standalone)$('#tvtip').hidden=false})();
 </script>
