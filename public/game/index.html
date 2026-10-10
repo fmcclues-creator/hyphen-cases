@@ -751,8 +751,8 @@ const SVG={
  receipt:`<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="240" fill="#2b2f3a"/><path d="M80 14h160v212l-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8z" fill="#f5f1e6"/><g font-family="Tajawal,sans-serif" fill="#2a2419" text-anchor="middle" direction="rtl"><text x="160" y="42" font-size="15" font-weight="700">سوق الجملة</text><text x="160" y="60" font-size="10">إيصال استلام بضاعة</text><line x1="100" y1="70" x2="220" y2="70" stroke="#999" stroke-dasharray="3 3"/><text x="160" y="92" font-size="11">التاريخ: الأربعاء</text><text x="160" y="110" font-size="13" font-weight="700">الوقت: ٨:٢٠ م</text><text x="160" y="132" font-size="11">عيش بسمتي ×٢٠ كيس</text><text x="160" y="148" font-size="11">لحم ×٥ كراتين</text><line x1="100" y1="160" x2="220" y2="160" stroke="#999" stroke-dasharray="3 3"/><text x="160" y="182" font-size="11">المستلم: سوق الجملة</text><text x="160" y="200" font-size="11">المورّد: فهد</text></g><path d="M118 212 q10-14 20-2 t18-6 t16 4" fill="none" stroke="#1d3a8a" stroke-width="1.8"/></svg>`,
  old:`<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="240" fill="#d9c7a3"/><rect x="10" y="10" width="300" height="220" fill="#b9a27a"/><rect x="40" y="50" width="240" height="130" fill="#7a6246"/><rect x="60" y="100" width="200" height="80" fill="#4a3a2a"/><rect x="50" y="60" width="220" height="30" fill="#efe1c3"/><text x="160" y="82" font-size="18" font-family="Amiri,serif" text-anchor="middle" fill="#4a3a2a" font-weight="700">Crazee Burger</text><path d="M70 190 h180" stroke="#c4382d" stroke-width="6"/><circle cx="160" cy="150" r="16" fill="#efe1c3"/><rect x="146" y="166" width="28" height="30" rx="6" fill="#efe1c3"/><text x="160" y="222" font-size="11" font-family="Amiri,serif" text-anchor="middle" fill="#4a3a2a">افتتاح الفرع الأول · ٢٠١٩</text></svg>`};
 const PHOTOS=[
- {id:'cctv_a',n:'لقطة مقصوصة ١',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'نص صورة. باب مخزن وسيارة… الباقي مقصوص.',del:1},
- {id:'cctv_b',n:'لقطة مقصوصة ٢',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'النص الثاني. زجاج خلفي عليه لزاق.',del:1},
+ {id:'cctv_a',n:'لقطة مقصوصة ١',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'النص الأول: بوابة مخزن وطرف سيارة… التاريخ ناقص.',del:1},
+ {id:'cctv_b',n:'لقطة مقصوصة ٢',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'النص الثاني: سيارة بيضاء وعلى زجاجها الخلفي لزاق… وين هذا؟',del:1},
  {id:'cctv',n:'كاميرا المخزن · CAM 02',info:'الثلاثاء ٣٠ سبتمبر ٩:١٤ م · الشويخ الصناعية، شارع ٣',cap:'لقطة من كاميرا المخزن القديم. لاند كروزر بيضاء واقفة عند البوابة، وعلى زجاجها الخلفي لزاق دلّة. المخزن اللي «فاضي من شهور».',ov:'21:14',hid:1},
  {id:'parking',n:'مواقف المكتب',info:'الأربعاء ٨:٣٤ م · مكتب مجموعة خالد، الدور الثالث',cap:'سيارة خالد، وبجنبها لاند كروزر بيضاء عليها لزاق أحمر على الزجاج الخلفي.',ov:'20:34'},
  {id:'diwaniya',n:'صورة من ماجد',info:'الأربعاء ٧:٣٢ م · مُستلمة من ماجد',cap:'ماجد مع أربعة أشخاص يتابعون المباراة. الساعة على الحائط تعرض ٧:٣٢.',ov:'19:32'},
@@ -809,7 +809,7 @@ keypad($('#pad'),$('#dots'),v=>{
   $('#lockMsg').textContent='تم فتح الموبايل ✓';S.unlocked=true;$('#backPhone').hidden=false;save();
   $('#lock').classList.add('open');setTimeout(()=>{show('phone');$('#lock').classList.remove('open')},900);return true});
 keypad($('#npad'),$('#ndots'),v=>{if(v!==NOTECODE)return false;openNotes();return true});
-keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;return true});
+keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
 function openNotes(){S.notes=true;save();$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
 function faisalArrives(){if(S.faisal)return;S.faisal=1;save();CHATS.unshift(FAISAL);renderChatList();beep();$$('#home [data-app=chats]').forEach(el=>{const b=el.querySelector('.b');if(b)b.textContent=+b.textContent+1;else el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
 function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g).connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.12)})}catch(e){}}
@@ -918,8 +918,13 @@ $('#callsBody').onclick=e=>{const b=e.target.closest('[data-vm]');if(!b)return;c
 $('#calBody').innerHTML=CAL.map(d=>`<div class="dayh">${d[0]}</div>`+d[1].map(e=>`<button class="ev" data-ev="1"><span class="t">${e[0]}</span><span><b>${e[1]}</b>${e[2]?`<small>${e[2]}</small>`:''}</span>${e[3]?`<span class="note" hidden>${e[3]}</span>`:''}</button>`).join('')).join('');
 $('#calBody').onclick=e=>{const b=e.target.closest('.ev');if(!b)return;const n=b.querySelector('.note');if(n)n.hidden=!n.hidden};
 
-$('#photoGrid').innerHTML=PHOTOS.filter(p=>!p.del&&!p.hid).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('')+`<div class="delh">🗑 المحذوفة مؤخراً · ٢</div>`+PHOTOS.filter(p=>p.del).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('')+`<button class="merge" id="mergeBtn">🧩 دمج الصورتين</button>`;
-$('#mergeBtn').onclick=()=>{S.merged=true;save();openPhoto('cctv')};
+function renderPhotos(){const main=PHOTOS.filter(p=>!p.del&&!p.hid).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('');
+ const del=S.notes2?`<div class="delh">🗑 المحذوفة مؤخراً · ٢</div>`+PHOTOS.filter(p=>p.del).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('')+`<button class="merge" id="mergeBtn">🧩 دمج الصورتين</button>`
+  :`<div class="delh">🗑 المحذوفة مؤخراً · ٢</div><button class="merge" id="delLock">🔒 الألبوم مقفل — يحتاج نفس رمز ملاحظة «حساب المخزن»</button>`;
+ $('#photoGrid').innerHTML=main+del;
+ const m=$('#mergeBtn');if(m)m.onclick=()=>{S.merged=true;save();openPhoto('cctv')};
+ const l=$('#delLock');if(l)l.onclick=()=>sheet('<h3>🔒 المحذوفة مؤخراً</h3><div class="h">هالألبوم محمي. خالد يستخدم نفس الرقم السري لملاحظة <b>«حساب المخزن»</b> — افتحوا الملاحظة أولاً وبعدها يفتح الألبوم تلقائياً.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')}
+renderPhotos();
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p)};
 function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id);$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<div style="position:relative;max-width:100%">${IMG(id)}${p.ov?`<span style="position:absolute;bottom:8px;left:10px;font:12px monospace;color:#ffd978;text-shadow:0 0 3px #000">${p.ov}</span>`:''}</div>`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo')}
 
