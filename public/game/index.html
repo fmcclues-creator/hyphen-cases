@@ -878,7 +878,7 @@ $$('[data-book]').forEach(b=>b.onclick=notebook);
 /* panic recovery: 🏠 chip, or triple-tap anywhere within 1.2 s, closes every overlay and returns to the phone home (or the file) */
 function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-narr','au-ring','au-faisal','au-splash'].forEach(i=>{const a=$('#'+i);if(a){a.pause()}});const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
 $$('[data-home]').forEach(b=>b.onclick=recover);
-let _taps=[];document.addEventListener('pointerdown',e=>{const n=Date.now();_taps=_taps.filter(t=>n-t<1200);_taps.push(n);if(_taps.length>=3){_taps=[];recover()}},true);
+let _taps=[];document.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,textarea,a,select,video,audio,[data-chat],[data-note],[data-p],[data-dm],.row,.pad,.icon,.dock,#three'))return;const n=Date.now();_taps=_taps.filter(t=>n-t<1200);_taps.push(n);if(_taps.length>=3){_taps=[];recover()}},true);
 
 
 const NARR_T='الأربعا، واحد أكتوبر. الساعة ثمانية وأربعين دقيقة بالليل. خالد، صاحب مطاعم كريزي برجر، طلع من مكتبه… وما رجع. سيارته بالمواقف. موبايله على مكتبه. وبعد ساعتين، تسجيل صوتي يوصل لعايلته: «خالد عندنا». الخميس الساعة إحدعش يوقّع أكبر صفقة بحياته. خمسة يعرفونه زين… وواحد منهم يكذب. الموبايل بين إيديكم. عندكم ساعة.';
