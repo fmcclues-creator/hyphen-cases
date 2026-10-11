@@ -446,7 +446,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
   </div>
 </div>
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
   <div class="fileBody">
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
@@ -547,7 +547,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ LOCK (3D) ============ -->
 <section class="screen" id="lock">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
   <div style="position:relative;flex:1;min-height:0">
     <div class="lockbg"></div><div id="three"></div>
     <div class="lock-title">اسحبوا لتدوير الموبايل</div>
@@ -563,7 +563,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -666,7 +666,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ SOLVE ============ -->
 <section class="screen" id="solve">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
   <div class="wrap">
     <h2>١. منو وراء اختفاء خالد؟</h2>
     <div class="pick" id="pickWho"></div>
@@ -875,6 +875,11 @@ function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه: أوقات، أسماء، تناقضات. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: ناصر قال وصل ٨:٤٥ بس البوابة سجّلته ٨:٣٣…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
   const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem('khalid_book',t.value)}catch(e){}}}
 $$('[data-book]').forEach(b=>b.onclick=notebook);
+/* panic recovery: 🏠 chip, or triple-tap anywhere within 1.2 s, closes every overlay and returns to the phone home (or the file) */
+function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-narr','au-ring','au-faisal','au-splash'].forEach(i=>{const a=$('#'+i);if(a){a.pause()}});const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
+$$('[data-home]').forEach(b=>b.onclick=recover);
+let _taps=[];document.addEventListener('pointerdown',e=>{const n=Date.now();_taps=_taps.filter(t=>n-t<1200);_taps.push(n);if(_taps.length>=3){_taps=[];recover()}},true);
+
 
 const NARR_T='الأربعا، واحد أكتوبر. الساعة ثمانية وأربعين دقيقة بالليل. خالد، صاحب مطاعم كريزي برجر، طلع من مكتبه… وما رجع. سيارته بالمواقف. موبايله على مكتبه. وبعد ساعتين، تسجيل صوتي يوصل لعايلته: «خالد عندنا». الخميس الساعة إحدعش يوقّع أكبر صفقة بحياته. خمسة يعرفونه زين… وواحد منهم يكذب. الموبايل بين إيديكم. عندكم ساعة.';
 function narrate(done){const n=$('#narr'),a=$('#au-narr'),tx=$('#narrTx');let fin=false;const end=()=>{if(fin)return;fin=true;clearInterval(iv);a.pause();n.hidden=true;done()};n.hidden=false;tx.textContent='';const words=NARR_T.split(' ');let i=0,step=560;const go=()=>{if(a.duration&&isFinite(a.duration))step=Math.max(200,(a.duration*1000-800)/words.length)};go();a.onloadedmetadata=go;const iv=setInterval(()=>{tx.textContent=words.slice(Math.max(0,i-22),++i).join(' ');if(i>=words.length)clearInterval(iv)},step);a.currentTime=0;a.onended=end;a.play().catch(()=>{});$('#narrSkip').onclick=end;setTimeout(end,(a.duration&&isFinite(a.duration)?a.duration*1000:32000)+1500)}
