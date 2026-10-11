@@ -877,12 +877,16 @@ $('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR
   var iv=setInterval(()=>{tx.textContent=words.slice(0,++n).join(' ');if(n>=words.length)clearInterval(iv)},step)};
 
 /* ================= KEYPAD ================= */
+/* tiny synthesized UI sounds (no files): key tap, wrong buzz, unlock chime */
+let _ac;function ac(){try{_ac=_ac||new (window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac}catch(e){return null}}
+function tone(f,t0,d,type,g){const c=ac();if(!c)return;const o=c.createOscillator(),v=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t0);v.gain.setValueAtTime(0,c.currentTime+t0);v.gain.linearRampToValueAtTime(g||0.25,c.currentTime+t0+0.005);v.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+t0+d);o.connect(v).connect(c.destination);o.start(c.currentTime+t0);o.stop(c.currentTime+t0+d+0.02)}
+const SFX={tap:()=>{tone(1400,0,0.045,'square',0.08);tone(900,0,0.06,'sine',0.12)},del:()=>tone(600,0,0.06,'sine',0.12),bad:()=>{tone(180,0,0.18,'sawtooth',0.12);tone(150,0.2,0.22,'sawtooth',0.12)},ok:()=>{tone(880,0,0.12,'sine',0.18);tone(1320,0.1,0.18,'sine',0.18);tone(1760,0.2,0.3,'sine',0.14)}};
 function keypad(el,dots,onFull){
   let v='';
   const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
   el.innerHTML='';
   keys.forEach(k=>{const b=document.createElement('button');b.textContent=k;if(!k)b.disabled=true;if(k==='⌫')b.className='sm';
-    b.onclick=()=>{if(k==='⌫')v=v.slice(0,-1);else if(v.length<4)v+=k;paint();if(v.length===4){const ok=onFull(v);if(!ok){dots.classList.add('bad','shake');setTimeout(()=>{dots.classList.remove('bad','shake');v='';paint()},500)}}};
+    b.onclick=()=>{if(k==='⌫'){v=v.slice(0,-1);SFX.del()}else if(v.length<4){v+=k;SFX.tap()}paint();if(v.length===4){const ok=onFull(v);if(ok)SFX.ok();else{SFX.bad();dots.classList.add('bad','shake');setTimeout(()=>{dots.classList.remove('bad','shake');v='';paint()},500)}}};
     el.appendChild(b)});
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}
 }
