@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Header, Footer } from "./components/Site";
 
 export default function Home() {
-  const price = process.env.PRICE_KWD || 6;
+  const price = process.env.PRICE_KWD || 4.750;
   return (
     <main className="wrap">
       <Header />
@@ -13,7 +13,7 @@ export default function Home() {
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين يديكم، مقفل. عندكم ساعة وحدة، وخمسة مشتبهين.</p>
           <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك</span></Link>
-          <div className="facts"><span>⏱ ساعة واحدة</span><span>👥 ٢ – ٨ لاعبين</span><span>📺 على التلفزيون</span><span>🇰🇼 باللهجة الكويتية</span></div>
+          <div className="facts"><span>⏱ ساعة واحدة</span><span>👥 العب بفريق أو لوحدك</span><span>📺 على التلفزيون</span><span>🇰🇼 باللهجة الكويتية</span></div>
         </div>
         <div className="folder"><div className="sheet">
           <div className="dept">إدارة البحث والتحرّي الجنائي</div>

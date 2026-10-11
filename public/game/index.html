@@ -1064,8 +1064,11 @@ async function gate(){
   if(!GATE_ON)return true;
   const m=(location.hash||'').match(/code=([A-Za-z0-9-]+)/);const fromUrl=m?m[1].toUpperCase():'';
   if(savedPass())return true;
+  if(fromUrl){ // code came from the store link: verify silently, no code screen unless it fails
+    try{const j=await checkCode(fromUrl);if(j.ok){try{localStorage.setItem('khalid_pass',JSON.stringify({code:fromUrl,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);return true}}catch(e){}
+    show('gate');$('#gateIn').value=fromUrl;tryCode();return new Promise(res=>{window.__gateOK=res});
+  }
   show('gate');
-  if(fromUrl){$('#gateIn').value=fromUrl;tryCode()}
   return new Promise(res=>{window.__gateOK=res});
 }
 async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';

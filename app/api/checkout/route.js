@@ -12,7 +12,7 @@ export async function POST(req) {
   const email = String(body.email || "").slice(0, 120);
   if (phone.length < 8) return Response.json({ ok: false, reason: "phone" }, { status: 400 });
 
-  const listPrice = Number(process.env.PRICE_KWD || 6);
+  const listPrice = Number(process.env.PRICE_KWD || 4.75);
   const pr = await applyPromo(body.promo, listPrice);
   if (!pr.ok) return Response.json({ ok: false, reason: pr.reason }, { status: 400 });
   const price = pr.price;
