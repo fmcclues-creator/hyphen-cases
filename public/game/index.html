@@ -721,8 +721,10 @@ const WRONG={
  loc:'الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.'};
 const HINTS={
  lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','قصاصة الجريدة: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
- phone:['ابدأوا من الواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي في الموبايل. صورة المواقف فيها ساعة… ومنو سيارته واقفة يم سيارة خالد؟','فيه ملاحظتين مقفلات في تطبيق الملاحظات: الأولى رقمها وقت آخر صورة في الاستوديو، والثانية رقمها من الصوتية اللي سجّلها خالد في قروب المطبخ (الأرقام بالترتيب). وفي الصور، افتحوا «المحذوفة مؤخراً» واضغطوا دمج.','الأجوبة: الملاحظة الأولى <b>٠٨٣٤</b>، ملاحظة حساب المخزن <b>٣٧٤٢</b>. الصورة المدموجة: كاميرا المخزن ٩:١٤ م وفيها سيارة ناصر.'],
- solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ والفاتورة في ملاحظة المخزن باسم منو؟','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>.']};
+ note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفلة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','افتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. افتحوا الملاحظة الأولى.'],
+ note2:['الملاحظة الثانية رقمها من صوتية خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» وبعدها ارجعوا للصور: الألبوم المحذوف انفتح.'],
+ cctv:['الملاحظة الثانية تقول كاميرا البوابة سجّلت شي، والألبوم المحذوف بالصور فيه لقطتين مقصوصتين. كل وحدة ناقصها شي… اضغطوا «دمج الصورتين».','بعد الدمج: سيارة بيضا عليها لزاق دلّة واقفة عند مخزن «فاضي من شهور». منو قال إن سيارته لاند كروزر بيضا عليها لزاق دلّة؟ راجعوا أقواله بالملف. ولا تنسون فيصل من البنك — بيتصل.','الجواب: الصورة من كاميرا مخزن الشويخ القديم ٩:١٤ م الثلاثاء، والسيارة سيارة <b>ناصر</b>. العنوان بكشف الكهرباء: قطعة ٣ · قسيمة ١٢. روحوا «حل القضية».'],
+ solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة («الأوراق» ولا «الأرقام»؟). والمكان مكتوب بكشف الكهرباء في الملاحظة الثانية.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ وفيصل قال التحويلات تروح لمنو؟ المكان: القطعة والقسيمة من عنوان المخزن.','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>.']};
 const HINT_WAIT=[0,5*60,10*60]; // seconds on this stage before each tier opens
 const HINT_PEN=[60,120,180];const HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
 
@@ -847,7 +849,7 @@ const CALLTX='ألو؟ آنا فيصل، من البنك. آنا أدري إنت
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function save(){try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem('khalid')||'null');if(d&&d.start&&!d.done)Object.assign(S,d)}catch(e){}}
-function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(id==='lock'?'lock':id==='solve'?'solve':'phone');if(id==='lock'&&!threeReady)initThree()}
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(stage());if(id==='lock'&&!threeReady)initThree()}
 function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
@@ -886,8 +888,8 @@ keypad($('#pad'),$('#dots'),v=>{
   $('#lockMsg').textContent='تم فتح الموبايل ✓';S.unlocked=true;$('#backPhone').hidden=false;save();
   $('#lock').classList.add('open');setTimeout(()=>{show('phone');$('#lock').classList.remove('open')},900);return true});
 keypad($('#npad'),$('#ndots'),v=>{if(v!==NOTECODE)return false;openNotes();return true});
-keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
-function openNotes(){S.notes=true;save();$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
+keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();stageAt('cctv');$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
+function openNotes(){S.notes=true;save();stageAt('note2');$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
 function faisalArrives(){if(S.faisal)return;S.faisal=1;save();setTimeout(()=>{if(S.faisal<3){S.faisal=3;save();if(S.screen==='phone')ring();else window.__ringLater=true}},20000);CHATS.unshift(FAISAL);renderChatList();beep();$$('#home [data-app=chats]').forEach(el=>{const b=el.querySelector('.b');if(b)b.textContent=+b.textContent+1;else el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
 function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g).connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.12)})}catch(e){}}
 
@@ -1008,13 +1010,13 @@ $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(
 function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id);$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<div style="position:relative;max-width:100%">${IMG(id)}${p.ov?`<span style="position:absolute;bottom:8px;left:10px;font:12px monospace;color:#ffd978;text-shadow:0 0 3px #000">${p.ov}</span>`:''}</div>`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo')}
 
 /* ================= HINTS ================= */
-function stage(){return S.screen==='lock'?'lock':S.screen==='solve'?'solve':'phone'}
+function stage(){if(S.screen==='lock')return 'lock';if(S.screen==='solve')return 'solve';return !S.notes?'note1':!S.notes2?'note2':'cctv'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
-$$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage(),used=S.hints[st],list=HINTS[st],el=onStage(st);
+$$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
   const body=list.map((h,i)=>{const lab=i===2?'الجواب مباشرة':`تلميح ${i+1}`;if(i<used)return `<div class="h">${h}</div>`;const wait=HINT_WAIT[i]-el;return `<div class="h lk">🔒 ${lab}${wait>0?` — يفتح بعد ${fmt(wait)}`:''}</div>`}).join('');
   const ready=used<list.length&&el>=HINT_WAIT[used];const next=used<list.length?(used===2?'اكشف الجواب':`اكشف تلميح ${used+1}`)+` (${HINT_LAB[used]})`:'';
-  sheet(`<h3>💡 تلميحات ${({lock:'الرقم السري',phone:'الموبايل',solve:'الاتهام'})[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
+  sheet(`<h3>💡 تلميحات ${({lock:'الرقم السري',note1:'الملاحظة الأولى',note2:'الملاحظة الثانية',cctv:'الصور المحذوفة',solve:'الاتهام'})[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
   const u=$('#useHint');if(u)u.onclick=()=>{S.pen+=HINT_PEN[S.hints[st]];S.hints[st]++;save();b.click()}});
 function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');$$('[data-close]').forEach(x=>x.onclick=()=>$('#modal').classList.remove('on'))}
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
