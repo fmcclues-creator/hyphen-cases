@@ -969,10 +969,10 @@ $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b&&!b.disabled)
 const NOTES=[
  {id:'secret',t:'ملاحظاتي (سري)',d:'الأربعاء',lock:1,pv:'🔒 مقفلة'},
  {id:'store',t:'حساب المخزن',d:'الثلاثاء',lock:2,pv:'🔒 مقفلة'},
- {id:'gift',t:'هدية ماما 🎁',d:'الأربعاء ٥:١٥ م',body:'عباية من الدار؟\nعطر (اللي تحبه — أسأل نوف)\nساعة؟ لا، عندها\n\nالأحد قبل الغدا 👍'},
+ {id:'gift',t:'هدية ماما 🎁',d:'الأربعاء ٥:١٥ م',body:'تراچي من الفارس 💍\nعطر (اللي تحبه — أسأل نوف)\nساعة؟ لا، عندها\n\nالأحد قبل الغدا 👍'},
  {id:'menu',t:'أفكار منيو الشتا',d:'الاثنين',body:'- برجر الكرك 🤔 (تجربة)\n- صوص الدقوس الحار\n- بطاط بالزعفران\n- كومبو العيال: برجر صغير + عصير\n\nنجرّب بالفرع الأول قبل الباقي'},
  {id:'wifi',t:'واي فاي',d:'٢٠٢٥',body:'المكتب: KhalidGroup_5G / crazee2019\nالفرع ١: CrazeeGuest / burger123\nالبيت: اسألي منيرة 😅'},
- {id:'sara',t:'مقاسات سارة',d:'سبتمبر',body:'جزمة: ٣٢\nملابس: ٨ سنين\nجاكيت المدرسة: M (الصغير)'},
+ {id:'sara',t:'مقاسات سارة',d:'سبتمبر',body:'جوتي: ٣٢\nملابس: ٨ سنين\nجاكيت المدرسة: M (الصغير)'},
  {id:'staff',t:'الموظفين الجدد — أكتوبر',d:'١ أكتوبر',body:'كاشير الفرع ٣: أحمد (تجربة أسبوعين)\nطباخ مساعد: رامي — يبدأ الأحد\nتذكير: أوراق الإقامات عند ناصر'},
  {id:'todo',t:'قبل الخميس ✅',d:'الثلاثاء',body:'☑ أوراق الصفقة من المحامي\n☑ موعد سالم\n☐ أراجع كشف الحساب مع المحاسب\n☐ أكلم ناصر\n☐ هدية ماما'}];
 function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':'🔒 مقفلة'):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
