@@ -384,6 +384,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .sheet .h{background:#1c2331;border-radius:10px;padding:10px 12px;line-height:1.6}
 .sheet .h.lk{color:var(--muted)}
 .sheet .acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+#narr:not([hidden]){display:grid}
 </style>
 
 <!-- ============ INTRO ============ -->
@@ -432,14 +433,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 </section>
 
 <!-- ============ CASE FILE ============ -->
-<div id="narr" hidden style="position:fixed;inset:0;z-index:60;background:#0b0907;color:#f3ede0;display:grid;place-items:center;text-align:center;padding:24px">
+<div id="narr" hidden style="position:fixed;inset:0;z-index:60;background:#0b0907;color:#f3ede0;place-items:center;text-align:center;padding:24px">
   <div style="max-width:560px">
     <div style="font-size:13px;letter-spacing:.2em;opacity:.55;margin-bottom:14px">ملف القضية K-0810</div>
     <div style="font-size:clamp(34px,8vw,64px);font-weight:900;line-height:1.1">قضية خالد</div>
     <div style="margin:18px auto 0;width:60px;height:2px;background:#b3261e"></div>
     <div id="narrTx" style="margin-top:22px;font-size:18px;line-height:1.9;min-height:3.8em;opacity:.9"></div>
-    <div class="narrBars" style="display:flex;gap:4px;justify-content:center;margin-top:26px;height:22px;align-items:flex-end">${'<i style="width:4px;background:#b3261e;border-radius:2px;animation:nb .9s ease-in-out infinite"></i>'.repeat(0)}</div>
-    <button class="btn" id="narrSkip" style="margin-top:28px;background:transparent;border:1px solid #6b5b4b;color:#d8ccb8;font-size:14px">تخطّي ›</button>
+        <button class="btn" id="narrSkip" style="margin-top:28px;background:transparent;border:1px solid #6b5b4b;color:#d8ccb8;font-size:14px">تخطّي ›</button>
   </div>
 </div>
 <section class="screen" id="file">
