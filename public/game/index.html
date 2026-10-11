@@ -232,7 +232,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .big .info{padding:10px 14px calc(10px + 8px);background:#111621;font-size:14px;color:var(--muted)}
 .big .info b{color:var(--fg);display:block}
 .notes{padding:16px;line-height:1.9;font-size:16px;background:#fff8dd;color:#2a2419;flex:0 0 auto}
-#a-notes{overflow:auto}#a-notes .locked{flex:0 0 auto;min-height:420px}
+#noteList .row{align-items:flex-start}#noteList .nm{font-weight:700}#noteList .pv{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}#noteList .tm{font-size:12px}
+.nview{background:#fff8dd;color:#2a2419}.nview .locked{background:#0b0e14;color:#fff;min-height:100%}.nview .notes{min-height:100%}.nview .plain{padding:16px;line-height:1.9;font-size:16px;white-space:pre-line}.nview .plain h4{margin:0 0 6px}.nview .plain small{color:#8a7f66;font-size:12px;display:block;margin-bottom:10px}
 .notes h4{margin:0 0 8px;font-size:18px}
 .notes mark{background:#ffe08a}
 .locked{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center}
@@ -634,17 +635,18 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
         </div>
       </div>
     </div>
-    <div class="app" id="a-notes"><div class="ah"><button data-back>‹</button><div>الملاحظات</div></div>
-      <div class="locked" id="notesLock"><div style="font-size:44px">🔒</div><b>ملاحظة مقفلة</b><div class="hint">تلميح خالد لنفسه: «وقت آخر صورة صورتها»</div><div class="dots" id="ndots"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad"></div></div>
-      <div class="notes" id="notesBody" hidden><h4>ملاحظاتي (سري)</h4>
+    <div class="app" id="a-notes"><div class="ah"><button data-back>‹</button><div>الملاحظات <span class="sub">٨ ملاحظات</span></div></div><div class="list" id="noteList"></div></div>
+    <div class="app" id="a-note"><div class="ah"><button data-back="notes">‹ الملاحظات</button><div id="noteTitle"></div></div><div class="list nview" id="noteView"></div>
+      <div id="noteStore" hidden>
+<div class="locked" id="notesLock"><div style="font-size:44px">🔒</div><b>ملاحظة مقفلة</b><div class="hint">تلميح خالد لنفسه: «وقت آخر صورة صورتها»</div><div class="dots" id="ndots"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad"></div></div>
+<div class="notes" id="notesBody" hidden><h4>ملاحظاتي (سري)</h4>
         ١. الحسابات فيها فرق <mark>١٨٠ ألف دينار</mark> من سنتين. المحاسب يقول كل التحويلات اعتمدها ناصر.<br>
         ٢. ما أبي أظلمه. لازم أسمع منه قبل التوقيع.<br>
         ٣. مفاتيح مخزن <mark>الشويخ</mark> القديم مع ناصر. يقول «فاضي من شهور»، فليش لين الحين ندفع إيجاره؟<br>
         ٤. بعد التوقيع أجلس معاه وأسمع منه. يمكن له عذر.
       </div>
-      <div class="nsep">ملاحظة ثانية · حساب المخزن</div>
-      <div class="locked" id="notesLock2"><div style="font-size:44px">🔒</div><b>حساب المخزن</b><div class="hint">تلميح خالد لنفسه: «الطلبية اللي سجّلتها بصوتي للمطبخ — بالترتيب»</div><div class="dots" id="ndots2"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad2"></div></div>
-      <div class="notes" id="notesBody2" hidden><h4>حساب المخزن</h4>
+<div class="locked" id="notesLock2"><div style="font-size:44px">🔒</div><b>حساب المخزن</b><div class="hint">تلميح خالد لنفسه: «الطلبية اللي سجّلتها بصوتي للمطبخ — بالترتيب»</div><div class="dots" id="ndots2"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad2"></div></div>
+<div class="notes" id="notesBody2" hidden><h4>حساب المخزن</h4>
         ناصر يقول المخزن «فاضي من شهور». طلبت كشف الكهرباء:
         <div class="bill"><div class="bh"><span>وزارة الكهرباء والماء والطاقة المتجددة</span><span>كشف استهلاك</span></div>
           <div class="br"><span>العنوان</span><b>الشويخ الصناعية · ق٣ · قسيمة ١٢ (مخزن)</b></div>
@@ -656,6 +658,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
         مخزن «فاضي» ما يستهلك كهرباء كل شهر. <b>شي شغّال هناك.</b><br><br>
         كاميرا البوابة سجّلت شي الثلاثاء بالليل. أخذت لقطة وقصّيتها… <mark>الصور بالألبوم المحذوف</mark>، نفس رقم هالملاحظة.
       </div>
+      </div>
+    </div>
     </div>
   </div></div>
 </section>
@@ -896,8 +900,8 @@ keypad($('#pad'),$('#dots'),v=>{
   $('#lockMsg').textContent='تم فتح الموبايل ✓';S.unlocked=true;$('#backPhone').hidden=false;save();
   $('#lock').classList.add('open');setTimeout(()=>{show('phone');$('#lock').classList.remove('open')},900);return true});
 keypad($('#npad'),$('#ndots'),v=>{if(v!==NOTECODE)return false;openNotes();return true});
-keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();stageAt('cctv');$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
-function openNotes(){S.notes=true;save();stageAt('note2');$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
+keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();stageAt('cctv');renderNotes();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
+function openNotes(){S.notes=true;save();stageAt('note2');renderNotes();$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
 function faisalArrives(){if(S.faisal)return;S.faisal=1;save();setTimeout(()=>{if(S.faisal<3){S.faisal=3;save();if(S.screen==='phone')ring();else window.__ringLater=true}},20000);CHATS.unshift(FAISAL);renderChatList();beep();$$('#home [data-app=chats]').forEach(el=>{const b=el.querySelector('.b');if(b)b.textContent=+b.textContent+1;else el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
 function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g).connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.12)})}catch(e){}}
 
@@ -961,6 +965,26 @@ const ico=(a)=>`<button class="icon${a[4]?' dim':''}" data-app="${a[0]}" ${a[4]?
 $('#home').innerHTML=APPS.map(ico).join('')+`<div class="dock">${DOCK.map(ico).join('')}</div>`;
 function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id))}
 $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b&&!b.disabled)openApp(b.dataset.app)};
+/* ---- Notes app: list + detail ---- */
+const NOTES=[
+ {id:'secret',t:'ملاحظاتي (سري)',d:'الأربعاء',lock:1,pv:'🔒 مقفلة'},
+ {id:'store',t:'حساب المخزن',d:'الثلاثاء',lock:2,pv:'🔒 مقفلة'},
+ {id:'gift',t:'هدية ماما 🎁',d:'الأربعاء ٥:١٥ م',body:'عباية من الدار؟\nعطر (اللي تحبه — أسأل نوف)\nساعة؟ لا، عندها\n\nالأحد قبل الغدا 👍'},
+ {id:'menu',t:'أفكار منيو الشتا',d:'الاثنين',body:'- برجر الكرك 🤔 (تجربة)\n- صوص الدقوس الحار\n- بطاط بالزعفران\n- كومبو العيال: برجر صغير + عصير\n\nنجرّب بالفرع الأول قبل الباقي'},
+ {id:'wifi',t:'واي فاي',d:'٢٠٢٥',body:'المكتب: KhalidGroup_5G / crazee2019\nالفرع ١: CrazeeGuest / burger123\nالبيت: اسألي منيرة 😅'},
+ {id:'sara',t:'مقاسات سارة',d:'سبتمبر',body:'جزمة: ٣٢\nملابس: ٨ سنين\nجاكيت المدرسة: M (الصغير)'},
+ {id:'staff',t:'الموظفين الجدد — أكتوبر',d:'١ أكتوبر',body:'كاشير الفرع ٣: أحمد (تجربة أسبوعين)\nطباخ مساعد: رامي — يبدأ الأحد\nتذكير: أوراق الإقامات عند ناصر'},
+ {id:'todo',t:'قبل الخميس ✅',d:'الثلاثاء',body:'☑ أوراق الصفقة من المحامي\n☑ موعد سالم\n☐ أراجع كشف الحساب مع المحاسب\n☐ أكلم ناصر\n☐ هدية ماما'}];
+function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':'🔒 مقفلة'):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
+function openNote(id){const n=NOTES.find(x=>x.id===id);const v=$('#noteView'),st=$('#noteStore');$('#noteTitle').textContent=n.t;
+  [...v.children].forEach(c=>{if(c.id)st.appendChild(c)});v.innerHTML='';
+  if(n.lock===1){v.appendChild($('#notesLock'));v.appendChild($('#notesBody'))}
+  else if(n.lock===2){v.appendChild($('#notesLock2'));v.appendChild($('#notesBody2'))}
+  else v.innerHTML=`<div class="plain"><h4>${n.t}</h4><small>${n.d}</small>${n.body}</div>`;
+  openApp('note')}
+$('#noteList').onclick=e=>{const b=e.target.closest('[data-note]');if(b)openNote(b.dataset.note)};
+renderNotes();
+
 $$('[data-back]').forEach(b=>b.onclick=()=>openApp(b.dataset.back||'home'));
 
 const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
@@ -1099,7 +1123,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{await splash();await gate();
 const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code!==pc){try{localStorage.removeItem('khalid')}catch(e){}const fresh={start:0,pen:0,hints:{lock:0,phone:0,solve:0},unlocked:false,notes:false,screen:'intro',done:0,who:null,where:null,wrong:0,faisal:0,num:'',code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}
-if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}}if(S.unlocked&&S.screen==='lock')S.screen='phone';if(!S.screen||['intro','splash','gate','reveal'].includes(S.screen))S.screen='file';show(S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
+if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderNotes()}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}}if(S.unlocked&&S.screen==='lock')S.screen='phone';if(!S.screen||['intro','splash','gate','reveal'].includes(S.screen))S.screen='file';show(S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
 else show('intro');
 })();
 document.addEventListener('visibilitychange',save);
