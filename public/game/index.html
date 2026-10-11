@@ -446,7 +446,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
   </div>
 </div>
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
   <div class="fileBody">
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
@@ -547,7 +547,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ LOCK (3D) ============ -->
 <section class="screen" id="lock">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
   <div style="position:relative;flex:1;min-height:0">
     <div class="lockbg"></div><div id="three"></div>
     <div class="lock-title">اسحبوا لتدوير الموبايل</div>
@@ -563,7 +563,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -666,7 +666,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <!-- ============ SOLVE ============ -->
 <section class="screen" id="solve">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
   <div class="wrap">
     <h2>١. منو وراء اختفاء خالد؟</h2>
     <div class="pick" id="pickWho"></div>
@@ -855,6 +855,9 @@ const S={start:0,pen:0,hints:{lock:0,phone:0,solve:0},unlocked:false,notes:false
 const FAISAL={id:'faisal',n:'فيصل (البنك)',av:'p:faisal',last:'الحين',u:1,msgs:[['day','اليوم'],['them','هذا موبايل خالد؟ آنا فيصل من البنك. أعرف إنه عند الشرطة. فيه شَيْ بالحسابات لازم تعرفونه. بتصل عليكم بعد شوي.','الحين']]};
 const CALLTX='ألو؟ آنا فيصل، من البنك. آنا أدري إنتاو الشرطة وموبايل خالد وياكم، فقلت أتصل يمكن أحد يشيله. بس هالمكالمة سرّية، البنك ما يسمح لي أقول هالشي، فلا تسألوني أكثر. من سنين فيه تحويلات شهرية من حساب الشركة، كلها تروح لحساب واحد، وكلها معتمدة من واحد من اللي عندهم صلاحية على الحساب. والشهر هذا انسحب إيجار مخزن قديم بالشويخ، من حساب شخصي، مو من الشركة. هذا اللي أقدر أقوله. خلاص لازم أسكّر. ما اتصلت فيكم.';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* iOS: sounds started by timers (ringtone, message beep) are only allowed after the page was "touched" once — prime every audio element on the first tap */
+let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{try{const m=a.muted;a.muted=true;const pr=a.play();if(pr&&pr.then)pr.then(()=>{a.pause();a.currentTime=0;a.muted=m}).catch(()=>{a.muted=m})}catch(e){}});try{ac()}catch(e){}}
+['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,primeAudio,{once:true,capture:true}));
 function save(){try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem('khalid')||'null');if(d&&d.start&&!d.done)Object.assign(S,d)}catch(e){}}
 function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(stage());if(id==='lock'&&!threeReady)initThree()}
@@ -865,6 +868,12 @@ setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(e
 /* ================= INTRO / FILE ================= */
 function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة (Screen Share) من الموبايل على التلفزيون، واضغطوا <b>⛶ Full screen · ملء الشاشة</b> فوق عشان يختفي شريط المتصفح. في سفاري على الآيفون: اضغطوا الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ثم <b>إخفاء شريط الأدوات</b>.</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
+/* team notebook (saved on this device) */
+function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch(e){}
+  sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه: أوقات، أسماء، تناقضات. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: ناصر قال وصل ٨:٤٥ بس البوابة سجّلته ٨:٣٣…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
+  const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem('khalid_book',t.value)}catch(e){}}}
+$$('[data-book]').forEach(b=>b.onclick=notebook);
+
 const NARR_T='الأربعا، واحد أكتوبر. الساعة ثمانية وأربعين دقيقة بالليل. خالد، صاحب مطاعم كريزي برجر، طلع من مكتبه… وما رجع. سيارته بالمواقف. موبايله على مكتبه. وبعد ساعتين، تسجيل صوتي يوصل لعايلته: «خالد عندنا». الخميس الساعة إحدعش يوقّع أكبر صفقة بحياته. خمسة يعرفونه زين… وواحد منهم يكذب. الموبايل بين إيديكم. عندكم ساعة.';
 function narrate(done){const n=$('#narr'),a=$('#au-narr'),tx=$('#narrTx');let fin=false;const end=()=>{if(fin)return;fin=true;clearInterval(iv);a.pause();n.hidden=true;done()};n.hidden=false;tx.textContent='';const words=NARR_T.split(' ');let i=0,step=560;const go=()=>{if(a.duration&&isFinite(a.duration))step=Math.max(200,(a.duration*1000-800)/words.length)};go();a.onloadedmetadata=go;const iv=setInterval(()=>{tx.textContent=words.slice(Math.max(0,i-22),++i).join(' ');if(i>=words.length)clearInterval(iv)},step);a.currentTime=0;a.onended=end;a.play().catch(()=>{});$('#narrSkip').onclick=end;setTimeout(end,(a.duration&&isFinite(a.duration)?a.duration*1000:32000)+1500)}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={lock:0,phone:0,solve:0};save();narrate(()=>{show('file');setTimeout(rules,400)})};
@@ -975,6 +984,8 @@ const NOTES=[
  {id:'sara',t:'مقاسات سارة',d:'سبتمبر',body:'جوتي: ٣٢\nملابس: ٨ سنين\nجاكيت المدرسة: M (الصغير)'},
  {id:'staff',t:'الموظفين الجدد — أكتوبر',d:'١ أكتوبر',body:'كاشير الفرع ٣: أحمد (تجربة أسبوعين)\nطباخ مساعد: رامي — يبدأ الأحد\nتذكير: أوراق الإقامات عند ناصر'},
  {id:'todo',t:'قبل الخميس ✅',d:'الثلاثاء',body:'☑ أوراق الصفقة من المحامي\n☑ موعد سالم\n☐ أراجع كشف الحساب مع المحاسب\n☐ أكلم ناصر\n☐ هدية ماما'}];
+const CALL_NOTE={id:'call',t:'🎧 مكالمة فيصل (البنك) — نص المكالمة',d:'الحين',body:''};
+function addCallNote(){if(!NOTES.find(n=>n.id==='call')){CALL_NOTE.body='«'+CALLTX+'»\n\n— سُجّلت تلقائياً من المكالمة. تقدرون تعيدون سماعها من محادثة فيصل.';NOTES.unshift(CALL_NOTE);renderNotes();$$('#home [data-app=notes] .b').forEach(b=>b.remove());$$('#home [data-app=notes]').forEach(el=>el.insertAdjacentHTML('beforeend','<span class="b">1</span>'))}}
 function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':'🔒 مقفلة'):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
 function openNote(id){const n=NOTES.find(x=>x.id===id);const v=$('#noteView'),st=$('#noteStore');$('#noteTitle').textContent=n.t;
   [...v.children].forEach(c=>{if(c.id)st.appendChild(c)});v.innerHTML='';
@@ -1009,7 +1020,7 @@ $('#hostDone').onclick=()=>{$('#host').classList.remove('on');S.faisal=4;save();
 function replayBtn(){const q=$('#qr');q.hidden=false;q.innerHTML='<button data-replay>🔁 إعادة سماع المكالمة</button>';q.onclick=e=>{if(e.target.closest('[data-replay]'))ring()}}
 function ring(){const o=$('#callov');o.classList.add('on');$('#callSt').textContent='مكالمة واردة…';$('#callTx').textContent='';$('#callAns').hidden=false;$('#callEnd').hidden=true;const rg=$('#au-ring');rg.currentTime=0;rg.play().catch(()=>{});const rv=setInterval(()=>{if(!o.classList.contains('on')||$('#callAns').hidden){clearInterval(rv);rg.pause();rg.currentTime=0}},300);
   $('#callAns').onclick=()=>{$('#callAns').hidden=true;$('#callEnd').hidden=false;$('#callSt').textContent='متصل';const w=CALLTX.split(' ');let i=0;const fa=$('#au-faisal');fa.currentTime=0;
-    const done=()=>{clearInterval(iv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn()},1500)};
+    const done=()=>{clearInterval(iv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();addCallNote()},1500)};
     let step=380;const go=()=>{if(fa.duration&&isFinite(fa.duration))step=Math.max(150,(fa.duration*1000-600)/w.length)};go();fa.onloadedmetadata=go;fa.onended=done;fa.play().catch(()=>{});
     var iv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
   $('#callEnd').onclick=()=>{$('#au-faisal').pause();$('#au-ring').pause();o.classList.remove('on')}}
@@ -1123,7 +1134,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{await splash();await gate();
 const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code!==pc){try{localStorage.removeItem('khalid')}catch(e){}const fresh={start:0,pen:0,hints:{lock:0,phone:0,solve:0},unlocked:false,notes:false,screen:'intro',done:0,who:null,where:null,wrong:0,faisal:0,num:'',code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}
-if(S.start){if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderNotes()}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}}if(S.unlocked&&S.screen==='lock')S.screen='phone';if(!S.screen||['intro','splash','gate','reveal'].includes(S.screen))S.screen='file';show(S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
+if(S.start){if(S.faisal>=4)addCallNote();if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderNotes()}if(S.notes){openNotes();if(S.faisal){CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;renderChatList();if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}}if(S.unlocked&&S.screen==='lock')S.screen='phone';if(!S.screen||['intro','splash','gate','reveal'].includes(S.screen))S.screen='file';show(S.screen);sel();if(S.unlocked){$('#backPhone').hidden=false}}
 else show('intro');
 })();
 document.addEventListener('visibilitychange',save);
