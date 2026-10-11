@@ -569,9 +569,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
           <div class="bio"><b>خالد | Khalid</b><br>Crazee Burger 🍔 منذ ٢٠١٩<br>الكويت 🇰🇼 · بو عبدالله</div>
           <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">الأحد</span></div><img src="img/machboos.jpg" alt=""><div class="lk">❤️ ٨٤٣ إعجاب</div><div class="cap"><b>khalid.q8</b>الأسبوع الكبير 🤲 دعواتكم</div></div>
           <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;font-size:14px">🍽️</span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل ٣ أسابيع</span></div><img src="img/old.jpg" alt=""><div class="lk">❤️ ١,٢٠٥ إعجاب</div><div class="cap"><b>khalid.q8</b>من هنا بدينا. ٢١ سبتمبر ٢٠١٩ 🙏</div></div>
-          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل شهر</span></div><img src="img/kitchen.jpg" alt=""><div class="lk">❤️ ٦٧٢ إعجاب</div><div class="cap"><b>khalid.q8</b>الفريق اللي ما ينام 👨‍🍳🔥 #CrazeeBurger</div></div>
-          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل شهرين</span></div><img src="img/sea.jpg" alt=""><div class="lk">❤️ ٩٥٨ إعجاب</div><div class="cap"><b>khalid.q8</b>الخيران 🌊 يوم بدون موبايل… تقريباً 😅</div></div>
-          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل ٣ أشهر</span></div><img src="img/buffet.jpg" alt=""><div class="lk">❤️ ١,٤٤٠ إعجاب</div><div class="cap"><b>khalid.q8</b>الفرع الثالث افتتح 🎉 حياكم السالمية</div></div>
+          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل شهر</span></div><img src="img/kitchen.jpg" alt="" onerror="this.closest('.post').remove()"><div class="lk">❤️ ٦٧٢ إعجاب</div><div class="cap"><b>khalid.q8</b>الفريق اللي ما ينام 👨‍🍳🔥 #CrazeeBurger</div></div>
+          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل شهرين</span></div><img src="img/sea.jpg" alt="" onerror="this.closest('.post').remove()"><div class="lk">❤️ ٩٥٨ إعجاب</div><div class="cap"><b>khalid.q8</b>الخيران 🌊 يوم بدون موبايل… تقريباً 😅</div></div>
+          <div class="post"><div class="ph"><span class="sav" style="width:28px;height:28px;overflow:hidden"><img src="img/p_khalid.jpg" alt=""></span>khalid.q8 <span style="color:#888;font-weight:400;margin-inline-start:auto">قبل ٣ أشهر</span></div><img src="img/buffet.jpg" alt="" onerror="this.closest('.post').remove()"><div class="lk">❤️ ١,٤٤٠ إعجاب</div><div class="cap"><b>khalid.q8</b>الفرع الثالث افتتح 🎉 حياكم السالمية</div></div>
         </div>
         <div class="pane" id="ig-s">
           <div style="padding:10px 14px;color:#888;font-size:13px">الأخيرة</div>
@@ -827,7 +827,7 @@ const PHOTOS=[
  {id:'sea',n:'الخيران',info:'قبل شهرين · شاليه العائلة',cap:'البحر وقت المغرب.',ov:''},
  {id:'fridge',n:'ثلاجة البيت',info:'السبت ٩:٠٠ ص · المنزل',cap:'رسومات سارة وبطاقة عيد ميلاد.',ov:'09:00'},
  {id:'old',n:'صورة قديمة',info:'مُحفوظة من الألبوم · ٢٠١٩',cap:'افتتاح الفرع الأول.',ov:''}];
-const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy">`;
+const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
 
 /* ================= STATE ================= */
 const S={start:0,pen:0,hints:{lock:0,phone:0,solve:0},unlocked:false,notes:false,screen:'intro',done:0,who:null,where:null,wrong:0,faisal:0,num:''};
