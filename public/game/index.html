@@ -30,7 +30,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 @media (max-width:480px){.chip{padding:5px 9px;font-size:12px}.bar .timer{font-size:16px;min-width:52px}}
 
 /* ---------- splash: POWERED BY HYPHEN ---------- */
-#splash{background:#000;cursor:pointer}
+#splash{background:#000;cursor:pointer;position:relative}
 #splash .wrap{align-items:center;justify-content:center;gap:18px;background:#000}
 #splash .pb{font-size:clamp(12px,2.6vw,18px);letter-spacing:.55em;color:#9aa2b1;opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform .8s ease;font-family:var(--ui);font-weight:500;padding-inline-start:.55em}
 #splash.s2 .pb{opacity:1;transform:none}
@@ -426,7 +426,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
       <div class="side"><small>رقم التصنيف</small><div>64219</div><small>رقم المجلد</small><div>63008</div></div>
     </div></div>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 ٢ – ٨ محققين</span><span>📺 شغّلوه على التلفزيون</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 العب بفريق أو لوحدك</span><span>📺 شغّلوه على التلفزيون</span></div>
     <button class="chip ghost" data-fs hidden style="padding:9px 16px;font-size:15px">⛶ Full screen · ملء الشاشة</button>
     <div class="tvtip" id="tvtip" hidden>📺 للعرض على التلفزيون: شغّلوا مشاركة الشاشة، وبعد ما تبدأون اضغطوا <b>⛶ Full screen · ملء الشاشة</b> فوق. في الآيفون: الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ← <b>إخفاء شريط الأدوات</b>.</div>
   </div></div>
@@ -1083,7 +1083,8 @@ $('#gateGo').onclick=tryCode;$('#gateIn').addEventListener('keydown',e=>{if(e.ke
 
 /* ================= BOOT ================= */
 load();
-function splash(){return new Promise(res=>{const el=$('#splash');show('splash');try{const sa=$('#au-splash');sa.volume=0.7;sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;
+function splash(){return new Promise(async res=>{const el=$('#splash');show('splash');const sa=$('#au-splash');try{sa.volume=0.7;sa.currentTime=0;await sa.play()}catch(e){ // autoplay blocked: ask for one tap, then start with sound
+  await new Promise(ok=>{const t=document.createElement('div');t.id='tapStart';t.innerHTML='<span>اضغطوا للبدء · Tap to start</span>';t.style.cssText='position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:#0b0907;color:#d8ccb8;font-size:18px;letter-spacing:.02em;cursor:pointer';el.appendChild(t);t.onclick=ev=>{ev.stopPropagation();t.remove();try{sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}ok()}})}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const starts={H1:[-180,-120,-25],Y:[-60,160,18],P:[40,-170,-12],H2:[120,150,22],E:[200,-90,-30],N:[260,120,14]};
   Object.entries(starts).forEach(([k,[x,y,r]],i)=>{const n=$('#l-'+k);if(!n)return;
