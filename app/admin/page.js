@@ -7,6 +7,7 @@ export default function Admin() {
   const [days, setDays] = useState(30);
   const [maxUses, setMaxUses] = useState(1);
   const [note, setNote] = useState("");
+  const [game, setGame] = useState("khalid");
   const [codes, setCodes] = useState([]);
   const [made, setMade] = useState([]);
   const [msg, setMsg] = useState("");
@@ -28,7 +29,7 @@ export default function Admin() {
     if (o.ok) { setOrders(o.orders); setStats(o.stats); }
   }
   async function gen() {
-    const r = await fetch("/api/admin/codes", { method: "POST", headers: H, body: JSON.stringify({ count, days, maxUses, note }) });
+    const r = await fetch("/api/admin/codes", { method: "POST", headers: H, body: JSON.stringify({ count, days, maxUses, note, game }) });
     const j = await r.json(); if (!j.ok) return setMsg("كلمة السر غلط");
     setMade(j.codes); load();
   }
@@ -77,6 +78,7 @@ export default function Admin() {
           <div><label>العدد</label><input type="number" value={count} onChange={(e) => setCount(e.target.value)} /></div>
           <div><label>صلاحية (أيام)</label><input type="number" value={days} onChange={(e) => setDays(e.target.value)} /></div>
           <div><label>أجهزة لكل رمز</label><input type="number" value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></div>
+          <div><label>القضية</label><select value={game} onChange={(e) => setGame(e.target.value)}><option value="khalid">قضية خالد</option><option value="shaleh">قضية الشاليه</option></select></div>
         </div>
         <label>ملاحظة (اسم الفعالية)</label><input value={note} onChange={(e) => setNote(e.target.value)} />
         <div style={{ marginTop: 18 }}><button className="cta" onClick={gen}>ولّد الرموز</button></div>
@@ -111,8 +113,8 @@ export default function Admin() {
       {codes.length > 0 && (
         <div className="card" style={{ maxWidth: 960 }}>
           <h2>آخر الرموز</h2>
-          <table><thead><tr><th>الرمز</th><th>الاستخدام</th><th>ينتهي</th><th>ملاحظة</th><th></th></tr></thead>
-            <tbody>{codes.map((c) => <tr key={c.code}><td className="mono">{c.code}</td><td>{c.uses}/{c.max_uses}</td><td>{new Date(c.expires_at).toLocaleDateString("ar-KW")}</td><td>{c.note || (c.order_id ? "شراء" : "")}</td><td>{c.uses > 0 && <button className="btn-sm" onClick={() => reset(c.code)}>صفّر</button>}</td></tr>)}</tbody>
+          <table><thead><tr><th>الرمز</th><th>القضية</th><th>الاستخدام</th><th>ينتهي</th><th>ملاحظة</th><th></th></tr></thead>
+            <tbody>{codes.map((c) => <tr key={c.code}><td className="mono">{c.code}</td><td>{c.game === "shaleh" ? "الشاليه" : "خالد"}</td><td>{c.uses}/{c.max_uses}</td><td>{new Date(c.expires_at).toLocaleDateString("ar-KW")}</td><td>{c.note || (c.order_id ? "شراء" : "")}</td><td>{c.uses > 0 && <button className="btn-sm" onClick={() => reset(c.code)}>صفّر</button>}</td></tr>)}</tbody>
           </table>
         </div>
       )}

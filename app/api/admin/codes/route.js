@@ -18,6 +18,7 @@ export async function POST(req) {
   const count = Math.min(100, Math.max(1, Number(b.count) || 1));
   const days = Math.min(365, Math.max(1, Number(b.days) || 7));
   const maxUses = Math.min(50, Math.max(1, Number(b.maxUses) || 1));
-  const codes = await issueCodes({ count, days, maxUses, note: String(b.note || "").slice(0, 80) || null });
+  const game = ["khalid", "shaleh"].includes(b.game) ? b.game : "khalid";
+  const codes = await issueCodes({ count, days, maxUses, game, note: String(b.note || "").slice(0, 80) || null });
   return Response.json({ ok: true, codes });
 }
