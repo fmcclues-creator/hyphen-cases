@@ -656,7 +656,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
     <div class="app" id="a-calls"><div class="ah"><button data-back>‹</button><div>الهاتف</div></div><div class="list" id="callsBody"></div></div>
 
-    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>المعرض <span class="sub">١٠ صور</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
+    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>المعرض <span class="sub">٥ صور</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
     <div class="app" id="a-photo"><div class="ah"><button data-back="photos">‹</button><div id="photoTitle"></div></div><div class="big"><div class="img" id="photoImg"></div><div class="info" id="photoInfo"></div></div></div>
 
     <div class="app" id="a-notes"><div class="ah"><button data-back>‹</button><div>الملاحظات</div></div><div class="list" id="noteList"></div></div>
@@ -804,8 +804,7 @@ const EV=[
  {id:'cam_hall_0235',n:'كاميرا الممر · ٢:٣٥ ص',cap:'شخص قصير، قميص فاتح، يدخل غرفة الجدّة. راسه <b>تحت</b> اللوحة النحاسية (١٧٠ سم). الصورة ضبابية.'},
  {id:'cam_gate_0302',n:'كاميرا البوابة · ٣:٠٢ ص',cap:'اللاند كروزر البيضا تطلع.'},
  {id:'cam_hall_0306',n:'كاميرا الممر · ٣:٠٦ ص',cap:'جويس، واضحة، بكوب ماي. (الدليل اللي اتهموها فيه.)'},
- {id:'cam_gate_0433',n:'كاميرا البوابة · ٤:٣٣ ص',cap:'اللاند كروزر ترجع.'},
- {id:'courtyard',n:'الحوش · الجمعة الصبح',cap:'مكان وقوف السيارات. السيارة البيضا يم الباب الجانبي.'}];
+ {id:'cam_gate_0433',n:'كاميرا البوابة · ٤:٣٣ ص',cap:'اللاند كروزر ترجع.'}];
 $('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><figcaption><b>${e.n}</b></figcaption></figure>`).join('');
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);sheet(`<h3>${ev.n}</h3><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`)};
 
@@ -837,7 +836,7 @@ const CHATS=[
  {id:'abd',n:'عبدالله',av:'p:abdullah',last:'٨:٠٥ ص',u:0,msgs:[['day','١٩ سبتمبر'],['them','عمي، بيوصلك مسجات من شركة مخازن (Easy Storage) تجاهلها 🙏 حطيت رقمك للتواصل لأن خطي موقوف مؤقتاً. أثاث شقتنا القديمة','١٢:٠٠ م'],['me','ليش موقوف؟','١٢:١٠ م'],['them','سالفة فواتير، بتنحل','١٢:١١ م'],['day','الخميس'],['them','عمي الله يخليك، ١٢٠٠ دينار بس لين الراتب. البنك بيسحب السيارة الأسبوع الياي 😔','١٠:٤٥ م'],['me','ما عندي ولدي. كلم أبوك.','١٠:٥٢ م'],['them','أبوي نفس وضعي. خلاص.','١٠:٥٣ م'],['day','الجمعة'],['them','عمي اتصل بالشرطة. الشغّالة أكيد. لا تطوّلها.','٨:٠٥ ص']]},
  {id:'mona',n:'منى (أم عبدالله)',av:'p:mona',last:'٧:٥٢ ص',u:0,msgs:[['day','الخميس'],['them','أمك نايمة عندنا بالصالة مع البنات، لا تصحّيها','١١:١٥ م'],['me','تمام','١١:١٦ م'],['day','الجمعة'],['them','الخزنة فاضية!!! تعال','٧:٣١ ص'],['them','لقيت ظرف فلوس بغرفة جويس. ٢٠٠ دينار. من وين لها؟؟','٧:٥٢ ص']]},
  {id:'saad',n:'سعد (أخوي)',av:'p:saad',last:'٨:١٥ ص',u:0,msgs:[['day','الخميس'],['them','أمي ورّت الذهب لشهد قدام الكل… الله يتمم','٩:١٠ م'],['me','إن شاء الله','٩:١٢ م'],['day','الجمعة'],['them','ولدي ما له علاقة، لا أحد يجيب سيرته','٨:١٥ ص']]},
- {id:'fam',n:'عايلة أم خالد 🏖',av:'🏖',last:'٧:٣٣ ص',u:0,grp:1,msgs:[['day','الخميس'],['them','وصلنا 🏖','٥:٠٥ م','courtyard','شهد'],['them','ذهب يدّتي 😍😍','٨:٣٥ م','gold','شهد'],['them','ما شاء الله… عقبال بنات الكل 🙂','٨:٣٦ م','','منى'],['them','بوعبدالعزيز الكرك 😂','٩:٤٠ م','','فهد'],['day','الجمعة'],['them','الخزنة فاضية','٧:٣٣ ص','','منى']]},
+ {id:'fam',n:'عايلة أم خالد 🏖',av:'🏖',last:'٧:٣٣ ص',u:0,grp:1,msgs:[['day','الخميس'],['them','وصلنا 🏖','٥:٠٥ م','plaque','شهد'],['them','ذهب يدّتي 😍😍','٨:٣٥ م','gold','شهد'],['them','ما شاء الله… عقبال بنات الكل 🙂','٨:٣٦ م','','منى'],['them','بوعبدالعزيز الكرك 😂','٩:٤٠ م','','فهد'],['day','الجمعة'],['them','الخزنة فاضية','٧:٣٣ ص','','منى']]},
  {id:'diw',n:'ديوانية الخميس ☕',av:'☕',last:'الخميس',u:0,grp:1,msgs:[['day','الخميس'],['them','بوعبدالعزيز وين؟ الشاليه؟','٩:٠٠ م','','بو فهد'],['me','إيه، الويكند كله','٩:٠٥ م'],['them','الله يهنيكم','٩:٠٦ م','','بو فهد']]},
  {id:'jam',n:'جمعية الخيران ✓',av:'🛒',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','عروض الويكند: ماي ٢ د.ك الكرتون · ثلج ٠.٥٠٠ · فحم ١.٥٠٠','١٠:٠٠ ص']]}];
 const SMS=[
@@ -848,7 +847,6 @@ const SMS=[
  {id:'spam',n:'+965 6xx xxxxx',last:'الثلاثاء',u:0,msgs:[['day','الثلاثاء'],['them','عرض خاص على عزل الأسطح! اتصل الآن','١١:٠٠ ص']]}];
 const CALLS=[{n:'الشرطة — مخفر الخيران',t:'٨:١٠ ص',k:'صادرة · ٤ دقايق'},{n:'عبدالله',t:'٧:٤٠ ص',k:'صادرة · ٢ دقيقة'},{n:'رضا (السوّاق)',t:'١:٥٦ ص',k:'فايتة',bad:1},{n:'فهد 🎮',t:'١١:٥٠ م',k:'فايتة (٢)',bad:1},{n:'سعد (أخوي)',t:'الخميس',k:'واردة · ٣ دقايق'},{n:'أم خالد ❤️',t:'الخميس',k:'صادرة · ١ دقيقة'},{n:'المكتب',t:'الأربعاء',k:'واردة · ١٢ دقيقة'}];
 const PHOTOS=[
- {id:'courtyard',n:'وصلنا',info:'الخميس ٥:٠٥ م · شاليه أم خالد',cap:'الحوش. السيارات واقفة.'},
  {id:'car_bag',n:'سيارة عبدالله',info:'الخميس ٥:٠٧ م',cap:'عبدالله وصل متأخر. شنطة رياضة سودا بالكرسي الخلفي.'},
  {id:'gold',n:'ذهب شهد',info:'الخميس ٨:٣٠ م · طاولة العشا',cap:'الطقم كامل. الجدّة ورّته للكل.'},
  {id:'plaque',n:'اللوحة',info:'الخميس ٥:١٠ م',cap:'لوحة مدخل الشاليه. بوعبدالعزيز يصوّرها كل سنة.'},
