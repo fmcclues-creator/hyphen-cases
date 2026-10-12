@@ -462,6 +462,18 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .gmwrap{display:flex;gap:14px;align-items:center;background:#161b24;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
 .gmwrap img{width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none}
 .gmtx{font-family:var(--doc);font-size:19px;line-height:1.7;color:#f3ede0;min-height:2em}
+
+/* TV companion */
+.tvbox{background:rgba(22,27,36,.95);border:1px solid var(--line);border-radius:14px;padding:12px 14px;max-width:40ch;display:flex;flex-direction:column;gap:8px;align-items:center}
+.tv-l{font-size:13px;color:#aab2c2;line-height:1.6}.tv-l b{color:#fff}
+.tv-code{font:700 36px/1 ui-monospace,Menlo,monospace;letter-spacing:.3em;padding-inline-start:.3em;direction:ltr;color:#ffd978}
+.tv-st{font-size:12px;color:#8e97a8}.tv-st.live{color:var(--ok);font-weight:700}
+.tpad{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;background:radial-gradient(ellipse at center,#141a24,#05070c);z-index:2}
+.tpad[hidden]{display:none}
+.tpad-box{width:min(80vw,320px);aspect-ratio:16/9;border:1px solid #3a4250;border-radius:14px;position:relative;background:#0a0d13;overflow:hidden}
+.tpad-box i{position:absolute;width:34px;height:34px;border-radius:50%;background:radial-gradient(#fff7d6,#ffd978 40%,transparent 70%);transform:translate(-50%,-50%);box-shadow:0 0 24px #ffd978;left:50%;top:50%}
+.tpad-tx{font-size:15px;line-height:1.7;color:#e9ecf2;text-align:center;max-width:36ch}
+.tpad-cnt{font:700 22px ui-monospace,Menlo,monospace;color:#ffd978;direction:ltr}
 </style>
 </head>
 <body>
@@ -674,7 +686,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     <div class="tdark" id="tdark"></div>
     <div class="tlit" id="tlit"></div>
     <div class="tfound" id="tfound"></div>
-    <div class="tintro" id="tintro"><div class="h" id="tintroTx"></div><button class="btn" id="torchOn">🔦 شغّلوا الكشّاف</button><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:8px">حرّكوا الموبايل عشان يتحرّك الضوء. إذا ما اشتغل، اسحبوا بإصبعكم.</div></div>
+    <div class="tpad" id="tpad" hidden><div class="tpad-box"><i id="tpadDot"></i></div><div class="tpad-tx">📺 الصورة على التلفزيون — <b>ميّلوا الموبايل</b> أو اسحبوا هنا، وثبّتوا الضوء على الشي اللي تشوفونه.</div><div class="tpad-cnt" id="tpadCnt"></div></div>
+    <div class="tintro" id="tintro"><div class="h" id="tintroTx"></div><div class="tvbox" id="tvbox" hidden><div class="tv-l">📺 تبون الصورة على التلفزيون؟ افتحوا عليه <b dir="ltr">cases.hyphen-eventskw.com/tv</b> واكتبوا الرمز:</div><div class="tv-code" id="tvCode"></div><div class="tv-st" id="tvSt">بانتظار التلفزيون…</div></div><button class="btn" id="torchOn">🔦 شغّلوا الكشّاف</button><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:8px">حرّكوا الموبايل عشان يتحرّك الضوء. إذا ما اشتغل، اسحبوا بإصبعكم.</div></div>
     <div class="tmsg" id="tmsg"></div>
   </div>
 </section>
@@ -729,6 +742,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wm-use" viewBox="0 0 1010 160"><path class="lw" data-l="H1" d="M 120.4 6.6 L 146.0 6.6 L 146.0 67.4 L 120.4 67.4 Z M 46.4 67.4 L 146.0 67.4 L 146.0 90.2 L 46.4 90.2 Z M 2.2 6.6 L 27.8 6.6 L 27.8 154.0 L 2.2 154.0 Z M 120.4 90.2 L 146.0 90.2 L 146.0 154.0 L 120.4 154.0 Z M 120.4 90.2 "/><path class="lw" data-l="Y" d="M 239.4 153.4 L 239.4 97.7 L 161.4 6.6 L 195.9 6.6 L 253.1 74.2 L 310.5 6.6 L 343.2 6.6 L 265.0 97.7 L 265.0 153.4 Z M 239.4 153.4 "/><path class="lw" data-l="P" d="M 402.8 112.6 L 402.8 87.8 L 461.8 87.8 C 470.8 87.8 477.8 85.3 482.9 80.2 C 487.9 75.1 490.5 68.4 490.5 59.9 C 490.5 51.4 487.9 44.7 482.9 39.7 C 477.9 34.7 470.8 32.2 461.8 32.2 L 384.2 32.2 L 384.2 153.4 L 358.5 153.4 L 358.5 6.6 L 461.8 6.6 C 470.3 6.6 477.8 7.8 484.5 10.3 C 491.2 12.8 496.8 16.3 501.4 20.8 C 506.0 25.3 509.5 30.8 511.9 37.3 C 514.3 43.7 515.5 51.0 515.5 59.1 C 515.5 67.0 514.3 74.3 511.9 80.8 C 509.5 87.3 505.9 93.0 501.4 97.7 C 496.8 102.4 491.2 106.1 484.5 108.7 C 477.8 111.3 470.3 112.6 461.8 112.6 Z M 402.8 112.6 "/><path class="lw" data-l="H2" d="M 651.9 6.6 L 677.5 6.6 L 677.5 67.4 L 651.9 67.4 Z M 577.9 67.4 L 677.5 67.4 L 677.5 90.2 L 577.9 90.2 Z M 533.7 6.6 L 559.3 6.6 L 559.3 154.0 L 533.7 154.0 Z M 651.9 90.2 L 677.5 90.2 L 677.5 154.0 L 651.9 154.0 Z M 651.9 90.2 "/><path class="lw" data-l="E" d="M 703.0 153.4 L 703.0 6.6 L 834.3 6.6 L 834.3 32.2 L 728.6 32.2 L 728.6 127.8 L 834.5 127.8 L 834.5 153.4 Z M 703.0 153.4 "/><path class="lw" data-l="N" d="M 880.1 46.0 L 880.1 153.4 L 855.7 153.4 L 855.7 20.1 C 855.7 15.4 856.9 11.7 859.2 8.9 C 861.6 6.1 864.8 4.8 868.8 4.8 C 870.7 4.8 872.5 5.2 874.3 6.0 C 876.0 6.8 877.8 8.1 879.7 10.0 L 983.4 112.8 L 983.4 5.4 L 1007.8 5.4 L 1007.8 139.9 C 1007.8 144.8 1006.6 148.5 1004.3 151.2 C 1001.9 153.9 998.8 155.2 995.1 155.2 C 990.9 155.2 987.0 153.4 983.3 149.8 Z M 880.1 46.0 "/><path class="barw" d="M 747.2 68.0 L 828.6 68.0 L 828.6 89.6 L 747.2 89.6 Z M 747.2 68.0 "/></symbol></svg>
 <style>.lw{fill:#fff}.barw{fill:#f00}</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 window.addEventListener('error',e=>{try{let t=document.getElementById('errToast');if(!t){t=document.createElement('div');t.id='errToast';t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7a1f1a;color:#fff;font:13px/1.5 monospace;direction:ltr;padding:10px 12px;border-radius:10px';t.onclick=()=>t.remove();document.body.appendChild(t)}t.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?')}catch(x){}});
@@ -738,7 +752,7 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261012';
 const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='6204';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,contract:false,door:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:''};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,contract:false,door:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',room:''};
 function save(){try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem(GAME)||'null');if(d&&d.start&&!d.done)Object.assign(S,d)}catch(e){}}
 function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField()}
@@ -763,7 +777,7 @@ function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: رضا رجع ١:٥٠ بس الكاميرا تشوفه بالممر ٢:٣٥…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
   const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}}}
 $$('[data-book]').forEach(b=>b.onclick=notebook);
-function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-ring','au-fahad','au-vn','au-gm','au-splash'].forEach(i=>{const a=$('#'+i);if(a)a.pause()});torchStop();const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
+function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-ring','au-fahad','au-vn','au-gm','au-splash'].forEach(i=>{const a=$('#'+i);if(a)a.pause()});tvSend('bye',{});torchStop();const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
 $$('[data-home]').forEach(b=>b.onclick=recover);
 let _taps=[];document.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,textarea,a,select,video,audio,[data-chat],[data-note],[data-p],[data-sms],.row,.pad,.icon,.dock,.pat,.tstage,.strip'))return;const n=Date.now();_taps=_taps.filter(t=>n-t<1200);_taps.push(n);if(_taps.length>=3){_taps=[];recover()}},true);
 const NARR_T=['الجمعة، ٣ أكتوبر. شاليه أم خالد، الخيران.','الساعة ٧:٣٠ الصبح، منى فتحت الخزنة… فاضية.','٨:١٠ — الشرطة. ٨:٤٥ — جويس، الشغّالة، في المخفر.','الجدّة تقول: بنتي ما تسوّيها.','موبايل بوعبدالعزيز بين إيديكم. عندكم ساعة.'];
@@ -909,23 +923,37 @@ function ring(){const o=$('#callov');o.classList.add('on');$('#callSt').textCont
 function addCallNote(){if(NOTES.find(n=>n.id==='call'))return;NOTES.unshift({id:'call',t:'🎧 مكالمة فهد — نص المكالمة',d:'الحين',body:'«'+CALLTX+'»\n\n— سُجّلت تلقائياً. فهد اتصل على موبايل عمه وهو عند الشرطة.'});renderNotes();$$('#home [data-app=notes]').forEach(el=>{if(!el.querySelector('.b'))el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
 $('#chatBody').addEventListener('click',e=>{},false);
 
+
+/* ---- TV companion (flashlight on the TV, phone as controller) ---- */
+const TV={sb:null,ch:null,room:'',live:false,lastHello:0,cfg:undefined,seq:0,lastBeam:0};
+function tvRoom(){if(!S.room){S.room=String(Math.floor(1000+Math.random()*9000));save()}return S.room}
+async function tvCfg(){if(TV.cfg!==undefined)return TV.cfg;try{const r=await fetch(STORE+'/api/tv-config');const j=await r.json();TV.cfg=j.ok?j:null}catch(e){TV.cfg=null}return TV.cfg}
+async function tvConnect(){if(TV.ch)return;const c=await tvCfg();if(!c||!window.supabase)return;TV.room=tvRoom();TV.sb=TV.sb||supabase.createClient(c.url,c.key,{realtime:{params:{eventsPerSecond:40}}});
+  TV.ch=TV.sb.channel('tv-'+TV.room,{config:{broadcast:{self:false}}});
+  TV.ch.on('broadcast',{event:'hello'},()=>{TV.lastHello=Date.now();if(!TV.live){TV.live=true;SFX.beep()}tvStatus();tvScene()}).subscribe();
+  setInterval(()=>{if(TV.live&&Date.now()-TV.lastHello>9000){TV.live=false;tvStatus()}},2000)}
+function tvSend(ev,p){if(TV.ch&&TV.live)try{TV.ch.send({type:'broadcast',event:ev,payload:p})}catch(e){}}
+function tvStatus(){const st=$('#tvSt');if(!st)return;st.textContent=TV.live?'✅ التلفزيون متصل':'بانتظار التلفزيون…';st.classList.toggle('live',TV.live);if(T&&T.on&&TV.live)tvCtrl(true)}
+function tvScene(){if(!T||!TV.live)return;const sc=T.sc;tvSend('scene',{id:T.id,seq:TV.seq,base:location.href.split('#')[0].split('?')[0].replace(/\/index\.html$/,'').replace(/\/$/,''),dark:sc.dark,lit:sc.lit,title:sc.tvTitle||'',n:sc.spots.length,ar:T.ar||16/9,on:!!T.on,found:sc.spots.map((s,i)=>({i,x:s.x,y:s.y,l:s.l})).filter(f=>T.found[f.i]||S[sc.flag]),done:!!S[sc.flag]||T.doneSent,doneText:sc.done,spots:sc.spots})}
+function tvCtrl(on){const pad=$('#tpad');pad.hidden=!on;$('#tdark').style.visibility=on?'hidden':'';$('#tlit').style.visibility=on?'hidden':'';$('#tfound').style.visibility=on?'hidden':'';if(on)$('#tpadCnt').textContent=`${Object.keys(T.found).length} / ${T.sc.spots.length}`}
+
 /* ---- torch scenes ---- */
 const SCENES={
- courtyard:{dark:'courtyard_night',lit:'courtyard_night',intro:'سناب فهد · ١١:٣٦ م — الصورة سودا. شغّلوا الكشّاف ودوروا بالحوش.',spots:[{x:33,y:55,r:11,l:'عبدالله — تيشيرت أسود، ساعة ذهب'},{x:43,y:61,r:10,l:'رضا — راسه تحت'},{x:60,y:47,r:14,l:'اللاند كروزر البيضا'}],done:'١١:٣٥ م: عبدالله ورضا بالحوش عند السيارة. ما كانوا نايمين. ✅',flag:'torch1',next:'voice'},
- corridor:{dark:'corridor_dark',lit:'corridor_lit',intro:'مخازن الري · مبنى B — الكهرباء مقطوعة. دوروا على الوحدة… وعلى أي شي على الأرض.',spots:[{x:71,y:12,r:10,l:'الوحدة B-17 — قفل رقمي'},{x:47,y:80,r:10,l:'بطاقة شنطة: «شاليه أم خالد · شهد 💍»'}],done:'لقينا B-17. وبطاقة شنطة شهد ساقطة جدّامها. ✅',flag:'corridor',next:'contract'}};
+ courtyard:{dark:'courtyard_night',lit:'courtyard_night',intro:'سناب فهد · ١١:٣٦ م — الصورة سودا. شغّلوا الكشّاف ودوروا بالحوش.',spots:[{x:33,y:55,r:11,l:'عبدالله — تيشيرت أسود، ساعة ذهب'},{x:43,y:61,r:10,l:'رضا — راسه تحت'},{x:60,y:47,r:14,l:'اللاند كروزر البيضا'}],done:'١١:٣٥ م: عبدالله ورضا بالحوش عند السيارة. ما كانوا نايمين. ✅',flag:'torch1',next:'voice',tvTitle:'سناب فهد · الخميس ١١:٣٦ م · الحوش'},
+ corridor:{dark:'corridor_dark',lit:'corridor_lit',intro:'مخازن الري · مبنى B — الكهرباء مقطوعة. دوروا على الوحدة… وعلى أي شي على الأرض.',spots:[{x:71,y:12,r:10,l:'الوحدة B-17 — قفل رقمي'},{x:47,y:80,r:10,l:'بطاقة شنطة: «شاليه أم خالد · شهد 💍»'}],done:'لقينا B-17. وبطاقة شنطة شهد ساقطة جدّامها. ✅',flag:'corridor',next:'contract',tvTitle:'مخازن Easy Storage · مبنى B · الكهرباء مقطوعة'}};
 let T=null;
-function torchStart(id){const sc=SCENES[id];T={sc,found:{},x:50,y:50,dwell:{},on:false,raf:0};$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
-  if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit}}
+function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
+  if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
 function mark(s){$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${s.x}%;top:${s.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click()}else{show('phone')}T=null}
+function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click()}else{show('phone')}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
-$('#torchOn').onclick=async()=>{$('#tintro').hidden=true;T.on=true;T.tx=50;T.ty=50;base=null;
+$('#torchOn').onclick=async()=>{$('#tintro').hidden=true;T.on=true;T.tx=50;T.ty=50;base=null;if(TV.live){tvCtrl(true);tvScene()}
   try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function'){const p=await DeviceOrientationEvent.requestPermission();if(p==='granted')window.addEventListener('deviceorientation',onOri)}else window.addEventListener('deviceorientation',onOri)}catch(e){}
-  const st=$('#tstage');const pt=ev=>{const r=st.getBoundingClientRect();T.tx=(ev.clientX-r.left)/r.width*100;T.ty=(ev.clientY-r.top)/r.height*100};st.onpointerdown=ev=>{if(ev.target.closest('button,.tmsg,.tintro'))return;st.setPointerCapture(ev.pointerId);pt(ev)};st.onpointermove=ev=>{if(ev.buttons||ev.pointerType==='touch')pt(ev)};
-  $('#tlit').style.opacity=1;let last=performance.now();const loop=now=>{if(!T||!T.on)return;const dt=(now-last)/1000;last=now;T.x+=(T.tx-T.x)*0.15;T.y+=(T.ty-T.y)*0.15;const m=`radial-gradient(circle at ${T.x}% ${T.y}%, #000 0 ${window.innerWidth<600?60:90}px, transparent ${window.innerWidth<600?110:160}px)`;$('#tlit').style.webkitMaskImage=m;$('#tlit').style.maskImage=m;
-    T.sc.spots.forEach((s,i)=>{if(T.found[i])return;const d=Math.hypot((T.x-s.x)*1.4,T.y-s.y);if(d<s.r){T.dwell[i]=(T.dwell[i]||0)+dt;if(T.dwell[i]>1.1){T.found[i]=true;SFX.found();mark(s);if(Object.keys(T.found).length===T.sc.spots.length){T.on=false;S[T.sc.flag]=true;save();stageAt(T.sc.next);$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';$('#tmsg').innerHTML=`<div class="h">${T.sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;return}}}else T.dwell[i]=Math.max(0,(T.dwell[i]||0)-dt)});
+  const st=$('#tstage');const pt=ev=>{const pb=$('.tpad-box');const r=(!$('#tpad').hidden&&pb)?pb.getBoundingClientRect():st.getBoundingClientRect();T.tx=(ev.clientX-r.left)/r.width*100;T.ty=(ev.clientY-r.top)/r.height*100};st.onpointerdown=ev=>{if(ev.target.closest('button,.tmsg,.tintro'))return;st.setPointerCapture(ev.pointerId);pt(ev)};st.onpointermove=ev=>{if(ev.buttons||ev.pointerType==='touch')pt(ev)};
+  $('#tlit').style.opacity=1;let last=performance.now();const loop=now=>{if(!T||!T.on)return;const dt=(now-last)/1000;last=now;T.x+=(T.tx-T.x)*0.15;T.y+=(T.ty-T.y)*0.15;if(TV.live){if(now-TV.lastBeam>50){TV.lastBeam=now;tvSend('beam',{x:+T.x.toFixed(1),y:+T.y.toFixed(1),on:true})}const d=$('#tpadDot');if(d){d.style.left=T.x+'%';d.style.top=T.y+'%'}}const m=`radial-gradient(circle at ${T.x}% ${T.y}%, #000 0 ${window.innerWidth<600?60:90}px, transparent ${window.innerWidth<600?110:160}px)`;$('#tlit').style.webkitMaskImage=m;$('#tlit').style.maskImage=m;
+    T.sc.spots.forEach((s,i)=>{if(T.found[i])return;const d=Math.hypot((T.x-s.x)*1.4,T.y-s.y);if(d<s.r){T.dwell[i]=(T.dwell[i]||0)+dt;if(T.dwell[i]>1.1){T.found[i]=true;SFX.found();mark(s);tvSend('found',{i,x:s.x,y:s.y,l:s.l});if(!$('#tpad').hidden)$('#tpadCnt').textContent=`${Object.keys(T.found).length} / ${T.sc.spots.length}`;if(Object.keys(T.found).length===T.sc.spots.length){T.on=false;S[T.sc.flag]=true;save();stageAt(T.sc.next);$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';$('#tmsg').innerHTML=`<div class="h">${T.sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvSend('done',{text:T.sc.done});return}}}else T.dwell[i]=Math.max(0,(T.dwell[i]||0)-dt)});
     T.raf=requestAnimationFrame(loop)};T.raf=requestAnimationFrame(loop)};
 
 /* ---- door keypad ---- */
@@ -957,7 +985,7 @@ let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lin
 /* ---- hints ---- */
 const HINTS={
  lock:['بوعبدالعزيز قال للشرطة: شكل النقشة أول حرف من اسم أمه. اسم الجدّة بأول سطر بالمحضر. وصورة الشاشة بالأدلة فيها أثر الإصبع.','اسمها لطيفة → حرف L: خط نازل من فوق، وبعدين خط لليمين من تحت. ابدأوا من النقطة اللي فوق على اليسار.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
- torch1:['فهد طرّش لعمه صورة سودا ١١:٣٦ م ومعاها «شوف الحوش». افتحوا واتساب فهد واضغطوا الصورة.','شغّلوا الكشّاف وثبّتوا الضوء ثانية على كل شي يبين: اثنين عند السيارة، والسيارة نفسها.','الجواب: عبدالله ورضا كانوا بالحوش ١١:٣٥ م — مو نايمين مثل ما قالوا بالمقابلات.'],
+ torch1:['فهد طرّش لعمه صورة سودا ١١:٣٦ م ومعاها «شوف الحوش». افتحوا واتساب فهد واضغطوا الصورة. (تقدرون تطلّعون الصورة على التلفزيون من cases.hyphen-eventskw.com/tv)','شغّلوا الكشّاف وثبّتوا الضوء ثانية على كل شي يبين: اثنين عند السيارة، والسيارة نفسها.','الجواب: عبدالله ورضا كانوا بالحوش ١١:٣٥ م — مو نايمين مثل ما قالوا بالمقابلات.'],
  voice:['صوتية رضا ١:٥٥ ص بواتساب فيها صوت ثاني بالخلفية. اضغطوا «تحليل الصوت» تحتها.','قارنوا الصوت مع المقابلات بالملف. منو صوته شبابي ومستعجل يقول «يلا»؟','الجواب: عبدالله — كان واقف يم رضا الساعة ١:٥٥. وبعدها بشوي فهد بيتصل.'],
  storage:['وين راحت السيارة البيضا بعد ٣ الفجر؟ الرسائل النصية فيها شي من المرور… وبالواتساب فيه شركة بوعبدالعزيز ما يعرفها.','رادار الخيران صوّر السيارة ٣:٠٧ رايحة <b>شمال</b> — طالعة من الخيران مو داخلة. وشركة Easy Storage تقول «تم فتح الوحدة B-17 ٣:٤٢». افتحوا محادثتها.','الجواب: مخازن Easy Storage بالري، الوحدة B-17. بعد ما تفتحون المحادثة، روحوا تبويب «🚓 الميدان» بالملف.'],
  corridor:['الدورية بالممر والكهرباء مقطوعة. من تبويب الميدان شغّلوا الكشّاف ودوروا على رقم الوحدة… وأي شي على الأرض.','لوحة الوحدة فوق على اليمين. وفيه شي صغير ساقط جدّام الباب على الأرض.','الجواب: B-17 عليها قفل رقمي، وبطاقة شنطة شهد ساقطة عندها — الشنطة اللي كانت بسيارة عبدالله يوم الخميس.'],

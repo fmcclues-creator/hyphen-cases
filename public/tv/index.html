@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HYPHEN CASES · TV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+:root{--ink:#0d1016;--fg:#e9ecf2;--muted:#8e97a8;--line:#283040;--gold:#ffd978;--ok:#3aa36a;--tape:#c4382d;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--ink);color:var(--fg);font-family:Tajawal,system-ui,sans-serif;overflow:hidden}
+.scr{position:absolute;inset:0;display:none}.scr.on{display:flex}
+#join{flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
+#join .brand{font-size:14px;letter-spacing:4px;color:var(--muted)}
+#join h1{font-size:clamp(28px,5vw,56px);margin:0}
+#join p{color:var(--muted);font-size:clamp(16px,2.2vw,24px);margin:0;line-height:1.7;max-width:40ch}
+#code{font:700 clamp(40px,8vw,96px)/1 ui-monospace,Menlo,monospace;letter-spacing:.35em;text-align:center;width:min(90vw,520px);padding:16px 0 16px .35em;background:#161b24;border:2px solid var(--line);border-radius:18px;color:#fff;direction:ltr;outline:none}
+#code:focus{border-color:var(--gold)}
+.btn{background:var(--tape);color:#fff;border:0;border-radius:999px;padding:16px 40px;font:700 clamp(18px,2.4vw,26px) Tajawal,sans-serif;cursor:pointer}
+.err{color:#e2574b;min-height:1.5em;font-size:18px}
+.stat{position:absolute;top:18px;inset-inline:24px;display:flex;align-items:center;gap:14px;font-size:clamp(14px,1.8vw,22px);color:var(--muted);z-index:5}
+.stat .room{font-family:ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#fff;background:#161b24;border:1px solid var(--line);border-radius:10px;padding:4px 12px;direction:ltr}
+.stat .sp{flex:1}.stat .dot{width:12px;height:12px;border-radius:50%;background:#555}.stat .dot.live{background:var(--ok);box-shadow:0 0 10px var(--ok)}
+#stage{position:absolute;inset:0;background:#000}
+.dark,.lit{position:absolute;inset:0;background-size:contain;background-position:center;background-repeat:no-repeat}
+.dark{filter:brightness(.08) saturate(.4)}
+.lit{opacity:0;transition:opacity .3s;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.lit.full{-webkit-mask-image:none!important;mask-image:none!important}
+.marks{position:absolute;inset:0;pointer-events:none}
+.mark{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation:pop .4s}
+.mark i{width:clamp(28px,3vw,44px);height:clamp(28px,3vw,44px);border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 18px var(--gold);display:block}
+.mark span{background:rgba(0,0,0,.8);color:var(--gold);font-size:clamp(14px,1.8vw,24px);padding:6px 14px;border-radius:8px;white-space:nowrap}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.wait{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(0,0,0,.75);z-index:4;text-align:center;padding:24px}
+.wait.on{display:flex}
+.wait h2{font-size:clamp(24px,3.5vw,44px);margin:0}.wait p{color:var(--muted);font-size:clamp(16px,2vw,24px);margin:0;max-width:44ch;line-height:1.7}
+.done{position:absolute;inset-inline:0;bottom:6vh;display:none;justify-content:center;z-index:5}
+.done.on{display:flex}
+.done div{background:rgba(0,0,0,.85);border:1px solid var(--gold);color:#fff;font-size:clamp(18px,2.6vw,34px);padding:16px 30px;border-radius:16px;max-width:80vw;text-align:center;line-height:1.6}
+.title{position:absolute;top:60px;inset-inline:0;text-align:center;color:var(--gold);font-size:clamp(16px,2.2vw,28px);z-index:5;text-shadow:0 2px 8px #000}
+.counter{position:absolute;bottom:24px;left:24px;font:700 clamp(16px,2vw,26px) ui-monospace,Menlo,monospace;color:var(--gold);direction:ltr;z-index:5;background:rgba(0,0,0,.6);padding:6px 14px;border-radius:10px}
+</style>
+</head>
+<body>
+<section class="scr on" id="join">
+  <div class="brand">HYPHEN · CASES</div>
+  <h1>📺 شاشة التلفزيون</h1>
+  <p>لما تطلع عندكم مهمة الكشّاف بالموبايل، اكتبوا هنا الرمز اللي يبين على الموبايل.</p>
+  <input id="code" inputmode="numeric" maxlength="4" placeholder="····" autocomplete="off">
+  <button class="btn" id="go">اتصال</button>
+  <div class="err" id="err"></div>
+</section>
+
+<section class="scr" id="play">
+  <div class="stat"><span class="room" id="roomLbl"></span><span id="st">بانتظار الموبايل…</span><span class="sp"></span><span class="dot" id="dot"></span></div>
+  <div id="stage">
+    <div class="dark" id="dark"></div>
+    <div class="lit" id="lit"></div>
+    <div class="marks" id="marks"></div>
+    <div class="title" id="ttl"></div>
+    <div class="counter" id="cnt"></div>
+    <div class="wait on" id="wait"><h2>متصل ✓</h2><p id="waitTx">الشاشة جاهزة. على الموبايل اضغطوا «🔦 شغّلوا الكشّاف».</p></div>
+    <div class="done" id="done"><div id="doneTx"></div></div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+let sb=null,ch=null,room='',scene=null,beam={x:50,y:50},tx=50,ty=50,raf=0,found={};
+async function cfg(){try{const r=await fetch('/api/tv-config');const j=await r.json();if(j.ok)return j}catch(e){}return null}
+function base(){return location.origin}
+$('#code').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^0-9٠-٩]/g,'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).slice(0,4);if(e.target.value.length===4)join()});
+$('#code').addEventListener('keydown',e=>{if(e.key==='Enter')join()});
+$('#go').onclick=join;
+const m=(location.hash||'').match(/room=(\d{4})/);if(m){$('#code').value=m[1];setTimeout(join,300)}
+async function join(){const c=$('#code').value;if(c.length!==4){$('#err').textContent='اكتبوا ٤ أرقام';return}$('#err').textContent='';$('#go').disabled=true;
+  const j=await cfg();if(!j){$('#err').textContent='شاشة التلفزيون مو مفعّلة بعد (مفتاح Supabase ناقص).';$('#go').disabled=false;return}
+  sb=sb||supabase.createClient(j.url,j.key,{realtime:{params:{eventsPerSecond:40}}});room=c;
+  ch=sb.channel('tv-'+room,{config:{broadcast:{self:false}}});
+  ch.on('broadcast',{event:'scene'},({payload})=>setScene(payload))
+    .on('broadcast',{event:'beam'},({payload})=>{tx=payload.x;ty=payload.y;if(payload.on!==undefined)setOn(payload.on)})
+    .on('broadcast',{event:'found'},({payload})=>mark(payload))
+    .on('broadcast',{event:'done'},({payload})=>finish(payload))
+    .on('broadcast',{event:'bye'},()=>{$('#st').textContent='الموبايل طلع من المشهد';$('#wait').classList.add('on');$('#waitTx').textContent='ارجعوا للمشهد من الموبايل.'})
+    .subscribe(status=>{if(status==='SUBSCRIBED'){$('#join').classList.remove('on');$('#play').classList.add('on');$('#roomLbl').textContent=room;$('#dot').classList.add('live');hello();setInterval(hello,3000)}
+      else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){$('#err').textContent='ما قدرنا نتصل. جرّبوا مرة ثانية.';$('#go').disabled=false}});
+  if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{})}
+function hello(){if(ch)ch.send({type:'broadcast',event:'hello',payload:{t:Date.now(),scene:scene?scene.id:null}})}
+function setScene(sc){if(scene&&scene.id===sc.id&&scene.seq===sc.seq)return;scene=sc;found={};$('#marks').innerHTML='';$('#done').classList.remove('on');$('#dark').style.backgroundImage=`url(${sc.base}/img/${sc.dark}.jpg)`;$('#lit').style.backgroundImage=`url(${sc.base}/img/${sc.lit}.jpg)`;$('#lit').classList.remove('full');$('#lit').style.opacity=0;$('#ttl').textContent=sc.title||'';$('#cnt').textContent=`0 / ${sc.n}`;$('#st').textContent='المشهد جاهز';$('#wait').classList.remove('on');
+  if(sc.on)setOn(true);(sc.found||[]).forEach(mark);if(sc.done)finish({text:sc.doneText});cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
+function setOn(on){$('#lit').style.opacity=on?1:0;$('#st').textContent=on?'🔦 الكشّاف شغّال — ميّلوا الموبايل':'المشهد جاهز'}
+/* image is drawn with background-size:contain, so convert % of image → % of stage */
+function imgRect(){const st=$('#stage').getBoundingClientRect();const ar=scene&&scene.ar?scene.ar:16/9;let w=st.width,h=w/ar;if(h>st.height){h=st.height;w=h*ar}return{x:(st.width-w)/2,y:(st.height-h)/2,w,h,W:st.width,H:st.height}}
+function toStage(px,py){const r=imgRect();return{x:(r.x+px/100*r.w)/r.W*100,y:(r.y+py/100*r.h)/r.H*100}}
+function loop(){beam.x+=(tx-beam.x)*0.2;beam.y+=(ty-beam.y)*0.2;const p=toStage(beam.x,beam.y);const r=imgRect();const rad=Math.max(90,r.w*0.085);const m=`radial-gradient(circle at ${p.x}% ${p.y}%, #000 0 ${rad}px, transparent ${rad*1.7}px)`;const l=$('#lit');if(!l.classList.contains('full')){l.style.webkitMaskImage=m;l.style.maskImage=m}raf=requestAnimationFrame(loop)}
+function mark(s){if(found[s.i])return;found[s.i]=true;const p=toStage(s.x,s.y);$('#marks').insertAdjacentHTML('beforeend',`<div class="mark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`);$('#cnt').textContent=`${Object.keys(found).length} / ${scene?scene.n:'?'}`;try{ding()}catch(e){}}
+function finish(p){$('#lit').classList.add('full');$('#lit').style.opacity=1;$('#doneTx').textContent=p.text||'';$('#done').classList.add('on');$('#st').textContent='اكتمل المشهد ✅'}
+window.addEventListener('resize',()=>{$('#marks').innerHTML='';const f=found;found={};if(scene)(scene.found||[]).concat(Object.keys(f).map(i=>scene.spots&&scene.spots[i]).filter(Boolean)).forEach(mark)});
+let ac;function ding(){ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.35);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.4)}
+</script>
+</body>
+</html>
