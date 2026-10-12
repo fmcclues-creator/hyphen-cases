@@ -12,6 +12,7 @@ export async function POST(req) {
   try { body = await req.json(); } catch { return Response.json({ ok: false, reason: "bad_request" }, { status: 400, headers: cors }); }
   const code = String(body.code || "").trim().toUpperCase().replace(/\s+/g, "");
   const device = String(body.device || "").slice(0, 80);
+  const game = String(body.game || "").slice(0, 20);
   if (!/^[A-Z]{3}-?\d{4}$/.test(code)) return Response.json({ ok: false, reason: "format" }, { headers: cors });
   const norm = code.includes("-") ? code : code.slice(0, 3) + "-" + code.slice(3);
 
@@ -19,6 +20,7 @@ export async function POST(req) {
   const { data: row } = await client.from("codes").select("*").eq("code", norm).maybeSingle();
   if (!row) return Response.json({ ok: false, reason: "not_found" }, { headers: cors });
   if (new Date(row.expires_at) < new Date()) return Response.json({ ok: false, reason: "expired" }, { headers: cors });
+  if (game && row.game && row.game !== game) return Response.json({ ok: false, reason: "wrong_game" }, { headers: cors });
 
   // Same device re-opening within the window is free; a new device counts as a use.
   const { data: prior } = await client.from("plays").select("id").eq("code", norm).eq("device", device).limit(1);
