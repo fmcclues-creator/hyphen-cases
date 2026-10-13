@@ -1,4 +1,3 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><base href="/game/"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="قضية خالد"><meta name="theme-color" content="#0d1016"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png">
 <title>قضية خالد</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&family=Grand+Hotel&display=swap">
 <style>
@@ -1030,7 +1029,7 @@ function ring(){const o=$('#callov');o.classList.add('on');$('#callSt').textCont
     const done=()=>{clearInterval(iv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();addCallNote()},1500)};
     let step=380;const go=()=>{if(fa.duration&&isFinite(fa.duration))step=Math.max(150,(fa.duration*1000-600)/w.length)};go();fa.onloadedmetadata=go;fa.onended=done;fa.play().catch(()=>{});
     var iv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
-  $('#callEnd').onclick=()=>{$('#au-faisal').pause();$('#au-ring').pause();o.classList.remove('on')}}
+  $('#callEnd').onclick=()=>{$('#au-faisal').pause();$('#au-ring').pause();o.classList.remove('on');if(S.faisal<4){S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();addCallNote()}}}
 $('#chatBody').onclick=e=>{const p=e.target.closest('[data-photo]');if(p)openPhoto(p.dataset.photo,'chat')};
 
 $('#igList').innerHTML=IGDM.map(c=>{const l=[...c.msgs].reverse().find(m=>m[0]!=='day');return `<button class="dm" data-dm="${c.id}"><span class="sav" style="overflow:hidden">${avh(c.av)}</span><span style="min-width:0;flex:1"><b>${c.n}</b><span class="pv">${l[1]}</span></span>${c.u?'<span style="width:8px;height:8px;border-radius:50%;background:#3797f0"></span>':''}</button>`}).join('');
