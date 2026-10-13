@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>قضية الفيلا</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&family=Grand+Hotel&display=swap">
+<style>
+/* Layout: one-screen app. Dark investigation room; the case file is cream paper; the phone is a framed device in the middle. */
+:root{
+  --ink:#0d1016; --panel:#161b24; --line:#283040; --fg:#e9ecf2; --muted:#8e97a8;
+  --paper:#efe7d3; --paper-2:#e4dac1; --paper-ink:#2a2419; --paper-muted:#6d6250;
+  --tape:#c4382d; --tape-2:#e2574b; --ok:#3aa36a;
+  --bubble-me:#1f4d3a; --bubble-them:#232a36;
+  --ui:'Tajawal',system-ui,sans-serif; --doc:'Amiri','Tajawal',serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.5;direction:rtl;overflow:hidden}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline-offset:2px}
+.screen{position:absolute;inset:0;display:none;flex-direction:column}
+.screen.on{display:flex}
+.wrap{flex:1;min-height:0;display:flex;flex-direction:column;padding-inline:16px;padding-block:12px}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 10px;padding-top:calc(8px + env(safe-area-inset-top,0px));background:var(--panel);border-bottom:1px solid var(--line);font-size:14px}
+.bar .timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;letter-spacing:.5px;min-width:64px}
+.bar .sp{flex:1}
+.chip{padding:6px 12px;border-radius:999px;background:var(--line);font-weight:500;white-space:nowrap}
+.chip.red{background:var(--tape);color:#fff}
+.chip.ghost{border:1px solid var(--line);background:transparent}
+@media (max-width:480px){.chip{padding:5px 9px;font-size:12px}.bar .timer{font-size:16px;min-width:52px}}
+
+/* ---------- splash: POWERED BY HYPHEN ---------- */
+#splash{background:#000;cursor:pointer}
+#splash .wrap{align-items:center;justify-content:center;gap:18px;background:#000}
+#splash .pb{font-size:clamp(12px,2.6vw,18px);letter-spacing:.55em;color:#9aa2b1;opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform .8s ease;font-family:var(--ui);font-weight:500;padding-inline-start:.55em}
+#splash.s2 .pb{opacity:1;transform:none}
+#splash #wm{width:min(78vw,620px);height:auto;overflow:visible}
+#splash .l{fill:#fff;opacity:0;transform-box:fill-box;transform-origin:center}
+#splash .bar{fill:#ff0000;opacity:0;transform-box:fill-box;transform-origin:center}
+#splash .skip{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:0;text-align:center;color:#3a4150;font-size:12px}
+#splash.out{animation:fadeout .7s forwards}
+@keyframes fadeout{to{opacity:0}}
+@media (prefers-reduced-motion:reduce){#splash .l,#splash .bar{transition:none;transform:none;opacity:1}#splash .pb{transition:none;opacity:1;transform:none}}
+
+/* ---------- access gate ---------- */
+#gate .wrap{align-items:center;justify-content:center;text-align:center;gap:14px;background:radial-gradient(60% 50% at 50% 35%,#2a221b 0,transparent 70%),#15110e}
+#gate .brand{font-size:11px;color:#8e97a8}
+#gate h1{font-family:var(--doc);font-size:40px;margin:0}
+#gate p{color:var(--muted);max-width:32ch;margin:0}
+#gate input{width:min(320px,100%);padding:14px;border-radius:14px;border:2px solid var(--line);background:#0b0e14;color:#fff;font-size:28px;letter-spacing:4px;text-align:center;direction:ltr;font-family:ui-monospace,Menlo,monospace}
+#gate input:focus{border-color:var(--tape-2)}
+#gate .err{color:var(--tape-2);font-size:14px;min-height:20px}
+#gate .btn{width:min(320px,100%)}
+#gate a{color:var(--muted);font-size:14px}
+
+/* ---------- intro: case folder ---------- */
+#intro{background:#15110e}
+#intro .wrap{padding:0;overflow:auto;background:
+ radial-gradient(80% 60% at 50% 30%,#2a221b 0,transparent 70%),#15110e}
+#intro .in{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));gap:14px}
+.folder{width:100%;max-width:400px;aspect-ratio:3/4.3;position:relative;border-radius:8px 14px 14px 8px;background:#7a1f1a;
+ box-shadow:0 30px 60px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);padding:10px 12px 12px 22px;display:flex}
+.folder::before{content:"";position:absolute;inset:0 auto 0 0;width:22px;border-radius:8px 0 0 8px;background:linear-gradient(90deg,#1b1613,#2b2420 60%,#1b1613);box-shadow:inset -2px 0 4px rgba(0,0,0,.6)}
+.folder::after{content:"";position:absolute;top:-10px;right:30px;width:110px;height:18px;background:#7a1f1a;border-radius:6px 6px 0 0}
+.sheet-k{flex:1;position:relative;background:#c9b48c;background-image:
+ radial-gradient(circle at 20% 30%,rgba(255,255,255,.18) 0,transparent 35%),radial-gradient(circle at 80% 70%,rgba(0,0,0,.08) 0,transparent 40%),
+ url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.8' numOctaves='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .08 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+ border:1.5px dashed #7a1f1a;outline:3px solid #c9b48c;color:#5a1512;font-family:var(--doc);display:grid;grid-template-columns:1fr 34px;overflow:hidden}
+.sheet-k .main{padding:10px 12px 10px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;min-width:0}
+.sheet-k .side{border-inline-start:1.5px solid #7a1f1a;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:8px 0;font-family:'Courier New',monospace;font-weight:700;font-size:13px;letter-spacing:1px}
+.sheet-k .side div{writing-mode:vertical-rl;transform:rotate(180deg)}
+.sheet-k .side small{font-family:var(--ui);font-size:8px;letter-spacing:0;writing-mode:vertical-rl;transform:rotate(180deg);color:#7a1f1a}
+.k-top{align-self:flex-start;font-family:var(--ui);font-size:9px;letter-spacing:1px;color:#7a1f1a;border:1px solid #7a1f1a;padding:1px 6px;border-radius:2px}
+.k-dept{font-family:var(--ui);font-weight:800;font-size:13px;border-bottom:2px solid #5a1512;padding-bottom:2px;margin-top:2px}
+.k-seal{width:72px;height:72px;margin:6px 0 2px}
+.k-bureau{font-weight:700;font-size:21px;line-height:1.15;color:#5a1512}
+.k-no{font-family:var(--ui);font-size:11px;margin-top:4px;display:flex;gap:8px;align-items:baseline;border-bottom:1px solid #5a1512;padding-bottom:2px}
+.k-no b{font-family:'Courier New',monospace;font-size:16px;letter-spacing:2px;color:#1b1613}
+.k-name{font-family:var(--doc);font-weight:700;font-size:40px;line-height:1;margin:10px 0 2px;color:#1b1613;}
+.k-name small{display:block;font-family:var(--ui);font-weight:500;font-size:11px;color:#5a1512;margin-top:4px}
+.k-type{font-family:var(--ui);font-weight:700;font-size:11px;line-height:1.4;color:#5a1512;margin-top:4px}
+.k-stamp{margin-top:8px;border:3px solid #a3261f;color:#a3261f;font-family:var(--ui);font-weight:800;font-size:15px;padding:3px 12px;transform:rotate(-7deg);border-radius:3px;opacity:.9;mix-blend-mode:multiply}
+.k-lines{width:100%;margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding-top:8px}
+.k-lines i{display:block;border-bottom:1.5px solid #a3261f;height:12px;opacity:.8}
+.k-lines .lbl{grid-column:1/-1;font-family:var(--ui);font-size:9px;color:#7a1f1a;text-align:right;margin-bottom:-4px}
+#intro .btn{width:100%;max-width:400px;padding:16px;font-size:19px;border-radius:14px;background:var(--tape);color:#fff;box-shadow:0 8px 24px rgba(196,56,45,.45)}
+#intro .meta{display:flex;justify-content:center;gap:14px;font-size:13px;color:#aab2c2;flex-wrap:wrap}
+#intro .meta span{display:flex;align-items:center;gap:5px}
+.tvtip{max-width:400px;background:#1c2331;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;color:#dfe3ea}
+#intro .brand{font-size:11px;color:#8e97a8}
+@media (min-height:900px){.folder{max-width:440px}}
+/* ---------- case file (paper) ---------- */
+#file{background:#3a3129}
+.paper{flex:1;min-height:0;overflow:auto;background:var(--paper);color:var(--paper-ink);font-family:var(--doc);font-size:18px;line-height:1.8;padding:18px 18px 40px;margin-inline:auto;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative}
+.paper::before{content:"";position:absolute;inset-inline:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--tape) 0 20px,transparent 20px 28px);opacity:.7}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px 0;background:#3a3129}
+.tabs button{padding:8px 12px;border-radius:10px 10px 0 0;background:var(--paper-2);color:var(--paper-muted);font-family:var(--doc);font-size:15px;white-space:nowrap}
+@media (max-width:420px){.tabs button{padding:7px 10px;font-size:14px}}
+/* landscape phones: tabs as a side column, paper keeps full height */
+.fileBody{flex:1;min-height:0;display:flex;flex-direction:column}
+@media (orientation:landscape) and (max-height:520px){.fileBody{flex-direction:row}.tabs{flex-direction:column;flex-wrap:nowrap;width:150px;padding:10px 10px 10px 0;gap:4px;overflow:auto}.tabs button{border-radius:10px 0 0 10px;text-align:right;white-space:normal;font-size:14px;padding:8px 10px}.paper{max-width:none;padding:14px 16px 30px}.paper-foot{padding:8px 12px}.paper-foot .btn{padding:10px;font-size:15px}}
+.tabs button.on{background:var(--paper);color:var(--paper-ink);font-weight:700}
+.doc h2{font-size:24px;margin:8px 0 6px;border-bottom:2px solid var(--paper-ink);padding-bottom:4px}
+.doc h3{font-size:19px;margin:16px 0 4px;color:var(--paper-ink)}
+.doc{color:var(--paper-ink)}
+.doc .stamp{display:inline-block;border:3px solid var(--tape);color:var(--tape);padding:2px 10px;transform:rotate(-6deg);font-weight:700;font-size:15px;float:left;margin:4px 0 8px 0}
+.doc dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.doc dt{font-weight:700;color:var(--paper-muted)}
+.doc dd{margin:0}
+.letter{background:#f7f1e1;border:1px solid #d9cfb4;padding:14px 16px;margin:10px 0;font-style:normal;position:relative;color:var(--paper-ink)}
+.letter::after{content:"منيرة";position:absolute;bottom:8px;left:16px;font-weight:700;color:var(--tape)}
+.papers{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{background:#fbf7ec;border:1px solid #d9cfb4;padding:12px;min-width:0;box-shadow:2px 3px 0 rgba(0,0,0,.08)}
+.card .k{font-size:13px;color:var(--paper-muted);}
+.card .v{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.card .n{font-size:14px;color:var(--paper-muted)}
+.np{position:relative;background:#efe6cf;color:#1f1a14;padding:12px 14px 14px;margin:10px -4px 4px;font-family:var(--doc);transform:rotate(-1.2deg);box-shadow:0 6px 16px rgba(0,0,0,.25);
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .06 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+ clip-path:polygon(0 2%,3% 0,8% 1.5%,15% 0,22% 1%,30% 0,38% 1.5%,47% 0,55% 1%,63% 0,70% 1.5%,78% 0,86% 1%,94% 0,100% 1.5%,100% 98%,96% 100%,90% 98.5%,82% 100%,74% 98.5%,66% 100%,58% 99%,50% 100%,42% 98.5%,34% 100%,26% 99%,18% 100%,10% 98.5%,4% 100%,0 98%)}
+.np-h{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;border-top:3px double #1f1a14;border-bottom:1px solid #1f1a14;padding:4px 0;margin-bottom:8px;letter-spacing:0}
+.np-h span:first-child{font-weight:700;font-size:22px}
+.np-h span:last-child{font-size:12px}
+.np-sec{display:flex;justify-content:space-between;font-size:10px;color:#4a4034;border-bottom:1px dotted #1f1a14;padding-bottom:3px;margin-bottom:8px}
+.np-b{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:start}
+.np-b figure{margin:0;width:150px}
+.np-b img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:grayscale(1) contrast(1.15) sepia(.15);border:1px solid #1f1a14}
+.np-b figcaption{font-size:10px;line-height:1.4;color:#4a4034;margin-top:3px}
+.np-b b{display:block;font-size:19px;line-height:1.25;margin-bottom:6px;font-weight:700}
+.np-b p{margin:0;font-size:13px;line-height:1.65;text-align:justify}
+.np-b p::first-letter{font-size:1.6em;font-weight:700}
+.np .np-f{font-size:10px;color:#4a4034;margin-top:8px;border-top:1px solid #1f1a14;padding-top:3px;display:flex;justify-content:space-between}
+@media (max-width:420px){.np-b{grid-template-columns:1fr}.np-b figure{width:100%}}
+.sus{display:grid;grid-template-columns:64px 1fr;gap:12px;background:#fbf7ec;border:1px solid #d9cfb4;padding:12px;margin:10px 0;min-width:0}
+.sus .av{width:64px;height:64px;border-radius:6px;background:var(--paper-2);display:grid;place-items:center;font-weight:700;font-size:20px;color:var(--paper-muted)}
+.sus b{display:block;font-size:19px}
+.sus small{display:block;color:var(--paper-muted);font-size:14px}
+.sus q{display:block;margin-top:6px;quotes:"«" "»"}
+.paper-foot{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));background:#3a3129;display:flex;gap:10px;justify-content:center;flex-shrink:0;box-shadow:0 -8px 20px rgba(0,0,0,.35)}
+.paper-foot .btn{flex:1;max-width:520px;padding:16px;font-size:18px;animation:glow 2s infinite}
+@keyframes glow{50%{box-shadow:0 0 0 6px rgba(226,87,75,.25)}}
+@media (prefers-reduced-motion:reduce){.paper-foot .btn{animation:none}}
+
+/* ---------- lock screen (3D) ---------- */
+#lock{background:#07090d}
+#three{position:absolute;inset:0}
+#three canvas{display:block;width:100%;height:100%}
+.lock-ui{position:absolute;inset-inline:0;bottom:0;padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;background:linear-gradient(0deg,rgba(7,9,13,.95) 60%,transparent)}
+.lock-ui .hint{color:var(--muted);font-size:14px;text-align:center}
+.dots{display:flex;gap:14px;direction:ltr}
+.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--fg);display:block;transition:background .15s}
+.dots i.f{background:var(--fg)}
+.dots.bad i{border-color:var(--tape-2);background:var(--tape-2)}
+.dots.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:10px;direction:ltr}
+.pad button{height:62px;border-radius:50%;background:rgba(255,255,255,.1);font-size:26px;font-weight:500}
+.pad button.sm{font-size:15px;background:transparent;color:var(--muted)}
+.lock-title{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));inset-inline:0;text-align:center;color:var(--muted);font-size:13px;pointer-events:none}
+.notif{position:absolute;top:calc(40px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(360px,calc(100% - 32px));background:rgba(255,255,255,.14);backdrop-filter:blur(16px);border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;color:#fff;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:drop .6s cubic-bezier(.2,.8,.2,1)}
+.notif+.notif{top:calc(112px + env(safe-area-inset-top,0px));animation-delay:.4s;animation-fill-mode:backwards}
+.notif img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.notif b{display:block;font-size:14px}.notif span{font-size:13px;color:#dfe3ea}.notif small{font-size:11px;color:#aab2c2}
+@keyframes drop{from{opacity:0;transform:translate(-50%,-20px)}}
+.lock-ui .hint{max-width:34ch;line-height:1.5}
+.lock-ui .hint b{color:#fff}
+#lock.open #three{animation:zoomin .9s forwards}
+@keyframes zoomin{to{transform:scale(2.2);opacity:0}}
+@media (prefers-reduced-motion:reduce){.dots.shake{animation:none}#lock.open #three{animation:none;opacity:0}}
+
+/* ---------- phone UI ---------- */
+#phone{background:var(--ink)}
+.stage{flex:1;min-height:0;display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.device{width:100%;max-width:430px;height:100%;background:#000;border-radius:28px;border:6px solid #1a1f29;display:flex;flex-direction:column;overflow:hidden;position:relative;box-shadow:0 0 0 1px #2c3443,0 30px 60px rgba(0,0,0,.6)}
+.status{display:flex;justify-content:space-between;padding:8px 18px 4px;font-size:13px;color:#cfd5e1;font-variant-numeric:tabular-nums}
+.status .bat{color:var(--tape-2)}
+.app{flex:1;min-height:0;display:none;flex-direction:column;background:#0b0e14}
+.app.on{display:flex}
+.home{flex:1;padding:18px 16px 12px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:max-content;gap:18px 10px;align-content:start;position:relative;background:
+ radial-gradient(70% 40% at 50% 0%,#24304a 0,transparent 70%),linear-gradient(180deg,#0f1420,#05070b)}
+.icon{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:#e3e7ef;position:relative}
+.icon .g{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;font-size:28px;box-shadow:inset 0 -6px 12px rgba(0,0,0,.25)}
+.icon .b{position:absolute;top:-6px;left:4px;background:var(--tape);color:#fff;font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 5px}
+.icon.dim{opacity:.35}
+.ah{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);background:#111621;font-weight:700}
+.ah button{font-size:22px;line-height:1;padding:0 4px;color:var(--tape-2)}
+.ah .sub{font-weight:400;font-size:12px;color:var(--muted);display:block;line-height:1.2}
+.list{flex:1;min-height:0;overflow:auto}
+.row{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid #161b25;text-align:right;width:100%}
+.row .av{width:46px;height:46px;border-radius:50%;background:#2a3344;display:grid;place-items:center;font-size:22px}
+.row .nm{font-weight:700}
+.row .pv{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.row .tm{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row .tm.u{color:var(--ok);font-weight:700}
+.msgs{flex:1;min-height:0;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:6px;background:#0b0e14 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='1' fill='%231d2430'/></svg>")}
+.day{align-self:center;background:#1c2331;color:var(--muted);font-size:12px;padding:3px 10px;border-radius:8px;margin:6px 0}
+.delh{grid-column:1/-1;margin-top:14px;font-size:13px;color:var(--muted)}.grid button.merge{grid-column:1/-1;aspect-ratio:auto;height:auto;padding:12px;border-radius:12px;background:#1b2130;color:#e9ecf2;border:1px solid #2a3344;font:inherit}
+.nsep{margin:18px 0 8px;font-size:13px;color:var(--muted);}.bill{background:#fff;color:#111;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.3)}.bill .bh{display:flex;justify-content:space-between;font-weight:700;border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:6px}.bill .br{display:flex;justify-content:space-between;gap:10px;padding:3px 0}.bill .br span{color:#666}
+.vn{display:inline-flex;align-items:center;gap:3px;cursor:pointer;min-width:170px;padding:2px 0}.vn i{display:inline-block;width:3px;height:10px;background:#9bb;border-radius:2px}.vn i:nth-child(odd){height:16px}.vn b{margin-inline-start:8px;font-weight:400;font-size:12px;color:#9bb}.vn.playing i{background:#3aa36a}
+.m{max-width:82%;padding:8px 12px;border-radius:14px;font-size:15px;line-height:1.5;position:relative}
+.m.them{align-self:flex-start;background:var(--bubble-them);border-bottom-left-radius:4px}
+.m.me{align-self:flex-end;background:var(--bubble-me);border-bottom-right-radius:4px}
+.m.sys{align-self:center;background:transparent;color:var(--muted);font-size:13px;font-style:italic}
+.m .t{display:block;font-size:11px;color:var(--muted);text-align:left;margin-top:2px;font-variant-numeric:tabular-nums}
+.m .who{display:block;font-size:12px;color:var(--tape-2);font-weight:700}
+.m.del{color:var(--muted);font-style:italic}
+.m .ph{display:block;margin:4px 0 0;border-radius:8px;overflow:hidden;width:220px;max-width:100%;cursor:pointer}
+.m .ph img{display:block;width:100%;height:auto}
+.grid img{width:100%;height:100%;object-fit:cover;display:block}
+.big .img img{max-width:100%;max-height:100%;width:100%;height:auto;object-fit:contain}
+.vm{padding:12px;border-bottom:1px solid #161b25}
+.vm .hd{display:flex;justify-content:space-between;font-weight:700}
+.vm .hd span{color:var(--muted);font-weight:400;font-size:13px}
+.wave{display:flex;align-items:center;gap:3px;height:34px;margin:8px 0;direction:ltr}
+.wave i{display:block;width:4px;height:6px;background:var(--muted);border-radius:2px}
+.wave.play i{animation:wv .6s infinite alternate;background:var(--tape-2)}
+.wave i:nth-child(odd){animation-delay:.2s}.wave i:nth-child(3n){animation-delay:.4s}
+@keyframes wv{to{height:30px}}
+.vm .tx{min-height:24px;color:#e3e7ef;line-height:1.7}
+.vm .bg{display:inline-block;margin-top:8px;padding:4px 10px;border-radius:999px;background:#1c2331;font-size:13px;color:var(--muted)}
+.vm .pl{padding:6px 14px;border-radius:999px;background:var(--line);font-size:13px}
+.ev{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:10px 12px;border-bottom:1px solid #161b25;text-align:right;width:100%}
+.ev .t{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.ev b{display:block}.ev small{display:block;color:var(--muted)}
+.ev .note{grid-column:2;color:#e3e7ef;font-size:14px;background:#1c2331;padding:6px 10px;border-radius:8px;margin-top:4px}
+.dayh{padding:10px 12px 4px;font-weight:700;color:var(--tape-2);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px}
+.grid button{aspect-ratio:1;background:#1a2030;border-radius:4px;overflow:hidden}
+.grid svg{width:100%;height:100%;display:block}
+.big{flex:1;min-height:0;display:flex;flex-direction:column;background:#000}
+.big .img{flex:1;min-height:0;display:grid;place-items:center;padding:8px}
+.big .img svg{max-width:100%;max-height:100%;width:100%;height:auto}
+.big .info{padding:10px 14px calc(10px + 8px);background:#111621;font-size:14px;color:var(--muted)}
+.big .info b{color:var(--fg);display:block}
+.notes{padding:16px;line-height:1.9;font-size:16px;background:#fff8dd;color:#2a2419;flex:0 0 auto}
+#noteList .row{align-items:flex-start}#noteList .nm{font-weight:700}#noteList .pv{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}#noteList .tm{font-size:12px}
+.nview{background:#fff8dd;color:#2a2419}.nview .locked{background:#0b0e14;color:#fff;min-height:100%}.nview .notes{min-height:100%}.nview .plain{padding:16px;line-height:1.9;font-size:16px;white-space:pre-line}.nview .plain h4{margin:0 0 6px}.nview .plain small{color:#8a7f66;font-size:12px;display:block;margin-bottom:10px}
+.notes h4{margin:0 0 8px;font-size:18px}
+.notes mark{background:#ffe08a}
+.locked{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center}
+.locked .hint{color:var(--muted);font-size:14px;max-width:28ch}
+
+/* ---------- realistic phone ---------- */
+.home{background:url("img/couple.jpg") center 30%/cover no-repeat}
+.home::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.55));pointer-events:none}
+#a-home{position:relative}
+.icon{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.icon .g{box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-size:0;position:relative;overflow:hidden}
+.icon .g svg{width:34px;height:34px;display:block}
+.dock{grid-column:1/-1;margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);position:relative;z-index:1}
+.dock .icon span:last-child{display:none}
+.lockbg{position:absolute;inset:0;background:url("img/couple.jpg") center 30%/cover;opacity:.45;filter:blur(3px)}
+/* instagram */
+.ig{flex:1;min-height:0;overflow:auto;background:#000;color:#f5f5f5}
+.ig .top{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;font-family:'Grand Hotel',cursive;font-size:26px;border-bottom:1px solid #222}
+.ig .tabs2{display:flex;gap:0;border-bottom:1px solid #222}
+.ig .tabs2 button{flex:1;padding:10px;font-size:13px;color:#999;border-bottom:2px solid transparent}
+.ig .tabs2 button.on{color:#fff;border-color:#fff}
+.ig .pane{display:none}.ig .pane.on{display:block}
+.ig .prof{display:flex;align-items:center;gap:16px;padding:14px}
+.ig .prof .pav{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);padding:3px}
+.ig .prof .pav div{width:100%;height:100%;border-radius:50%;background:#222;display:grid;place-items:center;font-size:30px}
+.ig .stats{display:flex;gap:18px;font-size:13px;text-align:center}.ig .stats b{display:block;font-size:16px}
+.ig .bio{padding:0 14px 10px;font-size:13px;line-height:1.5}
+.ig .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ig .pgrid div{aspect-ratio:1;background:#111;overflow:hidden}.ig .pgrid img{width:100%;height:100%;object-fit:cover;display:block}
+.ig .srow{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #161616;font-size:14px}
+.ig .srow .sav{width:44px;height:44px;border-radius:50%;background:#333;display:grid;place-items:center;font-size:20px}
+.ig .srow small{display:block;color:#888;font-size:12px}
+.ig .srow .x{margin-inline-start:auto;color:#666}
+.ig .dm{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #161616;width:100%;text-align:right}
+.ig .dm .sav{width:48px;height:48px;border-radius:50%;background:#333;display:grid;place-items:center;font-size:22px}
+.ig .dm .pv{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ig .dm b{display:block;font-size:14px}
+.igchat .m.them{background:#262626}.igchat .m.me{background:#3797f0}
+.ig .post{border-bottom:1px solid #222}
+.ig .post .ph{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;font-weight:700}
+.ig .post img{width:100%;display:block}
+.ig .post .cap{padding:8px 12px;font-size:13px;line-height:1.5}.ig .post .cap b{margin-inline-end:6px}
+.ig .post .lk{padding:0 12px 4px;font-size:13px;font-weight:700}
+/* maps */
+.map{flex:1;min-height:0;display:flex;flex-direction:column;background:#e8e4dc;color:#222}
+.map .canvas{flex:1;min-height:0;position:relative;overflow:hidden;background:
+ linear-gradient(90deg,transparent 48%,#fff 48%,#fff 52%,transparent 52%) 0 0/120px 120px,
+ linear-gradient(0deg,transparent 48%,#fff 48%,#fff 52%,transparent 52%) 0 0/120px 120px,
+ radial-gradient(circle at 70% 20%,#cfe3f5 0,#cfe3f5 18%,transparent 19%),#e9e5d9}
+.map .pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:#222;text-shadow:0 0 3px #fff}
+.map .pin i{width:16px;height:16px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#e2574b;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.map .pin.me i{background:#3c7bd8}
+.map .sheet2{background:#fff;border-radius:16px 16px 0 0;padding:10px 14px;box-shadow:0 -4px 12px rgba(0,0,0,.15)}
+.map .sheet2 h5{margin:0 0 6px;font-size:13px;color:#777;font-weight:500}
+.map .hist{display:grid;grid-template-columns:28px 1fr auto;gap:8px 10px;align-items:center;font-size:14px;padding:6px 0;border-bottom:1px solid #eee}
+.map .hist small{display:block;color:#777;font-size:12px}
+.map .hist .t{color:#777;font-size:12px;font-variant-numeric:tabular-nums}
+.map .search{display:flex;align-items:center;gap:8px;margin:10px 12px;padding:10px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15);color:#777;font-size:14px;position:absolute;top:0;inset-inline:0;z-index:2}
+/* case-file audio */
+.rec{background:#fbf7ec;border:1px solid #d9cfb4;padding:14px;margin:10px 0;color:var(--paper-ink)}
+.rec .wave{height:40px}.rec .wave i{background:#b9ad92}.rec .wave.play i{background:var(--tape)}
+.rec .pl{padding:8px 16px;border-radius:999px;background:var(--paper-ink);color:#fff;font-family:var(--ui);font-size:14px}
+.rec .tx{font-size:17px;line-height:1.8;margin-top:8px;min-height:40px}
+.note-tech{background:#fff;border:2px dashed var(--tape);padding:10px 14px;font-size:16px;color:var(--paper-ink)}
+
+/* ---------- whatsapp ---------- */
+.wa-h{background:#075e54;color:#fff;border-bottom:0}
+.wa-h button{color:#fff}
+.wa-h .sub{color:#cfe9e5}
+.av img,.sav img,.pav img,.row .av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.row .av{overflow:hidden}
+.msgs.wa{background:#e5ddd5 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><circle cx='30' cy='30' r='1.2' fill='%23d6cfc6'/></svg>")}
+.msgs.wa .m.them{background:#fff;color:#111;border-bottom-left-radius:4px;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.msgs.wa .m.me{background:#dcf8c6;color:#111;border-bottom-right-radius:4px;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.msgs.wa .m .t{color:#777}
+.msgs.wa .m.del{color:#777}
+.msgs.wa .day{background:#dbe7f0;color:#4a5c6b}
+.msgs.wa .m .who{color:#d35400}
+.msgs.wa .m.me .t::after{content:" \2713\2713";color:#4fc3f7;font-size:11px}
+.wa-list{background:#fff;color:#111}
+.wa-list .row{border-bottom:1px solid #f0f0f0}
+.wa-list .row .pv{color:#667}
+.wa-list .row .tm{color:#999}
+.wa-list .row .tm.u{color:#25d366}
+.wa-list .b{background:#25d366!important}
+.callov .av{overflow:hidden;background:#2a3344}
+.callov .av img{width:100%;height:100%;object-fit:cover}
+.ivg{display:grid;gap:14px;margin-top:8px}
+.iv{background:#fbf7ec;border:1px solid #d9cfb4;padding:10px}
+.iv .ivh{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;margin-bottom:8px}
+.iv .ivh img{width:44px;height:44px;border-radius:6px;object-fit:cover}
+.iv .ivh b{display:block;font-size:18px}.iv .ivh small{color:var(--paper-muted);font-size:13px}
+.iv video{width:100%;aspect-ratio:16/9;background:#000;border-radius:6px;display:block}
+.iv .ivn{font-family:var(--ui);font-size:12px;color:var(--paper-muted);margin-top:6px}
+.mug{display:flex;gap:12px;align-items:center;background:#fbf7ec;border:1px solid #d9cfb4;padding:10px;margin:8px 0 12px}.mug img{width:84px;height:84px;object-fit:cover;border-radius:6px;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}.mug b{display:block;font-size:20px}.mug small{display:block;color:var(--paper-muted);font-size:13px}
+.sus .av{overflow:hidden;padding:0}
+.sus .av img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.pick .av{overflow:hidden;padding:0}
+.pick .av img{width:100%;height:100%;object-fit:cover}
+#chatAv{width:34px;height:34px;border-radius:50%;overflow:hidden;display:inline-block;background:#0b3d36}
+
+/* ---------- faisal / call ---------- */
+.qr{display:flex;flex-direction:column;gap:6px;padding:10px;border-top:1px solid var(--line);background:#111621}
+.qr button{padding:10px 12px;border-radius:12px;border:1px solid var(--tape-2);color:var(--tape-2);text-align:right;font-size:14px}
+.qr input{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#0b0e14;color:var(--fg);font-size:18px;direction:ltr;text-align:left;width:100%}
+.callov{position:absolute;inset:0;background:linear-gradient(180deg,#1b2440,#05070b);display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:60px 20px 40px;text-align:center;z-index:5}
+.callov.on{display:flex}
+.callov .nm{font-size:28px;font-weight:700}.callov .st{color:var(--muted)}
+.callov .av{width:90px;height:90px;border-radius:50%;background:#2a3344;display:grid;place-items:center;font-size:44px;margin:12px auto}
+.callov .tx{max-width:34ch;line-height:1.8;font-size:16px;min-height:120px}
+.callov .btns{display:flex;gap:40px}
+.callov .btns button{width:70px;height:70px;border-radius:50%;font-size:30px}
+.callov .ans{background:var(--ok);animation:pulse 1s infinite}.callov .end{background:var(--tape)}
+@keyframes pulse{50%{transform:scale(1.1)}}
+.host{display:none;align-items:center;gap:8px;padding:8px 12px;background:#2a1d1e;border-bottom:1px solid var(--tape);font-size:13px}
+.host.on{display:flex}
+.host b{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+
+/* ---------- solve ---------- */
+#solve .wrap{overflow:auto;gap:14px;max-width:760px;margin-inline:auto;width:100%}
+#solve h2{margin:4px 0 0;font-size:22px}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.pick button,.loc button{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.pick button.on,.loc button.on{border-color:var(--tape-2);background:#2a1d1e}
+.pick .av{width:54px;height:54px;border-radius:50%;background:#2a3344;display:grid;place-items:center;font-size:24px;font-weight:700}
+.pick small{color:var(--muted);font-size:12px}
+.loc{display:grid;gap:8px}
+.plot{display:flex;gap:14px;justify-content:center}.plot label{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;color:var(--muted)}.plot input{width:96px;padding:12px;border-radius:12px;border:2px solid var(--line);background:#0b0e14;color:#fff;font-size:26px;text-align:center;font-variant-numeric:tabular-nums}.plot input:focus{border-color:var(--tape-2);outline:0}
+.loc button{flex-direction:row;justify-content:flex-start;text-align:right}
+.fb{background:#2a1d1e;border:1px solid var(--tape);border-radius:12px;padding:12px 14px;line-height:1.7}
+
+/* ---------- reveal ---------- */
+#reveal .wrap{justify-content:center;align-items:center;text-align:center;gap:14px;background:radial-gradient(60% 50% at 50% 30%,#2a1d1e 0,transparent 70%),var(--ink)}
+.rv{width:min(100%,520px);aspect-ratio:16/9;border-radius:14px;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.fbacts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.fbacts .btn{flex:1;padding:10px}
+.lines{max-width:40ch;display:flex;flex-direction:column;gap:12px;font-size:19px;line-height:1.7}
+.lines p{margin:0;opacity:0;transform:translateY(8px);transition:.6s}
+.lines p.in{opacity:1;transform:none}
+.lines .who{color:var(--tape-2);font-weight:700}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:420px}
+.res div{background:var(--panel);border-radius:12px;padding:12px}
+.res b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+.res small{color:var(--muted)}
+
+/* ---------- modal ---------- */
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:12px;z-index:9}
+.modal.on{display:flex}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;width:100%;max-width:480px;max-height:calc(100% - 16px);overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:10px}
+.sheet h3{margin:0;font-size:18px}
+.sheet .h{background:#1c2331;border-radius:10px;padding:10px 12px;line-height:1.6}
+.sheet .h.lk{color:var(--muted)}
+.sheet .acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+[hidden]{display:none!important}
+#narr:not([hidden]){display:grid}
+
+/* ===== Villa additions ===== */
+.btn.lite{background:transparent;border:1px solid var(--line);color:var(--fg)}
+.msg{min-height:20px}
+.pulse{animation:pulse 1.2s ease-in-out 3}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(226,87,75,0)}50%{box-shadow:0 0 0 6px rgba(226,87,75,.45)}}
+/* Easy-mode Android device */
+.device.ez{border-radius:14px;border:8px solid #2b2f36;background:#101216;box-shadow:0 0 0 1px #40464f,0 30px 60px rgba(0,0,0,.6)}
+.ez-status{font-size:13px;background:#1a1d23}
+.ez-lock{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 14px 10px;gap:8px;background:linear-gradient(#1b2330,#0d1016);overflow:auto}
+.ez-clock{font-size:56px;font-weight:700;line-height:1}
+.ez-date{color:#aab2c2;font-size:16px}
+.ez-hint{font-size:15px;color:#e9ecf2;margin-top:6px}
+.ez-dots{margin:6px 0}
+.ez-pad button{font-size:26px;min-height:58px}
+.ez-home{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 14px;align-content:start;background:#13161c;overflow:auto;position:relative}
+.ez-tile{background:#1e2229;border:1px solid #2c3139;border-radius:18px;padding:16px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;font:inherit;position:relative;cursor:pointer;min-height:118px}
+.ez-tile .g{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:30px}
+.ez-tile .t{font-size:17px;font-weight:700}
+.ez-tile .b{position:absolute;top:8px;inset-inline-end:8px;min-width:22px;height:22px;border-radius:11px;background:var(--tape-2);color:#fff;font-size:12px;display:grid;place-items:center;padding:0 6px}
+.ez-foot{grid-column:1/-1;text-align:center;color:#6c7483;font-size:12px;margin-top:4px}
+.ez-ah{font-size:18px}
+.ez-list .row .nm{font-size:17px}.ez-list .row .pv{font-size:14px}
+.ez-msgs .m{font-size:16px}
+.ez-note .plain{font-size:17px;line-height:1.9}
+.miss{color:var(--tape-2);font-weight:700}
+/* recorder */
+.recrow{display:flex;gap:12px;align-items:center;background:#1e2229;border-radius:14px;padding:12px}
+.recrow .ri{width:46px;height:46px;border-radius:50%;background:#e35d6a;display:grid;place-items:center;font-size:22px}
+.recrow b{display:block;font-size:16px}.recrow small{color:#aab2c2;font-size:12px}
+.knobs{display:flex;flex-direction:column;gap:14px;margin:8px 0}
+.knobs label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:#e9ecf2}
+.knobs input[type=range]{width:100%;accent-color:#e35d6a;height:32px}
+.recctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.meter{flex:1;min-width:100px;height:10px;border-radius:5px;background:#2c3139;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:#e35d6a;transition:width .3s}
+.meter.good i{background:var(--ok)}
+/* lens */
+.lens{position:relative;width:100%;border-radius:10px;overflow:hidden;touch-action:none;user-select:none;background:#000}
+.lens img{display:block;width:100%}
+.lensTop{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;pointer-events:none}
+.lensRing{position:absolute;width:120px;height:120px;border-radius:50%;border:3px solid #ffd978;box-shadow:0 0 0 2px #0008,0 0 20px #ffd97866;transform:translate(-50%,-50%);left:50%;top:50%;pointer-events:none}
+/* run */
+.runstage{position:relative;flex:1;overflow:hidden;background:#0a0c10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px}
+.runbg{position:absolute;inset:0;background:linear-gradient(#1b2330,#0b0e14 60%,#2a2418)}
+.runhud{position:relative;text-align:center}
+.runclock{font:900 72px/1 ui-monospace,Menlo,monospace;color:#ffd978}
+.runlbl{color:#aab2c2;font-size:14px}
+.runtrack{position:relative;width:min(92vw,520px)}
+.runpath{position:relative;height:60px}
+.runman{position:absolute;inset-inline-start:0;bottom:0;font-size:44px;font-style:normal;transition:inset-inline-start .2s;transform:scaleX(-1)}
+.runhome{position:absolute;inset-inline-start:0;top:0;font-size:18px;opacity:.6}
+.runannex{position:absolute;inset-inline-end:0;top:0;font-size:22px}
+.runbar{height:14px;border-radius:7px;background:#2c3139;overflow:hidden}
+.runbar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .2s}
+.rundist{text-align:center;color:#ffd978;font-size:18px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}
+.runtruck{position:absolute;bottom:14px;inset-inline-start:0;font-size:40px;transition:inset-inline-start 1s linear;transform:scaleX(-1)}
+.runintro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(0,0,0,.8);z-index:3}
+.runintro .h{max-width:40ch;color:#e9ecf2;font-size:16px;line-height:1.7}
+.runtap{position:relative;z-index:2;background:var(--tape);color:#fff;border:0;border-radius:999px;padding:22px 44px;font:800 24px Tajawal,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer}
+.runtap:active{transform:scale(.96)}
+/* blow */
+.blowstage{position:relative;flex:1;overflow:hidden;background:#000;touch-action:none;user-select:none}
+.blowimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.blowdust{transition:opacity .15s}
+.blowkey{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);font-size:54px;background:none;border:0;cursor:pointer;filter:drop-shadow(0 0 14px #ffd978);animation:fadein .5s}
+.blowkey[hidden]{display:none}
+@keyframes fadein{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.tintro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(0,0,0,.72);z-index:3}
+.tintro .h{max-width:40ch;color:#e9ecf2;font-size:16px;line-height:1.7}
+.tmsg{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-direction:column;gap:10px;align-items:center;z-index:3}
+.tmsg .h{background:rgba(0,0,0,.8);color:#fff;padding:10px 14px;border-radius:12px;font-size:15px;line-height:1.6;text-align:center}
+/* room */
+.roomstage{position:relative;flex:1;overflow:hidden;background:#000}
+.roomimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.hot{position:absolute;cursor:pointer;border-radius:10px}
+.hot:active{background:rgba(255,217,120,.18)}
+.roomtip{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(0,0,0,.8);color:#fff;padding:10px 14px;border-radius:12px;font-size:15px;line-height:1.6;text-align:center}
+/* album */
+.albumbook{background:#4a2c1f;border-radius:14px;padding:14px;box-shadow:0 30px 60px rgba(0,0,0,.6);max-width:520px;margin:0 auto}
+.albumpage{background:#efe7d3;border-radius:6px;padding:16px;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.albumphoto{position:relative;width:min(80%,360px);cursor:pointer;transition:transform .5s}
+.albumphoto img{display:block;width:100%;border:8px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.35);border-radius:3px}
+.albumphoto .cap{font-family:var(--doc);color:#2a2419;text-align:center;margin-top:8px;font-size:15px}
+.albumphoto.lift.lifted{transform:rotate(-8deg) translate(-12%,-10%);opacity:.85}
+.albumfound{width:min(90%,400px);text-align:center;color:#2a2419;font-size:15px;animation:fadein2 .6s}
+.albumfound img{width:100%;border-radius:8px;display:block;margin-bottom:6px}
+@keyframes fadein2{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.albumnav{display:flex;justify-content:space-between;align-items:center;margin-top:10px;color:#f3ede0;font-size:14px}
+.albumnav .chip{background:#2a1a12;border-color:#6b4a3a;color:#f3ede0}
+/* solve why */
+.pick.why button{min-height:0}
+/* ending */
+.willwrap{background:#161b24;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
+.willwrap img{width:100%;border-radius:8px;display:block}
+.gmtx{font-family:var(--doc);font-size:19px;line-height:1.7;color:#f3ede0;min-height:2em}
+.field{background:var(--paper-2);border-radius:12px;padding:14px;margin-top:10px;line-height:1.8}
+.field .btn{margin-top:8px}
+</style>
+</head>
+<body>
+<!-- ============ INTRO ============ -->
+<section class="screen" id="splash">
+  <div class="wrap">
+    <div class="pb">POWERED BY</div>
+    <svg id="wm" viewBox="0 0 1010 160" xmlns="http://www.w3.org/2000/svg" aria-label="HYPHEN"><path class="l" id="l-H1" d="M 120.4 6.6 L 146.0 6.6 L 146.0 67.4 L 120.4 67.4 Z M 46.4 67.4 L 146.0 67.4 L 146.0 90.2 L 46.4 90.2 Z M 2.2 6.6 L 27.8 6.6 L 27.8 154.0 L 2.2 154.0 Z M 120.4 90.2 L 146.0 90.2 L 146.0 154.0 L 120.4 154.0 Z M 120.4 90.2 "/><path class="l" id="l-Y" d="M 239.4 153.4 L 239.4 97.7 L 161.4 6.6 L 195.9 6.6 L 253.1 74.2 L 310.5 6.6 L 343.2 6.6 L 265.0 97.7 L 265.0 153.4 Z M 239.4 153.4 "/><path class="l" id="l-P" d="M 402.8 112.6 L 402.8 87.8 L 461.8 87.8 C 470.8 87.8 477.8 85.3 482.9 80.2 C 487.9 75.1 490.5 68.4 490.5 59.9 C 490.5 51.4 487.9 44.7 482.9 39.7 C 477.9 34.7 470.8 32.2 461.8 32.2 L 384.2 32.2 L 384.2 153.4 L 358.5 153.4 L 358.5 6.6 L 461.8 6.6 C 470.3 6.6 477.8 7.8 484.5 10.3 C 491.2 12.8 496.8 16.3 501.4 20.8 C 506.0 25.3 509.5 30.8 511.9 37.3 C 514.3 43.7 515.5 51.0 515.5 59.1 C 515.5 67.0 514.3 74.3 511.9 80.8 C 509.5 87.3 505.9 93.0 501.4 97.7 C 496.8 102.4 491.2 106.1 484.5 108.7 C 477.8 111.3 470.3 112.6 461.8 112.6 Z M 402.8 112.6 "/><path class="l" id="l-H2" d="M 651.9 6.6 L 677.5 6.6 L 677.5 67.4 L 651.9 67.4 Z M 577.9 67.4 L 677.5 67.4 L 677.5 90.2 L 577.9 90.2 Z M 533.7 6.6 L 559.3 6.6 L 559.3 154.0 L 533.7 154.0 Z M 651.9 90.2 L 677.5 90.2 L 677.5 154.0 L 651.9 154.0 Z M 651.9 90.2 "/><path class="l" id="l-E" d="M 703.0 153.4 L 703.0 6.6 L 834.3 6.6 L 834.3 32.2 L 728.6 32.2 L 728.6 127.8 L 834.5 127.8 L 834.5 153.4 Z M 703.0 153.4 "/><path class="l" id="l-N" d="M 880.1 46.0 L 880.1 153.4 L 855.7 153.4 L 855.7 20.1 C 855.7 15.4 856.9 11.7 859.2 8.9 C 861.6 6.1 864.8 4.8 868.8 4.8 C 870.7 4.8 872.5 5.2 874.3 6.0 C 876.0 6.8 877.8 8.1 879.7 10.0 L 983.4 112.8 L 983.4 5.4 L 1007.8 5.4 L 1007.8 139.9 C 1007.8 144.8 1006.6 148.5 1004.3 151.2 C 1001.9 153.9 998.8 155.2 995.1 155.2 C 990.9 155.2 987.0 153.4 983.3 149.8 Z M 880.1 46.0 "/><path class="bar" id="l-bar" d="M 747.2 68.0 L 828.6 68.0 L 828.6 89.6 L 747.2 89.6 Z M 747.2 68.0 "/></svg>
+    <div class="skip">اضغط للتخطي</div>
+  </div>
+</section>
+
+<section class="screen" id="gate">
+  <div class="wrap">
+    <div class="brand" style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 1010 160" style="width:110px;height:auto"><use href="#wm-use"/></svg><span>CASES</span></div>
+    <h1>رمز الفريق</h1>
+    <p>اكتبوا الرمز اللي وصلكم بعد الشراء، أو من المنظّم.</p>
+    <input id="gateIn" placeholder="VLA-7342" maxlength="8" autocomplete="off" autocapitalize="characters">
+    <div class="err" id="gateErr"></div>
+    <button class="btn" id="gateGo">ادخل</button>
+    <a id="gateBuy" href="#" target="_blank" rel="noopener">ما عندكم رمز؟ اشتروا واحد</a>
+  </div>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="screen" id="intro">
+  <div class="wrap"><div class="in">
+    <div class="brand" style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 1010 160" style="width:110px;height:auto"><use href="#wm-use"/></svg><span style="margin-inline-start:auto;font-size:10px;opacity:.4;font-family:monospace" id="buildv"></span></div>
+    <div class="folder"><div class="sheet-k">
+      <div class="main">
+        <span class="k-top">غلاف الملف</span>
+        <div class="k-dept">وزارة الداخلية · مديرية أمن محافظة حولي</div>
+        <svg class="k-seal" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#7a1f1a" stroke-width="2"/><circle cx="50" cy="50" r="38" fill="none" stroke="#7a1f1a" stroke-width="1" stroke-dasharray="2 3"/><circle cx="50" cy="50" r="22" fill="none" stroke="#7a1f1a" stroke-width="1.5"/><path d="M50 32l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z" fill="#7a1f1a" opacity=".85"/></svg>
+        <div class="k-bureau">مخفر الرميثية<br>قسم التحرّيات</div>
+        <div class="k-no">رقم ملف القضية <b>RM-1407</b></div>
+        <div class="k-name">الفيلا<small>اختفاء وصية · فيلا بوفيصل</small></div>
+        <div class="k-type">ملفات التحقيق الميداني<br>والأدلة المحرزة</div>
+        <div class="k-stamp">سرّي · عائلي</div>
+        <div class="k-lines"><span class="lbl">انظر أيضاً الأرقام:</span><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="side"><div>قضية الفيلا</div><small>HYPHEN CASES · ٣</small></div>
+    </div></div>
+    <h1>قضية <span>الفيلا</span></h1>
+    <p>بوفيصل بنى فيلته بيده سنة ١٤٠٧. يوم العيد قال جدّام الكل: «كتبت وصيتي، والفيلا لمن يسكن فيها»، وحطّها بالدرج. الثلاثاء الصبح توفّى بهدوء… وبعد العزا بيومين، الدرج فاضي. موبايله القديم بين إيديكم، وعندكم ساعة.</p>
+    <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 العب بفريق أو لوحدك</span><span>🏃 فيها حركة!</span></div>
+    <button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button>
+  </div></div>
+</section>
+
+<div id="narr" hidden style="position:fixed;inset:0;z-index:60;background:#0b0907;color:#f3ede0;place-items:center;text-align:center;padding:24px">
+  <div style="max-width:560px">
+    <div style="font-size:13px;letter-spacing:.2em;opacity:.55;margin-bottom:14px">ملف القضية RM-1407</div>
+    <div style="font-size:clamp(34px,8vw,64px);font-weight:900;line-height:1.1">قضية الفيلا</div>
+    <div style="margin:18px auto 0;width:60px;height:2px;background:#b3261e"></div>
+    <div id="narrTx" style="margin-top:22px;font-size:18px;line-height:1.9;min-height:3.8em;opacity:.9"></div>
+    <button class="btn" id="narrSkip" style="margin-top:28px;background:transparent;border:1px solid #6b5b4b;color:#d8ccb8;font-size:14px">تخطّي ›</button>
+  </div>
+</div>
+
+<!-- ============ FILE ============ -->
+<section class="screen" id="file">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="fileBody">
+  <div class="tabs">
+    <button class="on" data-tab="t1">محضر البلاغ</button>
+    <button data-tab="t2">الوثائق</button>
+    <button data-tab="t3">الصور</button>
+    <button data-tab="t4">الأشخاص</button>
+    <button data-tab="t5">المقابلات</button>
+    <button data-tab="t6">🏃 الميدان</button>
+  </div>
+  <div class="paper">
+    <div id="t1">
+      <h2>محضر بلاغ — اختفاء وثيقة</h2>
+      <div class="mug"><img src="img/p_bufaisal.jpg" alt=""><div><b>بوفيصل (المرحوم)</b><small>٨١ سنة · توفّي الثلاثاء فجراً في فيلته</small><small>الرميثية · قطعة ٩ · شارع ٩٣ · فيلا ١٢</small></div></div>
+      <dl>
+        <dt>البلاغ</dt><dd>تقدّم به <b>فيصل</b> (الابن الأكبر) الجمعة الساعة ١٠:٠٠ صباحاً، بعد انتهاء العزاء.</dd>
+        <dt>المفقود</dt><dd>وصية مكتوبة بخط يد المرحوم على ورقة واحدة. أعلنها جدّام العائلة يوم العيد الماضي: <b>«الفيلا لمن يسكن فيها»</b>، ووضعها بدرج مكتبه قدّام الجميع.</dd>
+        <dt>آخر مشاهدة</dt><dd>الاثنين ٩:٣٠ مساءً — بومشعل جالس مع المرحوم في المكتب، والدرج مغلق. الثلاثاء ٧:٢٠ صباحاً — فيصل يفتح الدرج بحضور طلال: <b>فاضي</b>.</dd>
+        <dt>سبب الوفاة</dt><dd>طبيعية (قصور قلبي أثناء النوم، نحو ٢:٣٠ فجراً) — تقرير طبيب الإسعاف مرفق. لا شبهة جنائية في الوفاة.</dd>
+        <dt>الموجودون بالفيلا ليلة الوفاة</dt><dd>المرحوم، <b>نورة</b> (تسكن معه)، <b>طلال</b> (وصل من لندن ٩:٠٠ م ونام بالصالة). <b>صالح</b> السائق يسكن بغرفة الحارس عند البوابة — غائب تلك الليلة.</dd>
+        <dt>الأجهزة</dt><dd>سلّمت نورة هاتف المرحوم (أندرويد قديم، وضع «سهل» بخط كبير) — مقفل برمز من ٤ أرقام. فيصل: «أبوي ما يحفظ إلا تواريخ هجرية، ويقول دايماً أهم تاريخ هو يوم بنينا البيت».</dd>
+        <dt>ملاحظة</dt><dd>المحامي <b>ياسر</b> (صديق المرحوم) يؤكد أن الوصية بخط اليد «صحيحة بس بدون شهود»، وأنه إذا لم تظهر، تُقسّم التركة بالتساوي حسب القانون.</dd>
+        <dt>المطلوب</dt><dd>منو أخذ الوصية؟ وليش؟ ووين هي الحين؟</dd>
+      </dl>
+    </div>
+    <div id="t2" hidden>
+      <h2>الوثائق</h2>
+      <p class="note-tech">اضغطوا أي وثيقة لتكبيرها.</p>
+      <div class="papers" id="docGrid"></div>
+      <h3>تقرير طبيب الإسعاف (ملخّص)</h3>
+      <div class="rec"><b>د. محمد — الإسعاف · الثلاثاء ٦:٠٥ ص</b><div class="tx">«البلاغ من الابنة نورة ٥:٥٠ ص. الوفاة طبيعية، التقدير بين ٢ و٣ فجراً. آخر جرعة دواء مسجّلة ١١:٠٢ م. لا آثار عنف.»</div></div>
+      <h3>كشف مستشفى مبارك (مرفق من صالح)</h3>
+      <div class="rec"><b>قسم الطوارئ · الاثنين ٨:٤٠ م – الثلاثاء ٦:٣٠ ص</b><div class="tx">«مرافق المريض: صالح عبدالحميد (الأخ). تواجد طوال فترة الملاحظة.»</div></div>
+    </div>
+    <div id="t3" hidden>
+      <h2>الصور</h2>
+      <p class="note-tech">صور من الفيلا ومن كاميرا المدخل.</p>
+      <div class="papers" id="evGrid"></div>
+    </div>
+    <div id="t4" hidden>
+      <h2>أفراد الأسرة</h2>
+      <div class="sus"><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div><b>فيصل</b><small>الابن الأكبر · ٥٨ سنة · تاجر · المبلّغ</small><q>«أول واحد فتح الدرج. اللي أخذها من البيت.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_talal.jpg" alt=""></div><div><b>طلال</b><small>الابن الثاني · ٥٢ سنة · طبيب في لندن · وصل ليلة الوفاة</small><q>«ما أعرف وين المكتب حتى. آنا أبي أبوي.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_abeer.jpg" alt=""></div><div><b>عبير</b><small>البنت الكبيرة · ٥٥ سنة · زوجة بومشعل</small><q>«نورة كانت بروحها بالبيت. هذا اللي صار.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_bumishal.jpg" alt=""></div><div><b>بومشعل</b><small>زوج عبير · ٦٠ سنة · مقاول · يبي يبيع الأرض</small><q>«الوصية ما لها قيمة قانونية أصلاً.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_saleh.jpg" alt=""></div><div><b>صالح</b><small>السائق · ٦٣ سنة · مصري · ٣٠ سنة مع العائلة · معه مفتاح الملحق</small><q>«الحاج كان زي أبويا. كنت في المستشفى.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_noura.jpg" alt=""></div><div><b>نورة</b><small>البنت الصغيرة · ٣٨ سنة · تسكن مع أبوها وتهتم فيه · <b style="color:var(--ok)">هي اللي بلّغت عن الوفاة</b></small><q>«الوصية؟ ما أدري عنها.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_yaser.jpg" alt=""></div><div><b>ياسر</b><small>المحامي · ٦٥ سنة · صديق المرحوم · مو من العائلة</small><q>«بخط يده، صحيحة بس بدون شهود.»</q></div></div>
+    </div>
+    <div id="t5" hidden>
+      <h2>المقابلات المسجّلة</h2>
+      <p class="note-tech">أُخذت الأقوال في الفيلا الجمعة بعد العصر.</p>
+      <div class="ivg">
+        <div class="iv"><div class="ivh"><img src="img/p_faisal.jpg" alt=""><div><b>فيصل</b><small>الابن الأكبر · ٠:١٥</small></div></div><video playsinline controls preload="none" poster="video/iv_faisal.jpg" src="video/iv_faisal.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_talal.jpg" alt=""><div><b>طلال</b><small>الابن الثاني · ٠:٢١</small></div></div><video playsinline controls preload="none" poster="video/iv_talal.jpg" src="video/iv_talal.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_bumishal.jpg" alt=""><div><b>بومشعل</b><small>زوج عبير · ٠:١٦</small></div></div><video playsinline controls preload="none" poster="video/iv_bumishal.jpg" src="video/iv_bumishal.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_abeer.jpg" alt=""><div><b>عبير</b><small>البنت الكبيرة · ٠:١٦</small></div></div><video playsinline controls preload="none" poster="video/iv_abeer.jpg" src="video/iv_abeer.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_saleh.jpg" alt=""><div><b>صالح</b><small>السائق · ٠:٢٠</small></div></div><video playsinline controls preload="none" poster="video/iv_saleh.jpg" src="video/iv_saleh.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_noura.jpg" alt=""><div><b>نورة</b><small>البنت الصغيرة · ٠:١٩</small></div></div><video playsinline controls preload="none" poster="video/iv_noura.jpg" src="video/iv_noura.mp4"></video></div>
+      </div>
+    </div>
+    <div id="t6" hidden>
+      <h2>🏃 الميدان</h2>
+      <p class="note-tech">لما تعرفون وين ممكن تكون الوصية، تروحون بنفسكم.</p>
+      <div class="field" id="fieldBox">
+        <div class="h" id="fieldLocked">🔒 ما عندنا مكان لين الحين. دوروا بالموبايل: شنو قال المرحوم بالصوتية؟ وشنو بالملاحظات؟ ووين راحت نورة الفجر؟</div>
+        <div id="fieldOpen" hidden>
+          <p><b>الخميس ٩:٠٠ صباحاً.</b> وصلتوا الفيلا… وعند البوابة شاحنة بومشعل ورجاله: «جايين ننظّف الملحق، بنشيل الأثاث القديم». الملحق على بعد ٨٠ متر من الباب.</p>
+          <img src="img/truck.jpg" alt="" style="width:100%;border-radius:10px;margin:6px 0" onerror="this.remove()">
+          <button class="btn" id="goRun">🏃 اركضوا للملحق قبلهم!</button>
+          <div id="fieldDoor" hidden><p>✅ وصلتوا قبلهم. باب غرفة أبوي القديمة مقفل، واللوحة فوقه مغطّاة تراب.</p><button class="btn" id="goBlow">💨 انفخوا التراب عن اللوحة</button></div>
+          <div id="fieldRoom" hidden><p>✅ المفتاح كان وراء اللوحة. الباب انفتح.</p><button class="btn" id="goRoom">🚪 ادخلوا الغرفة</button></div>
+          <div id="fieldFound" hidden><p>✅ لقيتوها. داخل ألبوم الصور، وراء صورة العيد.</p><button class="btn" id="goSolveF">🔍 حل القضية</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="paper-foot">
+      <button class="btn" id="toLock">📱 افتح موبايل بوفيصل</button>
+      <button class="btn" id="toSolveFile" style="background:var(--tape)">🔍 حل القضية</button>
+      <div class="tvtip">📺 شغّلوا اللعبة على التلفزيون بمشاركة الشاشة من الموبايل.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ============ LOCK (PIN, easy-mode Android) ============ -->
+<section class="screen" id="lock">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="stage"><div class="device ez">
+    <div class="status ez-status"><span>الجمعة ١١:٤٠ ص</span><span>📶 🔋 ٦١٪</span></div>
+    <div class="ez-lock">
+      <div class="ez-clock">١١:٤٠</div>
+      <div class="ez-date">الجمعة · ١٠ أكتوبر</div>
+      <div class="ez-hint">أدخلوا رمز القفل (٤ أرقام)</div>
+      <div class="dots ez-dots" id="ldots"><i></i><i></i><i></i><i></i></div>
+      <div class="pad ez-pad" id="lpad"></div>
+      <div class="pat-msg" id="lockMsg"></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ PHONE ============ -->
+<section class="screen" id="phone">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="stage"><div class="device ez">
+    <div class="callov" id="callov"><div><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344"><img src="img/p_yaser.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><div class="nm">ياسر المحامي</div><div class="st" id="callSt">مكالمة واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
+    <div class="status ez-status"><span>الجمعة ١١:٤٠ ص</span><span>📶 🔋 ٦١٪</span></div>
+    <div class="app on" id="a-home"><div class="ez-home" id="home"></div></div>
+
+    <div class="app" id="a-chats"><div class="ah wa-h ez-ah"><button data-back>‹</button><div>WhatsApp <span class="sub">المحادثات</span></div></div><div class="list wa-list ez-list" id="chatList"></div></div>
+    <div class="app" id="a-chat"><div class="ah wa-h ez-ah"><button data-back="chats">‹</button><span id="chatAv"></span><div id="chatTitle"></div></div><div class="msgs wa ez-msgs" id="chatBody"></div></div>
+
+    <div class="app" id="a-calls"><div class="ah ez-ah"><button data-back>‹</button><div>الهاتف</div></div><div class="list ez-list" id="callsBody"></div></div>
+
+    <div class="app" id="a-photos"><div class="ah ez-ah"><button data-back>‹</button><div>الصور <span class="sub">٦ صور</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
+    <div class="app" id="a-photo"><div class="ah ez-ah"><button data-back="photos">‹</button><div id="photoTitle"></div></div><div class="big"><div class="img" id="photoImg"></div><div class="info" id="photoInfo"></div><div id="photoAct" style="padding:0 12px 14px"></div></div></div>
+
+    <div class="app" id="a-notes"><div class="ah ez-ah"><button data-back>‹</button><div>الملاحظات</div></div><div class="list ez-list" id="noteList"></div></div>
+    <div class="app" id="a-note"><div class="ah ez-ah"><button data-back="notes">‹ الملاحظات</button><div id="noteTitle"></div></div><div class="list nview ez-note" id="noteView"></div></div>
+
+    <div class="app" id="a-meds"><div class="ah ez-ah"><button data-back>‹</button><div>تذكير الدوا</div></div><div class="list ez-list" id="medsBody"></div></div>
+
+    <div class="app" id="a-rec"><div class="ah ez-ah"><button data-back>‹</button><div>المسجّل <span class="sub">Voice Recorder</span></div></div>
+      <div class="list" style="padding:12px">
+        <div class="recrow"><div class="ri">🎙️</div><div><b>للمحامي ياسر</b><small>الاثنين ١٠:١٥ م · ٠:٢٦ · <span style="color:var(--tape-2)">غير مرسل</span></small></div></div>
+        <div class="note-tech" style="color:#aab2c2;font-size:13px;margin:10px 0">التسجيل تالف: ضجيج وسرعة غلط. اضبطوا المؤشرين لين يصير الصوت صافي.</div>
+        <div class="knobs">
+          <label>🎚️ تصفية الضجيج <input type="range" id="kFilter" min="0" max="100" value="12"></label>
+          <label>⏱️ السرعة <input type="range" id="kRate" min="0" max="100" value="80"></label>
+        </div>
+        <div class="recctl"><button class="btn" id="recPlay">▶ تشغيل</button><div class="meter" id="recMeter"><i></i></div><span id="recSt" class="msg"></span></div>
+        <div id="recDone" hidden class="plain" style="margin-top:10px"><h4>نص التسجيل</h4><div id="recTx"></div></div>
+      </div></div>
+
+    <div class="app" id="a-lens"><div class="ah ez-ah"><button data-back="photos">‹</button><div>فحص الصورة <span class="sub">عدسة التحقيق</span></div></div>
+      <div class="list" style="padding:10px">
+        <div class="note-tech" style="color:#aab2c2;font-size:13px;margin:0 0 8px">صورة المحامي تبيّن بس أول سطر. بس الورق يحتفظ بأثر القلم… مرّروا العدسة على الفراغ تحت السطر الأول، وثبّتوها لما يبين شي.</div>
+        <div class="lens" id="lens"><img src="img/will_corner.jpg" alt="" id="lensBase" draggable="false"><div class="lensTop" id="lensTop" style="background-image:url(img/will_trace.jpg)"></div><div class="lensRing" id="lensRing"></div></div>
+        <div class="msg" id="lensMsg" style="color:#aab2c2;font-size:14px;margin-top:8px"></div>
+        <div id="lensDone" hidden class="plain" style="margin-top:8px"><h4>السطر الثاني (أثر القلم)</h4><div style="font-family:var(--doc);font-size:19px">«…على أن تبقى بيتاً مفتوحاً لإخوتها.»</div></div>
+      </div></div>
+  </div></div>
+</section>
+
+<!-- ============ RUN ============ -->
+<section class="screen" id="run">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="runBack">‹ رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="runstage" id="runstage">
+    <div class="runbg"></div>
+    <div class="runhud">
+      <div class="runclock" id="runClock">60</div>
+      <div class="runlbl">ثانية قبل ما يوصلون</div>
+    </div>
+    <div class="runtrack"><div class="runpath"><i class="runman" id="runMan">🏃</i><span class="runhome">🏠</span><span class="runannex">🚪</span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">٨٠ م</div></div>
+    <div class="runtruck" id="runTruck">🚚</div>
+    <div class="runintro" id="runIntro"><div class="h">شاحنة بومشعل عند البوابة ورجاله نازلين. الملحق ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم. على اللابتوب: اضغطوا الزر بسرعة.</div><button class="btn" id="runGo">🏃 يلا!</button></div>
+    <button class="runtap" id="runTap" hidden>اركض! 👟</button>
+    <div class="tmsg" id="runMsg"></div>
+  </div>
+</section>
+
+<!-- ============ BLOW (dust on the plaque) ============ -->
+<section class="screen" id="blow">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="blowBack">‹ رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="blowstage" id="blowstage">
+    <img src="img/plaque_clean.jpg" alt="" class="blowimg" id="blowClean" draggable="false">
+    <img src="img/plaque_dust.jpg" alt="" class="blowimg blowdust" id="blowDust" draggable="false">
+    <div class="blowkey" id="blowKey" hidden>🔑</div>
+    <div class="tintro" id="blowIntro"><div class="h">اللوحة فوق الباب مغطّاة تراب. <b>انفخوا على الموبايل</b> (قرّبوه من فمكم) لين ينشال التراب. إذا ما اشتغل المايك، افركوا الشاشة بإصبعكم.</div><button class="btn" id="blowGo">💨 جاهزين</button></div>
+    <div class="tmsg" id="blowMsg"></div>
+  </div>
+</section>
+
+<!-- ============ ROOM (search) ============ -->
+<section class="screen" id="room">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="roomBack">‹ رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="roomstage" id="roomstage">
+    <img src="img/annex.jpg" alt="" class="roomimg" draggable="false">
+    <div class="hot" data-h="wardrobe" style="left:4%;top:8%;width:22%;height:60%"></div>
+    <div class="hot" data-h="bisht" style="left:9%;top:20%;width:15%;height:45%"></div>
+    <div class="hot" data-h="bed" style="left:28%;top:40%;width:40%;height:40%"></div>
+    <div class="hot" data-h="radio" style="left:72%;top:36%;width:12%;height:14%"></div>
+    <div class="hot" data-h="albums" style="left:84%;top:36%;width:14%;height:14%"></div>
+    <div class="hot" data-h="frames" style="left:68%;top:8%;width:30%;height:22%"></div>
+    <div class="roomtip" id="roomTip">غرفة أبوي القديمة. اضغطوا على الشي اللي تبون تفتّشونه.</div>
+  </div>
+</section>
+
+<!-- ============ ALBUM ============ -->
+<section class="screen" id="album">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="albumBack">‹ الغرفة</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="wrap">
+    <div class="albumbook" id="albumBook">
+      <div class="albumpage" id="albumPage"></div>
+      <div class="albumnav"><button class="chip" id="albPrev">‹ السابقة</button><span id="albNo"></span><button class="chip" id="albNext">التالية ›</button></div>
+    </div>
+    <div class="msg" id="albMsg" style="color:var(--muted);text-align:center"></div>
+  </div>
+</section>
+
+<!-- ============ SOLVE ============ -->
+<section class="screen" id="solve">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip ghost" data-fs hidden>⛶ Full screen · ملء الشاشة</button></div>
+  <div class="wrap">
+    <h2>١. منو أخذ الوصية من الدرج؟</h2>
+    <div class="pick" id="pickWho"></div>
+    <h2>٢. وليش؟</h2>
+    <div class="pick why" id="pickWhy"></div>
+    <div class="fb" id="fb" hidden></div>
+    <button class="btn" id="submit" disabled>تأكيد الاتهام</button>
+    <p style="color:var(--muted);font-size:13px;margin:0">الاتهام الغلط يضيف دقيقتين على وقتكم.</p>
+  </div>
+</section>
+
+<!-- ============ REVEAL ============ -->
+<section class="screen" id="reveal">
+  <div class="wrap">
+    <img id="rvImg" class="rv" src="img/album_will.jpg" alt="" hidden>
+    <div id="willWrap" hidden class="willwrap"><img src="img/will_full.jpg" alt="" id="willImg"><div class="who" style="margin:10px 0 4px">🎙️ فيصل يقرأ الوصية جدّام العايلة</div><div class="gmtx" id="willTx"></div></div>
+    <div class="lines" id="lines"></div>
+    <div class="res" id="res" hidden></div>
+    <button class="btn lite" id="again" hidden>لعبة جديدة</button>
+  </div>
+</section>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<audio id="au-ring" src="audio/ring.mp3" preload="auto" loop></audio>
+<audio id="au-yaser" src="audio/call_yaser.mp3" preload="auto"></audio>
+<audio id="au-memo" src="audio/memo_bufaisal.mp3" preload="auto" crossorigin="anonymous"></audio>
+<audio id="au-end" src="audio/end_faisal.mp3" preload="auto"></audio>
+<audio id="au-splash" src="audio/splash.mp3" preload="auto"></audio>
+<audio id="au-narr" src="audio/narrator_intro.mp3" preload="auto"></audio>
+<audio id="au-truck" src="audio/truck.mp3" preload="auto" loop></audio>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wm-use" viewBox="0 0 1010 160"><path class="lw" data-l="H1" d="M 120.4 6.6 L 146.0 6.6 L 146.0 67.4 L 120.4 67.4 Z M 46.4 67.4 L 146.0 67.4 L 146.0 90.2 L 46.4 90.2 Z M 2.2 6.6 L 27.8 6.6 L 27.8 154.0 L 2.2 154.0 Z M 120.4 90.2 L 146.0 90.2 L 146.0 154.0 L 120.4 154.0 Z M 120.4 90.2 "/><path class="lw" data-l="Y" d="M 239.4 153.4 L 239.4 97.7 L 161.4 6.6 L 195.9 6.6 L 253.1 74.2 L 310.5 6.6 L 343.2 6.6 L 265.0 97.7 L 265.0 153.4 Z M 239.4 153.4 "/><path class="lw" data-l="P" d="M 402.8 112.6 L 402.8 87.8 L 461.8 87.8 C 470.8 87.8 477.8 85.3 482.9 80.2 C 487.9 75.1 490.5 68.4 490.5 59.9 C 490.5 51.4 487.9 44.7 482.9 39.7 C 477.9 34.7 470.8 32.2 461.8 32.2 L 384.2 32.2 L 384.2 153.4 L 358.5 153.4 L 358.5 6.6 L 461.8 6.6 C 470.3 6.6 477.8 7.8 484.5 10.3 C 491.2 12.8 496.8 16.3 501.4 20.8 C 506.0 25.3 509.5 30.8 511.9 37.3 C 514.3 43.7 515.5 51.0 515.5 59.1 C 515.5 67.0 514.3 74.3 511.9 80.8 C 509.5 87.3 505.9 93.0 501.4 97.7 C 496.8 102.4 491.2 106.1 484.5 108.7 C 477.8 111.3 470.3 112.6 461.8 112.6 Z M 402.8 112.6 "/><path class="lw" data-l="H2" d="M 651.9 6.6 L 677.5 6.6 L 677.5 67.4 L 651.9 67.4 Z M 577.9 67.4 L 677.5 67.4 L 677.5 90.2 L 577.9 90.2 Z M 533.7 6.6 L 559.3 6.6 L 559.3 154.0 L 533.7 154.0 Z M 651.9 90.2 L 677.5 90.2 L 677.5 154.0 L 651.9 154.0 Z M 651.9 90.2 "/><path class="lw" data-l="E" d="M 703.0 153.4 L 703.0 6.6 L 834.3 6.6 L 834.3 32.2 L 728.6 32.2 L 728.6 127.8 L 834.5 127.8 L 834.5 153.4 Z M 703.0 153.4 "/><path class="lw" data-l="N" d="M 880.1 46.0 L 880.1 153.4 L 855.7 153.4 L 855.7 20.1 C 855.7 15.4 856.9 11.7 859.2 8.9 C 861.6 6.1 864.8 4.8 868.8 4.8 C 870.7 4.8 872.5 5.2 874.3 6.0 C 876.0 6.8 877.8 8.1 879.7 10.0 L 983.4 112.8 L 983.4 5.4 L 1007.8 5.4 L 1007.8 139.9 C 1007.8 144.8 1006.6 148.5 1004.3 151.2 C 1001.9 153.9 998.8 155.2 995.1 155.2 C 990.9 155.2 987.0 153.4 983.3 149.8 Z M 880.1 46.0 "/><path class="barw" d="M 747.2 68.0 L 828.6 68.0 L 828.6 89.6 L 747.2 89.6 Z M 747.2 68.0 "/></symbol></svg>
+<style>.lw{fill:#fff}.barw{fill:#f00}</style>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+window.addEventListener('error',e=>{try{let t=document.getElementById('errToast');if(!t){t=document.createElement('div');t.id='errToast';t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7a1f1a;color:#fff;font:13px/1.5 monospace;direction:ltr;padding:10px 12px;border-radius:10px';t.onclick=()=>t.remove();document.body.appendChild(t)}t.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?')}catch(x){}});
+let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{if(a.id==='au-memo')return;try{const m=a.muted;a.muted=true;const pr=a.play();if(pr&&pr.then)pr.then(()=>{a.pause();a.currentTime=0;a.muted=m}).catch(()=>{a.muted=m})}catch(e){}});try{ac()}catch(e){}}
+['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,primeAudio,{once:true,capture:true}));
+
+const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
+const GAME='villa', BUILD='261013';
+const PIN='1407';
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',roomTries:0};
+function save(){try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(GAME)||'null');if(d&&d.start&&!d.done)Object.assign(S,d)}catch(e){}}
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField();if(id!=='run')runStop();if(id!=='blow')blowStop();if(id!=='phone')recStop()}
+function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
+const AR=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+
+/* ---- sounds ---- */
+let _ac;function ac(){try{_ac=_ac||new (window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac}catch(e){return null}}
+function tone(f,t0,d,type,g){const c=ac();if(!c)return;const o=c.createOscillator(),v=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t0);v.gain.setValueAtTime(0,c.currentTime+t0);v.gain.linearRampToValueAtTime(g||0.25,c.currentTime+t0+0.005);v.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+t0+d);o.connect(v).connect(c.destination);o.start(c.currentTime+t0);o.stop(c.currentTime+t0+d+0.02)}
+const SFX={tap:()=>{tone(1400,0,0.045,'square',0.08);tone(900,0,0.06,'sine',0.12)},del:()=>tone(600,0,0.06,'sine',0.12),bad:()=>{tone(180,0,0.18,'sawtooth',0.12);tone(150,0.2,0.22,'sawtooth',0.12)},ok:()=>{tone(880,0,0.12,'sine',0.18);tone(1320,0.1,0.18,'sine',0.18);tone(1760,0.2,0.3,'sine',0.14)},beep:()=>{tone(1200,0,0.08,'sine',0.15);tone(1600,0.1,0.1,'sine',0.15)},found:()=>{tone(660,0,0.1,'sine',0.15);tone(990,0.08,0.2,'sine',0.15)},step:()=>tone(220,0,0.05,'triangle',0.08),horn:()=>{tone(330,0,0.5,'sawtooth',0.1);tone(392,0,0.5,'sawtooth',0.1)}};
+function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];el.innerHTML='';
+  keys.forEach(k=>{const b=document.createElement('button');b.textContent=k;if(!k)b.disabled=true;if(k==='⌫')b.className='sm';
+    b.onclick=()=>{if(k==='⌫'){v=v.slice(0,-1);SFX.del()}else if(v.length<4){v+=k;SFX.tap()}paint();if(v.length===4){const ok=onFull(v);if(ok)SFX.ok();else{SFX.bad();dots.classList.add('bad','shake');setTimeout(()=>{dots.classList.remove('bad','shake');v='';paint()},500)}}};el.appendChild(b)});
+  function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
+
+/* ---- intro / file ---- */
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، الوثائق، الصور، والمقابلات.</div><div class="h">٢. افتحوا موبايل المرحوم (رمز ٤ أرقام — فيصل عطاكم تلميح بالمحضر).</div><div class="h">٣. بالموبايل فيه تسجيل تالف لازم تصفّونه، وصورة لازم تفحصونها بالعدسة.</div><div class="h">٤. لما تعرفون وين الوصية، تبويب <b>🏃 الميدان</b> يفتح: فيه ركض بمكانكم، ونفخ على الموبايل، وتفتيش غرفة.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذها، وليش. الغلط = +دقيقتين.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📺 شغّلوها على التلفزيون بمشاركة الشاشة.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+$$('[data-rules]').forEach(b=>b.onclick=rules);
+function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
+  sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: الكاميرا ٦:١٤ — منو رايح الملحق؟"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
+  const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}}}
+$$('[data-book]').forEach(b=>b.onclick=notebook);
+function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-ring','au-yaser','au-memo','au-end','au-splash','au-narr','au-truck'].forEach(i=>{const a=$('#'+i);if(a)a.pause()});runStop();blowStop();recStop();const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
+$$('[data-home]').forEach(b=>b.onclick=recover);
+let _taps=[];document.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,textarea,a,select,video,audio,[data-chat],[data-note],[data-p],.row,.pad,.icon,.ez-tile,.lens,.hot,.runstage,.blowstage,.albumpage'))return;const n=Date.now();_taps=_taps.filter(t=>n-t<1200);_taps.push(n);if(_taps.length>=3){_taps=[];recover()}},true);
+const NARR_T=['الرميثية. فيلا بوفيصل، اللي بناها بيده سنة ١٤٠٧.','الثلاثاء الصبح توفّى بهدوء.','وبعد العزا بيومين… الدرج فاضي، والوصية راحت.','موبايله بين إيديكم.'];
+function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(iv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*2200+1500;const step=Math.max(1500,(total-1000)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else clearInterval(iv)},step);if(a)a.onended=()=>setTimeout(end,1200);setTimeout(end,total+2500);$('#narrSkip').onclick=end}
+$('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
+$$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})));
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));['t1','t2','t3','t4','t5','t6'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
+$('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
+$('#toFile1').onclick=$('#toFile2').onclick=$('#runBack').onclick=$('#blowBack').onclick=$('#roomBack').onclick=()=>show('file');
+$('#albumBack').onclick=()=>show('room');
+$('#backToPhone').onclick=()=>show('phone');
+$('#toSolveFile').onclick=$('#goSolveF').onclick=()=>trySolve();
+function trySolve(){if(!S.album){sheet('<h3>🔒 مو الحين</h3><div class="h">الاتهام يفتح بعد ما تلقون الوصية بنفسكم.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}show('solve')}
+
+/* ---- documents & photos (file) ---- */
+const DOCS=[
+ {id:'deed',n:'شهادة ملكية الأرض',cap:'وزارة العدل — إدارة التسجيل العقاري. قطعة ٩، الرميثية. <b>تاريخ الإفراز: ١٤٠٧/٠٣/١٢ هـ</b>. باسم المرحوم.'},
+ {id:'will_corner',n:'صورة من زاوية الوصية',cap:'أرسلها المرحوم للمحامي ياسر الأحد (قبل الوفاة بيومين) من موبايله. يبين فقط العنوان والسطر الأول: «الفيلا لمن يسكن فيها». الصورة الكاملة في موبايله.'},
+ {id:'drawer',n:'الدرج · الثلاثاء ٧:٢٠ ص',cap:'فاضي. لا كسر ولا عبث — فُتح بالمفتاح الموجود دائماً في القفل.'}];
+const EV=[
+ {id:'eid',n:'صورة العيد · قبل ٤ أشهر',cap:'الكل حول المرحوم. المكتب والدرج يبينون بالخلفية. يوم ما أعلن الوصية.'},
+ {id:'villa',n:'الفيلا',cap:'بناها سنة ١٤٠٧ هـ. على اليسار الملحق — غرفته الأولى قبل ما يكمّل البيت.'},
+ {id:'cam_0702',n:'كاميرا المدخل · الثلاثاء ٧:٠٢ ص',cap:'وصول فيصل وعبير وبومشعل وصالح مع بعض. أول مرة يدخلون الفيلا بعد الوفاة.'},
+ {id:'cam_0614',n:'كاميرا المدخل · الثلاثاء ٦:١٤ ص',cap:'شخص بعباة يطلع من البيت ويروح الملحق… حامل شي على صدره. الصورة الأوضح في موبايل المرحوم.'}];
+const mk=(e,src)=>`<figure class="ev" data-ev="${e.id}"><img src="img/${src||e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><figcaption><b>${e.n}</b></figcaption></figure>`;
+$('#docGrid').innerHTML=DOCS.map(e=>mk(e)).join('');$('#evGrid').innerHTML=EV.map(e=>mk(e)).join('');
+const openEv=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=DOCS.concat(EV).find(x=>x.id===f.dataset.ev);sheet(`<h3>${ev.n}</h3><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`)};
+$('#docGrid').onclick=openEv;$('#evGrid').onclick=openEv;
+
+/* ---- field tab ---- */
+function fieldReady(){return S.memo&&S.corner&&S.cam}
+function refreshField(){const r=fieldReady();$('#fieldLocked').hidden=r;$('#fieldOpen').hidden=!r;$('#goRun').hidden=S.run;$('#fieldDoor').hidden=!S.run;$('#goBlow').hidden=S.blow;$('#fieldRoom').hidden=!S.blow;$('#goRoom').hidden=S.album;$('#fieldFound').hidden=!S.album;if(r)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
+function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. افتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
+$('#goRun').onclick=()=>runStart();$('#goBlow').onclick=()=>blowStart();$('#goRoom').onclick=()=>roomStart();
+
+/* ---- PIN lock ---- */
+keypad($('#lpad'),$('#ldots'),v=>{if(v!==PIN){$('#lockMsg').textContent='رمز غلط';setTimeout(()=>$('#lockMsg').textContent='',900);return false}S.unlocked=true;save();$('#lockMsg').textContent='تم فتح الموبايل ✓';setTimeout(()=>{show('phone');openApp('home')},800);return true});
+
+/* ================= PHONE DATA ================= */
+const AV=id=>`<img src="img/p_${id}.jpg" alt="">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
+const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
+const CHATS=[
+ {id:'fam',n:'عيال بوفيصل',av:'👨‍👩‍👧‍👦',last:'الخميس',u:3,grp:1,msgs:[['day','الثلاثاء'],['them','العزا بديوانية أبوي من المغرب. الله يرحمه','٩:٢٠ ص','','فيصل'],['them','وصلت الكويت الحين. الله يرحمه','١٠:٠٠ ص','','عبير'],['day','الخميس'],['them','منو فتح الدرج؟؟','٨:١٠ م','','فيصل'],['them','فيصل مو وقته','٨:١١ م','','عبير'],['them','الورقة ما لها قيمة قانونية أصلاً يا جماعة، بدون شهود','٨:١٥ م','','بومشعل'],['them','آنا وصلت الاثنين بالليل وما أعرف وين المكتب حتى','٨:١٧ م','','طلال'],['them','نورة كانت بروحها بالبيت. مو اتهام، هذا اللي صار','٨:٢٠ م','','عبير'],['them','حرام عليكم… أبوي ما برد بعد','٨:٣١ م','','نورة'],['them','بكرة أبلّغ الشرطة. خلاص','٨:٤٠ م','','فيصل']]},
+ {id:'noura',n:'نورة ❤️',av:'p:noura',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه الدوا ✅ والغدا جاهز','١:٣٠ م'],['me','الله يسلمج يا بنتي','١:٤٥ م'],['them','طلال بيوصل الليلة إن شاء الله، فرشت له الصالة','٧:٠٠ م'],['them','يبه بومشعل عندك؟ لا تتعب نفسك بالكلام عن البيع، إنت تعبان','٩:٤٠ م'],['me','لا تخافين','٩:٤٥ م'],['them','تصبح على خير يبه ❤️','١١:٠٥ م']]},
+ {id:'yaser',n:'ياسر (المحامي)',av:'p:yaser',last:'الأحد',u:0,msgs:[['day','قبل شهر'],['them','أبو فيصل، الوصية اللي كتبتها بخطك صحيحة، بس الأفضل شاهدين','١٠:٠٠ ص'],['me','شاهدي الله يا بوعلي','١٠:٣٠ ص'],['day','الأحد'],['them','صوّر لي الورقة يبه عشان أحفظ نسخة','٥:٠٠ م'],['me','<span class="ph" data-photo="will_corner">'+IMG('will_corner')+'</span>','٥:٢٠ م'],['them','هذي بس زاوية! صوّرها كاملة','٥:٢٥ م'],['me','باچر إن شاء الله','٥:٣٠ م']]},
+ {id:'bumishal',n:'بومشعل',av:'p:bumishal',last:'الاثنين',u:0,msgs:[['day','قبل أسبوعين'],['them','يبه عرض المستثمر ٣ ملايين على الأرض. فكّر بس','٨:٠٠ م'],['me','البيت مو للبيع','٨:٣٠ م'],['day','الاثنين'],['them','يبه آنا ياي لك بعد العشا نسولف شوي','٨:٥٠ م'],['me','تعال','٨:٥٥ م'],['them','<span class="miss">📵 مكالمة فايتة</span>','١١:٣٠ م']]},
+ {id:'talal',n:'طلال',av:'p:talal',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه وصلت الكويت، ياي لك الحين من المطار','٨:٤٥ م'],['me','بانتظارك يا ولدي','٨:٥٠ م']]},
+ {id:'faisal',n:'فيصل',av:'p:faisal',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','يبه البنك بيسحب على المحل. ممكن نتكلم عن الفيلا؟','٤:٠٠ م'],['me','بعد العيد نتكلم. والفيلا مكتوبة.','٤:٣٠ م'],['them','مكتوبة لمنو يبه؟','٤:٣١ م'],['me','لمن يسكن فيها. وإنت تعرف السطر الثاني لو قريت','٤:٤٠ م'],['them','؟؟','٤:٤١ م']]},
+ {id:'hamad',n:'حمد (حفيدي) 🧒',av:'🧒',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يدو شلونك؟ باچر أمرّ عليك بعد المدرسة 🚗','٤:١٠ م'],['me','تعال يا حمد، آخذك الملحق أوريك راديو أول','٤:٢٠ م'],['them','😍😍','٤:٢١ م']]},
+ {id:'jam',n:'جمعية الرميثية ✓',av:'🛒',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','عروض الأسبوع: تمر ٢ د.ك · قهوة ١.٥٠٠','٩:٠٠ ص']]},
+ {id:'diw',n:'ديوانية الثلاثاء ☕',av:'☕',last:'الاثنين',u:0,grp:1,msgs:[['day','الاثنين'],['them','بوفيصل، باچر الديوانية عندك؟','٦:٠٠ م','','بو خالد'],['me','إيه إن شاء الله. تعالاو','٦:١٠ م']]}];
+const CALLS=[{n:'ياسر (المحامي)',t:'الجمعة ١٠:٥٠ ص',k:'فايتة',bad:1},{n:'الإسعاف ١١٢',t:'الثلاثاء ٥:٥٠ ص',k:'صادرة · ٢ دقيقة'},{n:'فيصل',t:'الثلاثاء ٥:٤٥ ص',k:'صادرة · ٣ دقايق'},{n:'بومشعل',t:'الاثنين ١١:٣٠ م',k:'فايتة',bad:1},{n:'طلال',t:'الاثنين ٨:٤٠ م',k:'واردة · ١ دقيقة'},{n:'حمد (حفيدي)',t:'الاثنين ٤:٠٠ م',k:'واردة · ٤ دقايق'},{n:'المستشفى — د. أحمد',t:'الأحد',k:'واردة · ٦ دقايق'}];
+const PHOTOS=[
+ {id:'eid',n:'العيد',info:'قبل ٤ أشهر · الصالة',cap:'الكل. والدرج وراي.'},
+ {id:'villa',n:'بيتنا',info:'السنة الماضية',cap:'الفيلا. والملحق — غرفتي الأولى.'},
+ {id:'will_corner',n:'IMG_0471',info:'الأحد ٥:٢٠ م · المكتب',cap:'الصورة اللي أرسلتها لياسر. زاوية الورقة بس.',lens:1},
+ {id:'cam_0614',n:'كاميرا المدخل',info:'الثلاثاء ٦:١٤ ص · حُفظت تلقائياً من تطبيق الكاميرا',cap:'شخص بعباة يطلع من البيت للملحق… حامل ورقة مطوية على صدره.',cam:1},
+ {id:'cam_0702',n:'كاميرا المدخل',info:'الثلاثاء ٧:٠٢ ص · حُفظت تلقائياً',cap:'فيصل وعبير وبومشعل وصالح يوصلون مع بعض.'},
+ {id:'p_bufaisal',n:'آنا',info:'١٩٩٤ · المجلس',cap:'يوم كنت أصغر.'}];
+const NOTES=[
+ {id:'meds',t:'أدويتي',d:'الأربعاء',body:'الضغط: الصبح والمغرب\nالسكر: بعد الغدا\nحبة القلب: ١١ بالليل — نورة تذكّرني'},
+ {id:'album',t:'ألبوم الصور',d:'قبل شهر',body:'ألبوم الصور بغرفتي القديمة بالملحق.\nإذا صار لي شي، أول شي يفتحونه مع بعض.\nكل الصور فيه… وكل شي.'},
+ {id:'saleh',t:'صالح',d:'قبل شهرين',body:'صالح ٣٠ سنة معاي.\nمن حصتي: ٥٠٠٠ د.ك له.\nلا أحد يطلعه من البيت.'},
+ {id:'hijri',t:'تواريخ',d:'قديمة',body:'بنينا البيت: ١٤٠٧\nزواجي: ١٣٨٩\nفيصل: ١٣٩٠\nطلال: ١٣٩٥\nعبير: ١٣٩٣\nنورة: ١٤٠٩'}];
+const MEDS=[['الاثنين ١١:٠٢ م','حبة القلب','✅ أُعطيت — نورة'],['الاثنين ٧:٠٥ م','الضغط (المغرب)','✅ أُعطيت — نورة'],['الاثنين ٢:١٠ م','السكر','✅ أُعطيت — نورة'],['الاثنين ٧:٠٠ ص','الضغط (الصبح)','✅ أُعطيت — نورة'],['الأحد ١١:٠٠ م','حبة القلب','✅ أُعطيت — نورة']];
+const APPS=[['chats','واتساب','#25d366',CHATS.reduce((a,c)=>a+c.u,0)],['calls','الهاتف','#2fcc5f',1],['photos','الصور','#f0b429',0],['rec','المسجّل','#e35d6a',1],['notes','الملاحظات','#5b8def',0],['meds','تذكير الدوا','#8e5bef',0]];
+const ICO={chats:'💬',calls:'📞',photos:'🖼️',rec:'🎙️',notes:'📝',meds:'💊'};
+$('#home').innerHTML=APPS.map(a=>`<button class="ez-tile" data-app="${a[0]}"><span class="g" style="background:${a[2]}">${ICO[a[0]]}</span><span class="t">${a[1]}</span>${a[3]?`<span class="b">${a[3]}</span>`:''}</button>`).join('')+`<div class="ez-foot">وضع الاستخدام السهل · خط كبير</div>`;
+function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(id!=='rec')recStop()}
+$('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b)openApp(b.dataset.app)};
+$$('[data-back]').forEach(b=>b.onclick=()=>openApp(b.dataset.back||'home'));
+
+function renderChatList(){$('#chatList').innerHTML=CHATS.map(c=>{const l=[...c.msgs].reverse().find(m=>m[0]!=='day');const pv=l[1].replace(/<[^>]+>/g,' ').trim().slice(0,40);return `<button class="row" data-chat="${c.id}"><span class="av">${avh(c.av)}</span><span style="min-width:0"><span class="nm">${c.n}</span><span class="pv">${pv}</span></span><span class="tm${c.u?' u':''}">${c.last}${c.u?` <span class="b" style="display:inline-grid;min-width:18px;height:18px;border-radius:9px;background:var(--ok);color:#fff;font-size:11px;place-items:center">${c.u}</span>`:''}</span></button>`}).join('')}
+function openChat(c){$('#chatTitle').innerHTML=c.n+(c.grp?'<span class="sub">مجموعة</span>':'<span class="sub">آخر ظهور الاثنين ١١:١٠ م</span>');$('#chatAv').innerHTML=avh(c.av);
+  $('#chatBody').innerHTML=c.msgs.map(m=>{if(m[0]==='day')return `<span class="day">${m[1]}</span>`;const ph=m[3]?`<span class="ph" data-photo="${m[3]}">${IMG(m[3])}</span>`:'';const who=m[4]?`<span class="who">${m[4]}</span>`:'';return `<div class="m ${m[0]}">${who}${m[1]}${ph}<span class="t">${m[2]}</span></div>`}).join('');
+  c.u=0;renderChatList();openApp('chat');$('#chatBody').scrollTop=1e6}
+$('#chatList').onclick=e=>{const b=e.target.closest('[data-chat]');if(b)openChat(CHATS.find(x=>x.id===b.dataset.chat))};
+$('#chatBody').addEventListener('click',e=>{const ph=e.target.closest('[data-photo]');if(ph)openPhoto(ph.dataset.photo,'chat')});
+renderChatList();
+$('#callsBody').innerHTML=`<div class="dayh">الأخيرة</div>`+CALLS.map(c=>`<div class="row"><span class="av">📞</span><span style="min-width:0"><span class="nm" style="${c.bad?'color:var(--tape-2)':''}">${c.n}</span><span class="pv">${c.k}</span></span><span class="tm">${c.t}</span></div>`).join('');
+$('#medsBody').innerHTML=`<div class="dayh">سجل الجرعات</div>`+MEDS.map(m=>`<div class="row"><span class="av" style="background:#8e5bef;color:#fff">💊</span><span style="min-width:0"><span class="nm">${m[1]}</span><span class="pv">${m[2]}</span></span><span class="tm">${m[0]}</span></div>`).join('')+`<div class="note-tech" style="color:#aab2c2;font-size:13px;padding:12px">الجرعات تُسجّل بالضغط على «أُعطيت» من موبايل المرافق. المرافق المسجّل: نورة.</div>`;
+
+/* photos */
+function renderPhotos(){$('#photoGrid').innerHTML=PHOTOS.map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('')}
+$('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'photos')};
+function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id)||{n:id,info:'',cap:''};$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<img src="img/${id}.jpg" alt="">`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';
+  const act=$('#photoAct');act.innerHTML='';if(p.lens)act.innerHTML=`<button class="btn" id="toLens">🔍 افحصوا الصورة بالعدسة</button>`;if(p.cam&&!S.cam)act.innerHTML=`<button class="btn" id="camZoom">🔎 كبّروا على الشخص</button>`;
+  openApp('photo');const tl=$('#toLens');if(tl)tl.onclick=()=>openLens();const cz=$('#camZoom');if(cz)cz.onclick=()=>{S.cam=true;save();stageAt('field');SFX.found();act.innerHTML=`<div class="plain"><h4>التكبير</h4>عباة سودا، قصيرة القامة، شعر مربوط… والورقة مطوية نصّين على صدرها. من داخل البيت، رايحة <b>الملحق</b>. الساعة ٦:١٤ — قبل ما يوصل أحد من برّا بـ٤٨ دقيقة.</div>`;checkField()}}
+renderPhotos();
+/* notes */
+function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>`<button class="row" data-note="${n.id}"><span class="av" style="background:#5b8def;color:#fff">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${n.body.split('\n')[0]}</span></span><span class="tm">${n.d}</span></button>`).join('')}
+$('#noteList').onclick=e=>{const b=e.target.closest('[data-note]');if(!b)return;const n=NOTES.find(x=>x.id===b.dataset.note);$('#noteTitle').textContent=n.t;$('#noteView').innerHTML=`<div class="plain"><h4>${n.t}</h4><small>${n.d}</small>${n.body}</div>`;openApp('note')};
+renderNotes();
+
+/* ---- voice recorder cleaning puzzle ---- */
+const REC={ctx:null,src:null,bp:null,noise:null,ngain:null,on:false,target:{f:0.62,r:0.5},tol:0.09,okSince:0};
+const MEMO_TX='«يا بوعلي… مساك الله بالخير. الوصية اللي كتبتها بخطّي… حطّيتها بالدرج مثل ما اتّفقنا. بس انتبه… فيها سطر ثاني تحت، ما أحد قراه. لا تخلّيهم يوقفون عند أول سطر… خلّهم يكمّلون. آنا تعبان شوي الليلة، باچر إن شاء الله أمرّ عليك.»';
+function recSetup(){if(REC.ctx)return true;const c=ac();if(!c)return false;const a=$('#au-memo');try{REC.src=c.createMediaElementSource(a)}catch(e){return false}
+  REC.bp=c.createBiquadFilter();REC.bp.type='bandpass';REC.bp.Q.value=1.2;REC.ngain=c.createGain();const buf=c.createBuffer(1,c.sampleRate*2,c.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.5;REC.noise=c.createBufferSource();REC.noise.buffer=buf;REC.noise.loop=true;REC.noise.connect(REC.ngain).connect(c.destination);REC.noise.start();REC.ngain.gain.value=0;
+  REC.src.connect(REC.bp).connect(c.destination);REC.ctx=c;return true}
+function recApply(){const f=$('#kFilter').value/100,r=$('#kRate').value/100;const a=$('#au-memo');const df=Math.abs(f-REC.target.f),dr=Math.abs(r-REC.target.r);const bad=Math.min(1,(df+dr)*2.2);
+  if(REC.bp){REC.bp.frequency.value=300+Math.pow(2,f*5)*120;REC.bp.Q.value=0.6+bad*4}
+  a.playbackRate=0.65+r*0.7;if(REC.ngain)REC.ngain.gain.value=REC.on?bad*0.35:0;
+  $('#recMeter').firstElementChild.style.width=Math.round((1-bad)*100)+'%';$('#recMeter').classList.toggle('good',bad<0.2);
+  const ok=df<REC.tol&&dr<REC.tol;$('#recSt').textContent=ok?'✅ الصوت صافي':bad<0.4?'قريب…':'ضجيج';
+  if(ok&&REC.on){if(!REC.okSince)REC.okSince=Date.now();if(Date.now()-REC.okSince>2500&&!S.memo)recSolved()}else REC.okSince=0}
+function recSolved(){S.memo=true;save();stageAt('corner');SFX.ok();$('#recDone').hidden=false;$('#recTx').textContent=MEMO_TX;if(REC.ngain)REC.ngain.gain.value=0;if(REC.bp){REC.bp.type='allpass'}$('#au-memo').playbackRate=1;addNote('memo','🎙️ نص تسجيل أبوي للمحامي',MEMO_TX+'\n\n— حُفظ تلقائياً من المسجّل.');checkField();setTimeout(()=>{if(!S.yaser){S.yaser=1;save();if(S.screen==='phone')ring();else window.__ringLater=true}},12000)}
+$('#kFilter').oninput=$('#kRate').oninput=recApply;
+$('#recPlay').onclick=()=>{const a=$('#au-memo');if(REC.on){recStop();return}if(!recSetup()){/* fallback: no WebAudio */}REC.on=true;$('#recPlay').textContent='⏸ إيقاف';a.currentTime=0;a.loop=true;a.play().catch(()=>{});recApply();REC.iv=setInterval(recApply,300)};
+function recStop(){const a=$('#au-memo');if(!REC.on)return;REC.on=false;clearInterval(REC.iv);a.pause();if(REC.ngain)REC.ngain.gain.value=0;const b=$('#recPlay');if(b)b.textContent='▶ تشغيل'}
+function addNote(id,t,body){if(NOTES.find(n=>n.id===id))return;NOTES.unshift({id,t,d:'الحين',body});renderNotes();$$('#home [data-app=notes]').forEach(el=>{if(!el.querySelector('.b'))el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
+
+/* ---- lens (will corner) ---- */
+let LZ={x:50,y:50,dwell:0,raf:0,on:false,last:0};
+function openLens(){openApp('lens');const l=$('#lens');if(S.corner){$('#lensTop').style.maskImage='none';$('#lensTop').style.webkitMaskImage='none';$('#lensTop').style.opacity=1;$('#lensDone').hidden=false;$('#lensMsg').textContent='✅ تم استخراج السطر الثاني';$('#lensRing').hidden=true;return}
+  $('#lensDone').hidden=true;$('#lensRing').hidden=false;const pt=ev=>{const r=l.getBoundingClientRect();LZ.x=Math.max(0,Math.min(100,(ev.clientX-r.left)/r.width*100));LZ.y=Math.max(0,Math.min(100,(ev.clientY-r.top)/r.height*100))};
+  l.onpointerdown=ev=>{l.setPointerCapture(ev.pointerId);LZ.on=true;pt(ev)};l.onpointermove=ev=>{if(LZ.on)pt(ev)};l.onpointerup=()=>{LZ.on=false};
+  cancelAnimationFrame(LZ.raf);LZ.last=performance.now();const loop=now=>{if(!$('#a-lens').classList.contains('on'))return;const dt=(now-LZ.last)/1000;LZ.last=now;const m=`radial-gradient(circle at ${LZ.x}% ${LZ.y}%, #000 0 60px, transparent 90px)`;const t=$('#lensTop');t.style.webkitMaskImage=m;t.style.maskImage=m;t.style.opacity=1;$('#lensRing').style.left=LZ.x+'%';$('#lensRing').style.top=LZ.y+'%';
+    /* target zone: the blank area under line 1 — y 62..80%, x 15..85% */
+    const inZone=LZ.on&&LZ.y>66&&LZ.y<92&&LZ.x>28&&LZ.x<97;LZ.dwell=inZone?LZ.dwell+dt:Math.max(0,LZ.dwell-dt*2);$('#lensMsg').textContent=inZone?`يبين شي… ثبّتوا (${AR(Math.ceil(Math.max(0,2.2-LZ.dwell)))})`:'';
+    if(LZ.dwell>2.2&&!S.corner){S.corner=true;save();stageAt('cam');SFX.found();t.style.maskImage='none';t.style.webkitMaskImage='none';$('#lensDone').hidden=false;$('#lensMsg').textContent='✅ تم استخراج السطر الثاني';$('#lensRing').hidden=true;addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»\n\n— أثر القلم على الورقة تحت السطر الأول.');checkField();return}
+    LZ.raf=requestAnimationFrame(loop)};LZ.raf=requestAnimationFrame(loop)}
+
+/* ---- Yaser's call ---- */
+const CALLTX='فيصل؟ ياسر معاك. أبوك طرّش لي صورة من زاوية الوصية قبل يومين، وفيها سطر ثاني بعد «الفيلا لمن يسكن فيها»… ما أذكره بالضبط. الوصية الأصلية وين؟ لو ضاعت، القانون يقسّم الفيلا بالتساوي وخلاص. بس هو ما كان يبي چذي.';
+function ring(){const o=$('#callov');o.classList.add('on');$('#callSt').textContent='مكالمة واردة…';$('#callTx').textContent='';$('#callAns').hidden=false;$('#callEnd').hidden=true;const rg=$('#au-ring');rg.currentTime=0;rg.play().catch(()=>{});const rv=setInterval(()=>{if(!o.classList.contains('on')||$('#callAns').hidden){clearInterval(rv);rg.pause();rg.currentTime=0}},300);
+  $('#callAns').onclick=()=>{$('#callAns').hidden=true;$('#callEnd').hidden=false;$('#callSt').textContent='متصل · يظن إنه يكلم فيصل';const w=CALLTX.split(' ');let i=0;const fa=$('#au-yaser');fa.currentTime=0;
+    const done=()=>{clearInterval(iv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.yaser=2;save();addNote('call','📞 مكالمة ياسر المحامي — نص المكالمة','«'+CALLTX+'»\n\n— سُجّلت تلقائياً. اتصل على موبايل المرحوم يدوّر فيصل.')},1500)};
+    let step=380;const go=()=>{if(fa.duration&&isFinite(fa.duration))step=Math.max(150,(fa.duration*1000-600)/w.length)};go();fa.onloadedmetadata=go;fa.onended=done;fa.play().catch(()=>{});
+    var iv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
+  $('#callEnd').onclick=()=>{$('#au-yaser').pause();$('#au-ring').pause();o.classList.remove('on');S.yaser=2;save();addNote('call','📞 مكالمة ياسر المحامي — نص المكالمة','«'+CALLTX+'»\n\n— سُجّلت تلقائياً.')}}
+
+/* ---- RUN in place ---- */
+const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,lastMag:0,rising:false};
+function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();if(S.run){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ وصلتوا الملحق قبلهم.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=()=>{show('file');$$('.tabs button')[5].click()}}}
+function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
+function onMotion(e){if(!RUN.on)return;const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.hypot(a.x||0,a.y||0,a.z||0);const now=Date.now();if(mag>13.5&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>230){RUN.lastStep=now;runStep()}}else if(mag<10.5)RUN.rising=false}
+function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();paintRun();if(RUN.steps>=RUN.need)runWin()}
+$('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted')window.addEventListener('devicemotion',onMotion)}else window.addEventListener('devicemotion',onMotion)}catch(e){}
+  $('#runTap').hidden=false;$('#runTap').onclick=runStep;try{const tr=$('#au-truck');tr.volume=0.25;tr.currentTime=0;tr.play().catch(()=>{})}catch(e){}
+  RUN.iv=setInterval(()=>{RUN.t--;try{$('#au-truck').volume=Math.min(1,0.25+(60-RUN.t)/60)}catch(e){}paintRun();if(RUN.t%10===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
+function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion);try{$('#au-truck').pause()}catch(e){}}
+function runWin(){runStop();S.run=true;save();stageAt('blow');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 وصلتوا! بومشعل ورجاله بعدهم عند البوابة.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=()=>{show('file');$$('.tabs button')[5].click();setTimeout(blowStart,300)}}
+function runFail(){runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ وصلوا قبلكم ووقفوا عند الباب. +دقيقتين. جرّبوا مرة ثانية — اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
+
+/* ---- BLOW dust ---- */
+const BL={on:false,dust:1,stream:null,an:null,raf:0,rub:0};
+function blowStart(){show('blow');$('#blowIntro').hidden=!!S.blow;$('#blowMsg').innerHTML='';BL.dust=S.blow?0:1;$('#blowDust').style.opacity=BL.dust;$('#blowKey').hidden=!S.blow;if(S.blow){$('#blowMsg').innerHTML=`<div class="h">✅ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». والمفتاح وراء اللوحة.</div><button class="btn" id="blowDone">🚪 ادخلوا</button>`;$('#blowDone').onclick=roomStart}}
+$('#blowGo').onclick=async()=>{$('#blowIntro').hidden=true;BL.on=true;BL.rub=0;const st=$('#blowstage');st.onpointermove=ev=>{if(BL.on&&(ev.buttons||ev.pointerType==='touch')){BL.rub+=1;if(BL.rub%4===0)BL.dust=Math.max(0,BL.dust-0.012)}};
+  const buf=new Uint8Array(256);let last=performance.now();const loop=now=>{if(!BL.on)return;const dt=(now-last)/1000;last=now;if(BL.an){BL.an.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v}const rms=Math.sqrt(s/buf.length);if(rms>0.08)BL.dust=Math.max(0,BL.dust-dt*0.45*Math.min(2,rms*8))}$('#blowDust').style.opacity=BL.dust;if(BL.dust<=0.02){blowWin();return}BL.raf=requestAnimationFrame(loop)};BL.raf=requestAnimationFrame(loop);
+  $('#blowMsg').innerHTML='<div class="h">💨 انفخوا على الموبايل… أو افركوا الشاشة.</div>';
+  try{const gum=navigator.mediaDevices.getUserMedia({audio:true});const to=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),8000));BL.stream=await Promise.race([gum,to]);if(!BL.on){blowStop();return}const c=ac();const src=c.createMediaStreamSource(BL.stream);BL.an=c.createAnalyser();BL.an.fftSize=512;src.connect(BL.an);$('#blowMsg').innerHTML='<div class="h">💨 انفخوا!</div>'}catch(e){BL.an=null;if(BL.on)$('#blowMsg').innerHTML='<div class="h">المايك مو متاح — افركوا الشاشة بإصبعكم بسرعة.</div>'}};
+function blowStop(){BL.on=false;cancelAnimationFrame(BL.raf);if(BL.stream){BL.stream.getTracks().forEach(t=>t.stop());BL.stream=null}const st=$('#blowstage');if(st)st.onpointermove=null}
+function blowWin(){blowStop();S.blow=true;save();stageAt('room');SFX.found();$('#blowDust').style.opacity=0;$('#blowKey').hidden=false;$('#blowMsg').innerHTML=`<div class="h">✨ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». وفيه مفتاح معلّق وراء اللوحة!</div>`;$('#blowKey').onclick=()=>{SFX.ok();$('#blowMsg').innerHTML=`<div class="h">🔑 الباب انفتح.</div><button class="btn" id="blowDone">🚪 ادخلوا الغرفة</button>`;$('#blowDone').onclick=roomStart}}
+
+/* ---- ROOM search ---- */
+const HOT={wardrobe:'الكبت: دشاديش مكويّة وغتر. ولا ورقة.',bisht:'البشت: جيوبه فاضية… ريحة العود.',bed:'تحت الفراش والمخدة: لا شي.',radio:'الراديو: ما يشتغل. الحين مو وقته.',frames:'الصور على الجدار: العرس، والعيال صغار. ما فيه شي وراها.'};
+function roomStart(){show('room');$('#roomTip').textContent=S.album?'✅ الألبوم كان على الطاولة.':'غرفة أبوي القديمة. اضغطوا على الشي اللي تبون تفتّشونه.'}
+$('#roomstage').onclick=e=>{const h=e.target.closest('.hot');if(!h)return;const k=h.dataset.h;if(k==='albums'){SFX.found();albumOpen();return}S.roomTries++;if(S.roomTries%3===0){S.pen+=60;save();SFX.bad();$('#roomTip').textContent=HOT[k]+' (+٦٠ ثانية — ارجعوا للملاحظة بالموبايل)'}else{SFX.del();$('#roomTip').textContent=HOT[k]}};
+
+/* ---- ALBUM ---- */
+const PAGES=[{img:'p_bufaisal',cap:'١٩٩٤ — المجلس'},{img:'villa',cap:'الفيلا يوم كملت'},{img:'cam_0702',cap:'(صورة قديمة للعايلة عند البوابة)'},{img:'eid',cap:'العيد الماضي — الكل',lift:1},{img:'annex',cap:'غرفتي الأولى'}];
+let PG=0;
+function albumOpen(){show('album');PG=0;paintAlbum()}
+function paintAlbum(){const p=PAGES[PG];const found=S.album;$('#albumPage').innerHTML=`<div class="albumphoto${p.lift?' lift':''}" id="albPhoto">${IMG(p.img)}<div class="cap">${p.cap}</div></div>`+(p.lift&&found?`<div class="albumfound">${IMG('album_will')}<b>الوصية — وراء صورة العيد</b></div>`:'');$('#albNo').textContent=`صفحة ${AR(PG+1)} / ${AR(PAGES.length)}`;$('#albMsg').textContent=p.lift&&!found?'هالصفحة أثقل من غيرها… اضغطوا الصورة.':'قلّبوا الصفحات.';
+  const ph=$('#albPhoto');if(ph)ph.onclick=()=>{if(!p.lift||S.album)return;ph.classList.add('lifted');SFX.ok();S.album=true;save();stageAt('solve');setTimeout(()=>{paintAlbum();sheet(`<h3>📜 لقيتوها</h3><img src="img/album_will.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">الوصية كاملة، مطوية وراء صورة العيد. بخط أبوي… وفيها السطر الثاني.</div><div class="acts"><button class="btn" id="afterAlbum">🔍 حل القضية</button></div>`);$('#afterAlbum').onclick=()=>{$('#modal').classList.remove('on');show('solve')}},700)}}
+$('#albPrev').onclick=()=>{PG=(PG+PAGES.length-1)%PAGES.length;SFX.del();paintAlbum()};$('#albNext').onclick=()=>{PG=(PG+1)%PAGES.length;SFX.del();paintAlbum()};
+
+/* ---- solve ---- */
+const SUS=[['faisal','فيصل','الابن الأكبر'],['talal','طلال','الابن الثاني'],['abeer','عبير','البنت الكبيرة'],['bumishal','بومشعل','زوج عبير'],['saleh','صالح','السائق'],['noura','نورة','البنت الصغيرة']];
+const WHY=[['money','الفلوس','مديون ويبي حصته'],['sell','البيع','يبي الأرض تنباع'],['protect','الحماية','يحمي العايلة من الهوشة'],['revenge','الزعل','زعلان من أبوه']];
+$('#pickWho').innerHTML=SUS.map(s=>`<button data-who="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');
+$('#pickWhy').innerHTML=WHY.map(s=>`<button data-why="${s[0]}"><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');
+$('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(!b)return;S.who=b.dataset.who;save();selPick()};$('#pickWhy').onclick=e=>{const b=e.target.closest('[data-why]');if(!b)return;S.why=b.dataset.why;save();selPick()};
+function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
+const WRONG={faisal:'فيصل وصل ٧:٠٢ مع الكل (كاميرا المدخل)، والدرج كان فاضي من ٦:١٤. منو كان داخل البيت الفجر؟',talal:'طلال نايم بالصالة وما يعرف المكتب… وكاميرا ٦:١٤ تشوف عباة، مو رجّال.',abeer:'عبير وصلت ٧:٠٢ مع زوجها. الوصية راحت قبلها بساعة.',bumishal:'أقوى دافع، صح… بس كان ببيته (مكالمة فايتة ١١:٣٠ من رقمه + وصل ٧:٠٢). منو كان بالبيت؟',saleh:'صالح كان بالمستشفى مع أخوه طول الليل (الكشف بالوثائق). وكاميرا ٦:١٤ تشوف عباة.'};
+$('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='noura'&&S.why==='protect';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
+  S.pen+=120;S.wrong++;save();let msg;
+  if(S.who==='noura')msg='نورة، صح. بس ليش؟ هي اللي تسكن بالبيت — الوصية تعطيها كل شي. لو تبي الفلوس كانت خلّتها بالدرج. ارجعاو لرسالتها بالقروب: «حرام عليكم».';
+  else msg=WRONG[S.who]||'مو هذا. ارجعاو للكاميرا ٦:١٤ وتذكير الدوا.';
+  fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +دقيقتين.</b><br>${msg}<div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
+
+/* ---- reveal ---- */
+function reveal(){show('reveal');const L=$('#lines');L.innerHTML='';const add=(t,who)=>{const p=document.createElement('p');p.innerHTML=(who?`<span class="who">${who}</span> `:'')+t;L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'))};
+  $('#rvImg').hidden=false;add('نورة أخذتها الفجر، ٦:١٠، قبل ما يوصل أحد. مو عشان الفلوس… الوصية تعطيها الفيلا كاملة، وهي تعرف إن فيصل بيقول «أخذت كل شي»، وإخوانها بيتهاوشون على أبوهم وهو ما برد بعد.');
+  setTimeout(()=>add('راحت الملحق عشان تمزّقها. ما قدرت. خبّتها وراء صورة العيد — نفس الصورة اللي أعلن فيها أبوها الوصية.'),2800);
+  setTimeout(()=>{$('#willWrap').hidden=false;$('#willWrap').scrollIntoView({behavior:'smooth',block:'center'});playWill()},5600)}
+function playWill(){const tx='«بسم الله الرحمن الرحيم. وصيتي… الفيلا لمن يسكن فيها… على أن تبقى بيتاً مفتوحاً لإخوتها.» … أبوي كان أذكى منّا كلنا.';const a=$('#au-end');$('#willTx').textContent='';const w=tx.split(' ');let i=0;const step=a.duration&&isFinite(a.duration)?(a.duration*1000-400)/w.length:420;a.currentTime=0;a.play().catch(()=>{});const iv=setInterval(()=>{$('#willTx').textContent=w.slice(0,++i).join(' ');if(i>=w.length)clearInterval(iv)},step);a.onended=()=>setTimeout(endCard,900);setTimeout(()=>{if(!a.duration)endCard()},20000)}
+let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='الكل سكت. نورة بكت. والفيلا بقت مثل ما بناها: بيت مفتوح لأهله.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
+  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()}}
+
+/* ---- hints ---- */
+const HINTS={
+ lock:['فيصل قال بالمحضر: أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ هو يوم بنينا البيت. دوروا بالوثائق.','شهادة ملكية الأرض فيها تاريخ الإفراز بالهجري. السنة بس — ٤ أرقام.','الجواب: ١٤٠٧.'],
+ memo:['افتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
+ corner:['بالصور فيه صورة زاوية الوصية اللي أرسلها المرحوم لياسر. افتحوها واضغطوا «افحصوا بالعدسة».','الورق يحتفظ بأثر القلم. مرّروا العدسة على الفراغ اللي تحت السطر الأول وثبّتوها.','الجواب: السطر الثاني «على أن تبقى بيتاً مفتوحاً لإخوتها».'],
+ cam:['بالصور فيه لقطة من كاميرا المدخل الساعة ٦:١٤ الفجر. افتحوها واضغطوا «كبّروا».','منو كان داخل البيت الفجر؟ الكل وصل ٧:٠٢ إلا… ارجعاو للمحضر: الموجودون ليلة الوفاة.','الجواب: اللي بالعباة طالعة من البيت للملحق، حاملة ورقة — ٤٨ دقيقة قبل ما يوصل أحد.'],
+ run:['تبويب 🏃 الميدان. شاحنة بومشعل عند البوابة. اضغطوا «اركضوا» وبعدين اركضوا بمكانكم والموبايل بإيدكم.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما ينتهي الوقت. لو فشلتوا، +دقيقتين وجرّبوا مرة ثانية.'],
+ blow:['اللوحة فوق الباب مغطّاة تراب. قرّبوا الموبايل من فمكم وانفخوا — المايك يحس.','لو ما سمح الموبايل بالمايك، افركوا الشاشة بإصبعكم لين يروح التراب. بعدها اضغطوا المفتاح.','الجواب: وراء اللوحة مفتاح الغرفة.'],
+ room:['ارجعاو لملاحظة المرحوم بالموبايل: شنو قال يفتحون أول شي؟','«ألبوم الصور بغرفتي القديمة بالملحق». الألبومات على الطاولة يم الراديو.','الجواب: اضغطوا الألبومات على الطاولة، وقلّبوا لين صفحة العيد واضغطوا الصورة.'],
+ solve:['منو كان بالبيت الفجر؟ المحضر يقول: نورة وطلال. والكاميرا تشوف عباة.','نورة أخذتها — بس مو عشان الفلوس: الوصية أصلاً تعطيها الفيلا. ليش تخبّي ورقة بصالحها؟ ارجعاو لرسالتها: «حرام عليكم… أبوي ما برد بعد».','الجواب: <b>نورة</b>، والسبب <b>الحماية</b> — خافت من الهوشة بين إخوانها.']};
+const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
+const HNAME={lock:'فتح الموبايل',memo:'التسجيل التالف',corner:'زاوية الوصية',cam:'كاميرا ٦:١٤',run:'الركض للملحق',blow:'اللوحة',room:'تفتيش الغرفة',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.memo)return 'memo';if(!S.corner)return 'corner';if(!S.cam)return 'cam';if(!S.run)return 'run';if(!S.blow)return 'blow';if(!S.album)return 'room';return 'solve'}
+function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
+function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
+$$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
+  const body=list.map((h,i)=>{const lab=i===2?'الجواب مباشرة':`تلميح ${i+1}`;if(i<used)return `<div class="h">${h}</div>`;const wait=HINT_WAIT[i]-el;return `<div class="h lk">🔒 ${lab}${wait>0?` — يفتح بعد ${fmt(wait)}`:''}</div>`}).join('');
+  const ready=used<list.length&&el>=HINT_WAIT[used];const next=used<list.length?(used===2?'اكشف الجواب':`اكشف تلميح ${used+1}`)+` (${HINT_LAB[used]})`:'';
+  sheet(`<h3>💡 تلميحات — ${HNAME[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
+  const u=$('#useHint');if(u)u.onclick=()=>{S.pen+=HINT_PEN[S.hints[st]];S.hints[st]++;save();b.click()}});
+function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');$$('[data-close]').forEach(x=>x.onclick=()=>$('#modal').classList.remove('on'))}
+
+/* ---- fullscreen ---- */
+(function(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent);const can=document.documentElement.requestFullscreen||ios;$$('[data-fs]').forEach(b=>{b.hidden=!can;b.onclick=()=>{if(document.documentElement.requestFullscreen&&!ios){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}else sheet('<h3>⛶ ملء الشاشة على الآيفون</h3><div class="h">اضغطوا <b>aA</b> (أو ⋯) في شريط العنوان، ثم <b>إخفاء شريط الأدوات</b>. ولمشاركة الشاشة على التلفزيون: مركز التحكم → انعكاس الشاشة.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')}})})();
+
+/* ---- gate ---- */
+const GATE_ON=true;
+function deviceId(){try{let d=localStorage.getItem(GAME+'_dev');if(!d){d=crypto.randomUUID();localStorage.setItem(GAME+'_dev',d)}return d}catch(e){return 'nodevice'}}
+function savedPass(){try{const p=JSON.parse(localStorage.getItem(GAME+'_pass')||'null');if(p&&new Date(p.expires_at)>new Date())return p}catch(e){}return null}
+async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME})});return r.json()}
+$('#gateBuy').href=STORE+'/buy?game='+GAME;
+async function gate(){if(!GATE_ON)return true;const m=(location.hash||'').match(/code=([A-Za-z0-9-]+)/);const fromUrl=m?m[1].toUpperCase():'';const sp=savedPass();if(sp&&(!fromUrl||fromUrl===sp.code))return true;
+  if(fromUrl){try{const j=await checkCode(fromUrl);if(j.ok){try{localStorage.setItem(GAME+'_pass',JSON.stringify({code:fromUrl,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);return true}}catch(e){}show('gate');$('#gateIn').value=fromUrl;tryCode();return new Promise(res=>{window.__gateOK=res})}
+  show('gate');return new Promise(res=>{window.__gateOK=res})}
+async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';
+  try{const j=await checkCode(code);if(j.ok){try{localStorage.setItem(GAME+'_pass',JSON.stringify({code,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);window.__gateOK&&window.__gateOK(true)}
+    else err.textContent=({not_found:'الرمز غير صحيح',expired:'انتهت صلاحية الرمز',used:'هالرمز مستخدم على جهاز ثاني',format:'اكتبوا الرمز مثل VLA-7342',wrong_game:'هالرمز لقضية ثانية'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية'}catch(e){err.textContent='ما قدرنا نتحقق. تأكدوا من الإنترنت'}b.disabled=false}
+$('#gateGo').onclick=tryCode;$('#gateIn').addEventListener('keydown',e=>{if(e.key==='Enter')tryCode()});
+
+/* ---- boot ---- */
+load();$('#buildv').textContent='v'+BUILD;
+function splash(){return new Promise(res=>{const el=$('#splash');show('splash');try{const sa=$('#au-splash');sa.volume=0.6;sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const starts={H1:[-180,-120,-25],Y:[-60,160,18],P:[40,-170,-12],H2:[120,150,22],E:[200,-90,-30],N:[260,120,14]};
+  Object.entries(starts).forEach(([k,[x,y,r]],i)=>{const n=$('#l-'+k);if(!n)return;if(reduce){n.style.opacity=1;return}n.animate([{transform:`translate(${x}px,${y}px) rotate(${r}deg)`,opacity:0},{transform:'translate(0,0) rotate(0deg)',opacity:1}],{duration:1100,delay:120+i*70,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})});
+  const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
+  setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
+(async()=>{await splash();await gate();
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc,roomTries:0};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}
+if(S.start){if(S.yaser===1)window.__ringLater=true;if(S.yaser>=2)addNote('call','📞 مكالمة ياسر المحامي — نص المكالمة','«'+CALLTX+'»');if(S.memo){addNote('memo','🎙️ نص تسجيل أبوي للمحامي',MEMO_TX);$('#recDone').hidden=false;$('#recTx').textContent=MEMO_TX}if(S.corner)addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»');
+  if(!S.screen||['intro','splash','gate','reveal','run','blow','room','album'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);selPick();refreshField()}else show('intro');
+})();
+</script>
+</body>
+</html>

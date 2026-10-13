@@ -78,7 +78,7 @@ export default function Admin() {
           <div><label>العدد</label><input type="number" value={count} onChange={(e) => setCount(e.target.value)} /></div>
           <div><label>صلاحية (أيام)</label><input type="number" value={days} onChange={(e) => setDays(e.target.value)} /></div>
           <div><label>أجهزة لكل رمز</label><input type="number" value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></div>
-          <div><label>القضية</label><select value={game} onChange={(e) => setGame(e.target.value)}><option value="khalid">قضية خالد</option><option value="shaleh">قضية الشاليه</option></select></div>
+          <div><label>القضية</label><select value={game} onChange={(e) => setGame(e.target.value)}><option value="khalid">قضية خالد</option><option value="shaleh">قضية الشاليه</option><option value="villa">قضية الفيلا</option></select></div>
         </div>
         <label>ملاحظة (اسم الفعالية)</label><input value={note} onChange={(e) => setNote(e.target.value)} />
         <div style={{ marginTop: 18 }}><button className="cta" onClick={gen}>ولّد الرموز</button></div>
@@ -114,7 +114,7 @@ export default function Admin() {
         <div className="card" style={{ maxWidth: 960 }}>
           <h2>آخر الرموز</h2>
           <table><thead><tr><th>الرمز</th><th>القضية</th><th>الاستخدام</th><th>ينتهي</th><th>ملاحظة</th><th></th></tr></thead>
-            <tbody>{codes.map((c) => <tr key={c.code}><td className="mono">{c.code}</td><td>{c.game === "shaleh" ? "الشاليه" : "خالد"}</td><td>{c.uses}/{c.max_uses}</td><td>{new Date(c.expires_at).toLocaleDateString("ar-KW")}</td><td>{c.note || (c.order_id ? "شراء" : "")}</td><td>{c.uses > 0 && <button className="btn-sm" onClick={() => reset(c.code)}>صفّر</button>}</td></tr>)}</tbody>
+            <tbody>{codes.map((c) => <tr key={c.code}><td className="mono">{c.code}</td><td>{c.game === "shaleh" ? "الشاليه" : c.game === "villa" ? "الفيلا" : "خالد"}</td><td>{c.uses}/{c.max_uses}</td><td>{new Date(c.expires_at).toLocaleDateString("ar-KW")}</td><td>{c.note || (c.order_id ? "شراء" : "")}</td><td>{c.uses > 0 && <button className="btn-sm" onClick={() => reset(c.code)}>صفّر</button>}</td></tr>)}</tbody>
           </table>
         </div>
       )}
