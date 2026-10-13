@@ -6,8 +6,8 @@ export async function POST(req) {
   const team = String(body.team || "").trim().slice(0, 40);
   const members = (Array.isArray(body.members) ? body.members : []).map((s) => String(s || "").trim().slice(0, 40)).filter(Boolean).slice(0, 6);
   const phone = String(body.phone || "").replace(/\D/g, "").slice(0, 15);
-  if (!team || members.length < 4 || phone.length < 8) return Response.json({ ok: false, error: "البيانات ناقصة" }, { status: 400 });
+  if (!team || members.length < 4 || phone.length < 8) return Response.json({ ok: false, error: "Missing details" }, { status: 400 });
   const { error } = await db().from("registrations").insert({ team, members, phone });
-  if (error) return Response.json({ ok: false, error: "تعذّر الحفظ، حاولوا مرة ثانية" }, { status: 500 });
+  if (error) return Response.json({ ok: false, error: "Could not save, please try again" }, { status: 500 });
   return Response.json({ ok: true });
 }
