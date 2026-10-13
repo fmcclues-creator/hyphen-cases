@@ -39,9 +39,7 @@ export default function Reg() {
         <section className="reg-intro">
           <div className="reg-kicker">Live event</div>
           <h1 className="reg-title">THE MYSTERY ROUTE</h1>
-          <p>A restaurant-group owner vanished hours before the biggest deal of his life. His phone is in your hands, locked. You have one hour, five suspects, and one question: who did it?</p>
-          <p>A team investigation game in Kuwaiti dialect. Unlock his phone, read his messages, listen to his calls, and connect the evidence before time runs out. Teams of 4 to 6. We will contact the team leader with the details.</p>
-          <div className="reg-facts"><span>⏱ One hour</span><span>👥 4–6 players</span><span>🇰🇼 Kuwaiti dialect</span></div>
+          <p className="reg-when">Saturday at Ktech</p>
           <p className="reg-wait">We can't wait to see you 🔍</p>
         </section>
       )}
