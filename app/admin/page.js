@@ -36,6 +36,10 @@ export default function Admin() {
   async function promoPatch(code, body) {
     await fetch("/api/admin/promos", { method: "PATCH", headers: H, body: JSON.stringify({ code, ...body }) }); load();
   }
+  async function hesabeCheck() {
+    const r = await fetch("/api/admin/hesabe", { headers: H }); const j = await r.json();
+    alert(JSON.stringify(j, null, 2));
+  }
   async function cleanup() {
     if (!confirm("حذف كل الطلبات التجريبية (TEST) والرموز اللي طلعت منها؟")) return;
     const r = await fetch("/api/admin/cleanup", { method: "POST", headers: H }); const j = await r.json();
@@ -65,7 +69,7 @@ export default function Admin() {
 
       {authed && <>
       <div className="card" style={{ maxWidth: 1100 }}>
-        <h2>الطلبات</h2><button className="btn-sm" onClick={cleanup}>🧹 حذف الطلبات التجريبية</button>
+        <h2>الطلبات</h2><button className="btn-sm" onClick={cleanup}>🧹 حذف الطلبات التجريبية</button> <button className="btn-sm" onClick={hesabeCheck}>🩺 فحص بوابة الدفع</button>
         {stats && <p>مدفوع: <b>{stats.paid}</b> · الإيراد: <b>{stats.revenue.toFixed(3)} د.ك</b> · غير مكتمل: {stats.pending}</p>}
         {orders.length === 0 ? <p className="muted">ما فيه طلبات بعد.</p> : (
           <table><thead><tr><th>التاريخ</th><th>الموبايل</th><th>الإيميل</th><th>المبلغ</th><th>كود خصم</th><th>الدفع</th><th>الحالة</th><th>الرمز</th><th>الاستخدام</th></tr></thead>
