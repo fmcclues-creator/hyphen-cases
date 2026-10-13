@@ -694,7 +694,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 <section class="screen" id="reveal">
   <div class="wrap">
     <video id="rvVideo" class="rv" playsinline controls preload="none" poster="video/rescue.jpg" src="video/rescue.mp4" hidden></video>
-    <div id="cfWrap" hidden><div class="who" style="margin:14px 0 6px">🎙️ اعتراف ناصر في غرفة التحقيق</div><video id="cfVideo" class="rv" playsinline controls preload="none" poster="video/confession.jpg" src="video/confession.mp4"></video></div>
+    <div id="cfWrap"><div class="who" style="margin:14px 0 6px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span>🎙️ اعتراف ناصر في غرفة التحقيق</span><button id="rvSkip" style="font:inherit;font-size:13px;font-weight:700;color:#ffd978;background:rgba(255,255,255,.08);border:1px solid #3a4456;border-radius:9px;padding:5px 10px">⏭ تخطّي الفيديو الأول</button></div><video id="cfVideo" class="rv" playsinline controls preload="none" poster="video/confession.jpg" src="video/confession.mp4"></video></div>
     <div class="lines" id="lines"></div>
     <div class="res" id="res" hidden></div>
     <button class="btn lite" id="again" hidden>لعبة جديدة</button>
@@ -1312,7 +1312,7 @@ $('#submit').onclick=()=>{const fb=$('#fb');
   S.done=elapsed();save();reveal()};
 
 /* ================= REVEAL ================= */
-function reveal(){show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=true;v.onended=()=>{cw.hidden=false;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};const L=[
+function reveal(){show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
  [S.gaveUp?'ما حلّيتوها هالمرة… هذا اللي صار':'','الدوريات توصل لمخزن الشويخ القديم. الباب يتفتح…'],
  ['','خالد جالس على صندوق، راسه ملفوف، بس بخير.'],
  ['ناصر، وهو يطلع مطأطئ الرأس','«ما كان مخطط… لما واجهني اخترعت، وما عرفت شلون أوقف.»'],
