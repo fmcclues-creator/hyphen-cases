@@ -33,6 +33,11 @@ export default function Admin() {
     const j = await r.json(); if (!j.ok) return setMsg("كلمة السر غلط");
     setMade(j.codes); load();
   }
+  async function cleanup() {
+    if (!confirm("حذف كل الطلبات التجريبية (TEST) والرموز اللي طلعت منها؟")) return;
+    const r = await fetch("/api/admin/cleanup", { method: "POST", headers: H }); const j = await r.json();
+    alert(j.ok ? `تم حذف ${j.orders} طلب و ${j.codes} رمز تجريبي` : "صار خطأ"); load();
+  }
   async function reset(code) {
     const c = (code || resetCode).trim().toUpperCase(); if (!c) return;
     const r = await fetch("/api/admin/reset", { method: "POST", headers: H, body: JSON.stringify({ code: c }) });
@@ -57,7 +62,7 @@ export default function Admin() {
 
       {authed && <>
       <div className="card" style={{ maxWidth: 1100 }}>
-        <h2>الطلبات</h2>
+        <h2>الطلبات</h2><button className="btn-sm" onClick={cleanup}>🧹 حذف الطلبات التجريبية</button>
         {stats && <p>مدفوع: <b>{stats.paid}</b> · الإيراد: <b>{stats.revenue.toFixed(3)} د.ك</b> · غير مكتمل: {stats.pending}</p>}
         {orders.length === 0 ? <p className="muted">ما فيه طلبات بعد.</p> : (
           <table><thead><tr><th>التاريخ</th><th>الموبايل</th><th>الإيميل</th><th>المبلغ</th><th>كود خصم</th><th>الدفع</th><th>الحالة</th><th>الرمز</th><th>الاستخدام</th></tr></thead>
