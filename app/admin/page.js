@@ -16,6 +16,7 @@ export default function Admin() {
   const [promos, setPromos] = useState([]);
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState(null);
+  const [regs, setRegs] = useState([]);
   const [pf, setPf] = useState({ code: "", percent: 20, amount: 0, maxUses: 100, days: 30, note: "" });
   const H = { authorization: `Bearer ${pw}`, "content-type": "application/json" };
 
@@ -23,6 +24,7 @@ export default function Admin() {
     const r = await fetch("/api/admin/codes", { headers: H }); const j = await r.json();
     if (!j.ok) { setAuthed(false); return setMsg("كلمة السر غلط"); }
     setAuthed(true); setCodes(j.codes); setMsg("");
+    try { const rr = await fetch("/api/admin/reg", { headers: H }); const rj = await rr.json(); if (rj.ok) setRegs(rj.rows); } catch {}
     const p = await fetch("/api/admin/promos", { headers: H }).then((x) => x.json());
     if (p.ok) setPromos(p.promos);
     const o = await fetch("/api/admin/orders", { headers: H }).then((x) => x.json());
@@ -58,6 +60,15 @@ export default function Admin() {
     await fetch("/api/admin/promos", { method: "PATCH", headers: H, body: JSON.stringify({ code: p.code, active: !p.active }) }); load();
   }
 
+  async function delReg(id) { if (!confirm("حذف هذا التسجيل؟")) return; await fetch("/api/admin/reg", { method: "DELETE", headers: H, body: JSON.stringify({ id }) }); setRegs((r) => r.filter((x) => x.id !== id)); }
+  function exportRegs() {
+    const esc = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    const lines = [["التاريخ", "الفريق", "قائد الفريق", "الأعضاء", "العدد"].map(esc).join(",")];
+    regs.forEach((r) => lines.push([new Date(r.created_at).toLocaleString("en-GB"), r.team, r.phone, (r.members || []).join(" | "), (r.members || []).length].map(esc).join(",")));
+    const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "registrations.csv"; a.click();
+  }
+
   return (
     <main className="wrap">
       <nav className="nav"><span><b>HYPHEN</b> CASES · الإدارة</span></nav>
@@ -79,6 +90,21 @@ export default function Admin() {
               <td>{Number(o.amount_kwd).toFixed(3)}</td><td className="mono">{o.promo ? `${o.promo} (−${Number(o.discount_kwd).toFixed(3)})` : "—"}</td>
               <td>{o.gateway}</td><td>{o.status === "paid" ? "✅ مدفوع" : o.status === "failed" ? "❌ فشل" : "⏳ معلّق"}</td>
               <td className="mono">{o.code ? o.code.code : "—"}</td><td>{o.code ? `${o.code.uses}/${o.code.max_uses}` : "—"}</td>
+            </tr>)}</tbody>
+          </table>
+        )}
+      </div>
+      <div className="card" style={{ maxWidth: 1100 }}>
+        <h2>تسجيل الفرق (reg.hyphen-eventskw.com)</h2>
+        <p>{regs.length} فريق مسجّل. <button className="btn-sm" onClick={exportRegs} disabled={!regs.length}>⬇️ تصدير Excel/CSV</button></p>
+        {regs.length === 0 ? <p className="muted">ما فيه تسجيلات بعد.</p> : (
+          <table><thead><tr><th>التاريخ</th><th>الفريق</th><th>قائد الفريق</th><th>الأعضاء</th><th></th></tr></thead>
+            <tbody>{regs.map((r) => <tr key={r.id}>
+              <td style={{ whiteSpace: "nowrap" }}>{new Date(r.created_at).toLocaleString("ar-KW", { dateStyle: "short", timeStyle: "short" })}</td>
+              <td><b>{r.team}</b></td>
+              <td className="mono"><a href={`https://wa.me/965${r.phone}`} target="_blank" rel="noreferrer">{r.phone}</a></td>
+              <td style={{ fontSize: 13 }}>{(r.members || []).join("، ")} <span className="muted">({(r.members || []).length})</span></td>
+              <td><button className="btn-sm" onClick={() => delReg(r.id)}>🗑</button></td>
             </tr>)}</tbody>
           </table>
         )}

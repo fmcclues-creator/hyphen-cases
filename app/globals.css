@@ -82,3 +82,15 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .ok{color:var(--ok);font-size:14px;margin-top:6px}
 .btn-sm{padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:13px;cursor:pointer}
 @media (max-width:760px){.menu{gap:14px;font-size:14px}.menu a:nth-child(4){display:none}.ftr{grid-template-columns:1fr}}
+/* ---- reg.hyphen-eventskw.com ---- */
+.reg{min-height:100svh;display:flex;flex-direction:column;align-items:center;gap:22px;padding:40px 16px 60px}
+.reg-logo img{width:min(260px,70vw);height:auto;display:block}
+.reg-card{width:100%;max-width:440px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px 22px 26px;display:flex;flex-direction:column}
+.reg-card h1{font-size:24px;margin:0 0 6px;text-wrap:balance}
+.reg-names{display:flex;flex-direction:column;gap:8px}
+.reg-row{display:flex;align-items:center;gap:8px}
+.reg-n{width:26px;color:var(--muted);font-size:14px;text-align:center;flex:none}
+.reg-x{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:#0b0e14;color:var(--muted);font-size:20px}
+.reg-add{align-self:flex-start;margin-top:8px;background:none;border:1px dashed var(--line);color:var(--fg);border-radius:10px;padding:8px 12px;font-size:14px}
+.reg-submit{justify-content:center;margin-top:22px;border:0}
+.reg-ok{width:64px;height:64px;border-radius:50%;background:var(--ok);display:grid;place-items:center;font-size:34px;font-weight:800;margin:4px auto 12px;color:#fff}

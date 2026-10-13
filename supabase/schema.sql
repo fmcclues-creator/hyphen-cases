@@ -43,3 +43,14 @@ create table if not exists promos (
 alter table orders add column if not exists promo text;
 alter table orders add column if not exists discount_kwd numeric(8,3) not null default 0;
 alter table promos enable row level security;
+
+-- v3: event sign-ups (reg.hyphen-eventskw.com)
+create table if not exists registrations (
+  id bigint generated always as identity primary key,
+  created_at timestamptz default now(),
+  team text not null,
+  members jsonb not null default '[]'::jsonb,
+  phone text not null,
+  note text
+);
+alter table registrations enable row level security;
