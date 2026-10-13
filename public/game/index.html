@@ -689,7 +689,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     <div class="plot" id="pickWhen"><label>الساعة <input id="whH" inputmode="numeric" maxlength="2" placeholder="٠"></label><label>الدقيقة <input id="whM" inputmode="numeric" maxlength="2" placeholder="٠٠"></label><label>&nbsp;<select id="whAP" style="padding:12px;border-radius:12px;border:2px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:20px"><option value="pm">مساءً</option><option value="am">صباحاً</option></select></label></div>
     <div class="fb" id="fb" hidden></div>
     <button class="btn" id="submit" disabled>تأكيد الاتهام</button>
-    <p style="color:var(--muted);font-size:13px;margin:0">الاتهام الغلط يضيف دقيقتين على وقتكم.</p>
+    <p style="color:var(--muted);font-size:13px;margin:0">لو غلطتوا، ترجعون تحقّقون وتحاولون مرة ثانية.</p>
   </div>
 </section>
 
@@ -1311,8 +1311,8 @@ $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(b){S.who=b.d
 if(S.where&&S.where.includes('/')){const [q,s2]=S.where.split('/');$('#plotQ').value=q;$('#plotS').value=s2}
 if(S.when){const m=S.when.match(/^(am|pm)(\d+):(\d+)$/);if(m){$('#whAP').value=m[1];$('#whH').value=m[2];$('#whM').value=m[3]}}
 $('#submit').onclick=()=>{const fb=$('#fb');
-  if(S.who!=='nasser'||S.where!=='3/12'||S.when!=='pm9:14'){S.pen+=120;S.wrong++;save();fb.hidden=false;
-    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:S.where!=='3/12'?WRONG.loc:WRONG.time)+' <b>(+دقيقتين)</b></div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
+  if(S.who!=='nasser'||S.where!=='3/12'||S.when!=='pm9:14'){S.wrong++;save();fb.hidden=false;
+    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:S.where!=='3/12'?WRONG.loc:WRONG.time)+'</div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
     $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
     $('#fbGive').onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
     fb.scrollIntoView({behavior:'smooth'});return}
