@@ -19,10 +19,11 @@ export async function GET(req) {
   try {
     const r = await createCheckout({ orderId: "diag-" + Date.now(), amount: 1, phone: "99999999", email: "", site: process.env.SITE_URL || "https://cases.hyphen-eventskw.com" });
     dry = { ok: true, paymentUrl: r.paymentUrl.slice(0, 80) + "…" };
-  } catch (e) { dry = { ok: false, error: String(e.message || e).slice(0, 400) }; }
+  } catch (e) { dry = { ok: false, error: String(e.message || e).slice(0, 400), full: String(e.message || e) }; }
   // Try to decrypt the raw reply with a few key interpretations to find the right one.
   let variants = null;
-  const m = dry && !dry.ok && /raw=([0-9a-f]+)/.exec(dry.error);
+  const m = dry && !dry.ok && /raw=([0-9a-f]+)/.exec(dry.full || "");
+  if (dry) delete dry.full;
   if (m) {
     const key = process.env.HESABE_SECRET_KEY || "", iv = process.env.HESABE_IV || "";
     const hex = m[1];
