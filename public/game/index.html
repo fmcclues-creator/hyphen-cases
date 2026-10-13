@@ -684,6 +684,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     <h2>٢. وين خالد الحين؟</h2>
     <p style="color:var(--muted);font-size:14px;margin:0">الشويخ الصناعية — اكتبوا رقم القطعة والقسيمة من الورق اللي بالموبايل.</p>
     <div class="plot" id="pickWhere"><label>قطعة <input id="plotQ" inputmode="numeric" maxlength="2" placeholder="٠"></label><label>قسيمة <input id="plotS" inputmode="numeric" maxlength="3" placeholder="٠٠"></label></div>
+    <h2>٣. متى وصل خالد للمخزن؟</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0">الوقت بالضبط، مثل ما سجّلته الكاميرا.</p>
+    <div class="plot" id="pickWhen"><label>الساعة <input id="whH" inputmode="numeric" maxlength="2" placeholder="٠"></label><label>الدقيقة <input id="whM" inputmode="numeric" maxlength="2" placeholder="٠٠"></label><label>&nbsp;<select id="whAP" style="padding:12px;border-radius:12px;border:2px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:20px"><option value="pm">مساءً</option><option value="am">صباحاً</option></select></label></div>
     <div class="fb" id="fb" hidden></div>
     <button class="btn" id="submit" disabled>تأكيد الاتهام</button>
     <p style="color:var(--muted);font-size:13px;margin:0">الاتهام الغلط يضيف دقيقتين على وقتكم.</p>
@@ -737,14 +740,15 @@ const WRONG={
  majed:'صورة الديوانية مأخوذة الساعة ٧:٣٢، وماجد بعيد عن المكتب وقتها.',
  fahad:'إيصال سوق الجملة الساعة ٨:٢٠ م بتوقيع فهد. كان يوصّل بضاعة بعيد عن المكتب.',
  abdul:'عبدالرحمن تصافح مع خالد الثلاثاء، والاجتماع انلغى. بس انتبهوا لشي: منو قال له موعد التوقيع السري؟',
- loc:'الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.'};
+ loc:'الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.',
+ time:'الجاني والمكان صح، بس الوقت غلط. الكاميرا تكتب الوقت على اللقطة… شوفوها زين.'};
 const HINTS={
  lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','قصاصة الجريدة: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
  note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفلة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','افتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. افتحوا الملاحظة الأولى.'],
  note2:['الملاحظة الثانية رقمها من صوتية خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» واقروها زين — تقول وين الصور.'],
  hidden:['الملاحظة الثانية تقول إن لقطة الكاميرا بالألبوم المخفي بالصور، ورقمه «منيرة تعرفه». ارجعوا لواتساب منيرة واقروا كلامها من شهر… مكان بارد 🥶 ورقم غرفة، وعمر.','المكان البارد الوحيد بين ألبومات السفر: لندن. فيه صورة لباب غرفة الفندق عليها رقم. والعمر: عمر سارة — شوفوا كيكة عيد ميلادها بألبوم «سارة».','الجواب: <b>١٢٠٨</b> — غرفة ١٢ وعمر سارة ٨. افتحوا الألبوم المخفي من «الألبومات».'],
  cctv:['الألبوم المخفي فيه لقطة كاميرا البوابة بس ظلماء. افتحوها واضغطوا «تعديل» فوق — مثل ما تعدّلون أي صورة بالموبايل — وعدّلوا الإضاءة والحدّة لين يبين اللي بالصورة.','الإضاءة لازم تكون عالية (حوالي +٧٥) والحدّة فوق النص (حوالي +٥٥)، وثبّتوها ثانية. بعدها: سيارة بيضا عليها لزاق دلّة واقفة عند مخزن «فاضي من شهور». منو قال إن سيارته لاند كروزر بيضا عليها لزاق دلّة؟ راجعوا أقواله بالملف. ولا تنسون فيصل من البنك — بيتصل.','الجواب: الصورة من كاميرا مخزن الشويخ القديم ٩:١٤ م الثلاثاء، والسيارة سيارة <b>ناصر</b>. العنوان بكشف الكهرباء: قطعة ٣ · قسيمة ١٢. روحوا «حل القضية».'],
- solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة («الأوراق» ولا «الأرقام»؟). والمكان مكتوب بكشف الكهرباء في الملاحظة الثانية.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ وفيصل قال التحويلات تروح لمنو؟ المكان: القطعة والقسيمة من عنوان المخزن.','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>.']};
+ solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة («الأوراق» ولا «الأرقام»؟). والمكان مكتوب بكشف الكهرباء في الملاحظة الثانية. والوقت؟ الكاميرا ما تكذب.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ وفيصل قال التحويلات تروح لمنو؟ المكان: القطعة والقسيمة من عنوان المخزن.','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>، والوقت <b>٩:١٤ مساءً</b> (من لقطة الكاميرا).']};
 const HINT_WAIT=[0,5*60,10*60]; // seconds on this stage before each tier opens
 const HINT_PEN=[60,120,180];const HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
 
@@ -1299,13 +1303,16 @@ $('#toSolve').onclick=trySolve;$('#toSolveFile').onclick=trySolve;$('#backToPhon
 $('#pickWho').innerHTML=SUSPECTS.map(s=>`<button data-who="${s.id}"><span class="av">${AV(s.id)}</span><b>${s.n}</b><small>${s.r}</small></button>`).join('');
 const AD=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,'');
 function plotVal(){const q=AD($('#plotQ').value),s2=AD($('#plotS').value);return (q&&s2)?q+'/'+s2:null}
+function whenVal(){let hh=AD($('#whH').value),mm=AD($('#whM').value);if(!hh||mm.length<1)return null;hh=+hh;mm=+mm;if(isNaN(hh)||isNaN(mm)||mm>59)return null;const ap=$('#whAP').value;if(hh>=13)hh-=12;if(hh===0)hh=12;return (ap==='pm'?'pm':'am')+hh+':'+String(mm).padStart(2,'0')}
+['#whH','#whM'].forEach(i=>$(i).addEventListener('input',()=>{S.when=whenVal();save();sel()}));$('#whAP').addEventListener('change',()=>{S.when=whenVal();save();sel()});
 ['#plotQ','#plotS'].forEach(i=>$(i).addEventListener('input',()=>{S.where=plotVal();save();sel()}));
-function sel(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$('#submit').disabled=!(S.who&&S.where)}
+function sel(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$('#submit').disabled=!(S.who&&S.where&&S.when)}
 $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(b){S.who=b.dataset.who;sel()}};
 if(S.where&&S.where.includes('/')){const [q,s2]=S.where.split('/');$('#plotQ').value=q;$('#plotS').value=s2}
+if(S.when){const m=S.when.match(/^(am|pm)(\d+):(\d+)$/);if(m){$('#whAP').value=m[1];$('#whH').value=m[2];$('#whM').value=m[3]}}
 $('#submit').onclick=()=>{const fb=$('#fb');
-  if(S.who!=='nasser'||S.where!=='3/12'){S.pen+=120;S.wrong++;save();fb.hidden=false;
-    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:WRONG.loc)+' <b>(+دقيقتين)</b></div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
+  if(S.who!=='nasser'||S.where!=='3/12'||S.when!=='pm9:14'){S.pen+=120;S.wrong++;save();fb.hidden=false;
+    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:S.where!=='3/12'?WRONG.loc:WRONG.time)+' <b>(+دقيقتين)</b></div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
     $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
     $('#fbGive').onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
     fb.scrollIntoView({behavior:'smooth'});return}
