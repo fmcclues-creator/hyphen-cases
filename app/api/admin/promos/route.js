@@ -20,10 +20,15 @@ export async function POST(req) {
   if (error) return Response.json({ ok: false, reason: "db" }, { status: 500 });
   return Response.json({ ok: true });
 }
-// PATCH { code, active }
+// PATCH { code, active } | { code, resetUses:true } | { code, extendDays:n }
 export async function PATCH(req) {
   if (!authed(req)) return Response.json({ ok: false }, { status: 401 });
   const b = await req.json().catch(() => ({}));
-  await db().from("promos").update({ active: !!b.active }).eq("code", String(b.code || ""));
+  const code = String(b.code || "");
+  const upd = {};
+  if (typeof b.active === "boolean") upd.active = b.active;
+  if (b.resetUses) upd.uses = 0;
+  if (b.extendDays) upd.expires_at = new Date(Date.now() + Number(b.extendDays) * 86400000).toISOString();
+  await db().from("promos").update(upd).eq("code", code);
   return Response.json({ ok: true });
 }

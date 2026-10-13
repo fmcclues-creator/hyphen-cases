@@ -33,6 +33,9 @@ export default function Admin() {
     const j = await r.json(); if (!j.ok) return setMsg("كلمة السر غلط");
     setMade(j.codes); load();
   }
+  async function promoPatch(code, body) {
+    await fetch("/api/admin/promos", { method: "PATCH", headers: H, body: JSON.stringify({ code, ...body }) }); load();
+  }
   async function cleanup() {
     if (!confirm("حذف كل الطلبات التجريبية (TEST) والرموز اللي طلعت منها؟")) return;
     const r = await fetch("/api/admin/cleanup", { method: "POST", headers: H }); const j = await r.json();
@@ -110,7 +113,7 @@ export default function Admin() {
         <div style={{ marginTop: 18 }}><button className="cta" onClick={addPromo}>أنشئ الكود</button></div>
         {promos.length > 0 && (
           <table style={{ marginTop: 16 }}><thead><tr><th>الكود</th><th>الخصم</th><th>الاستخدام</th><th>ينتهي</th><th>الحالة</th></tr></thead>
-            <tbody>{promos.map((p) => <tr key={p.code}><td className="mono">{p.code}</td><td>{p.percent > 0 ? `${p.percent}٪` : `${Number(p.amount_kwd).toFixed(3)} د.ك`}</td><td>{p.uses}/{p.max_uses}</td><td>{p.expires_at ? new Date(p.expires_at).toLocaleDateString("ar-KW") : "—"}</td><td><button className="btn-sm" onClick={() => togglePromo(p)}>{p.active ? "إيقاف" : "تفعيل"}</button></td></tr>)}</tbody>
+            <tbody>{promos.map((p) => <tr key={p.code}><td className="mono">{p.code}</td><td>{p.percent > 0 ? `${p.percent}٪` : `${Number(p.amount_kwd).toFixed(3)} د.ك`}</td><td>{p.uses}/{p.max_uses}</td><td>{p.expires_at ? new Date(p.expires_at).toLocaleDateString("ar-KW") : "—"}</td><td style={{ whiteSpace: "nowrap" }}><button className="btn-sm" onClick={() => togglePromo(p)}>{p.active ? "إيقاف" : "تفعيل"}</button> <button className="btn-sm" onClick={() => promoPatch(p.code, { resetUses: true })}>صفّر الاستخدام</button> <button className="btn-sm" onClick={() => promoPatch(p.code, { extendDays: 30 })}>+٣٠ يوم</button></td></tr>)}</tbody>
           </table>
         )}
       </div>
