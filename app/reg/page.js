@@ -34,7 +34,7 @@ export default function Reg() {
 
   return (
     <main className="reg" dir="ltr">
-      <div className="reg-logo"><img src="/wordmark.svg" alt="HYPHEN" /><span>CASES</span></div>
+      <div className="reg-logo"><img src="/wordmark.svg" alt="HYPHEN" /></div>
       {!done && (
         <section className="reg-intro">
           <div className="reg-kicker">Live event</div>
