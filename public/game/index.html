@@ -223,7 +223,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .ev b{display:block}.ev small{display:block;color:var(--muted)}
 .ev .note{grid-column:2;color:#e3e7ef;font-size:14px;background:#1c2331;padding:6px 10px;border-radius:8px;margin-top:4px}
 .dayh{padding:10px 12px 4px;font-weight:700;color:var(--tape-2);font-size:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:2px}.mh{grid-column:1/-1;padding:14px 8px 4px;font-size:13px;font-weight:700;color:var(--muted)}.mh:first-child{padding-top:8px}.seg{display:flex;gap:6px;padding:8px 12px;background:#111621;border-bottom:1px solid var(--line)}.seg button{flex:1;padding:7px;border-radius:9px;background:#1a2030;color:var(--muted);font:inherit;font-weight:700;font-size:13px}.seg button.on{background:#2a3344;color:#fff}.albs{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}.albs button{text-align:start;background:none;color:#e9ecf2;font:inherit}.albs .cov{aspect-ratio:1;border-radius:12px;overflow:hidden;background:#1a2030;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative}.albs .cov img{width:100%;height:100%;object-fit:cover;display:block}.albs .cov .lk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);font-size:40px}.albs b{display:block;margin-top:6px;font-size:14px}.albs small{color:var(--muted);font-size:12px}
 .grid button{aspect-ratio:1;background:#1a2030;border-radius:4px;overflow:hidden}
 .grid svg{width:100%;height:100%;display:block}
 .big{flex:1;min-height:0;display:flex;flex-direction:column;background:#000}
@@ -573,7 +573,11 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
     <div class="app" id="a-chat"><div class="ah wa-h"><button data-back="chats">‹</button><span id="chatAv"></span><div id="chatTitle"></div></div><div class="msgs wa" id="chatBody"></div><div class="qr" id="qr" hidden></div></div>
     <div class="app" id="a-calls"><div class="ah"><button data-back>‹</button><div>الهاتف</div></div><div class="list" id="callsBody"></div></div>
     <div class="app" id="a-cal"><div class="ah"><button data-back>‹</button><div>التقويم</div></div><div class="list" id="calBody"></div></div>
-    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>الصور <span class="sub">١٤ صورة · ٢ محذوفة مؤخراً</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
+    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>الصور <span class="sub" id="phSub"></span></div></div>
+      <div class="seg" id="phSeg"><button class="on" data-seg="lib">المكتبة</button><button data-seg="alb">الألبومات</button></div>
+      <div class="list"><div class="grid" id="photoGrid"></div><div class="albs" id="albGrid" hidden></div></div></div>
+    <div class="app" id="a-album"><div class="ah"><button data-back="photos">‹</button><div id="albTitle"></div></div><div class="list"><div class="grid" id="albPhotos"></div></div></div>
+    <div class="app" id="a-hidlock"><div class="ah"><button data-back="photos">‹</button><div>المخفي</div></div><div class="locked" style="background:#0b0e14;color:#fff"><div style="font-size:44px">🔒</div><b>الألبوم المخفي</b><div class="hint">محمي برمز من ٤ أرقام.<br>خالد ينسى الأرقام… بس منيرة ما تنسى.</div><div class="dots" id="hdots"><i></i><i></i><i></i><i></i></div><div class="pad" id="hpad"></div></div></div>
     <div class="app" id="a-photo"><div class="ah"><button data-back="photos">‹</button><div id="photoTitle"></div></div><div class="big"><div class="img" id="photoImg"></div><div class="info" id="photoInfo"></div></div></div>
     <div class="app" id="a-ig"><div class="ah"><button data-back>‹</button><div>Instagram</div></div>
       <div class="ig">
@@ -656,7 +660,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
           <div class="br"><span>آخر ٣ أشهر</span><b>٩٨٠ · ١,٠٥٠ · ١,١٨٠</b></div>
           <div class="br"><span>المبلغ</span><b>٢٣٫٦٠٠ د.ك — مدفوع (كي نت)</b></div></div>
         مخزن «فاضي» ما يستهلك كهرباء كل شهر. <b>شي شغّال هناك.</b><br><br>
-        كاميرا البوابة سجّلت شي الثلاثاء بالليل. أخذت لقطة وقصّيتها… <mark>الصور بالألبوم المحذوف</mark>، نفس رقم هالملاحظة.
+        كاميرا البوابة سجّلت شي الثلاثاء بالليل. أخذت لقطة وقصّيتها… <mark>الصور بالألبوم المخفي</mark>. الرقم؟ اللي منيرة دايماً تضحك عليّ إني أنساه.
       </div>
       </div>
     </div>
@@ -730,14 +734,16 @@ const WRONG={
 const HINTS={
  lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','قصاصة الجريدة: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
  note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفلة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','افتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. افتحوا الملاحظة الأولى.'],
- note2:['الملاحظة الثانية رقمها من صوتية خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» وبعدها ارجعوا للصور: الألبوم المحذوف انفتح.'],
- cctv:['الملاحظة الثانية تقول كاميرا البوابة سجّلت شي، والألبوم المحذوف بالصور فيه لقطتين مقصوصتين. كل وحدة ناقصها شي… اضغطوا «دمج الصورتين».','بعد الدمج: سيارة بيضا عليها لزاق دلّة واقفة عند مخزن «فاضي من شهور». منو قال إن سيارته لاند كروزر بيضا عليها لزاق دلّة؟ راجعوا أقواله بالملف. ولا تنسون فيصل من البنك — بيتصل.','الجواب: الصورة من كاميرا مخزن الشويخ القديم ٩:١٤ م الثلاثاء، والسيارة سيارة <b>ناصر</b>. العنوان بكشف الكهرباء: قطعة ٣ · قسيمة ١٢. روحوا «حل القضية».'],
+ note2:['الملاحظة الثانية رقمها من صوتية خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» واقروها زين — تقول وين الصور.'],
+ hidden:['الملاحظة الثانية تقول إن لقطات الكاميرا بالألبوم المخفي بالصور، ورقمه «منيرة تعرفه». ارجعوا لواتساب منيرة واقروا كلامها من شهر… مكان بارد 🥶 ورقم غرفة، وعمر.','المكان البارد الوحيد بين ألبومات السفر: لندن. فيه صورة لباب غرفة الفندق عليها رقم. والعمر: عمر سارة — شوفوا كيكة عيد ميلادها بألبوم «سارة».','الجواب: <b>١٢٠٨</b> — غرفة ١٢ وعمر سارة ٨. افتحوا الألبوم المخفي من «الألبومات».'],
+ cctv:['الألبوم المخفي بالصور فيه لقطتين مقصوصتين من كاميرا البوابة. كل وحدة ناقصها شي… اضغطوا «دمج الصورتين».','بعد الدمج: سيارة بيضا عليها لزاق دلّة واقفة عند مخزن «فاضي من شهور». منو قال إن سيارته لاند كروزر بيضا عليها لزاق دلّة؟ راجعوا أقواله بالملف. ولا تنسون فيصل من البنك — بيتصل.','الجواب: الصورة من كاميرا مخزن الشويخ القديم ٩:١٤ م الثلاثاء، والسيارة سيارة <b>ناصر</b>. العنوان بكشف الكهرباء: قطعة ٣ · قسيمة ١٢. روحوا «حل القضية».'],
  solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة («الأوراق» ولا «الأرقام»؟). والمكان مكتوب بكشف الكهرباء في الملاحظة الثانية.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ وفيصل قال التحويلات تروح لمنو؟ المكان: القطعة والقسيمة من عنوان المخزن.','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>.']};
 const HINT_WAIT=[0,5*60,10*60]; // seconds on this stage before each tier opens
 const HINT_PEN=[60,120,180];const HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
 
 const CHATS=[
  {id:'munira',n:'منيرة ❤️',av:'p:munira',last:'١١:١٥ م',u:3,msgs:[
+  ['day','٢ سبتمبر'],['me','منيرة، شنو رقم الألبوم المخفي؟ نسيته 😅','١٠:٣١ ص'],['them','واااااي خالد شفيك 😂😂','١٠:٣٣ ص'],['them','بس تنسى الأرقام زين، ما تنساني بعد','١٠:٣٣ ص'],['them','مراح أگولك. بس بگولك شيئين: غرفة بمكان آنا أحبّه واااايد 🥶 … وعمري أو عمر بنتك عاد كيفك','١٠:٣٥ ص'],['them','يلااا باي عندي ميتنگ','١٠:٣٥ ص'],['me','😂 حسافة عليك','١٠:٣٦ ص'],
   ['day','الاثنين'],['them','سارة عندها مسرحية بالمدرسة الخميس الياي، لا تنسى 🎭','٦:٠٠ م'],['me','ما أنسى، بس الخميس عندي التوقيع الصبح، بلحقكم','٦:٢٠ م'],['day','الثلاثاء'],['them','تذكّر دوا ماما يوم الجمعة','١٠:٠٠ ص'],['me','تم ❤️','١٠:٠٢ ص'],['them','سارة تبي تروح الشاليه ويا عمها الويكند','٤:٠٠ م'],['me','خلّها، وإذا خلصت آنا بلحقكم','٤:٠٥ م'],['day','الأربعاء'],['them','صباح الخير، لا تنسى الفطور معك','٧:١٠ ص'],['me','صباح النور ❤️ تم','٧:١٢ ص'],['them','شنو تبي للعشا؟','٤:٣٠ م'],['me','أي شَيْ من يدك ❤️','٤:٣٥ م'],['them','لا تتأخر الليلة، العشا جاهز.','٧:٣٠ م'],['me','إن شاء الله، بس أخلص شغل.','٧:٣٥ م'],
   ['them','خالد وينك؟ ردّ علي.','١٠:٣٠ م'],['them','كلمت ناصر، رايح يشوفك بالمكتب.','١٠:٤٥ م'],['them','٧ اتصالات فايتة. الله يستر عليك.','١١:١٥ م']]},
  {id:'nasser',n:'ناصر',av:'p:nasser',last:'٨:٥٠ م',u:1,msgs:[
@@ -831,24 +837,117 @@ const SVG={
  receipt:`<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="240" fill="#2b2f3a"/><path d="M80 14h160v212l-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8-10-8-10 8z" fill="#f5f1e6"/><g font-family="Tajawal,sans-serif" fill="#2a2419" text-anchor="middle" direction="rtl"><text x="160" y="42" font-size="15" font-weight="700">سوق الجملة</text><text x="160" y="60" font-size="10">إيصال استلام بضاعة</text><line x1="100" y1="70" x2="220" y2="70" stroke="#999" stroke-dasharray="3 3"/><text x="160" y="92" font-size="11">التاريخ: الأربعاء</text><text x="160" y="110" font-size="13" font-weight="700">الوقت: ٨:٢٠ م</text><text x="160" y="132" font-size="11">عيش بسمتي ×٢٠ كيس</text><text x="160" y="148" font-size="11">لحم ×٥ كراتين</text><line x1="100" y1="160" x2="220" y2="160" stroke="#999" stroke-dasharray="3 3"/><text x="160" y="182" font-size="11">المستلم: سوق الجملة</text><text x="160" y="200" font-size="11">المورّد: فهد</text></g><path d="M118 212 q10-14 20-2 t18-6 t16 4" fill="none" stroke="#1d3a8a" stroke-width="1.8"/></svg>`,
  old:`<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="240" fill="#d9c7a3"/><rect x="10" y="10" width="300" height="220" fill="#b9a27a"/><rect x="40" y="50" width="240" height="130" fill="#7a6246"/><rect x="60" y="100" width="200" height="80" fill="#4a3a2a"/><rect x="50" y="60" width="220" height="30" fill="#efe1c3"/><text x="160" y="82" font-size="18" font-family="Amiri,serif" text-anchor="middle" fill="#4a3a2a" font-weight="700">Crazee Burger</text><path d="M70 190 h180" stroke="#c4382d" stroke-width="6"/><circle cx="160" cy="150" r="16" fill="#efe1c3"/><rect x="146" y="166" width="28" height="30" rx="6" fill="#efe1c3"/><text x="160" y="222" font-size="11" font-family="Amiri,serif" text-anchor="middle" fill="#4a3a2a">افتتاح الفرع الأول · ٢٠١٩</text></svg>`};
 const PHOTOS=[
- {id:'cctv_a',n:'لقطة مقصوصة ١',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'النص الأول: بوابة مخزن وطرف سيارة… التاريخ ناقص.',del:1},
- {id:'cctv_b',n:'لقطة مقصوصة ٢',info:'الثلاثاء ٣٠ سبتمبر · محذوفة',cap:'النص الثاني: سيارة بيضاء وعلى زجاجها الخلفي لزاق… وين هذا؟',del:1},
- {id:'cctv',n:'كاميرا المخزن · CAM 02',info:'الثلاثاء ٣٠ سبتمبر ٩:١٤ م · الشويخ الصناعية، شارع ٣',cap:'لقطة من كاميرا المخزن القديم. لاند كروزر بيضاء واقفة عند البوابة، وعلى زجاجها الخلفي لزاق دلّة. المخزن اللي «فاضي من شهور».',ov:'21:14',hid:1},
- {id:'parking',n:'مواقف المكتب',info:'الأربعاء ٨:٣٤ م · مكتب مجموعة خالد، الدور الثالث',cap:'سيارة خالد، وبجنبها لاند كروزر بيضاء عليها لزاق أحمر على الزجاج الخلفي.',ov:'20:34'},
- {id:'diwaniya',n:'صورة من ماجد',info:'الأربعاء ٧:٣٢ م · مُستلمة من ماجد',cap:'ماجد مع أربعة أشخاص يتابعون المباراة. الساعة على الحائط تعرض ٧:٣٢.',ov:'19:32'},
- {id:'receipt',n:'إيصال استلام',info:'الأربعاء ٨:٤٥ م · مُستلم من فهد',cap:'سوق الجملة، الساعة ٨:٢٠ م، توقيع فهد.',ov:'20:20'},
- {id:'karak',n:'كرك',info:'الثلاثاء ٤:١٠ م · الشويخ الصناعية، شارع ٣',cap:'كوب كرك على طاولة كافتيريا. بالخلفية: أبواب مخازن.',ov:'16:10'},
- {id:'warehouse',n:'المخزن القديم',info:'الثلاثاء ٤:٢٥ م · الشويخ الصناعية، شارع ٣',cap:'باب مخزن أزرق قديم مقفل. نفس الشارع اللي صوّر فيه الكرك.',ov:'16:25'},
- {id:'coffee',n:'قهوة الصبح',info:'الأربعاء ٨:٠٥ ص · مكتب مجموعة خالد',cap:'كوب قهوة على المكتب، وبجنبه ملف أوراق الصفقة.',ov:'08:05'},
- {id:'carwash',n:'المغسلة',info:'الثلاثاء ٦:٣٠ م · مغسلة السيارات، السالمية',cap:'سيارة خالد بالمغسلة.',ov:'18:30'},
- {id:'kitchen',n:'مطبخ الفرع',info:'الاثنين ٢:١٥ م · Crazee Burger، السالمية',cap:'الطباخين وقت الذروة.',ov:'14:15'},
- {id:'hospital',n:'ممر المستشفى',info:'الاثنين ٨:٤٠ م · مستشفى مبارك',cap:'زار سالم ووالدته في المستشفى.',ov:'20:40'},
- {id:'machboos',n:'مجبوس',info:'الأحد ١:٣٠ م · Crazee Burger، الفرع الرئيسي',cap:'صحن مجبوس دجاج.',ov:'13:30'},
- {id:'buffet',n:'افتتاح الفرع الثالث',info:'قبل ٣ أشهر · السالمية',cap:'بوفيه الافتتاح.',ov:''},
- {id:'sea',n:'الخيران',info:'قبل شهرين · شاليه العائلة',cap:'البحر وقت المغرب.',ov:''},
- {id:'fridge',n:'ثلاجة البيت',info:'السبت ٩:٠٠ ص · المنزل',cap:'رسومات سارة وبطاقة عيد ميلاد.',ov:'09:00'},
- {id:'old',n:'صورة قديمة',info:'مُحفوظة من الألبوم · ٢٠١٩',cap:'افتتاح الفرع الأول.',ov:''}];
+ {id:'cctv_a',d:'2025-09-30T21:14',alb:'hidden',n:'لقطة مقصوصة ١',info:'الثلاثاء ٣٠ سبتمبر · الألبوم المخفي',cap:'النص الأول: بوابة مخزن وطرف سيارة… التاريخ ناقص.',hid2:1},
+ {id:'cctv_b',d:'2025-09-30T21:15',alb:'hidden',n:'لقطة مقصوصة ٢',info:'الثلاثاء ٣٠ سبتمبر · الألبوم المخفي',cap:'النص الثاني: سيارة بيضاء وعلى زجاجها الخلفي لزاق… وين هذا؟',hid2:1},
+ {id:'cctv',d:'2025-09-30T21:14',alb:'',n:'كاميرا المخزن · CAM 02',info:'الثلاثاء ٣٠ سبتمبر ٩:١٤ م · الشويخ الصناعية، شارع ٣',cap:'لقطة من كاميرا المخزن القديم. لاند كروزر بيضاء واقفة عند البوابة، وعلى زجاجها الخلفي لزاق دلّة. المخزن اللي «فاضي من شهور».',ov:'21:14',hid:1},
+ {id:'parking',d:'2025-10-01T20:34',alb:'',n:'مواقف المكتب',info:'الأربعاء ٨:٣٤ م · مكتب مجموعة خالد، الدور الثالث',cap:'سيارة خالد، وبجنبها لاند كروزر بيضاء عليها لزاق أحمر على الزجاج الخلفي.',ov:'20:34'},
+ {id:'diwaniya',d:'2025-10-01T19:32',alb:'',n:'صورة من ماجد',info:'الأربعاء ٧:٣٢ م · مُستلمة من ماجد',cap:'ماجد مع أربعة أشخاص يتابعون المباراة. الساعة على الحائط تعرض ٧:٣٢.',ov:'19:32'},
+ {id:'receipt',d:'2025-10-01T20:45',alb:'',n:'إيصال استلام',info:'الأربعاء ٨:٤٥ م · مُستلم من فهد',cap:'سوق الجملة، الساعة ٨:٢٠ م، توقيع فهد.',ov:'20:20'},
+ {id:'karak',d:'2025-09-30T16:10',alb:'',n:'كرك',info:'الثلاثاء ٤:١٠ م · الشويخ الصناعية، شارع ٣',cap:'كوب كرك على طاولة كافتيريا. بالخلفية: أبواب مخازن.',ov:'16:10'},
+ {id:'warehouse',d:'2025-09-30T16:25',alb:'',n:'المخزن القديم',info:'الثلاثاء ٤:٢٥ م · الشويخ الصناعية، شارع ٣',cap:'باب مخزن أزرق قديم مقفل. نفس الشارع اللي صوّر فيه الكرك.',ov:'16:25'},
+ {id:'coffee',d:'2025-10-01T08:05',alb:'',n:'قهوة الصبح',info:'الأربعاء ٨:٠٥ ص · مكتب مجموعة خالد',cap:'كوب قهوة على المكتب، وبجنبه ملف أوراق الصفقة.',ov:'08:05'},
+ {id:'carwash',d:'2025-09-30T18:30',alb:'',n:'المغسلة',info:'الثلاثاء ٦:٣٠ م · مغسلة السيارات، السالمية',cap:'سيارة خالد بالمغسلة.',ov:'18:30'},
+ {id:'kitchen',d:'2025-09-29T14:15',alb:'crazee',n:'مطبخ الفرع',info:'الاثنين ٢:١٥ م · Crazee Burger، السالمية',cap:'الطباخين وقت الذروة.',ov:'14:15'},
+ {id:'hospital',d:'2025-09-29T20:40',alb:'',n:'ممر المستشفى',info:'الاثنين ٨:٤٠ م · مستشفى مبارك',cap:'زار سالم ووالدته في المستشفى.',ov:'20:40'},
+ {id:'machboos',d:'2025-09-28T13:30',alb:'',n:'مجبوس',info:'الأحد ١:٣٠ م · Crazee Burger، الفرع الرئيسي',cap:'صحن مجبوس دجاج.',ov:'13:30'},
+ {id:'buffet',d:'2025-06-12T20:30',alb:'crazee',n:'افتتاح الفرع الثالث',info:'قبل ٣ أشهر · السالمية',cap:'بوفيه الافتتاح.',ov:''},
+ {id:'sea',d:'2025-08-15T18:10',alb:'',n:'الخيران',info:'قبل شهرين · شاليه العائلة',cap:'البحر وقت المغرب.',ov:''},
+ {id:'fridge',d:'2025-09-27T09:00',alb:'',n:'ثلاجة البيت',info:'السبت ٩:٠٠ ص · المنزل',cap:'رسومات سارة وبطاقة عيد ميلاد.',ov:'09:00'},
+ {id:'old',d:'2019-09-21T19:00',alb:'crazee',n:'صورة قديمة',info:'مُحفوظة من الألبوم · ٢٠١٩',cap:'افتتاح الفرع الأول.',ov:''},
+ {id:'p1',src:'lib/p1.jpg',th:'th/p1.jpg',d:'2024-12-12T19:40',alb:'london',n:'بيغ بن',info:'١٢ ديسمبر ٢٠٢٤ · لندن',cap:'أول ليلة بلندن. البرد يقطع 🥶',ov:''},
+ {id:'p2',src:'lib/p2.jpg',th:'th/p2.jpg',d:'2024-12-13T13:10',alb:'london',n:'أكسفورد ستريت',info:'١٣ ديسمبر ٢٠٢٤ · لندن',cap:'منيرة والأكياس… ما خلّت شي',ov:''},
+ {id:'p3',src:'lib/p3.jpg',th:'th/p3.jpg',d:'2024-12-12T15:05',alb:'london',n:'غرفتنا',info:'١٢ ديسمبر ٢٠٢٤ · فندق لندن',cap:'وصلنا. الغرفة ١٢',ov:''},
+ {id:'p4',src:'lib/p4.jpg',th:'th/p4.jpg',d:'2024-12-13T08:30',alb:'london',n:'فطور الفندق',info:'١٣ ديسمبر ٢٠٢٤ · لندن',cap:'إنجليزي كامل',ov:''},
+ {id:'p5',src:'lib/p5.jpg',th:'th/p5.jpg',d:'2024-12-14T11:20',alb:'london',n:'المترو',info:'١٤ ديسمبر ٢٠٢٤ · لندن',cap:'ضايعين بالخطوط',ov:''},
+ {id:'p6',src:'lib/p6.jpg',th:'th/p6.jpg',d:'2024-12-15T10:00',alb:'london',n:'هايد بارك',info:'١٥ ديسمبر ٢٠٢٤ · لندن',cap:'مطر خفيف وقهوة',ov:''},
+ {id:'p20',src:'lib/p20.jpg',th:'th/p20.jpg',d:'2024-12-13T15:30',alb:'london',n:'تاور بريدج',info:'١٣ ديسمبر ٢٠٢٤ · لندن',cap:'كلنا على الجسر',ov:''},
+ {id:'p21',src:'lib/p21.jpg',th:'th/p21.jpg',d:'2024-12-14T13:00',alb:'london',n:'ترافلغار',info:'١٤ ديسمبر ٢٠٢٤ · لندن',cap:'سارة والحمام 🕊️',ov:''},
+ {id:'p22',src:'lib/p22.jpg',th:'th/p22.jpg',d:'2024-12-14T16:30',alb:'london',n:'شاي العصر',info:'١٤ ديسمبر ٢٠٢٤ · لندن',cap:'منيرة قالت لازم نجرّب',ov:''},
+ {id:'p23',src:'lib/p23.jpg',th:'th/p23.jpg',d:'2024-12-15T07:45',alb:'london',n:'من الشباك',info:'١٥ ديسمبر ٢٠٢٤ · فندق لندن',cap:'مطر… كل يوم مطر',ov:''},
+ {id:'p24',src:'lib/p24.jpg',th:'th/p24.jpg',d:'2024-12-15T18:20',alb:'london',n:'التلفون الأحمر',info:'١٥ ديسمبر ٢٠٢٤ · لندن',cap:'لازم الصورة الكلاسيكية 😂',ov:''},
+ {id:'p25',src:'lib/p25.jpg',th:'th/p25.jpg',d:'2024-12-16T13:15',alb:'london',n:'فش آند تشبس',info:'١٦ ديسمبر ٢٠٢٤ · لندن',cap:'مو شي بس تمام',ov:''},
+ {id:'p26',src:'lib/p26.jpg',th:'th/p26.jpg',d:'2024-12-16T11:00',alb:'london',n:'متحف التاريخ الطبيعي',info:'١٦ ديسمبر ٢٠٢٤ · لندن',cap:'سارة ما تبي تطلع',ov:''},
+ {id:'p27',src:'lib/p27.jpg',th:'th/p27.jpg',d:'2024-12-16T15:40',alb:'london',n:'عين لندن',info:'١٦ ديسمبر ٢٠٢٤ · لندن',cap:'سارة خايفة من العلو',ov:''},
+ {id:'p28',src:'lib/p28.jpg',th:'th/p28.jpg',d:'2024-12-17T18:00',alb:'london',n:'كوفنت غاردن',info:'١٧ ديسمبر ٢٠٢٤ · لندن',cap:'ثلج! أول مرة لسارة',ov:''},
+ {id:'p29',src:'lib/p29.jpg',th:'th/p29.jpg',d:'2024-12-17T19:30',alb:'london',n:'وينتر وندرلاند',info:'١٧ ديسمبر ٢٠٢٤ · هايد بارك',cap:'آخر ليلة',ov:''},
+ {id:'p30',src:'lib/p30.jpg',th:'th/p30.jpg',d:'2024-12-13T19:00',alb:'london',n:'تاكسي',info:'١٣ ديسمبر ٢٠٢٤ · لندن',cap:'',ov:''},
+ {id:'p31',src:'lib/p31.jpg',th:'th/p31.jpg',d:'2024-12-14T18:45',alb:'london',n:'رجعنا',info:'١٤ ديسمبر ٢٠٢٤ · فندق لندن',cap:'منيرة ورجعتها من التسوق',ov:''},
+ {id:'p0',src:'lib/p0.jpg',th:'th/p0.jpg',d:'2025-03-08T16:40',alb:'sara',n:'سارة',info:'٨ مارس ٢٠٢٥ · الحديقة',cap:'المرجيحة المفضلة',ov:''},
+ {id:'p40',src:'lib/p40.jpg',th:'th/p40.jpg',d:'2025-05-17T19:30',alb:'sara',n:'عيد ميلاد سارة',info:'١٧ مايو ٢٠٢٥ · البيت',cap:'٨ سنين ❤️',ov:''},
+ {id:'p41',src:'lib/p41.jpg',th:'th/p41.jpg',d:'2025-09-14T06:50',alb:'sara',n:'أول يوم مدرسة',info:'١٤ سبتمبر ٢٠٢٥ · البيت',cap:'الصف الثالث',ov:''},
+ {id:'p42',src:'lib/p42.jpg',th:'th/p42.jpg',d:'2025-02-02T17:20',alb:'sara',n:'الفنانة',info:'٢ فبراير ٢٠٢٥ · البيت',cap:'',ov:''},
+ {id:'p43',src:'lib/p43.jpg',th:'th/p43.jpg',d:'2025-07-19T20:10',alb:'sara',n:'آيس كريم',info:'١٩ يوليو ٢٠٢٥ · الأفنيوز',cap:'على ذقنها كلها',ov:''},
+ {id:'p44',src:'lib/p44.jpg',th:'th/p44.jpg',d:'2025-01-25T22:30',alb:'sara',n:'نامت',info:'٢٥ يناير ٢٠٢٥ · البيت',cap:'ويا الدب',ov:''},
+ {id:'p45',src:'lib/p45.jpg',th:'th/p45.jpg',d:'2025-04-11T17:45',alb:'sara',n:'البحر',info:'١١ أبريل ٢٠٢٥ · شاطئ المسيلة',cap:'',ov:''},
+ {id:'p46',src:'lib/p46.jpg',th:'th/p46.jpg',d:'2025-06-06T19:00',alb:'sara',n:'سارة ويدّتها',info:'٦ يونيو ٢٠٢٥ · بيت ماما',cap:'',ov:''},
+ {id:'p47',src:'lib/p47.jpg',th:'th/p47.jpg',d:'2025-03-22T16:30',alb:'sara',n:'السيكل الجديد',info:'٢٢ مارس ٢٠٢٥ · الشارع عندنا',cap:'أول يوم',ov:''},
+ {id:'p48',src:'lib/p48.jpg',th:'th/p48.jpg',d:'2025-03-31T11:00',alb:'sara',n:'عيد الفطر',info:'٣١ مارس ٢٠٢٥ · البيت',cap:'الحنا والدراعة',ov:''},
+ {id:'p49',src:'lib/p49.jpg',th:'th/p49.jpg',d:'2025-08-02T14:20',alb:'sara',n:'البسّة',info:'٢ أغسطس ٢٠٢٥ · البيت',cap:'صارت لها',ov:''},
+ {id:'p50',src:'lib/p50.jpg',th:'th/p50.jpg',d:'2025-09-21T19:15',alb:'sara',n:'الواجبات',info:'٢١ سبتمبر ٢٠٢٥ · البيت',cap:'منيرة والصبر',ov:''},
+ {id:'p51',src:'lib/p51.jpg',th:'th/p51.jpg',d:'2025-06-28T12:30',alb:'sara',n:'المسبح',info:'٢٨ يونيو ٢٠٢٥ · البيت',cap:'',ov:''},
+ {id:'p126',src:'lib/p126.jpg',th:'th/p126.jpg',d:'2025-08-30T15:10',alb:'sara',n:'الكابتن',info:'٣٠ أغسطس ٢٠٢٥ · السيارة',cap:'كابي ونظارتي',ov:''},
+ {id:'p131',src:'lib/p131.jpg',th:'th/p131.jpg',d:'2025-02-14T17:00',alb:'sara',n:'كوكيز',info:'١٤ فبراير ٢٠٢٥ · البيت',cap:'منيرة وسارة',ov:''},
+ {id:'p143',src:'lib/p143.jpg',th:'th/p143.jpg',d:'2025-04-26T17:30',alb:'sara',n:'الحديقة',info:'٢٦ أبريل ٢٠٢٥ · الحديقة',cap:'',ov:''},
+ {id:'p7',src:'lib/p7.jpg',th:'th/p7.jpg',d:'2025-05-03T13:00',alb:'crazee',n:'الشباب',info:'٣ مايو ٢٠٢٥ · مطبخ الفرع الأول',cap:'',ov:''},
+ {id:'p8',src:'lib/p8.jpg',th:'th/p8.jpg',d:'2025-09-20T21:15',alb:'crazee',n:'برجر وكرك',info:'٢٠ سبتمبر ٢٠٢٥ · Crazee Burger',cap:'التجربة الجديدة',ov:''},
+ {id:'p60',src:'lib/p60.jpg',th:'th/p60.jpg',d:'2025-06-12T19:45',alb:'crazee',n:'الفرع الثالث',info:'١٢ يونيو ٢٠٢٥ · السالمية',cap:'ليلة الافتتاح',ov:''},
+ {id:'p61',src:'lib/p61.jpg',th:'th/p61.jpg',d:'2025-06-12T18:00',alb:'crazee',n:'قص الشريط',info:'١٢ يونيو ٢٠٢٥ · السالمية',cap:'الفرع الثالث ✂️',ov:''},
+ {id:'p62',src:'lib/p62.jpg',th:'th/p62.jpg',d:'2025-07-05T14:00',alb:'crazee',n:'الصاج',info:'٥ يوليو ٢٠٢٥ · المطبخ',cap:'',ov:''},
+ {id:'p63',src:'lib/p63.jpg',th:'th/p63.jpg',d:'2025-09-23T23:10',alb:'crazee',n:'المكتب',info:'٢٣ سبتمبر ٢٠٢٥ · المكتب',cap:'ليلة طويلة',ov:''},
+ {id:'p64',src:'lib/p64.jpg',th:'th/p64.jpg',d:'2025-04-15T11:30',alb:'crazee',n:'قبل الافتتاح',info:'١٥ أبريل ٢٠٢٥ · الفرع الثالث',cap:'شهرين وتجهز',ov:''},
+ {id:'p65',src:'lib/p65.jpg',th:'th/p65.jpg',d:'2025-08-12T13:20',alb:'crazee',n:'التوصيل',info:'١٢ أغسطس ٢٠٢٥ · الفرع الأول',cap:'',ov:''},
+ {id:'p66',src:'lib/p66.jpg',th:'th/p66.jpg',d:'2025-08-28T15:00',alb:'crazee',n:'أبو حسين',info:'٢٨ أغسطس ٢٠٢٥ · المطبخ',cap:'الشيف يجرّب',ov:''},
+ {id:'p67',src:'lib/p67.jpg',th:'th/p67.jpg',d:'2025-09-09T07:30',alb:'crazee',n:'طلبية الصبح',info:'٩ سبتمبر ٢٠٢٥ · الفرع الأول',cap:'فهد ودّى البضاعة',ov:''},
+ {id:'p68',src:'lib/p68.jpg',th:'th/p68.jpg',d:'2025-01-18T12:00',alb:'crazee',n:'المنيو الجديد',info:'١٨ يناير ٢٠٢٥ · Crazee Burger',cap:'',ov:''},
+ {id:'p69',src:'lib/p69.jpg',th:'th/p69.jpg',d:'2025-03-14T20:30',alb:'crazee',n:'برجر الهلابينو',info:'١٤ مارس ٢٠٢٥ · Crazee Burger',cap:'نحطه بالمنيو؟',ov:''},
+ {id:'p70',src:'lib/p70.jpg',th:'th/p70.jpg',d:'2025-06-13T23:00',alb:'crazee',n:'الفريق',info:'١٣ يونيو ٢٠٢٥ · الفرع الثالث',cap:'بعد الافتتاح',ov:''},
+ {id:'p71',src:'lib/p71.jpg',th:'th/p71.jpg',d:'2025-09-24T00:30',alb:'crazee',n:'سكّرنا',info:'٢٤ سبتمبر ٢٠٢٥ · الفرع الأول',cap:'',ov:''},
+ {id:'p11',src:'lib/p11.jpg',th:'th/p11.jpg',d:'2023-07-21T12:30',alb:'egypt',n:'الأهرامات',info:'٢١ يوليو ٢٠٢٣ · الجيزة',cap:'حر… حر واااايد',ov:''},
+ {id:'p80',src:'lib/p80.jpg',th:'th/p80.jpg',d:'2023-07-22T17:00',alb:'egypt',n:'النيل',info:'٢٢ يوليو ٢٠٢٣ · القاهرة',cap:'فلوكة',ov:''},
+ {id:'p81',src:'lib/p81.jpg',th:'th/p81.jpg',d:'2023-07-22T20:30',alb:'egypt',n:'خان الخليلي',info:'٢٢ يوليو ٢٠٢٣ · القاهرة',cap:'منيرة والفوانيس',ov:''},
+ {id:'p82',src:'lib/p82.jpg',th:'th/p82.jpg',d:'2023-07-24T16:00',alb:'egypt',n:'شرم',info:'٢٤ يوليو ٢٠٢٣ · شرم الشيخ',cap:'المسبح',ov:''},
+ {id:'p10',src:'lib/p10.jpg',th:'th/p10.jpg',d:'2025-03-27T15:20',alb:'dubai',n:'برج خليفة',info:'٢٧ مارس ٢٠٢٥ · دبي',cap:'',ov:''},
+ {id:'p83',src:'lib/p83.jpg',th:'th/p83.jpg',d:'2025-03-28T18:10',alb:'dubai',n:'سفاري',info:'٢٨ مارس ٢٠٢٥ · صحراء دبي',cap:'غروب',ov:''},
+ {id:'p84',src:'lib/p84.jpg',th:'th/p84.jpg',d:'2025-03-29T13:00',alb:'dubai',n:'الأكواريوم',info:'٢٩ مارس ٢٠٢٥ · دبي مول',cap:'سارة والقرش',ov:''},
+ {id:'p85',src:'lib/p85.jpg',th:'th/p85.jpg',d:'2025-03-29T16:30',alb:'dubai',n:'JBR',info:'٢٩ مارس ٢٠٢٥ · دبي',cap:'جوز هند',ov:''},
+ {id:'p86',src:'lib/p86.jpg',th:'th/p86.jpg',d:'2024-08-11T20:15',alb:'thai',n:'بانكوك',info:'١١ أغسطس ٢٠٢٤ · تايلند',cap:'أكل الشارع',ov:''},
+ {id:'p87',src:'lib/p87.jpg',th:'th/p87.jpg',d:'2024-08-13T11:30',alb:'thai',n:'بوكيت',info:'١٣ أغسطس ٢٠٢٤ · تايلند',cap:'الماي لونه مو طبيعي',ov:''},
+ {id:'p88',src:'lib/p88.jpg',th:'th/p88.jpg',d:'2024-08-12T17:00',alb:'thai',n:'توك توك',info:'١٢ أغسطس ٢٠٢٤ · بانكوك',cap:'الحر والزحمة 😂',ov:''},
+ {id:'p89',src:'lib/p89.jpg',th:'th/p89.jpg',d:'2025-06-20T12:40',alb:'bahrain',n:'باب البحرين',info:'٢٠ يونيو ٢٠٢٥ · المنامة',cap:'',ov:''},
+ {id:'p90',src:'lib/p90.jpg',th:'th/p90.jpg',d:'2025-06-21T10:30',alb:'bahrain',n:'البيتش',info:'٢١ يونيو ٢٠٢٥ · البحرين',cap:'',ov:''},
+ {id:'p91',src:'lib/p91.jpg',th:'th/p91.jpg',d:'2024-07-06T13:00',alb:'bodrum',n:'بودروم',info:'٦ يوليو ٢٠٢٤ · تركيا',cap:'اليخت',ov:''},
+ {id:'p9',src:'lib/p9.jpg',th:'th/p9.jpg',d:'2025-01-10T17:10',alb:'',n:'الأبراج',info:'١٠ يناير ٢٠٢٥ · الكويت',cap:'',ov:''},
+ {id:'p100',src:'lib/p100.jpg',th:'th/p100.jpg',d:'2025-09-26T13:45',alb:'',n:'غدا الجمعة',info:'٢٦ سبتمبر ٢٠٢٥ · بيت ماما',cap:'مجبوس',ov:''},
+ {id:'p101',src:'lib/p101.jpg',th:'th/p101.jpg',d:'2025-08-15T21:00',alb:'',n:'الشوي',info:'١٥ أغسطس ٢٠٢٥ · شاليه الخيران',cap:'',ov:''},
+ {id:'p102',src:'lib/p102.jpg',th:'th/p102.jpg',d:'2025-09-18T19:30',alb:'',n:'النادي',info:'١٨ سبتمبر ٢٠٢٥ · النادي',cap:'',ov:''},
+ {id:'p103',src:'lib/p103.jpg',th:'th/p103.jpg',d:'2025-09-15T17:50',alb:'',n:'الدائري الخامس',info:'١٥ سبتمبر ٢٠٢٥ · الدائري الخامس',cap:'',ov:''},
+ {id:'p104',src:'lib/p104.jpg',th:'th/p104.jpg',d:'2025-02-21T18:00',alb:'',n:'المباركية',info:'٢١ فبراير ٢٠٢٥ · الكويت',cap:'منيرة والبهارات',ov:''},
+ {id:'p105',src:'lib/p105.jpg',th:'th/p105.jpg',d:'2025-09-19T20:00',alb:'',n:'الديوانية',info:'١٩ سبتمبر ٢٠٢٥ · الديوانية',cap:'',ov:''},
+ {id:'p106',src:'lib/p106.jpg',th:'th/p106.jpg',d:'2025-09-11T22:00',alb:'',n:'المباراة',info:'١١ سبتمبر ٢٠٢٥ · ديوانية بو سعود',cap:'',ov:''},
+ {id:'p107',src:'lib/p107.jpg',th:'th/p107.jpg',d:'2025-05-10T19:30',alb:'',n:'ماما',info:'١٠ مايو ٢٠٢٥ · بيت ماما',cap:'❤️',ov:''},
+ {id:'p108',src:'lib/p108.jpg',th:'th/p108.jpg',d:'2025-04-04T18:30',alb:'',n:'الشيف',info:'٤ أبريل ٢٠٢٥ · البيت',cap:'منيرة',ov:''},
+ {id:'p109',src:'lib/p109.jpg',th:'th/p109.jpg',d:'2025-02-07T05:45',alb:'',n:'الصيد',info:'٧ فبراير ٢٠٢٥ · المارينا',cap:'ما صدنا شي',ov:''},
+ {id:'p110',src:'lib/p110.jpg',th:'th/p110.jpg',d:'2024-11-29T14:10',alb:'',n:'مطر',info:'٢٩ نوفمبر ٢٠٢٤ · الكويت',cap:'',ov:''},
+ {id:'p111',src:'lib/p111.jpg',th:'th/p111.jpg',d:'2025-09-27T16:00',alb:'',n:'الحلاق',info:'٢٧ سبتمبر ٢٠٢٥ · الحلاق',cap:'',ov:''},
+ {id:'p120',src:'lib/p120.jpg',th:'th/p120.jpg',d:'2025-05-29T21:30',alb:'',n:'عرس ولد خالتي',info:'٢٩ مايو ٢٠٢٥ · الكويت',cap:'',ov:''},
+ {id:'p121',src:'lib/p121.jpg',th:'th/p121.jpg',d:'2025-08-22T21:00',alb:'',n:'فيلم',info:'٢٢ أغسطس ٢٠٢٥ · البيت',cap:'',ov:''},
+ {id:'p122',src:'lib/p122.jpg',th:'th/p122.jpg',d:'2025-09-05T20:00',alb:'',n:'البيت',info:'٥ سبتمبر ٢٠٢٥ · البيت',cap:'ذكرى زواجنا ❤️',ov:''},
+ {id:'p123',src:'lib/p123.jpg',th:'th/p123.jpg',d:'2025-01-30T18:30',alb:'',n:'السيارة الجديدة',info:'٣٠ يناير ٢٠٢٥ · البيت',cap:'',ov:''},
+ {id:'p124',src:'lib/p124.jpg',th:'th/p124.jpg',d:'2025-06-07T10:30',alb:'',n:'عيد الأضحى',info:'٧ يونيو ٢٠٢٥ · بيت ماما',cap:'',ov:''},
+ {id:'p125',src:'lib/p125.jpg',th:'th/p125.jpg',d:'2025-09-12T17:40',alb:'',n:'المارينا كريسنت',info:'١٢ سبتمبر ٢٠٢٥ · المارينا كريسنت',cap:'',ov:''},
+ {id:'p127',src:'lib/p127.jpg',th:'th/p127.jpg',d:'2025-08-05T11:00',alb:'',n:'المكتب',info:'٥ أغسطس ٢٠٢٥ · المكتب',cap:'المدير الجديد',ov:''},
+ {id:'p128',src:'lib/p128.jpg',th:'th/p128.jpg',d:'2015-11-20T20:00',alb:'',n:'الملچة',info:'٢٠ نوفمبر ٢٠١٥ · ٢٠١٥',cap:'من الصور القديمة',ov:''},
+ {id:'p129',src:'lib/p129.jpg',th:'th/p129.jpg',d:'2025-09-16T21:30',alb:'',n:'ملعب الشباب',info:'١٦ سبتمبر ٢٠٢٥ · ملعب الشباب',cap:'',ov:''},
+ {id:'p130',src:'lib/p130.jpg',th:'th/p130.jpg',d:'2025-09-28T09:15',alb:'',n:'بلاليط',info:'٢٨ سبتمبر ٢٠٢٥ · البيت',cap:'',ov:''},
+ {id:'p140',src:'lib/p140.jpg',th:'th/p140.jpg',d:'2025-07-11T16:30',alb:'',n:'كافيه',info:'١١ يوليو ٢٠٢٥ · كافيه',cap:'منيرة والبنات',ov:''},
+ {id:'p141',src:'lib/p141.jpg',th:'th/p141.jpg',d:'2025-03-05T18:40',alb:'',n:'لقيمات',info:'٥ مارس ٢٠٢٥ · البيت',cap:'رمضان',ov:''},
+ {id:'p142',src:'lib/p142.jpg',th:'th/p142.jpg',d:'2025-09-21T15:00',alb:'',n:'البيت',info:'٢١ سبتمبر ٢٠٢٥ · البيت',cap:'منيرة صوّرتني 😑',ov:''}];
+const ALBUMS=[{id:'london',n:'لندن ٢٠٢٤'},{id:'sara',n:'سارة 👧'},{id:'crazee',n:'Crazee Burger'},{id:'dubai',n:'دبي'},{id:'egypt',n:'مصر ٢٠٢٣'},{id:'thai',n:'تايلند'},{id:'bahrain',n:'البحرين'},{id:'bodrum',n:'بودروم'},{id:'hidden',n:'المخفي',lock:1}];
+const HIDCODE='1208';
+
 const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
+const PIMG=(p,th)=>`<img src="${th&&p.th?p.th:(p.src||('img/'+p.id+'.jpg'))}" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
+const PL=n=>AR(n)+(n===1?' صورة':n<11?' صور':' صورة');const AR=s=>String(s).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);const MONS=['','يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
 /* ================= STATE ================= */
 const S={start:0,pen:0,hints:{lock:0,phone:0,solve:0},unlocked:false,notes:false,screen:'intro',done:0,who:null,where:null,wrong:0,faisal:0,num:''};
@@ -1049,24 +1148,39 @@ $('#callsBody').onclick=e=>{const b=e.target.closest('[data-vm]');if(!b)return;c
 $('#calBody').innerHTML=CAL.map(d=>`<div class="dayh">${d[0]}</div>`+d[1].map(e=>`<button class="ev" data-ev="1"><span class="t">${e[0]}</span><span><b>${e[1]}</b>${e[2]?`<small>${e[2]}</small>`:''}</span>${e[3]?`<span class="note" hidden>${e[3]}</span>`:''}</button>`).join('')).join('');
 $('#calBody').onclick=e=>{const b=e.target.closest('.ev');if(!b)return;const n=b.querySelector('.note');if(n)n.hidden=!n.hidden};
 
-function renderPhotos(){const main=PHOTOS.filter(p=>!p.del&&!p.hid).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('');
- const del=S.notes2?`<div class="delh">🗑 المحذوفة مؤخراً · ٢</div>`+PHOTOS.filter(p=>p.del).map(p=>`<button data-p="${p.id}">${IMG(p.id)}</button>`).join('')+`<button class="merge" id="mergeBtn">🧩 دمج الصورتين</button>`
-  :`<div class="delh">🗑 المحذوفة مؤخراً · ٢</div><button class="merge" id="delLock">🔒 الألبوم مقفل — يحتاج نفس رمز ملاحظة «حساب المخزن»</button>`;
- $('#photoGrid').innerHTML=main+del;
- const m=$('#mergeBtn');if(m)m.onclick=()=>{S.merged=true;save();openPhoto('cctv')};
- const l=$('#delLock');if(l)l.onclick=()=>sheet('<h3>🔒 المحذوفة مؤخراً</h3><div class="h">هالألبوم محمي. خالد يستخدم نفس الرقم السري لملاحظة <b>«حساب المخزن»</b> — افتحوا الملاحظة أولاً وبعدها يفتح الألبوم تلقائياً.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')}
+function phList(){return PHOTOS.filter(p=>!p.hid&&p.alb!=='hidden').sort((a,b)=>a.d<b.d?1:-1)}
+function phBtn(p){return `<button data-p="${p.id}">${PIMG(p,1)}</button>`}
+function renderPhotos(){
+  const L=phList();let last='';let html='';
+  L.forEach(p=>{const k=p.d.slice(0,7);if(k!==last){last=k;const[y,m]=k.split('-');html+=`<div class="mh">${MONS[+m]} ${AR(y)}</div>`}html+=phBtn(p)});
+  $('#photoGrid').innerHTML=html;
+  $('#phSub').textContent=AR(L.length)+' صورة · '+AR(ALBUMS.length)+' ألبومات';
+  $('#albGrid').innerHTML=ALBUMS.map(a=>{const ps=PHOTOS.filter(p=>p.alb===a.id&&!p.hid);const cov=ps[0];
+    if(a.lock)return `<button data-alb="${a.id}"><div class="cov">${S.hidden?PIMG(cov,1):''}<div class="lk">${S.hidden?'':'🔒'}</div></div><b>${a.n}</b><small>${S.hidden?PL(ps.length):'مقفل'}</small></button>`;
+    return `<button data-alb="${a.id}"><div class="cov">${cov?PIMG(cov,1):'📁'}</div><b>${a.n}</b><small>${PL(ps.length)}</small></button>`}).join('');
+}
+function openAlbum(id){const a=ALBUMS.find(x=>x.id===id);if(a.lock&&!S.hidden){openApp('hidlock');return}
+  const ps=PHOTOS.filter(p=>p.alb===id&&!p.hid).sort((x,y)=>x.d<y.d?1:-1);
+  $('#albTitle').textContent=a.n;
+  $('#albPhotos').innerHTML=ps.map(phBtn).join('')+(id==='hidden'?`<button class="merge" id="mergeBtn">🧩 دمج الصورتين</button>`:'');
+  const m=$('#mergeBtn');if(m)m.onclick=()=>{S.merged=true;save();openPhoto('cctv','album')};
+  openApp('album')}
+$('#phSeg').onclick=e=>{const b=e.target.closest('[data-seg]');if(!b)return;$$('#phSeg button').forEach(x=>x.classList.toggle('on',x===b));const lib=b.dataset.seg==='lib';$('#photoGrid').hidden=!lib;$('#albGrid').hidden=lib};
+$('#albGrid').onclick=e=>{const b=e.target.closest('[data-alb]');if(b)openAlbum(b.dataset.alb)};
+$('#albPhotos').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'album')};
+keypad($('#hpad'),$('#hdots'),v=>{if(v!==HIDCODE)return false;S.hidden=true;save();stageAt('cctv');renderPhotos();setTimeout(()=>openAlbum('hidden'),300);return true});
 renderPhotos();
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p)};
-function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id);$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<div style="position:relative;max-width:100%">${IMG(id)}${p.ov?`<span style="position:absolute;bottom:8px;left:10px;font:12px monospace;color:#ffd978;text-shadow:0 0 3px #000">${p.ov}</span>`:''}</div>`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo')}
+function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id);$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<div style="position:relative;max-width:100%">${PIMG(p)}${p.ov?`<span style="position:absolute;bottom:8px;left:10px;font:12px monospace;color:#ffd978;text-shadow:0 0 3px #000">${p.ov}</span>`:''}</div>`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap||''}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo')}
 
 /* ================= HINTS ================= */
-function stage(){if(S.screen==='lock')return 'lock';if(S.screen==='solve')return 'solve';return !S.notes?'note1':!S.notes2?'note2':'cctv'}
+function stage(){if(S.screen==='lock')return 'lock';if(S.screen==='solve')return 'solve';return !S.notes?'note1':!S.notes2?'note2':!S.hidden?'hidden':'cctv'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 $$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
   const body=list.map((h,i)=>{const lab=i===2?'الجواب مباشرة':`تلميح ${i+1}`;if(i<used)return `<div class="h">${h}</div>`;const wait=HINT_WAIT[i]-el;return `<div class="h lk">🔒 ${lab}${wait>0?` — يفتح بعد ${fmt(wait)}`:''}</div>`}).join('');
   const ready=used<list.length&&el>=HINT_WAIT[used];const next=used<list.length?(used===2?'اكشف الجواب':`اكشف تلميح ${used+1}`)+` (${HINT_LAB[used]})`:'';
-  sheet(`<h3>💡 تلميحات ${({lock:'الرقم السري',note1:'الملاحظة الأولى',note2:'الملاحظة الثانية',cctv:'الصور المحذوفة',solve:'الاتهام'})[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
+  sheet(`<h3>💡 تلميحات ${({lock:'الرقم السري',note1:'الملاحظة الأولى',note2:'الملاحظة الثانية',hidden:'الألبوم المخفي',cctv:'لقطات الكاميرا',solve:'الاتهام'})[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
   const u=$('#useHint');if(u)u.onclick=()=>{S.pen+=HINT_PEN[S.hints[st]];S.hints[st]++;save();b.click()}});
 function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');$$('[data-close]').forEach(x=>x.onclick=()=>$('#modal').classList.remove('on'))}
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
