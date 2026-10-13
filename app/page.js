@@ -42,8 +42,13 @@ export default function Home() {
           </Link>
           <div className="case soon">
             <div className="tag">قريباً</div>
-            <b>القضية الثانية</b>
-            <span>قاعدين نكتبها… تابعونا على إنستغرام.</span>
+            <b>قضية الشاليه</b>
+            <span>سرقة · ٦ مشتبهين · ساعة واحدة · كشّاف على التلفزيون</span>
+          </div>
+          <div className="case soon">
+            <div className="tag">قريباً</div>
+            <b>قضية الفيلا</b>
+            <span>وصية مختفية · ٦ مشتبهين · ساعة واحدة · فيها حركة!</span>
           </div>
         </div>
       </section>
