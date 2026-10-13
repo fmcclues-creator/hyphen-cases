@@ -40,6 +40,7 @@ export default function Reg() {
           <div className="reg-kicker">Live event</div>
           <h1 className="reg-title">THE MYSTERY ROUTE</h1>
           <p className="reg-when">Saturday at Ktech</p>
+          <div className="reg-facts"><span>⏱ One hour</span><span>👥 4–6 players</span></div>
           <p className="reg-wait">We can't wait to see you 🔍</p>
         </section>
       )}
