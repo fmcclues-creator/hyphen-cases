@@ -31,7 +31,14 @@ export default function Buy() {
 
   async function go(e) {
     e.preventDefault(); setErr(""); setBusy(true);
-    const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ phone, email, promo: quote?.discount ? promo : "" }) });
+    // A typed-but-not-applied promo is applied automatically before checkout.
+    let usePromo = quote?.discount ? promo : "";
+    if (promo && !quote?.discount) {
+      const j = await quoteFor(promo);
+      if (j.ok && j.discount > 0) { setQuote(j); setPromoMsg(`خصم ${fmt(j.discount)} د.ك ✓`); usePromo = promo; }
+      else { setBusy(false); return setErr(j.reason === "promo_expired" ? "الكود منتهي" : j.reason === "promo_used" ? "الكود خلصت استخداماته" : "كود الخصم غير صحيح — امسحوه أو صحّحوه"); }
+    }
+    const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ phone, email, promo: usePromo }) });
     const j = await r.json().catch(() => ({}));
     setBusy(false);
     if (!j.ok) return setErr(j.reason === "phone" ? "اكتبوا رقم موبايل صحيح" : j.reason?.startsWith("promo") ? "كود الخصم ما عاد يشتغل" : "صار خطأ، جرّبوا مرة ثانية");
