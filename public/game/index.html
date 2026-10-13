@@ -1106,7 +1106,7 @@ $('#again').onclick=()=>{try{localStorage.removeItem('khalid')}catch(e){}locatio
 const STORE='https://cases.hyphen-eventskw.com'; // change after deploy if different
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
-function deviceId(){try{let d=localStorage.getItem('khalid_dev');if(!d){d=crypto.randomUUID();localStorage.setItem('khalid_dev',d)}return d}catch(e){return 'nodevice'}}
+function deviceId(){try{let d=localStorage.getItem('hyphen_dev')||localStorage.getItem('khalid_dev');if(!d){d=crypto.randomUUID()}localStorage.setItem('hyphen_dev',d);return d}catch(e){return 'nodevice'}}
 function savedPass(){try{const p=JSON.parse(localStorage.getItem('khalid_pass')||'null');if(p&&new Date(p.expires_at)>new Date())return p}catch(e){}return null}
 async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId()})});return r.json()}
 async function gate(){

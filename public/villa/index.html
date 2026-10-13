@@ -1043,7 +1043,7 @@ function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');
 
 /* ---- gate ---- */
 const GATE_ON=true;
-function deviceId(){try{let d=localStorage.getItem(GAME+'_dev');if(!d){d=crypto.randomUUID();localStorage.setItem(GAME+'_dev',d)}return d}catch(e){return 'nodevice'}}
+function deviceId(){try{let d=localStorage.getItem('hyphen_dev')||localStorage.getItem(GAME+'_dev')||localStorage.getItem('khalid_dev');if(!d){d=crypto.randomUUID()}localStorage.setItem('hyphen_dev',d);return d}catch(e){return 'nodevice'}}
 function savedPass(){try{const p=JSON.parse(localStorage.getItem(GAME+'_pass')||'null');if(p&&new Date(p.expires_at)>new Date())return p}catch(e){}return null}
 async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME})});return r.json()}
 $('#gateBuy').href=STORE+'/buy?game='+GAME;
