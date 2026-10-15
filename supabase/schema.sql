@@ -54,3 +54,13 @@ create table if not exists registrations (
   note text
 );
 alter table registrations enable row level security;
+
+-- v4: shared team progress (one code on several phones). Run this block once.
+create table if not exists game_state (
+  code text not null,
+  game text not null default 'khalid',
+  state jsonb not null default '{}'::jsonb,
+  v int not null default 0,
+  updated_at timestamptz default now(),
+  primary key (code, game)
+);

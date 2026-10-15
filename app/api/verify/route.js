@@ -22,14 +22,18 @@ export async function POST(req) {
   if (new Date(row.expires_at) < new Date()) return Response.json({ ok: false, reason: "expired" }, { headers: cors });
   if (game && row.game && row.game !== game) return Response.json({ ok: false, reason: "wrong_game" }, { headers: cors });
 
-  // Same device re-opening within the window is free; a new device counts as a use.
-  const { data: prior } = await client.from("plays").select("id").eq("code", norm).eq("device", device).limit(1);
-  if (!prior?.length) {
-    if (row.uses >= row.max_uses) return Response.json({ ok: false, reason: "used" }, { headers: cors });
-    await client.from("codes").update({ uses: row.uses + 1 }).eq("code", norm);
+  // One code = one team. The team can open it on up to DEVICES phones (they share progress);
+  // `uses` counts activated teams against max_uses, not phones.
+  const DEVICES = 6;
+  const { data: plays } = await client.from("plays").select("device").eq("code", norm);
+  const devices = [...new Set((plays || []).map((p) => p.device))];
+  if (!devices.includes(device)) {
+    if (devices.length === 0 && row.uses >= row.max_uses) return Response.json({ ok: false, reason: "used" }, { headers: cors });
+    if (devices.length >= DEVICES) return Response.json({ ok: false, reason: "devices" }, { headers: cors });
+    if (devices.length === 0) await client.from("codes").update({ uses: row.uses + 1 }).eq("code", norm);
     await client.from("plays").insert({ code: norm, device });
   }
-  return Response.json({ ok: true, expires_at: row.expires_at, game: row.game }, { headers: cors });
+  return Response.json({ ok: true, expires_at: row.expires_at, game: row.game, devices: Math.max(1, devices.length + (devices.includes(device) ? 0 : 1)), max_devices: DEVICES }, { headers: cors });
 }
 
 export async function OPTIONS() {

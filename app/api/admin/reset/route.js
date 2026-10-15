@@ -7,6 +7,7 @@ export async function POST(req) {
   const code = String(b.code || "").trim().toUpperCase();
   const client = db();
   await client.from("plays").delete().eq("code", code);
+  await client.from("game_state").delete().eq("code", code).then(() => {}, () => {});
   const { error } = await client.from("codes").update({ uses: 0 }).eq("code", code);
   return Response.json({ ok: !error });
 }
