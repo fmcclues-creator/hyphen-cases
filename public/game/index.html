@@ -398,6 +398,7 @@ html.tv #solve .wrap{max-width:none}
 html.tv .home{grid-template-columns:repeat(auto-fill,minmax(86px,1fr))}
 html.tv .grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
 html.tv .m{max-width:70%}
+html.tv body{zoom:1.18}
 @media (min-width:900px){html.tv body{zoom:1.45}}
 @media (min-width:1500px){html.tv body{zoom:1.9}}
 @media (orientation:landscape) and (max-height:520px){.device{max-width:none;border-radius:0;border-width:0 6px}.stage{padding:0}}
@@ -461,7 +462,7 @@ html.tv .m{max-width:70%}
   </div>
 </div>
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>⛶ تكبير</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 تكبير الشاشة</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
   <div class="fileBody">
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
@@ -562,7 +563,7 @@ html.tv .m{max-width:70%}
 
 <!-- ============ LOCK (3D) ============ -->
 <section class="screen" id="lock">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>⛶ تكبير</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 تكبير الشاشة</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div style="position:relative;flex:1;min-height:0">
     <div class="lockbg"></div><div id="three"></div>
     <div class="lock-title">اسحبوا لتدوير الموبايل</div>
@@ -578,7 +579,7 @@ html.tv .m{max-width:70%}
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>⛶ تكبير</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 تكبير الشاشة</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -692,7 +693,7 @@ html.tv .m{max-width:70%}
 
 <!-- ============ SOLVE ============ -->
 <section class="screen" id="solve">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>⛶ تكبير</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 تكبير الشاشة</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div class="wrap">
     <h2>١. منو وراء اختفاء خالد؟</h2>
     <div class="pick" id="pickWho"></div>
@@ -1079,11 +1080,11 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> نفس الرمز يفتح على ٦ أجهزة والتقدّم مشترك بينها — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة (Screen Share) من الموبايل على التلفزيون، واضغطوا <b>⛶ تكبير</b> فوق عشان يكبر الخط ويملأ الشاشة. في سفاري على الآيفون: اضغطوا الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ثم <b>إخفاء شريط الأدوات</b>.</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفلة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> نفس الرمز يفتح على ٦ أجهزة والتقدّم مشترك بينها — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة (Screen Share) من الموبايل على التلفزيون، واضغطوا <b>📺 تكبير الشاشة</b> فوق عشان يكبر الخط ويملأ الشاشة. في سفاري على الآيفون: اضغطوا الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ثم <b>إخفاء شريط الأدوات</b>.</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 /* team notebook (saved on this device) */
 function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch(e){}
-  sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه: أوقات، أسماء، تناقضات. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: ناصر قال وصل ٨:٤٥ بس البوابة سجّلته ٨:٣٣…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
+  sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه: أوقات، أسماء، تناقضات. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="اكتبوا ملاحظاتكم هنا…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
   const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem('khalid_book',t.value)}catch(e){}}}
 $$('[data-book]').forEach(b=>b.onclick=notebook);
 /* panic recovery: 🏠 chip, or triple-tap anywhere within 1.2 s, closes every overlay and returns to the phone home (or the file) */
@@ -1348,7 +1349,7 @@ $('#again').onclick=async()=>{try{localStorage.removeItem('khalid')}catch(e){}tr
 /* ---- TV / maximize ---- */
 (function(){const de=document.documentElement;let on=false;try{on=localStorage.getItem('khalid_tv')==='1'}catch(e){}
 const ios=/iPhone|iPod/.test(navigator.userAgent);
-function apply(){de.classList.toggle('tv',on);$$('[data-tv]').forEach(b=>b.textContent=on?'⤡ تصغير':'⛶ تكبير');try{localStorage.setItem('khalid_tv',on?'1':'0')}catch(e){}}
+function apply(){de.classList.toggle('tv',on);$$('[data-tv]').forEach(b=>b.textContent=on?'📺 تصغير الشاشة':'📺 تكبير الشاشة');try{localStorage.setItem('khalid_tv',on?'1':'0')}catch(e){}}
 $$('[data-tv]').forEach(b=>b.onclick=()=>{on=!on;apply();if(!ios){try{const full=document.fullscreenElement||document.webkitFullscreenElement;if(on&&!full)(de.requestFullscreen||de.webkitRequestFullscreen).call(de);else if(!on&&full)(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}}});
 apply()})();
 
