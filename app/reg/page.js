@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 const MIN = 4, MAX = 6;
+const SOLD_OUT = true; // flip to false to reopen sign-ups
 
 export default function Reg() {
   const [team, setTeam] = useState("");
@@ -41,10 +42,15 @@ export default function Reg() {
           <h1 className="reg-title">THE MYSTERY ROUTE</h1>
           <p className="reg-when">Saturday at Ktech</p>
           <div className="reg-facts"><span>⏱ One hour</span><span>👥 4–6 players</span></div>
-          <p className="reg-wait">We can't wait to see you 🔍</p>
+          {!SOLD_OUT && <p className="reg-wait">We can't wait to see you 🔍</p>}
         </section>
       )}
-      {done ? (
+      {SOLD_OUT ? (
+        <section className="reg-card reg-soldout">
+          <div className="reg-stamp">SOLD OUT</div>
+          <p className="muted">All team spots are taken. Thank you for the amazing response — see you on the route 🔍</p>
+        </section>
+      ) : done ? (
         <section className="reg-card">
           <div className="reg-ok">✓</div>
           <h2>You're in</h2>

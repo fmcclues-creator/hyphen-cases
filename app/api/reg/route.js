@@ -1,6 +1,7 @@
 import { db } from "../../../lib/db";
 
 export async function POST(req) {
+  return Response.json({ ok: false, error: "Sign-ups are closed — sold out." }, { status: 410 });
   let body;
   try { body = await req.json(); } catch { return Response.json({ ok: false, error: "bad_request" }, { status: 400 }); }
   const team = String(body.team || "").trim().slice(0, 40);
