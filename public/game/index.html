@@ -1338,7 +1338,7 @@ $('#submit').onclick=()=>{const fb=$('#fb');
   S.done=elapsed();save();reveal()};
 
 /* ================= REVEAL ================= */
-function reveal(){show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
+function reveal(){$('#modal').classList.remove('on');show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
  [S.gaveUp?'ما حلّيتوها هالمرة… هذا اللي صار':'','الدوريات توصل لمخزن الشويخ القديم. الباب يتفتح…'],
  ['','خالد جالس على صندوق، راسه ملفوف، بس بخير.'],
  ['ناصر، وهو يطلع مطأطئ الرأس','«ما كان مخطط… لما واجهني اخترعت، وما عرفت شلون أوقف.»'],
@@ -1399,7 +1399,7 @@ const SYNC_B=['unlocked','notes','notes2','hidden','merged','gaveUp'],SYNC_M=['p
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
-function syncPush(reset){const code=syncCode();if(!code)return;clearTimeout(_syncT);_syncT=setTimeout(async()=>{if(_syncBusy)return;const st=syncPick();const j=JSON.stringify(st);if(!reset&&j===_syncLast)return;_syncBusy=true;try{const r=await fetch(STORE+'/api/state',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:st,reset:!!reset})});const d=await r.json();if(d.ok&&d.state){_syncLast=JSON.stringify(st);syncApply(d.state)}}catch(e){}_syncBusy=false},reset?0:800)}
+function syncPush(reset){const code=syncCode();if(!code)return;clearTimeout(_syncT);_syncT=setTimeout(async()=>{if(_syncBusy){syncPush(reset);return}const st=syncPick();const j=JSON.stringify(st);if(!reset&&j===_syncLast)return;_syncBusy=true;try{const r=await fetch(STORE+'/api/state',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:st,reset:!!reset})});const d=await r.json();if(d.ok&&d.state){_syncLast=JSON.stringify(st);syncApply(d.state)}}catch(e){}_syncBusy=false},reset?0:800)}
 async function syncPull(){const code=syncCode();if(!code||document.hidden||_syncBusy)return;try{const r=await fetch(STORE+'/api/state?code='+encodeURIComponent(code)+'&game=khalid');const d=await r.json();if(d.ok&&d.state)syncApply(d.state)}catch(e){}}
 function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hints}};
   if(r.start&&(!S.start||r.start<S.start)){S.start=r.start;ch=true}
@@ -1446,7 +1446,7 @@ syncStart();
 })();
 /* rebuild everything the player had already unlocked (idempotent, also used by multi-device sync) */
 function restoreUI(){if(S.faisal>=4)addCallNote();if(S.merged)addCctvNote();if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(S.faisal){if(!CHATS.includes(FAISAL))CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}else setTimeout(faisalArrives,9000)}renderNotes();renderChatList();renderPhotos();if(S.unlocked)$('#backPhone').hidden=false}
-window.addEventListener('pagehide',save);
+window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code&&S.start)navigator.sendBeacon&&fetch(STORE+'/api/state',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:syncPick()})})}catch(e){}});
 document.addEventListener('visibilitychange',save);
 (function(){const de=document.documentElement;const can=de.requestFullscreen||de.webkitRequestFullscreen;const bs=$$('[data-fs]');const ios=/iPhone|iPod/.test(navigator.userAgent);
 bs.forEach(b=>{b.hidden=false;b.onclick=()=>{if(can&&!ios){const full=document.fullscreenElement||document.webkitFullscreenElement;if(full){(document.exitFullscreen||document.webkitExitFullscreen).call(document)}else{try{(de.requestFullscreen||de.webkitRequestFullscreen).call(de)}catch(e){}}return}
