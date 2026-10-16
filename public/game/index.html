@@ -1338,7 +1338,7 @@ $('#submit').onclick=()=>{const fb=$('#fb');
   S.done=elapsed();save();reveal()};
 
 /* ================= REVEAL ================= */
-function reveal(){$('#modal').classList.remove('on');show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
+function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}catch(e){}show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
  [S.gaveUp?'ما حلّيتوها هالمرة… هذا اللي صار':'','الدوريات توصل لمخزن الشويخ القديم. الباب يتفتح…'],
  ['','خالد جالس على صندوق، راسه ملفوف، بس بخير.'],
  ['ناصر، وهو يطلع مطأطئ الرأس','«ما كان مخطط… لما واجهني اخترعت، وما عرفت شلون أوقف.»'],
@@ -1399,7 +1399,7 @@ const SYNC_B=['unlocked','notes','notes2','hidden','merged','gaveUp'],SYNC_M=['p
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
-function syncPush(reset){const code=syncCode();if(!code)return;clearTimeout(_syncT);_syncT=setTimeout(async()=>{if(_syncBusy){syncPush(reset);return}const st=syncPick();const j=JSON.stringify(st);if(!reset&&j===_syncLast)return;_syncBusy=true;try{const r=await fetch(STORE+'/api/state',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:st,reset:!!reset})});const d=await r.json();if(d.ok&&d.state){_syncLast=JSON.stringify(st);syncApply(d.state)}}catch(e){}_syncBusy=false},reset?0:800)}
+function syncPush(reset,now){const code=syncCode();if(!code)return;clearTimeout(_syncT);_syncT=setTimeout(async()=>{if(_syncBusy){setTimeout(()=>syncPush(reset,now),400);return}const st=syncPick();const j=JSON.stringify(st);if(!reset&&j===_syncLast)return;_syncBusy=true;try{const r=await fetch(STORE+'/api/state',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:st,reset:!!reset})});const d=await r.json();if(d.ok&&d.state){_syncLast=JSON.stringify(st);syncApply(d.state)}}catch(e){}_syncBusy=false},(reset||now)?0:800)}
 async function syncPull(){const code=syncCode();if(!code||document.hidden||_syncBusy)return;try{const r=await fetch(STORE+'/api/state?code='+encodeURIComponent(code)+'&game=khalid');const d=await r.json();if(d.ok&&d.state)syncApply(d.state)}catch(e){}}
 function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hints}};
   if(r.start&&(!S.start||r.start<S.start)){S.start=r.start;ch=true}
@@ -1420,7 +1420,7 @@ function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hint
   if(S.hidden&&!was.hidden)stageAt('cctv');
   renderNotes();renderChatList();renderPhotos();
   if(S.done&&!was.done&&S.screen!=='reveal')reveal();
-  _syncLast=JSON.stringify(syncPick());try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}}
+  try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}syncPush()}
 function syncStart(){if(!syncCode())return;syncPull();setInterval(syncPull,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncPull()})}
 
 /* ================= BOOT ================= */
