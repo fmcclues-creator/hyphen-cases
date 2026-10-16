@@ -29,6 +29,9 @@ export async function POST(req) {
   const devices = [...new Set((plays || []).map((p) => p.device))];
   if (!devices.includes(device)) {
     if (devices.length === 0 && row.uses >= row.max_uses) return Response.json({ ok: false, reason: "used" }, { headers: cors });
+    // once the team has solved the case the code is spent: no new phones can join
+    const { data: gs } = await client.from("game_state").select("state").eq("code", norm).eq("game", row.game || "khalid").maybeSingle();
+    if (gs?.state && Number(gs.state.done) > 0) return Response.json({ ok: false, reason: "finished" }, { headers: cors });
     if (devices.length >= DEVICES) return Response.json({ ok: false, reason: "devices" }, { headers: cors });
     if (devices.length === 0) await client.from("codes").update({ uses: row.uses + 1 }).eq("code", norm);
     await client.from("plays").insert({ code: norm, device });
