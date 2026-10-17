@@ -11,7 +11,7 @@
   --ui:'Tajawal',system-ui,sans-serif; --doc:'Readex Pro','Tajawal',system-ui,sans-serif;
   color-scheme:dark;
 }
-html,body{height:100%}
+html,body{height:100%}@supports(height:100dvh){html,body{height:100dvh}}
 body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.5;direction:rtl;overflow:hidden}
 *{box-sizing:border-box}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -487,9 +487,9 @@ html.tv body{zoom:1.18}
       <div class="side"><small>رقم التصنيف</small><div>64219</div><small>رقم المجلد</small><div>63008</div></div>
     </div></div>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق لين ٦ موبايلات بنفس الرمز</span><span>🔒 الرمز لمرة وحدة</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق لين ٦ موبايلات بنفس الرمز</span><span>🔒 الرمز لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span></div>
     <button class="chip ghost" data-fs hidden style="padding:9px 16px;font-size:15px">⛶ Full screen · ملء الشاشة</button>
-    <div class="tvtip" id="tvtip" hidden>📺 للعرض على التلفزيون: شغّلوا مشاركة الشاشة، وبعد ما تبدأون اضغطوا <b>⛶ Full screen · ملء الشاشة</b> فوق. في الآيفون: الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ← <b>إخفاء شريط الأدوات</b>.</div>
+    <div class="tvtip" id="tvtip" hidden>📺 للعرض على التلفزيون: شغّلوا مشاركة الشاشة، اقلبوا الموبايل بالعرض، واضغطوا <b>📺 تكبير الشاشة</b> فوق. تبون شريط سفاري يختفي نهائياً؟ <b data-a2hs style="text-decoration:underline;cursor:pointer">أضيفوا اللعبة للشاشة الرئيسية</b>.</div>
   </div></div>
 </section>
 
@@ -1134,7 +1134,7 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفولة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز وما ينفتح على أجهزة جديدة.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة (Screen Share) من الموبايل على التلفزيون، واضغطوا <b>📺 تكبير الشاشة</b> فوق عشان يكبر الخط ويملأ الشاشة. في سفاري على الآيفون: اضغطوا الأيقونة يسار شريط العنوان (<b>aA</b> أو <b>⋯</b>) ثم <b>إخفاء شريط الأدوات</b>.</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: محضر البلاغ، رسالة منيرة، الأوراق، وأقوال المشتبهين.</div><div class="h">٢. اضغطوا <b>افتح موبايل خالد</b> تحت، وطلّعوا الرقم السري من الأوراق.</div><div class="h">٣. داخل الموبايل: المحادثات، الاتصالات، الصور، إنستغرام، الخرائط، والملاحظات المقفولة.</div><div class="h">٤. لما تتأكدون، اضغطوا <b>حل القضية</b> فوق.</div><div class="h">٥. تعبتوا؟ <b>💡 Hint</b>: تلميح أول من البداية، الثاني بعد ٥ دقايق، والجواب بعد ١٠ دقايق — كل واحد يضيف وقت على نتيجتكم.</div><div class="h">٦. اتهام غلط؟ تقدرون تكمّلون التحقيق أو تكشفون الجاني وتنتهي اللعبة.</div><div class="h">٧. الهدف: الجاني <b>والمكان</b> بأقل وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة (Screen Share) من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 تكبير الشاشة</b> فوق — الخط والصور والفيديو يكبرون والعرض يتوزّع على الشاشة كلها. وإذا تبون شريط سفاري يختفي: <b data-a2hs style="text-decoration:underline;cursor:pointer">أضيفوا اللعبة للشاشة الرئيسية</b> وافتحوها من الأيقونة مثل أي تطبيق.</div><div class="h">🎥 مقابلات المشتبهين موجودة في <b>الملف</b> (زر 📁 الملف فوق) تحت تبويب «مقابلات التحقيق».</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 /* team notebook (saved on this device) */
 function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch(e){}
@@ -1406,9 +1406,15 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
 (function(){const de=document.documentElement;let on=false;try{on=localStorage.getItem('khalid_tv')==='1'}catch(e){}
 const ios=/iPhone|iPod/.test(navigator.userAgent);
 function apply(){de.classList.toggle('tv',on);$$('[data-tv]').forEach(b=>b.textContent=on?'📺 تصغير الشاشة':'📺 تكبير الشاشة');try{localStorage.setItem('khalid_tv',on?'1':'0')}catch(e){}}
-$$('[data-tv]').forEach(b=>b.onclick=()=>{on=!on;apply();if(!ios){try{const full=document.fullscreenElement||document.webkitFullscreenElement;if(on&&!full)(de.requestFullscreen||de.webkitRequestFullscreen).call(de);else if(!on&&full)(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}}});
+$$('[data-tv]').forEach(b=>b.onclick=()=>{on=!on;apply();if(on&&ios&&!(navigator.standalone===true)){let seen=false;try{seen=localStorage.getItem('khalid_a2hs')==='1'}catch(e){}if(!seen){try{localStorage.setItem('khalid_a2hs','1')}catch(e){}setTimeout(a2hs,250)}}if(!ios){try{const full=document.fullscreenElement||document.webkitFullscreenElement;if(on&&!full)(de.requestFullscreen||de.webkitRequestFullscreen).call(de);else if(!on&&full)(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}}});
 apply()})();
 
+
+
+/* ---- Add to Home Screen walkthrough (hides Safari's bars completely) ---- */
+function a2hs(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+sheet('<h3>📺 اللعبة بملء الشاشة</h3><div class="h">وضع التلفزيون شغّال: اقلبوا الموبايل <b>بالعرض</b> وشغّلوا مشاركة الشاشة على التلفزيون.</div><div class="h">تبون شريط '+(ios?'سفاري':'المتصفح')+' يختفي نهائياً؟ أضيفوا اللعبة للشاشة الرئيسية وافتحوها من الأيقونة — تشتغل مثل التطبيق بدون أي شريط:</div>'+(ios?'<div class="h">١. اضغطوا زر <b>المشاركة</b> <span style="display:inline-block;border:1.5px solid currentColor;border-radius:5px;padding:0 6px;font-size:13px">⬆︎</span> تحت الشاشة في سفاري.</div><div class="h">٢. انزلوا واختاروا <b>إضافة إلى الشاشة الرئيسية</b> (Add to Home Screen).</div><div class="h">٣. اضغطوا <b>إضافة</b>، وافتحوا «قضية خالد» من الشاشة الرئيسية. تقدّمكم محفوظ — تكمّلون من نفس المكان.</div>':'<div class="h">١. افتحوا قائمة المتصفح <b>⋮</b>.</div><div class="h">٢. اختاروا <b>إضافة إلى الشاشة الرئيسية</b> أو <b>تثبيت التطبيق</b>.</div><div class="h">٣. افتحوا «قضية خالد» من الأيقونة. تقدّمكم محفوظ.</div>')+'<div class="acts"><button class="btn" data-close>تمام</button></div>')}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if(t){e.preventDefault();a2hs()}});
 
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
@@ -1440,7 +1446,7 @@ async function gate(){
 async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';
   try{const j=await checkCode(code);
     if(j.ok){try{localStorage.setItem('khalid_pass',JSON.stringify({code,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);window.__gateOK&&window.__gateOK(true)}
-    else err.textContent=({not_found:'الرمز غير صحيح',expired:'انتهت صلاحية الرمز',used:'هالرمز مستخدم من فريق ثاني',devices:'هالرمز مفتوح على ٦ أجهزة — هذا الحد الأقصى',finished:'هالرمز خلص — القضية انحلّت فيه. للعب مرة ثانية تحتاجون رمز جديد',format:'اكتبوا الرمز مثل KHD-7342'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية';
+    else err.textContent=({not_found:'الرمز غير صحيح',expired:'انتهت صلاحية الرمز',used:'هالرمز مستخدم من فريق ثاني',devices:'هالرمز مفتوح على ٦ أجهزة — هذا الحد الأقصى',finished:'هالرمز خلص — القضية انحلّت فيه. للعب مرة ثانية تحتاجون رمز جديد',late:'هالفريق بدأ من أكثر من ٣ ساعات — ما ينفع تنضمّون من جهاز جديد الحين. الأجهزة اللي دخلت من البداية تكمّل عادي',format:'اكتبوا الرمز مثل KHD-7342'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية';
   }catch(e){err.textContent='ما قدرنا نتحقق. تأكدوا من الإنترنت'}
   b.disabled=false}
 $('#gateGo').onclick=tryCode;$('#gateIn').addEventListener('keydown',e=>{if(e.key==='Enter')tryCode()});
