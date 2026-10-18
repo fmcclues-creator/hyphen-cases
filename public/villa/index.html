@@ -987,7 +987,7 @@ $('#noteList').onclick=e=>{const b=e.target.closest('[data-note]');if(!b)return;
 renderNotes();
 
 /* ---- voice recorder cleaning puzzle ---- */
-const REC={ctx:null,src:null,bp:null,noise:null,ngain:null,on:false,target:{f:0.62,r:0.5},tol:0.09,okSince:0};
+const REC={ctx:null,src:null,bp:null,noise:null,ngain:null,on:false,target:{f:0.62,r:0.5},tol:0.14,okSince:0};
 const MEMO_TX='«يا بوعلي… مساك الله بالخير. الوصية اللي كتبتها بخطّي… حطّيتها بالدرج مثل ما اتّفقنا. بس انتبه… فيها سطر ثاني تحت، ما أحد قراه. لا تخلّيهم يوقفون عند أول سطر… خلّهم يكمّلون. آنا تعبان شوي الليلة، باچر إن شاء الله أمرّ عليك.»';
 function recSetup(){if(REC.ctx)return true;const c=ac();if(!c)return false;const a=$('#au-memo');try{REC.src=c.createMediaElementSource(a)}catch(e){return false}
   REC.bp=c.createBiquadFilter();REC.bp.type='bandpass';REC.bp.Q.value=1.2;REC.ngain=c.createGain();const buf=c.createBuffer(1,c.sampleRate*2,c.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.5;REC.noise=c.createBufferSource();REC.noise.buffer=buf;REC.noise.loop=true;REC.noise.connect(REC.ngain).connect(c.destination);REC.noise.start();REC.ngain.gain.value=0;
@@ -997,7 +997,7 @@ function recApply(){const f=$('#kFilter').value/100,r=$('#kRate').value/100;cons
   a.playbackRate=0.65+r*0.7;if(REC.ngain)REC.ngain.gain.value=REC.on?bad*0.35:0;
   $('#recMeter').firstElementChild.style.width=Math.round((1-bad)*100)+'%';$('#recMeter').classList.toggle('good',bad<0.2);
   const ok=df<REC.tol&&dr<REC.tol;$('#recSt').textContent=ok?'✅ الصوت صافي':bad<0.4?'قريب…':'ضجيج';
-  if(ok&&REC.on){if(!REC.okSince)REC.okSince=Date.now();if(Date.now()-REC.okSince>2500&&!S.memo)recSolved()}else REC.okSince=0}
+  if(ok&&REC.on){if(!REC.okSince)REC.okSince=Date.now();if(Date.now()-REC.okSince>1500&&!S.memo)recSolved()}else REC.okSince=0}
 function recSolved(){S.memo=true;save();stageAt('corner');SFX.ok();$('#recDone').hidden=false;$('#recTx').textContent=MEMO_TX;if(REC.ngain)REC.ngain.gain.value=0;if(REC.bp){REC.bp.type='allpass'}$('#au-memo').playbackRate=1;addNote('memo','🎙️ نص تسجيل أبوي للمحامي',MEMO_TX+'\n\n— حُفظ تلقائياً من المسجّل.');checkField();setTimeout(()=>{if(!S.yaser){S.yaser=1;save();if(S.screen==='phone')ring();else window.__ringLater=true}},12000)}
 $('#kFilter').oninput=$('#kRate').oninput=recApply;
 $('#recPlay').onclick=()=>{const a=$('#au-memo');if(REC.on){recStop();return}if(!recSetup()){/* fallback: no WebAudio */}REC.on=true;$('#recPlay').textContent='⏸ إيقاف';a.currentTime=0;a.loop=true;a.play().catch(()=>{});recApply();REC.iv=setInterval(recApply,300)};
@@ -1011,8 +1011,8 @@ function openLens(){openApp('lens');const l=$('#lens');if(S.corner){$('#lensTop'
   l.onpointerdown=ev=>{l.setPointerCapture(ev.pointerId);LZ.on=true;pt(ev)};l.onpointermove=ev=>{if(LZ.on)pt(ev)};l.onpointerup=()=>{LZ.on=false};
   cancelAnimationFrame(LZ.raf);LZ.last=performance.now();const loop=now=>{if(!$('#a-lens').classList.contains('on'))return;const dt=(now-LZ.last)/1000;LZ.last=now;const m=`radial-gradient(circle at ${LZ.x}% ${LZ.y}%, #000 0 60px, transparent 90px)`;const t=$('#lensTop');t.style.webkitMaskImage=m;t.style.maskImage=m;t.style.opacity=1;$('#lensRing').style.left=LZ.x+'%';$('#lensRing').style.top=LZ.y+'%';
     /* target zone: the blank area under line 1 — y 62..80%, x 15..85% */
-    const inZone=LZ.on&&LZ.y>66&&LZ.y<92&&LZ.x>28&&LZ.x<97;LZ.dwell=inZone?LZ.dwell+dt:Math.max(0,LZ.dwell-dt*2);$('#lensMsg').textContent=inZone?`يبين شي… ثبّتوا (${AR(Math.ceil(Math.max(0,2.2-LZ.dwell)))})`:'';
-    if(LZ.dwell>2.2&&!S.corner){S.corner=true;save();stageAt('cam');SFX.found();t.style.maskImage='none';t.style.webkitMaskImage='none';$('#lensDone').hidden=false;$('#lensMsg').textContent='✅ تم استخراج السطر الثاني';$('#lensRing').hidden=true;addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»\n\n— أثر القلم على الورقة تحت السطر الأول.');checkField();return}
+    const inZone=LZ.on&&LZ.y>66&&LZ.y<92&&LZ.x>28&&LZ.x<97;LZ.dwell=inZone?LZ.dwell+dt:Math.max(0,LZ.dwell-dt*2);$('#lensMsg').textContent=inZone?`يبين شي… ثبّتوا (${AR(Math.ceil(Math.max(0,1.4-LZ.dwell)))})`:'';
+    if(LZ.dwell>1.4&&!S.corner){S.corner=true;save();stageAt('cam');SFX.found();t.style.maskImage='none';t.style.webkitMaskImage='none';$('#lensDone').hidden=false;$('#lensMsg').textContent='✅ تم استخراج السطر الثاني';$('#lensRing').hidden=true;addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»\n\n— أثر القلم على الورقة تحت السطر الأول.');checkField();return}
     LZ.raf=requestAnimationFrame(loop)};LZ.raf=requestAnimationFrame(loop)}
 
 /* ---- Yaser's call ---- */

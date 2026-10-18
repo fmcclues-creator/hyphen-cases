@@ -15,7 +15,7 @@ const cors = {
 // Progress keys per game: booleans OR together, counters take the max.
 const KEYS = {
   khalid: { bools: ["unlocked", "notes", "notes2", "hidden", "merged", "gaveUp"], maxes: ["pen", "wrong", "faisal", "done", "total"] },
-  shaleh: { bools: ["unlocked", "torch1", "voice", "seenStorage", "corridor", "contract", "door"], maxes: ["pen", "wrong", "fahad", "done", "total"] },
+  shaleh: { bools: ["unlocked", "torch1", "voice", "call", "timeline", "seenStorage", "corridor", "contract", "door"], maxes: ["pen", "wrong", "fahad", "done", "total"] },
   villa:  { bools: ["unlocked", "memo", "corner", "cam", "run", "blow", "room", "album"], maxes: ["pen", "wrong", "yaser", "done", "total"] },
 };
 const keysFor = (game) => KEYS[game] || KEYS.khalid;
