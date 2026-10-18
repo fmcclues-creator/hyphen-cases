@@ -12,8 +12,13 @@ const cors = {
   "Cache-Control": "no-store",
 };
 
-const BOOLS = ["unlocked", "notes", "notes2", "hidden", "merged", "gaveUp"];
-const MAXES = ["pen", "wrong", "faisal", "done"];
+// Progress keys per game: booleans OR together, counters take the max.
+const KEYS = {
+  khalid: { bools: ["unlocked", "notes", "notes2", "hidden", "merged", "gaveUp"], maxes: ["pen", "wrong", "faisal", "done", "total"] },
+  shaleh: { bools: ["unlocked", "torch1", "voice", "seenStorage", "corridor", "contract", "door"], maxes: ["pen", "wrong", "fahad", "done", "total"] },
+  villa:  { bools: ["unlocked", "memo", "corner", "cam", "run", "blow", "room", "album"], maxes: ["pen", "wrong", "yaser", "done", "total"] },
+};
+const keysFor = (game) => KEYS[game] || KEYS.khalid;
 
 function normCode(raw) {
   const code = String(raw || "").trim().toUpperCase().replace(/\s+/g, "");
@@ -22,7 +27,8 @@ function normCode(raw) {
 }
 
 // Progress only ever moves forward: booleans OR, counters max, timestamps min (earliest wins).
-function merge(a = {}, b = {}) {
+function merge(a = {}, b = {}, game = "khalid") {
+  const { bools: BOOLS, maxes: MAXES } = keysFor(game);
   const out = { ...a };
   for (const k of BOOLS) out[k] = !!(a[k] || b[k]);
   for (const k of MAXES) out[k] = Math.max(Number(a[k]) || 0, Number(b[k]) || 0);
@@ -39,8 +45,9 @@ function merge(a = {}, b = {}) {
   return out;
 }
 
-function clean(s) {
+function clean(s, game = "khalid") {
   // keep only the keys we sync; drop anything else a client might send
+  const { bools: BOOLS, maxes: MAXES } = keysFor(game);
   if (!s || typeof s !== "object") return {};
   const o = {};
   for (const k of [...BOOLS, ...MAXES, "start"]) if (k in s) o[k] = s[k];
@@ -68,7 +75,7 @@ export async function POST(req) {
   const game = String(body.game || "khalid").slice(0, 20);
   const device = String(body.device || "").slice(0, 80);
   if (!code) return Response.json({ ok: false, reason: "format" }, { headers: cors });
-  const incoming = clean(body.state);
+  const incoming = clean(body.state, game);
   const client = db();
   try {
     // the code must be real and this device must have claimed it
@@ -80,7 +87,7 @@ export async function POST(req) {
       await client.from("game_state").delete().eq("code", code).eq("game", game);
       return Response.json({ ok: true, state: null, v: 0 }, { headers: cors });
     }
-    const merged = merge(cur?.state || {}, incoming);
+    const merged = merge(cur?.state || {}, incoming, game);
     const v = (cur?.v || 0) + 1;
     const { error: e2 } = await client.from("game_state").upsert({ code, game, state: merged, v, updated_at: new Date().toISOString() }, { onConflict: "code,game" });
     if (e2) return Response.json({ ok: false, reason: "write" }, { headers: cors });
