@@ -94,6 +94,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #intro .meta span{display:flex;align-items:center;gap:5px}
 .tvtip{max-width:400px;background:#1c2331;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;color:#dfe3ea}
 #intro .brand{font-size:11px;color:#8e97a8}
+#intro .in{justify-content:flex-start}#intro .in>:first-child{margin-top:auto}#intro .in>:last-child{margin-bottom:auto}
+#intro .in>p{max-width:520px;text-align:center}#intro h1{text-align:center}
+@media (orientation:landscape) and (min-width:900px){
+ #intro .in{display:grid;grid-template-columns:minmax(260px,380px) minmax(320px,520px);grid-template-areas:"brand brand" "folder h1" "folder p" "folder btn" "folder meta" "folder fs" "folder tip";justify-content:center;align-content:center;align-items:center;column-gap:40px;row-gap:14px;padding:24px}
+ #intro .in>.brand{grid-area:brand;width:100%}#intro .folder{grid-area:folder;max-width:380px;margin:0}#intro h1{grid-area:h1;text-align:start;margin:0}#intro .in>p{grid-area:p;text-align:start;max-width:none}#intro .btn{grid-area:btn;max-width:none}#intro .meta{grid-area:meta;justify-content:flex-start}#intro .tvtip{grid-area:tip;max-width:none}#intro [data-fs]{grid-area:fs;justify-self:start}
+ #intro .in>:first-child,#intro .in>:last-child{margin:0}
+}
 @media (min-height:900px){.folder{max-width:440px}}
 /* ---------- case file (paper) ---------- */
 #file{background:#3a3129}
@@ -628,14 +635,14 @@ html.tv body{zoom:1.18}
       <div class="mug"><img src="img/p_umkhalid.jpg" alt=""><div><b>أم خالد (لطيفة)</b><small>صاحبة الذهب · ٧٨ سنة</small><small>شاليه أم خالد · الخيران · قطعة ٤ · شاليه ٤٢</small></div></div>
       <dl>
         <dt>البلاغ</dt><dd>تقدّم به <b>بوعبدالعزيز</b> (الابن الأكبر، مدير الشاليه) الجمعة ٣ أكتوبر الساعة ٨:١٠ صباحاً.</dd>
-        <dt>المسروق</dt><dd>طقم ذهب كامل (عقد، أساور، أقراط) قيمته التقديرية ١٢,٠٠٠ د.ك، في علبة قطيفة حمرا. كان في تيجوري غرفة الجدّة. الطقم مخصّص لحفيدتها <b>شهد</b> لزواجها بعد شهر.</dd>
-        <dt>آخر مشاهدة</dt><dd>الخميس ٩:٠٠ مساءً — الجدّة أرجعته للتيجوري بعد ما ورّته للعايلة على العشا. الجمعة ٧:٣٠ صباحاً — التيجوري فاضي. <b>لا يوجد كسر</b>؛ التيجوري انفتح بالمفتاح.</dd>
-        <dt>المفاتيح</dt><dd>مفتاح مع الجدّة (في جيب عباتها طول الليل)، ومفتاح احتياطي مع <b>رضا</b> السوّاق (يشغّل الشاليه من ٢٠ سنة).</dd>
+        <dt>المسروق</dt><dd>طقم ذهب كامل (عقد، تراچي، أساور) قيمته التقديرية ١٢,٠٠٠ د.ك، في علبة قطيفة حمرا. كان في تيجوري غرفة الجدّة. الطقم مخصّص لحفيدتها <b>شهد</b> لزواجها بعد شهر.</dd>
+        <dt>آخر مشاهدة</dt><dd>الخميس ٩:٠٠ مساءً — الجدّة رجّعته للتيجوري بعد ما ورّته للعايلة على العشا. الجمعة ٧:٣٠ صباحاً — التيجوري فاضي. <b>لا يوجد كسر</b>؛ التيجوري انفتح بالمفتاح.</dd>
+        <dt>المفاتيح</dt><dd>مفتاح مع الجدّة (في جيب عباتها طول الليل)، ومفتاح احتياطي مع <b>رضا</b> السايق (يفتح الشاليه من ٢٠ سنة).</dd>
         <dt>أقوال المبلّغ</dt><dd>«العاملة <b>جويس</b> شافوها بالممر الفجر، وبغرفتها ظرف فيه ٢٠٠ دينار. من وين لها؟» — جويس بالمخفر من ٨:٤٥.</dd>
         <dt>الأجهزة</dt><dd>هاتف المبلّغ (سامسونج، مقفول بنقشة) محرز. <b>باقي الأسرة رفضوا تسليم هواتفهم.</b></dd>
-        <dt>مركبات</dt><dd>لاند كروزر بيضا باسم شركة بوعبدالعزيز، يستخدمها ابن أخيه <b>عبدالله</b>. سيارة رضا: كامري رمادية.</dd>
+        <dt>مركبات</dt><dd>لاند كروزر بيضا باسم شركة بوعبدالعزيز، يستخدمها ابن أخوه <b>عبدالله</b>. سيارة رضا: كامري رمادية.</dd>
         <dt>ملاحظة</dt><dd>الجدّة ترفض الاتهام بشدّة: «جويس بنتي، ما تسوّيها».</dd>
-        <dt>المطلوب</dt><dd>من أخذ الذهب؟ ووين هو الحين؟</dd>
+        <dt>المطلوب</dt><dd>منو أخذ الذهب؟ ووينه الحين؟</dd>
       </dl>
     </div>
     <div id="t2" hidden>
@@ -659,7 +666,7 @@ html.tv body{zoom:1.18}
       <h2>أفراد الأسرة والعاملون</h2>
       <div class="sus"><div class="av"><img src="img/p_bu.jpg" alt=""></div><div><b>بوعبدالعزيز</b><small>الابن الأكبر · ٥٥ سنة · صاحب الموبايل والمبلّغ</small><q>نام ١١:٣٠. «الشغّالة. ما فيه غيرها.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_joyce.jpg" alt=""></div><div><b>جويس</b><small>العاملة · ٣٤ سنة · ٨ سنين مع العايلة · <b style="color:var(--tape)">متهمة</b></small><q>«ما أخذت شي. الفلوس ماما عطتني. صحيت ٣ أشرب ماي بس.»</q></div></div>
-      <div class="sus"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div><b>رضا</b><small>السوّاق · ٥٨ سنة · ٢٠ سنة مع العايلة · المفتاح الاحتياطي معاه</small><q>«رحت أجيب ثلج ١٢:٣٠، رجعت ١:٥٠ ونمت. ما سوّيت شي سيدي.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div><b>رضا</b><small>السايق · ٥٨ سنة · ٢٠ سنة مع العايلة · المفتاح الاحتياطي معاه</small><q>«رحت أجيب ثلج ١٢:٣٠، رجعت ١:٥٠ ونمت. ما سوّيت شي سيدي.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_abdullah.jpg" alt=""></div><div><b>عبدالله</b><small>الحفيد · ٢٩ سنة · متزوّج جديد</small><q>«نمت ١٢ وقمت ٧ على الصراخ. طلعت الفير شوي أييب عشا من الخيران، ما لقيت شي مفتوح فرجعت.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_saad.jpg" alt=""></div><div><b>سعد (بوعبدالله)</b><small>الابن الثاني · ٥٠ سنة · تاجر · والد عبدالله</small><q>«آنا ومنى نمنا ١٠:٣٠. الشغّالة. ولدي ما له علاقة.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_mona.jpg" alt=""></div><div><b>منى</b><small>زوجة سعد · ٤٥ سنة · والدة شهد وعبدالله</small><q>«آنا اللي فتحت التيجوري الصبح. وآنا اللي لقيت الظرف بغرفتها.»</q></div></div>
@@ -671,7 +678,7 @@ html.tv body{zoom:1.18}
       <p class="note-tech">أقوال الأسرة أُخذت في مجلس الشاليه الجمعة الصبح. أقوال العاملة في مخفر الخيران.</p>
       <div class="ivg">
         <div class="iv"><div class="ivh"><img src="img/p_joyce.jpg" alt=""><div><b>جويس</b><small>العاملة · في المخفر · ٠:٣٠</small></div></div><video playsinline controls preload="none" poster="video/iv_joyce.jpg" src="video/iv_joyce.mp4"></video></div>
-        <div class="iv"><div class="ivh"><img src="img/p_reza.jpg" alt=""><div><b>رضا</b><small>السوّاق · ٠:٢٦</small></div></div><video playsinline controls preload="none" poster="video/iv_reza.jpg" src="video/iv_reza.mp4"></video></div>
+        <div class="iv"><div class="ivh"><img src="img/p_reza.jpg" alt=""><div><b>رضا</b><small>السايق · ٠:٢٣</small></div></div><video playsinline controls preload="none" poster="video/iv_reza.jpg" src="video/iv_reza.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_abdullah.jpg" alt=""><div><b>عبدالله</b><small>الحفيد · ٠:٢٠</small></div></div><video playsinline controls preload="none" poster="video/iv_abdullah.jpg" src="video/iv_abdullah.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_saad.jpg" alt=""><div><b>سعد</b><small>الابن الثاني · ٠:٢١</small></div></div><video playsinline controls preload="none" poster="video/iv_saad.jpg" src="video/iv_saad.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_mona.jpg" alt=""><div><b>منى</b><small>زوجة سعد · ٠:١٩</small></div></div><video playsinline controls preload="none" poster="video/iv_mona.jpg" src="video/iv_mona.mp4"></video></div>
@@ -720,7 +727,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div class="stage"><div class="device sam">
-    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div class="nm">رضا (السوّاق)</div><div class="st" id="rcSt">جاري الاتصال…</div></div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
+    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div class="nm">رضا (السايق)</div><div class="st" id="rcSt">جاري الاتصال…</div></div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
     <div class="callov" id="callov"><div><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344">🎮</div><div class="nm">فهد (ولد أخوي)</div><div class="st" id="callSt">مكالمة واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
     <div class="status"><span>الجمعة ١٢:٠٥ م</span><span>📶 🔋 ٣٤٪</span></div>
     <div class="apps">
@@ -917,7 +924,7 @@ const CHATS=[
  {id:'shahad',n:'شهد 💍',av:'p:shahad',last:'٨:٥٥ ص',u:2,msgs:[['day','الجمعة'],['them','عمي والله ماما (يدّتي) عطت جويس العيدية قدامي الخميس العصر! قالت لها عشان تحوّلين لأمج. ليش تتهمونها؟ 😭','٨:٥٠ ص'],['me','شهد، مو وقته.','٨:٥٢ ص'],['them','حرام عليكم.','٨:٥٥ ص']]},
  {id:'easy',n:'Easy Storage ✓',av:'📦',last:'٣:٤٢ ص',u:1,biz:1,msgs:[['day','١٩ سبتمبر'],['them','أهلاً بك في Easy Storage الري 👋 تم تفعيل عقدك. الوحدة <b>B-17</b> · مبنى B · الطابق الأرضي. مرفق صورة العقد:','١١:٢٠ ص'],['them','<span class="broken" data-strips>🖼️ <b>IMG_2291.jpg</b><br><small>الصورة ما اكتملت · ملف تالف</small><br><u>إصلاح الصورة</u></span>','١١:٢٠ ص'],['them','رمز الدخول في العقد. يُرجى عدم مشاركته.','١١:٢١ ص'],['day','الجمعة'],['them','✅ تم فتح الوحدة B-17 · بوابة ٢ · ٣:٤٢ ص','٣:٤٢ ص']]},
  {id:'fahad',n:'فهد 🎮',av:'🎮',last:'٨:٣١ ص',u:0,msgs:[['day','الخميس'],['them','<span class="snap" data-torch="courtyard">🌑<small>صورة · ١١:٣٦ م</small></span>','١١:٣٦ م'],['them','عمي شوف الحوش 👀 منو هذول؟','١١:٣٦ م'],['them','ما يبين شي بالصورة بس فيه اثنين عند السيارة','١١:٣٧ م'],['day','الجمعة'],['me','فهد، شفت شي البارح؟','٨:٣٠ ص'],['them','…لا','٨:٣١ ص']]},
- {id:'reza',n:'رضا (السوّاق)',av:'p:reza',last:'٧:٥٥ ص',u:0,msgs:[['day','الخميس'],['me','رضا جهّز الشاليه، الكل ياي الساعة ٥','٤:٣٠ م'],['them','حاضر بابا، كله جاهز 👍','٤:٣٢ م'],['day','الجمعة'],['them','بابا الثلج خلص، أروح الجمعية؟','١٢:٢٨ ص'],['them','<span class="vn" data-au="au-vn">▶<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>٠:١١</b></span><br><button class="chip analyze" data-voice>🔍 تحليل الصوت</button>','١:٥٥ ص'],['me','رضا تعال المجلس الحين','٧:٥٥ ص']]},
+ {id:'reza',n:'رضا (السايق)',av:'p:reza',last:'٧:٥٥ ص',u:0,msgs:[['day','الخميس'],['me','رضا جهّز الشاليه، الكل ياي الساعة ٥','٤:٣٠ م'],['them','حاضر بابا، كله جاهز 👍','٤:٣٢ م'],['day','الجمعة'],['them','بابا الثلج خلص، أروح الجمعية؟','١٢:٢٨ ص'],['them','<span class="vn" data-au="au-vn">▶<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>٠:١١</b></span><br><button class="chip analyze" data-voice>🔍 تحليل الصوت</button>','١:٥٥ ص'],['me','رضا تعال المجلس الحين','٧:٥٥ ص']]},
  {id:'abd',n:'عبدالله',av:'p:abdullah',last:'٨:٠٥ ص',u:0,msgs:[['day','١٩ سبتمبر'],['them','عمي، بيوصلك مسجات من شركة مخازن (Easy Storage) تجاهلها 🙏 حطيت رقمك للتواصل لأن خطي موقوف مؤقتاً. أثاث شقتنا القديمة','١٢:٠٠ م'],['me','ليش موقوف؟','١٢:١٠ م'],['them','سالفة فواتير، بتنحل','١٢:١١ م'],['day','الخميس'],['them','عمي الله يخليك، ١٢٠٠ دينار بس لين الراتب. البنك بيسحب السيارة الأسبوع الياي 😔','١٠:٤٥ م'],['me','ما عندي ولدي. كلم أبوك.','١٠:٥٢ م'],['them','أبوي نفس وضعي. خلاص.','١٠:٥٣ م'],['day','الجمعة'],['them','عمي اتصل بالشرطة. الشغّالة أكيد. لا تطوّلها.','٨:٠٥ ص']]},
  {id:'joyce',n:'Joyce (جويس)',av:'p:joyce',last:'١٠:٥٢ م',u:0,msgs:[['day','الخميس'],['them','Sir, tomorrow morning 7 I go Salmiya? Need send money Philippines, mama in hospital 🙏🙏','١٠:٤٠ م'],['me','بعدين جويس، بكرة الكل نايم','١٠:٥٠ م'],['them','Ok sir sorry. Very urgent only 😢','١٠:٥٢ م']]},
  {id:'mona',n:'منى (أم عبدالله)',av:'p:mona',last:'٧:٥٢ ص',u:0,msgs:[['day','الخميس'],['them','أمك نايمة عندنا بالصالة مع البنات، لا تصحّيها','١١:١٥ م'],['me','تمام','١١:١٦ م'],['day','الجمعة'],['them','التيجوري فاضي!!! تعال','٧:٣١ ص'],['them','لقيت ظرف فلوس بغرفة جويس. ٢٠٠ دينار. من وين لها؟؟','٧:٥٢ ص']]},
@@ -931,7 +938,7 @@ const SMS=[
  {id:'zain',n:'Zain',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','فاتورتك لشهر سبتمبر: ٣٢.٠٠٠ د.ك. آخر موعد للدفع ١٠ أكتوبر.','٩:٠٠ ص']]},
  {id:'otp',n:'K-NET',last:'الخميس',u:0,msgs:[['day','الخميس'],['them','رمز التحقق: ٤٤٠١٩٢. لا تشاركه مع أحد.','٤:٥٤ م']]},
  {id:'spam',n:'+965 6xx xxxxx',last:'الثلاثاء',u:0,msgs:[['day','الثلاثاء'],['them','عرض خاص على عزل الأسطح! اتصل الآن','١١:٠٠ ص']]}];
-const CALLS=[{n:'الشرطة — مخفر الخيران',t:'٨:١٠ ص',k:'صادرة · ٤ دقايق'},{n:'عبدالله',t:'٧:٤٠ ص',k:'صادرة · ٢ دقيقة'},{n:'رضا (السوّاق)',t:'١:٥٦ ص',k:'فايتة',bad:1},{n:'فهد 🎮',t:'١١:٥٠ م',k:'فايتة (٢)',bad:1},{n:'سعد (أخوي)',t:'الخميس',k:'واردة · ٣ دقايق'},{n:'أم خالد ❤️',t:'الخميس',k:'صادرة · ١ دقيقة'},{n:'المكتب',t:'الأربعاء',k:'واردة · ١٢ دقيقة'}];
+const CALLS=[{n:'الشرطة — مخفر الخيران',t:'٨:١٠ ص',k:'صادرة · ٤ دقايق'},{n:'عبدالله',t:'٧:٤٠ ص',k:'صادرة · ٢ دقيقة'},{n:'رضا (السايق)',t:'١:٥٦ ص',k:'فايتة',bad:1},{n:'فهد 🎮',t:'١١:٥٠ م',k:'فايتة (٢)',bad:1},{n:'سعد (أخوي)',t:'الخميس',k:'واردة · ٣ دقايق'},{n:'أم خالد ❤️',t:'الخميس',k:'صادرة · ١ دقيقة'},{n:'المكتب',t:'الأربعاء',k:'واردة · ١٢ دقيقة'}];
 const PHOTOS=[
  {id:'car_bag',n:'سيارة عبدالله',info:'الخميس ٥:٠٧ م',cap:'عبدالله وصل متأخر. شنطة رياضة سودا بالكرسي الخلفي.'},
  {id:'gold',n:'ذهب شهد',info:'الخميس ٨:٣٠ م · طاولة العشا',cap:'الطقم كامل. الجدّة ورّته للكل.'},
@@ -942,7 +949,7 @@ const NOTES=[
  {id:'meds',t:'أدوية أمي',d:'الأربعاء',body:'الضغط: الصبح والمغرب\nالسكر: بعد الغدا\nحبة النوم: ١٠:٣٠ — لا تنسون!'},
  {id:'keys',t:'مفاتيح الشاليه',d:'سبتمبر',body:'البوابة: رضا\nالتيجوري: أمي + الاحتياطي مع رضا\nالجيت سكي: عندي'},
  {id:'jam',t:'قائمة الجمعية',d:'الخميس',body:'ماي ×٤\nثلج (رضا)\nفحم\nعصير للعيال\nكرك 😂'},
- {id:'bills',t:'مصاريف الشاليه ٢٠٢٦',d:'أغسطس',body:'كهرباء: ٤٢٠\nصيانة المكيفات: ٢٨٠\nالسوّاق: ...\nالحارس: ...'}];
+ {id:'bills',t:'مصاريف الشاليه ٢٠٢٦',d:'أغسطس',body:'كهرباء: ٤٢٠\nصيانة المكيفات: ٢٨٠\nالسايق: ...\nالحارس: ...'}];
 const APPS=[['chats','WhatsApp','#25d366',CHATS.reduce((a,c)=>a+c.u,0)],['sms','الرسائل','#1a73e8',SMS.reduce((a,c)=>a+c.u,0)],['photos','المعرض','#fff',0],['notes','الملاحظات','#f6c344',0],['calls','الهاتف','#2fcc5f',0],['x1','الإعدادات','#8e8e93',0,1],['x2','يوتيوب','#f00',0,1],['x3','الآلة الحاسبة','#333',0,1],['x4','الكاميرا','#222',0,1],['x5','Samsung Pay','#1f2a44',0,1],['x6','الخرائط','#fff',0,1],['x7','المتجر','#1b5fb8',0,1]];
 const ICO={chats:'💬',sms:'✉️',photos:'🖼️',notes:'📝',calls:'📞',x1:'⚙️',x2:'▶️',x3:'🔢',x4:'📷',x5:'💳',x6:'🗺️',x7:'🛍️'};
 $('#home').innerHTML=APPS.map(a=>`<button class="icon${a[4]?' dim':''}" data-app="${a[0]}" ${a[4]?'disabled':''}><span class="g" style="background:${a[2]}">${ICO[a[0]]}</span><span>${a[1]}</span>${a[3]?`<span class="b">${a[3]}</span>`:''}</button>`).join('');
@@ -966,7 +973,7 @@ function renderSms(){$('#smsList').innerHTML=SMS.map(c=>{const l=[...c.msgs].rev
 $('#smsList').onclick=e=>{const b=e.target.closest('[data-sms]');if(!b)return;const c=SMS.find(x=>x.id===b.dataset.sms);c.u=0;renderSms();$('#smsTitle').textContent=c.n;$('#smsBody').innerHTML=c.msgs.map(m=>m[0]==='day'?`<span class="day">${m[1]}</span>`:`<div class="m them">${m[1]}${m[3]?`<span class="ph" data-photo="${m[3]}">${IMG(m[3])}</span>`:''}<span class="t">${m[2]}</span></div>`).join('');openApp('smsc')};
 $('#smsBody').addEventListener('click',e=>{const ph=e.target.closest('[data-photo]');if(ph)openPhoto(ph.dataset.photo,'smsc')});
 renderSms();
-function renderCalls(){$('#callsBody').innerHTML=(S.voice&&!S.call?`<button class="row rcall-btn" id="callReza"><span class="av" style="background:var(--ok)">📞</span><span style="min-width:0"><span class="nm">اتصل برضا</span><span class="pv">السوّاق · بالمجلس الحين</span></span><span class="tm">الحين</span></button>`:'')+`<div class="dayh">الأخيرة</div>`+CALLS.map(c=>`<div class="row"><span class="av">📞</span><span style="min-width:0"><span class="nm" style="${c.bad?'color:var(--tape-2)':''}">${c.n}</span><span class="pv">${c.k}</span></span><span class="tm">${c.t}</span></div>`).join('');const cb=$('#callReza');if(cb)cb.onclick=rezaCall}renderCalls();
+function renderCalls(){$('#callsBody').innerHTML=(S.voice&&!S.call?`<button class="row rcall-btn" id="callReza"><span class="av" style="background:var(--ok)">📞</span><span style="min-width:0"><span class="nm">اتصل برضا</span><span class="pv">السايق · بالمجلس الحين</span></span><span class="tm">الحين</span></button>`:'')+`<div class="dayh">الأخيرة</div>`+CALLS.map(c=>`<div class="row"><span class="av">📞</span><span style="min-width:0"><span class="nm" style="${c.bad?'color:var(--tape-2)':''}">${c.n}</span><span class="pv">${c.k}</span></span><span class="tm">${c.t}</span></div>`).join('');const cb=$('#callReza');if(cb)cb.onclick=rezaCall}renderCalls();
 
 /* photos */
 const PH_EXTRA={radar_0307:{n:'مخالفة المرور',info:'الجمعة ٣:٠٧ ص · طريق الخيران كم ١٢.٤ · الاتجاه شمال',cap:'رادار R-07. لاند كروزر بيضا، ٩٤ كم/س. الاتجاه <b>شمال</b> — رايحة طالعة من الخيران، مو داخلة.'}};
@@ -1045,7 +1052,7 @@ $('#torchOn').onclick=async()=>{$('#tintro').hidden=true;T.on=true;T.tx=50;T.ty=
 keypad($('#dpad'),$('#ddots'),v=>{if(v!==DOORCODE)return false;S.door=true;save();stageAt('solve');setTimeout(()=>{sheet(`<h3>🔓 B-17 انفتحت</h3><img src="img/ending_bag.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">شنطة رياضة سودا… نفس اللي كانت بسيارة عبدالله يوم الخميس. وداخلها العلبة الحمرا. الذهب كامل.</div><div class="acts"><button class="btn" id="afterDoor">🔍 حل القضية</button></div>`);$('#afterDoor').onclick=()=>{$('#modal').classList.remove('on');show('solve')}},700);return true});
 
 /* ---- solve ---- */
-const SUS=[['reza','رضا','السوّاق'],['abdullah','عبدالله','الحفيد'],['saad','سعد','الابن الثاني'],['mona','منى','زوجة سعد'],['joyce','جويس','العاملة'],['bu','بوعبدالعزيز','المبلّغ']];
+const SUS=[['reza','رضا','السايق'],['abdullah','عبدالله','الحفيد'],['saad','سعد','الابن الثاني'],['mona','منى','زوجة سعد'],['joyce','جويس','العاملة'],['bu','بوعبدالعزيز','المبلّغ']];
 const pick=(el,key)=>{$(el).innerHTML=SUS.map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
 pick('#pickWho','who');pick('#pickWhy','why');
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}

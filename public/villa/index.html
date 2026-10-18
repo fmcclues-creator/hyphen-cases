@@ -94,6 +94,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #intro .meta span{display:flex;align-items:center;gap:5px}
 .tvtip{max-width:400px;background:#1c2331;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;color:#dfe3ea}
 #intro .brand{font-size:11px;color:#8e97a8}
+#intro .in{justify-content:flex-start}#intro .in>:first-child{margin-top:auto}#intro .in>:last-child{margin-bottom:auto}
+#intro .in>p{max-width:520px;text-align:center}#intro h1{text-align:center}
+@media (orientation:landscape) and (min-width:900px){
+ #intro .in{display:grid;grid-template-columns:minmax(260px,380px) minmax(320px,520px);grid-template-areas:"brand brand" "folder h1" "folder p" "folder btn" "folder meta" "folder fs" "folder tip";justify-content:center;align-content:center;align-items:center;column-gap:40px;row-gap:14px;padding:24px}
+ #intro .in>.brand{grid-area:brand;width:100%}#intro .folder{grid-area:folder;max-width:380px;margin:0}#intro h1{grid-area:h1;text-align:start;margin:0}#intro .in>p{grid-area:p;text-align:start;max-width:none}#intro .btn{grid-area:btn;max-width:none}#intro .meta{grid-area:meta;justify-content:flex-start}#intro .tvtip{grid-area:tip;max-width:none}#intro [data-fs]{grid-area:fs;justify-self:start}
+ #intro .in>:first-child,#intro .in>:last-child{margin:0}
+}
 @media (min-height:900px){.folder{max-width:440px}}
 /* ---------- case file (paper) ---------- */
 #file{background:#3a3129}
