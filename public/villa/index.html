@@ -551,6 +551,22 @@ html.tv body{zoom:1.18}
 }
 
 @media (orientation:landscape) and (min-width:640px){#solve .wrap{grid-template-columns:1fr 1fr}}
+
+/* ---- outgoing call with question choices ---- */
+.callov.rc{justify-content:flex-start;padding:28px 14px 18px;gap:10px}
+.callov.rc .av{width:64px;height:64px;font-size:30px;margin:0 auto 6px}.callov.rc .nm{font-size:20px}
+.rc-log{flex:1;min-height:0;overflow:auto;width:100%;display:flex;flex-direction:column;gap:6px;text-align:right}
+.rc-log .m{max-width:88%;padding:8px 12px;border-radius:14px;font-size:15px;line-height:1.6;background:#232a36;align-self:flex-start}
+.rc-log .m.me{background:#1f4d3a;align-self:flex-end}.rc-log .m.sys{align-self:center;background:transparent;color:var(--muted);font-size:13px}
+.rc-log .dots i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#aab;margin:0 2px;animation:rcd 1s infinite}.rc-log .dots i:nth-child(2){animation-delay:.2s}.rc-log .dots i:nth-child(3){animation-delay:.4s}
+@keyframes rcd{50%{opacity:.2}}
+.rc-q{width:100%;display:grid;gap:6px}.rc-q button{text-align:right;padding:10px 12px;border-radius:12px;background:#2a3344;color:#fff;font-size:14px;line-height:1.5;border:1px solid var(--line)}
+.callov.rc .btns button{width:54px;height:54px;font-size:24px}
+.rcall-btn{background:rgba(58,163,106,.12)}
+/* ---- tilt-to-look room ---- */
+.roompan{position:absolute;top:0;bottom:0;left:0;will-change:transform;touch-action:none}
+.roompan img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.roomtilt{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font-size:13px;z-index:2}
 </style>
 </head>
 <body>
@@ -633,8 +649,8 @@ html.tv body{zoom:1.18}
         <dt>آخر مشاهدة</dt><dd>الاثنين ٩:٣٠ مساءً — بومشعل جالس مع المرحوم في المكتب، والدرج مغلق. الثلاثاء ٧:٢٠ صباحاً — فيصل يفتح الدرج بحضور طلال: <b>فاضي</b>.</dd>
         <dt>سبب الوفاة</dt><dd>طبيعية (قصور قلبي أثناء النوم، نحو ٢:٣٠ فجراً) — تقرير طبيب الإسعاف مرفق. لا شبهة جنائية في الوفاة.</dd>
         <dt>الموجودون بالفيلا ليلة الوفاة</dt><dd>المرحوم، <b>نورة</b> (تسكن معه)، <b>طلال</b> (وصل من لندن ٩:٠٠ م ونام بالصالة). <b>صالح</b> السائق يسكن بغرفة الحارس عند البوابة — غائب تلك الليلة.</dd>
-        <dt>الأجهزة</dt><dd>سلّمت نورة هاتف المرحوم (أندرويد قديم، وضع «سهل» بخط كبير) — مقفول برمز من ٤ أرقام. فيصل: «أبوي ما يحفظ إلا تواريخ هجرية، ويقول دايماً أهم تاريخ هو يوم بنينا البيت».</dd>
-        <dt>ملاحظة</dt><dd>المحامي <b>ياسر</b> (صديق المرحوم) يؤكد أن الوصية بخط اليد «صحيحة بس بدون شهود»، وأنه إذا لم تظهر، تُقسّم التركة بالتساوي حسب القانون.</dd>
+        <dt>الأجهزة</dt><dd>هاتف المرحوم (أندرويد، مقفول برمز ٤ أرقام). فيصل: «أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ عنده يوم بنينا البيت».</dd>
+        <dt>ملاحظة</dt><dd>المحامي <b>ياسر</b>: الوصية بخط اليد «صحيحة بس بدون شهود». لو ما ظهرت، تنقسم التركة بالتساوي.</dd>
         <dt>المطلوب</dt><dd>منو أخذ الوصية؟ وليش؟ ووين هي الحين؟</dd>
       </dl>
     </div>
@@ -655,7 +671,7 @@ html.tv body{zoom:1.18}
     <div id="t4" hidden>
       <h2>أفراد الأسرة</h2>
       <div class="sus"><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div><b>فيصل</b><small>الابن الأكبر · ٥٨ سنة · تاجر · المبلّغ</small><q>«أول واحد فتح الدرج. اللي أخذها من البيت.»</q></div></div>
-      <div class="sus"><div class="av"><img src="img/p_talal.jpg" alt=""></div><div><b>طلال</b><small>الابن الثاني · ٥٢ سنة · طبيب في لندن · وصل ليلة الوفاة</small><q>«ما أعرف وين المكتب حتى. آنا أبي أبوي.»</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_talal.jpg" alt=""></div><div><b>طلال</b><small>الابن الثاني · ٥٢ سنة · طبيب في لندن · وصل ليلة الوفاة · «ما أعرف وين المكتب حتى»</small><q>«ما أعرف وين المكتب حتى. آنا أبي أبوي.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_abeer.jpg" alt=""></div><div><b>عبير</b><small>البنت الكبيرة · ٥٥ سنة · زوجة بومشعل</small><q>«نورة كانت بروحها بالبيت. هذا اللي صار.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_bumishal.jpg" alt=""></div><div><b>بومشعل</b><small>زوج عبير · ٦٠ سنة · مقاول · يبي يبيع الأرض</small><q>«الوصية ما لها قيمة قانونية أصلاً.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_saleh.jpg" alt=""></div><div><b>صالح</b><small>السائق · ٦٣ سنة · مصري · ٣٠ سنة مع العائلة · معه مفتاح الملحق</small><q>«الحاج كان زي أبويا. كنت في المستشفى.»</q></div></div>
@@ -678,7 +694,7 @@ html.tv body{zoom:1.18}
       <h2>🏃 الميدان</h2>
       <p class="note-tech">لما تعرفون وين ممكن تكون الوصية، تروحون بنفسكم.</p>
       <div class="field" id="fieldBox">
-        <div class="h" id="fieldLocked">🔒 ما عندنا مكان لين الحين. دوروا بالموبايل: شنو قال المرحوم بالصوتية؟ وشنو بالملاحظات؟ ووين راحت نورة الفجر؟</div>
+        <div class="h" id="fieldLocked">🔒 ما عندنا مكان لين الحين. دوروا بالموبايل: شنو قال المرحوم بالصوتية؟ وشنو بالملاحظات؟ ووين راح اللي بالعباة الفجر؟ واتصلوا بصالح — هو اللي معاه مفتاح الملحق.</div>
         <div id="fieldOpen" hidden>
           <p><b>الخميس ٩:٠٠ صباحاً.</b> وصلتوا الفيلا… وعند البوابة شاحنة بومشعل ورجاله: «جايين ننظّف الملحق، بنشيل الأثاث القديم». الملحق على بعد ٨٠ متر من الباب.</p>
           <img src="img/truck.jpg" alt="" style="width:100%;border-radius:10px;margin:6px 0" onerror="this.remove()">
@@ -718,6 +734,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
   <div class="stage"><div class="device ez">
+    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_saleh.jpg" alt=""></div><div class="nm">صالح (السائق)</div><div class="st" id="rcSt">جاري الاتصال…</div></div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
     <div class="callov" id="callov"><div><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344"><img src="img/p_yaser.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><div class="nm">ياسر المحامي</div><div class="st" id="callSt">مكالمة واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
     <div class="status ez-status"><span>الجمعة ١١:٤٠ ص</span><span>📶 🔋 ٦١٪</span></div>
     <div class="apps">
@@ -805,7 +822,7 @@ html.tv body{zoom:1.18}
     <div class="hot" data-h="radio" style="left:72%;top:36%;width:12%;height:14%"></div>
     <div class="hot" data-h="albums" style="left:84%;top:36%;width:14%;height:14%"></div>
     <div class="hot" data-h="frames" style="left:68%;top:8%;width:30%;height:22%"></div>
-    <div class="roomtip" id="roomTip">غرفة أبوي القديمة. اضغطوا على الشي اللي تبون تفتّشونه.</div>
+    <div class="roomtip" id="roomTip">غرفة أبوي القديمة. ميّلوا الموبايل أو اسحبوا عشان تطالعون، واضغطوا على الشي اللي تبون تفتّشونه.</div>
   </div>
 </section>
 
@@ -867,7 +884,7 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='villa', BUILD='261013';
 const PIN='1407';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',roomTries:0};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,call:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',roomTries:0};
 function save(){try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
 function load(){try{const d=JSON.parse(localStorage.getItem(GAME)||'null');if(d&&d.start)Object.assign(S,d)}catch(e){}}
 function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField();if(id!=='run')runStop();if(id!=='blow')blowStop();if(id!=='phone')recStop()}
@@ -886,7 +903,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، الوثائق، الصور، والمقابلات.</div><div class="h">٢. افتحوا موبايل المرحوم (رمز ٤ أرقام — فيصل عطاكم تلميح بالمحضر).</div><div class="h">٣. بالموبايل فيه تسجيل تالف لازم تصفّونه، وصورة لازم تفحصونها بالعدسة.</div><div class="h">٤. لما تعرفون وين الوصية، تبويب <b>🏃 الميدان</b> يفتح: فيه ركض بمكانكم، ونفخ على الموبايل، وتفتيش غرفة.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذها، وليش. الغلط = +دقيقتين.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 العب على التلفزيون</b> فوق — الخط والصور والفيديو يكبرون، ويطلع لكم كيف تضيفون اللعبة للشاشة الرئيسية عشان شريط سفاري يختفي.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، الوثائق، الصور، والمقابلات.</div><div class="h">٢. افتحوا موبايل المرحوم (رمز ٤ أرقام — فيصل عطاكم تلميح بالمحضر).</div><div class="h">٣. بالموبايل فيه تسجيل تالف لازم تصفّونه، وصورة لازم تفحصونها بالعدسة.</div><div class="h">٤. من تطبيق الهاتف تتصلون بصالح بنفسكم وتختارون الأسئلة. ولما تعرفون وين الوصية، تبويب <b>🏃 الميدان</b> يفتح: فيه ركض بمكانكم، ونفخ على الموبايل، وتفتيش غرفة.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذها، وليش. الغلط = +دقيقتين.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 العب على التلفزيون</b> فوق — الخط والصور والفيديو يكبرون، ويطلع لكم كيف تضيفون اللعبة للشاشة الرئيسية عشان شريط سفاري يختفي.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: الكاميرا ٦:١٤ — منو رايح الملحق؟"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -922,7 +939,7 @@ const openEv=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=DOC
 $('#docGrid').onclick=openEv;$('#evGrid').onclick=openEv;
 
 /* ---- field tab ---- */
-function fieldReady(){return S.memo&&S.corner&&S.cam}
+function fieldReady(){return S.memo&&S.corner&&S.cam&&S.call}
 function refreshField(){const r=fieldReady();$('#fieldLocked').hidden=r;$('#fieldOpen').hidden=!r;$('#goRun').hidden=S.run;$('#fieldDoor').hidden=!S.run;$('#goBlow').hidden=S.blow;$('#fieldRoom').hidden=!S.blow;$('#goRoom').hidden=S.album;$('#fieldFound').hidden=!S.album;if(r)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
 function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. افتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
 $('#goRun').onclick=()=>runStart();$('#goBlow').onclick=()=>blowStart();$('#goRoom').onclick=()=>roomStart();
@@ -938,7 +955,7 @@ const CHATS=[
  {id:'noura',n:'نورة ❤️',av:'p:noura',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه الدوا ✅ والغدا جاهز','١:٣٠ م'],['me','الله يسلمج يا بنتي','١:٤٥ م'],['them','طلال بيوصل الليلة إن شاء الله، فرشت له الصالة','٧:٠٠ م'],['them','يبه بومشعل عندك؟ لا تتعب نفسك بالكلام عن البيع، إنت تعبان','٩:٤٠ م'],['me','لا تخافين','٩:٤٥ م'],['them','تصبح على خير يبه ❤️','١١:٠٥ م']]},
  {id:'yaser',n:'ياسر (المحامي)',av:'p:yaser',last:'الأحد',u:0,msgs:[['day','قبل شهر'],['them','أبو فيصل، الوصية اللي كتبتها بخطك صحيحة، بس الأفضل شاهدين','١٠:٠٠ ص'],['me','شاهدي الله يا بوعلي','١٠:٣٠ ص'],['day','الأحد'],['them','صوّر لي الورقة يبه عشان أحفظ نسخة','٥:٠٠ م'],['me','<span class="ph" data-photo="will_corner">'+IMG('will_corner')+'</span>','٥:٢٠ م'],['them','هذي بس زاوية! صوّرها كاملة','٥:٢٥ م'],['me','باچر إن شاء الله','٥:٣٠ م']]},
  {id:'bumishal',n:'بومشعل',av:'p:bumishal',last:'الاثنين',u:0,msgs:[['day','قبل أسبوعين'],['them','يبه عرض المستثمر ٣ ملايين على الأرض. فكّر بس','٨:٠٠ م'],['me','البيت مو للبيع','٨:٣٠ م'],['day','الاثنين'],['them','يبه آنا ياي لك بعد العشا نسولف شوي','٨:٥٠ م'],['me','تعال','٨:٥٥ م'],['them','<span class="miss">📵 مكالمة فايتة</span>','١١:٣٠ م']]},
- {id:'talal',n:'طلال',av:'p:talal',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه وصلت الكويت، ياي لك الحين من المطار','٨:٤٥ م'],['me','بانتظارك يا ولدي','٨:٥٠ م']]},
+ {id:'talal',n:'طلال',av:'p:talal',last:'الاثنين',u:1,msgs:[['day','الاثنين'],['them','يبه وصلت الكويت، ياي لك الحين من المطار','٨:٤٥ م'],['me','بانتظارك يا ولدي','٨:٥٠ م'],['them','يبه نمت؟ آنا بالمكتب… شفت الورقة بالدرج. ما فهمت السطر الثاني 🤔 نتكلم الصبح','١١:٤٠ م'],['them','لا تقول لفيصل إني قريتها','١١:٤١ م']]},
  {id:'faisal',n:'فيصل',av:'p:faisal',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','يبه البنك بيسحب على المحل. ممكن نتكلم عن الفيلا؟','٤:٠٠ م'],['me','بعد العيد نتكلم. والفيلا مكتوبة.','٤:٣٠ م'],['them','مكتوبة لمنو يبه؟','٤:٣١ م'],['me','لمن يسكن فيها. وإنت تعرف السطر الثاني لو قريت','٤:٤٠ م'],['them','؟؟','٤:٤١ م']]},
  {id:'hamad',n:'حمد (حفيدي) 🧒',av:'🧒',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يدو شلونك؟ باچر أمرّ عليك بعد المدرسة 🚗','٤:١٠ م'],['me','تعال يا حمد، آخذك الملحق أوريك راديو أول','٤:٢٠ م'],['them','😍😍','٤:٢١ م']]},
  {id:'jam',n:'جمعية الرميثية ✓',av:'🛒',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','عروض الأسبوع: تمر ٢ د.ك · قهوة ١.٥٠٠','٩:٠٠ ص']]},
@@ -971,7 +988,7 @@ function openChat(c){$('#chatTitle').innerHTML=c.n+(c.grp?'<span class="sub">م�
 $('#chatList').onclick=e=>{const b=e.target.closest('[data-chat]');if(b)openChat(CHATS.find(x=>x.id===b.dataset.chat))};
 $('#chatBody').addEventListener('click',e=>{const ph=e.target.closest('[data-photo]');if(ph)openPhoto(ph.dataset.photo,'chat')});
 renderChatList();
-$('#callsBody').innerHTML=`<div class="dayh">الأخيرة</div>`+CALLS.map(c=>`<div class="row"><span class="av">📞</span><span style="min-width:0"><span class="nm" style="${c.bad?'color:var(--tape-2)':''}">${c.n}</span><span class="pv">${c.k}</span></span><span class="tm">${c.t}</span></div>`).join('');
+function renderCalls(){$('#callsBody').innerHTML=(S.cam&&!S.call?`<button class="row rcall-btn" id="callSaleh"><span class="av" style="background:var(--ok)">📞</span><span style="min-width:0"><span class="nm">اتصل بصالح</span><span class="pv">السائق · بالمستشفى</span></span><span class="tm">الحين</span></button>`:'')+`<div class="dayh">الأخيرة</div>`+CALLS.map(c=>`<div class="row"><span class="av">📞</span><span style="min-width:0"><span class="nm" style="${c.bad?'color:var(--tape-2)':''}">${c.n}</span><span class="pv">${c.k}</span></span><span class="tm">${c.t}</span></div>`).join('');const cb=$('#callSaleh');if(cb)cb.onclick=salehCall}renderCalls();
 $('#medsBody').innerHTML=`<div class="dayh">سجل الجرعات</div>`+MEDS.map(m=>`<div class="row"><span class="av" style="background:#8e5bef;color:#fff">💊</span><span style="min-width:0"><span class="nm">${m[1]}</span><span class="pv">${m[2]}</span></span><span class="tm">${m[0]}</span></div>`).join('')+`<div class="note-tech" style="color:#aab2c2;font-size:13px;padding:12px">الجرعات تُسجّل بالضغط على «أُعطيت» من موبايل المرافق. المرافق المسجّل: نورة.</div>`;
 
 /* photos */
@@ -979,7 +996,7 @@ function renderPhotos(){$('#photoGrid').innerHTML=PHOTOS.map(p=>`<button data-p=
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'photos')};
 function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id)||{n:id,info:'',cap:''};$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<img src="img/${id}.jpg" alt="">`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';
   const act=$('#photoAct');act.innerHTML='';if(p.lens)act.innerHTML=`<button class="btn" id="toLens">🔍 افحصوا الصورة بالعدسة</button>`;if(p.cam&&!S.cam)act.innerHTML=`<button class="btn" id="camZoom">🔎 كبّروا على الشخص</button>`;
-  openApp('photo');const tl=$('#toLens');if(tl)tl.onclick=()=>openLens();const cz=$('#camZoom');if(cz)cz.onclick=()=>{S.cam=true;save();stageAt('field');SFX.found();act.innerHTML=`<div class="plain"><h4>التكبير</h4>عباة سودا، قصيرة القامة، شعر مربوط… والورقة مطوية نصّين على صدرها. من داخل البيت، رايحة <b>الملحق</b>. الساعة ٦:١٤ — قبل ما يوصل أحد من برّا بـ٤٨ دقيقة.</div>`;checkField()}}
+  openApp('photo');const tl=$('#toLens');if(tl)tl.onclick=()=>openLens();const cz=$('#camZoom');if(cz)cz.onclick=()=>{S.cam=true;save();stageAt('field');SFX.found();act.innerHTML=`<div class="plain"><h4>التكبير</h4>عباة سودا، قصيرة القامة، شعر مربوط… والورقة مطوية نصّين على صدرها. من داخل البيت، رايحة <b>الملحق</b>. الساعة ٦:١٤ — قبل ما يوصل أحد من برّا بـ٤٨ دقيقة.</div>`;renderCalls();setTimeout(()=>sheet('<h3>📞 اسألوا صالح</h3><div class="h">مفتاح الملحق مع صالح السائق، وهو بالمستشفى. من تطبيق <b>الهاتف</b> اضغطوا <b>اتصل بصالح</b> واختاروا أسئلتكم — لو اتهمتوه بيسكّر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),900);checkField()}}
 renderPhotos();
 /* notes */
 function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>`<button class="row" data-note="${n.id}"><span class="av" style="background:#5b8def;color:#fff">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${n.body.split('\n')[0]}</span></span><span class="tm">${n.d}</span></button>`).join('')}
@@ -1050,7 +1067,7 @@ function blowWin(){blowStop();S.blow=true;save();stageAt('room');SFX.found();$('
 /* ---- ROOM search ---- */
 const HOT={wardrobe:'الكبت: دشاديش مكويّة وغتر. ولا ورقة.',bisht:'البشت: جيوبه فاضية… ريحة العود.',bed:'تحت الفراش والمخدة: لا شي.',radio:'الراديو: ما يشتغل. الحين مو وقته.',frames:'الصور على الجدار: العرس، والعيال صغار. ما فيه شي وراها.'};
 function roomStart(){show('room');$('#roomTip').textContent=S.album?'✅ الألبوم كان على الطاولة.':'غرفة أبوي القديمة. اضغطوا على الشي اللي تبون تفتّشونه.'}
-$('#roomstage').onclick=e=>{const h=e.target.closest('.hot');if(!h)return;const k=h.dataset.h;if(k==='albums'){SFX.found();albumOpen();return}S.roomTries++;if(S.roomTries%3===0){S.pen+=60;save();SFX.bad();$('#roomTip').textContent=HOT[k]+' (+٦٠ ثانية — ارجعوا للملاحظة بالموبايل)'}else{SFX.del();$('#roomTip').textContent=HOT[k]}};
+$('#roomstage').onclick=e=>{if(e.currentTarget.dataset.moved)return;const h=e.target.closest('.hot');if(!h)return;const k=h.dataset.h;if(k==='albums'){SFX.found();albumOpen();return}S.roomTries++;if(S.roomTries%3===0){S.pen+=60;save();SFX.bad();$('#roomTip').textContent=HOT[k]+' (+٦٠ ثانية — ارجعوا للملاحظة بالموبايل)'}else{SFX.del();$('#roomTip').textContent=HOT[k]}};
 
 /* ---- ALBUM ---- */
 const PAGES=[{img:'p_bufaisal',cap:'١٩٩٤ — المجلس'},{img:'villa',cap:'الفيلا يوم كملت'},{img:'cam_0702',cap:'(صورة قديمة للعايلة عند البوابة)'},{img:'eid',cap:'العيد الماضي — الكل',lift:1},{img:'annex',cap:'غرفتي الأولى'}];
@@ -1067,7 +1084,7 @@ $('#pickWho').innerHTML=SUS.map(s=>`<button data-who="${s[0]}"><span class="av">
 $('#pickWhy').innerHTML=WHY.map(s=>`<button data-why="${s[0]}"><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');
 $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(!b)return;S.who=b.dataset.who;save();selPick()};$('#pickWhy').onclick=e=>{const b=e.target.closest('[data-why]');if(!b)return;S.why=b.dataset.why;save();selPick()};
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
-const WRONG={faisal:'فيصل وصل ٧:٠٢ مع الكل (كاميرا المدخل)، والدرج كان فاضي من ٦:١٤. منو كان داخل البيت الفجر؟',talal:'طلال نايم بالصالة وما يعرف المكتب… وكاميرا ٦:١٤ تشوف عباة، مو رجّال.',abeer:'عبير وصلت ٧:٠٢ مع زوجها. الوصية راحت قبلها بساعة.',bumishal:'أقوى دافع، صح… بس كان ببيته (مكالمة فايتة ١١:٣٠ من رقمه + وصل ٧:٠٢). منو كان بالبيت؟',saleh:'صالح كان بالمستشفى مع أخوه طول الليل (الكشف بالوثائق). وكاميرا ٦:١٤ تشوف عباة.'};
+const WRONG={faisal:'فيصل وصل ٧:٠٢ مع الكل (كاميرا المدخل)، والدرج كان فاضي من ٦:١٤. منو كان داخل البيت الفجر؟',talal:'طلال كذب فعلاً — كان بالمكتب ١١:٤٠ وقرأ الورقة (رسالته لأبوه). بس اللي أخذها الفجر بعباة، وطلال كان نايم بالصالة لما نورة اتصلت بالإسعاف. ليش كذب؟ عشان ما يقولون إنه كان يدوّر شنو كتب أبوه.',abeer:'عبير وصلت ٧:٠٢ مع زوجها. الوصية راحت قبلها بساعة.',bumishal:'أقوى دافع، صح… بس كان ببيته (مكالمة فايتة ١١:٣٠ من رقمه + وصل ٧:٠٢). منو كان بالبيت؟',saleh:'صالح كان بالمستشفى مع أخوه طول الليل (الكشف بالوثائق). وكاميرا ٦:١٤ تشوف عباة.'};
 $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='noura'&&S.why==='protect';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120;S.wrong++;save();let msg;
   if(S.who==='noura')msg='نورة، صح. بس ليش؟ هي اللي تسكن بالبيت — الوصية تعطيها كل شي. لو تبي الفلوس كانت خلّتها بالدرج. ارجعاو لرسالتها بالقروب: «حرام عليكم».';
@@ -1083,19 +1100,52 @@ function playWill(){const tx='«بسم الله الرحمن الرحيم. وص�
 let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='الكل سكت. نورة بكت. والفيلا بقت مثل ما بناها: بيت مفتوح لأهله.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
   const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()}}
 
+
+/* ---- call Saleh (Egyptian): 3 rounds, one right question each; accusations or money talk make him hang up ---- */
+const RC=[
+ {ask:[['صالح، إنت كنت فين ليلة الاثنين؟','في مستشفى مبارك يا فندم، من ٨ ونص بالليل مع أخويا. الكشف معاكم.',1],['صالح، إنت اللي خدت الورقة؟','أنا؟! ثلاثين سنة في البيت ده يا فندم… ',0],['الحاج كان عامل إيه يوم الاثنين؟','تعبان شوية يا فندم… بس ضحك معايا الصبح. الله يرحمه.',2]]},
+ {ask:[['مفتاح الملحق — مين معاه غيرك؟','أنا بس يا فندم… وفيه نسخة في درج المطبخ. الست نورة عارفاها.',1],['الحاج كتب لك فلوس في الوصية، صح؟','…مش عايز أتكلم في الموضوع ده يا فندم.',0],['الملحق مقفول على طول؟','أيوه، من سنين. الحاج كان بيدخله لوحده، يقعد مع الراديو بتاعه.',2]]},
+ {ask:[['الثلاثاء الصبح، حد كلّمك قبل الساعة ٧؟','…الست نورة. ٦ ونص كده. سألتني مفتاح الملحق لسه في درج المطبخ ولا لأ… وقفلت على طول. ما سألتنيش عن الحاج حتى.',1],['نورة بتكره إخواتها؟','يا فندم أنا سوّاق… ماليش في الكلام ده.',0],['رجعت البيت الساعة كام؟','٧ إلا ربع يا فندم. لقيت الأستاذ فيصل والست عبير على الباب.',2]]}];
+let rc={r:0,n:0,busy:false};
+function salehCall(){if(S.call)return;rc={r:0,n:0,busy:false};const o=$('#rcall');o.classList.add('on');$('#rcLog').innerHTML='';$('#rcQ').innerHTML='';$('#rcSt').textContent='جاري الاتصال…';
+  const rg=$('#au-ring');try{rg.currentTime=0;rg.play().catch(()=>{})}catch(e){}
+  setTimeout(()=>{rg.pause();$('#rcSt').textContent='متصل · ٠:٠١';rcSay('ألو… أيوه يا فندم؟ أنا لسه في المستشفى مع أخويا. خير؟',()=>rcAsk())},2200);
+  let sec=-2;rc.iv=setInterval(()=>{if(!o.classList.contains('on')){clearInterval(rc.iv);return}sec++;if(sec>0)$('#rcSt').textContent='متصل · '+fmt(sec)},1000)}
+function rcLine(t,cls){const L=$('#rcLog');const d=document.createElement('div');d.className='m '+(cls||'');d.textContent=t;L.appendChild(d);L.scrollTop=1e6;return d}
+function rcSay(t,then){const L=$('#rcLog');const d=document.createElement('div');d.className='m dots';d.innerHTML='<i></i><i></i><i></i>';L.appendChild(d);L.scrollTop=1e6;setTimeout(()=>{d.className='m';d.textContent=t;L.scrollTop=1e6;then&&then()},900+Math.min(1800,t.length*28))}
+function rcAsk(){const round=RC[rc.r];if(!round){rcSuccess();return}$('#rcQ').innerHTML=round.ask.map((q,i)=>`<button data-i="${i}">${q[0]}</button>`).join('');
+  $$('#rcQ button').forEach(b=>b.onclick=()=>{if(rc.busy)return;rc.busy=true;const q=round.ask[+b.dataset.i];$('#rcQ').innerHTML='';rcLine(q[0],'me');rc.n++;
+    rcSay(q[1],()=>{rc.busy=false;if(q[2]===0){rcHangup();return}if(q[2]===1)rc.r++;if(rc.n>=5&&rc.r<3){rcLine('صالح: يا فندم الدكتور بينادي، لازم أقفل…','sys');setTimeout(rcHangup,900,true);return}rcAsk()})})}
+function rcHangup(soft){const o=$('#rcall');clearInterval(rc.iv);$('#rcQ').innerHTML='';if(!soft){S.pen+=60;save();SFX.bad();rcLine('📵 صالح قفل الخط. +٦٠ ثانية','sys')}else rcLine('📵 انتهت المكالمة','sys');
+  setTimeout(()=>{o.classList.remove('on');sheet(soft?'<h3>📵 انتهت المكالمة</h3><div class="h">ما وصلتوا لشي. اتصلوا مرة ثانية — ثلاث أسئلة صح تكفي: وين كان، منو معاه المفتاح، ومنو كلّمه الصبح.</div><div class="acts"><button class="btn" data-close>تمام</button></div>':'<h3>📵 صالح سكّر</h3><div class="h">لما تتهمونه أو تجيبون سيرة الفلوس يسكّر. +٦٠ ثانية. اتصلوا مرة ثانية وخلّوا الأسئلة هادية.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1400)}
+function rcSuccess(){clearInterval(rc.iv);S.call=true;save();SFX.ok();rcLine('📵 انتهت المكالمة','sys');setTimeout(()=>{$('#rcall').classList.remove('on');addSalehNote();checkField();if(S.fieldShown)return;sheet('<h3>🤔 ٦:٣٠ الفجر</h3><div class="h">نورة سألت صالح عن نسخة مفتاح الملحق… قبل ما تبلّغ عن الوفاة بنص ساعة. انحفظ نص المكالمة بالملاحظات.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1200)}
+$('#rcEnd').onclick=()=>{clearInterval(rc.iv);$('#rcall').classList.remove('on')};
+function addSalehNote(){addNote('saleh_call','📞 مكالمة صالح — نص المكالمة','صالح: «في مستشفى مبارك من ٨ ونص مع أخويا.»\nصالح: «مفتاح الملحق معايا… ونسخة في درج المطبخ، الست نورة عارفاها.»\nصالح: «الست نورة كلّمتني ٦ ونص الصبح. سألتني المفتاح لسه في الدرج ولا لأ… وقفلت على طول.»')}
+/* ---- room: tilt the phone (or drag) to look around; the image is wider than the screen in portrait ---- */
+(function(){const st=$('#roomstage');if(!st)return;const pan=document.createElement('div');pan.className='roompan';const img=st.querySelector('.roomimg');img.classList.remove('roomimg');pan.appendChild(img);st.querySelectorAll('.hot').forEach(h=>pan.appendChild(h));st.insertBefore(pan,st.firstChild);
+ const tip=document.createElement('button');tip.className='roomtilt';tip.id='roomTilt';tip.textContent='📐 ميّلوا الموبايل عشان تطالعون الغرفة';st.appendChild(tip);
+ const AR_=1184/864;let x=0,max=0,tilt=false,drag=null,g0=null;
+ function size(){const H=st.clientHeight,W=st.clientWidth;const pw=Math.max(W,H*AR_);pan.style.width=pw+'px';max=Math.max(0,pw-W);x=Math.min(x,max);if(max===0)x=0;apply();tip.hidden=max<20}
+ function apply(){pan.style.transform=`translateX(${-x}px)`}
+ st.onpointerdown=e=>{if(e.target.closest('button'))return;drag={px:e.clientX,x0:x,moved:false}};st.onpointermove=e=>{if(!drag)return;const dx=e.clientX-drag.px;if(Math.abs(dx)>8)drag.moved=true;x=Math.max(0,Math.min(max,drag.x0-dx));apply()};st.onpointerup=st.onpointercancel=()=>{if(drag&&drag.moved){st.dataset.moved='1';setTimeout(()=>delete st.dataset.moved,50)}drag=null};
+ function onOri(e){if(!tilt||max===0)return;const g=e.gamma==null?0:e.gamma;if(g0===null)g0=g;const d=(g-g0);x=Math.max(0,Math.min(max,x+d*0.9));apply()}
+ tip.onclick=async()=>{try{if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission){const r=await DeviceOrientationEvent.requestPermission();if(r!=='granted')throw 0}window.addEventListener('deviceorientation',onOri);tilt=true;g0=null;tip.textContent='📐 الحركة شغّالة — ميّلوا يمين ويسار';setTimeout(()=>tip.hidden=true,2500)}catch(e){tip.textContent='اسحبوا الصورة بإصبعكم يمين ويسار';setTimeout(()=>tip.hidden=true,2500)}};
+ new ResizeObserver(size).observe(st);size();window.addEventListener('orientationchange',()=>setTimeout(size,300));})();
+
 /* ---- hints ---- */
 const HINTS={
  lock:['فيصل قال بالمحضر: أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ هو يوم بنينا البيت. دوروا بالوثائق.','شهادة ملكية الأرض فيها تاريخ الإفراز بالهجري. السنة بس — ٤ أرقام.','الجواب: ١٤٠٧.'],
  memo:['افتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
  corner:['بالصور فيه صورة زاوية الوصية اللي أرسلها المرحوم لياسر. افتحوها واضغطوا «افحصوا بالعدسة».','الورق يحتفظ بأثر القلم. مرّروا العدسة على الفراغ اللي تحت السطر الأول وثبّتوها.','الجواب: السطر الثاني «على أن تبقى بيتاً مفتوحاً لإخوتها».'],
  cam:['بالصور فيه لقطة من كاميرا المدخل الساعة ٦:١٤ الفجر. افتحوها واضغطوا «كبّروا».','منو كان داخل البيت الفجر؟ الكل وصل ٧:٠٢ إلا… ارجعاو للمحضر: الموجودون ليلة الوفاة.','الجواب: اللي بالعباة طالعة من البيت للملحق، حاملة ورقة — ٤٨ دقيقة قبل ما يوصل أحد.'],
+ call:['اتصلوا بصالح بنفسكم من تطبيق <b>الهاتف</b> (زر «اتصل بصالح»). أسئلة هادية — لو اتهمتوه أو جبتوا سيرة الفلوس يسكّر.','ابدأوا: وين كان ← منو معاه مفتاح الملحق غيره ← ومنو كلّمه الثلاثاء قبل ٧ الصبح.','الجواب: صالح يقول إن نورة اتصلت فيه ٦:٣٠ الفجر تسأل عن نسخة مفتاح الملحق اللي بدرج المطبخ. يعني رايحة الملحق.'],
  run:['تبويب 🏃 الميدان. شاحنة بومشعل عند البوابة. اضغطوا «اركضوا» وبعدين اركضوا بمكانكم والموبايل بإيدكم.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما ينتهي الوقت. لو فشلتوا، +دقيقتين وجرّبوا مرة ثانية.'],
  blow:['اللوحة فوق الباب مغطّاة تراب. قرّبوا الموبايل من فمكم وانفخوا — المايك يحس.','لو ما سمح الموبايل بالمايك، افركوا الشاشة بإصبعكم لين يروح التراب. بعدها اضغطوا المفتاح.','الجواب: وراء اللوحة مفتاح الغرفة.'],
  room:['ارجعاو لملاحظة المرحوم بالموبايل: شنو قال يفتحون أول شي؟','«ألبوم الصور بغرفتي القديمة بالملحق». الألبومات على الطاولة يم الراديو.','الجواب: اضغطوا الألبومات على الطاولة، وقلّبوا لين صفحة العيد واضغطوا الصورة.'],
- solve:['منو كان بالبيت الفجر؟ المحضر يقول: نورة وطلال. والكاميرا تشوف عباة.','نورة أخذتها — بس مو عشان الفلوس: الوصية أصلاً تعطيها الفيلا. ليش تخبّي ورقة بصالحها؟ ارجعاو لرسالتها: «حرام عليكم… أبوي ما برد بعد».','الجواب: <b>نورة</b>، والسبب <b>الحماية</b> — خافت من الهوشة بين إخوانها.']};
+ solve:['منو كان بالبيت الفجر؟ المحضر يقول: نورة وطلال. طلال كذب عن المكتب (شوفوا رسالته ١١:٤٠)… بس الكاميرا تشوف عباة، ومكالمة صالح تقول منو سأل عن مفتاح الملحق.','نورة أخذتها — بس مو عشان الفلوس: الوصية أصلاً تعطيها الفيلا. ليش تخبّي ورقة بصالحها؟ ارجعاو لرسالتها: «حرام عليكم… أبوي ما برد بعد».','الجواب: <b>نورة</b>، والسبب <b>الحماية</b> — خافت من الهوشة بين إخوانها.']};
 const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
-const HNAME={lock:'فتح الموبايل',memo:'التسجيل التالف',corner:'زاوية الوصية',cam:'كاميرا ٦:١٤',run:'الركض للملحق',blow:'اللوحة',room:'تفتيش الغرفة',solve:'الاتهام'};
-function stage(){if(!S.unlocked)return 'lock';if(!S.memo)return 'memo';if(!S.corner)return 'corner';if(!S.cam)return 'cam';if(!S.run)return 'run';if(!S.blow)return 'blow';if(!S.album)return 'room';return 'solve'}
+const HNAME={lock:'فتح الموبايل',memo:'التسجيل التالف',corner:'زاوية الوصية',cam:'كاميرا ٦:١٤',call:'مكالمة صالح',run:'الركض للملحق',blow:'اللوحة',room:'تفتيش الغرفة',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.memo)return 'memo';if(!S.corner)return 'corner';if(!S.cam)return 'cam';if(!S.call)return 'call';if(!S.run)return 'run';if(!S.blow)return 'blow';if(!S.album)return 'room';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 $$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
@@ -1137,12 +1187,12 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked', 'فتح الموبايل'], ['memo', 'التسجيل'], ['corner', 'زاوية الوصية'], ['cam', 'كاميرا ٦:١٤'], ['run', 'الركض'], ['blow', 'اللوحة'], ['album', 'الألبوم']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
+function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked', 'فتح الموبايل'], ['memo', 'التسجيل'], ['corner', 'زاوية الوصية'], ['cam', 'كاميرا ٦:١٤'], ['call', 'مكالمة صالح'], ['run', 'الركض'], ['blow', 'اللوحة'], ['album', 'الألبوم']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
 /* ================= TEAM SYNC (several phones, one code) ================= */
-const SYNC_B=['unlocked', 'memo', 'corner', 'cam', 'run', 'blow', 'room', 'album'],SYNC_M=['pen', 'wrong', 'yaser', 'done', 'total'];
+const SYNC_B=['unlocked', 'memo', 'corner', 'cam', 'call', 'run', 'blow', 'room', 'album'],SYNC_M=['pen', 'wrong', 'yaser', 'done', 'total'];
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
@@ -1188,13 +1238,13 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
-const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc,roomTries:0};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,call:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc,roomTries:0};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){if(S.yaser===1)window.__ringLater=true; restoreUI();if(!S.screen||['intro','splash','gate','reveal','run','blow','room','album'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'photo': 'photos', 'note': 'notes', 'lens': 'photos'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
 syncStart();
 })();
-function restoreUI(){if(S.yaser>=2)addNote('call','📞 مكالمة ياسر المحامي — نص المكالمة','«'+CALLTX+'»');if(S.memo){addNote('memo','🎙️ نص تسجيل أبوي للمحامي',MEMO_TX);$('#recDone').hidden=false;$('#recTx').textContent=MEMO_TX}if(S.corner)addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»');renderNotes();renderChatList();renderPhotos();selPick();refreshField();}
+function restoreUI(){if(S.call)addSalehNote();if(typeof renderCalls==='function')renderCalls();if(S.yaser>=2)addNote('call','📞 مكالمة ياسر المحامي — نص المكالمة','«'+CALLTX+'»');if(S.memo){addNote('memo','🎙️ نص تسجيل أبوي للمحامي',MEMO_TX);$('#recDone').hidden=false;$('#recTx').textContent=MEMO_TX}if(S.corner)addNote('corner','🔍 السطر الثاني من الوصية','«…على أن تبقى بيتاً مفتوحاً لإخوتها.»');renderNotes();renderChatList();renderPhotos();selPick();refreshField();}
 
 </script>
 </body>
