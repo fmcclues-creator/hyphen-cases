@@ -79,6 +79,22 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .runtap{position:relative;z-index:2;background:var(--tape);color:#fff;border:0;border-radius:999px;padding:22px 44px;font:800 24px Tajawal,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer}
 .runtap:active{transform:scale(.96)}
 
+/* ---------- add to home screen: visual steps ---------- */
+.a2h{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.a2h-t{font-size:15px;font-weight:800;color:var(--fg)}
+.a2h-s{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.a2h-n{width:30px;height:30px;border-radius:50%;background:var(--tape);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+.a2h-d{font-size:15px;line-height:1.6;color:#e9ecf2;margin:3px 0 7px}
+.a2h-bar{display:flex;align-items:center;justify-content:space-around;background:#f4f4f7;border:1px solid #d7d9e0;border-radius:14px;padding:11px 10px}
+.a2h-bar i{color:#9a9aa0;font-style:normal;display:grid;place-items:center}
+.a2h-bar i svg{width:21px;height:21px}
+.a2h-bar i.hi{color:#0a84ff;position:relative}
+.a2h-bar i.hi::after{content:"";position:absolute;inset:-8px;border:2.5px solid var(--tape);border-radius:50%;animation:a2p 1.3s infinite}
+@keyframes a2p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.14)}}
+.a2h-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid #d7d9e0;border-radius:14px;padding:13px 15px;color:#1c1c1e;font-size:15px;font-weight:700}
+.a2h-row svg{width:23px;height:23px;flex:none}
+.a2h-f{font-size:13px;line-height:1.6;color:var(--muted)}
+
 /* ---------- intro: case folder ---------- */
 #intro{background:#15110e}
 #intro .wrap{padding:0;overflow:auto;background:
@@ -902,7 +918,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، رسالة الجدّة، الأدلة، والمقابلات.</div><div class="h">٢. افتحوا موبايل بوعبدالعزيز (سامسونج — نقشة مو رقم).</div><div class="h">٣. داخل الموبايل: صورة سودا تحتاج كشّاف، صوتية فيها صوت ثاني، مكالمة تسوونها بنفسكم وتختارون الأسئلة، أحداث الليلة ترتّبونها، وصورة تالفة تصلّحونها.</div><div class="h">٤. لما تعرفون وين راح الذهب، تبويب <b>الميدان</b> بالملف يفتح: الدورية تروح وإنتو تشغّلون الكشّاف، وتلحقون اللي يهرب بالركض بمكانكم، وتفتحون القفل.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذه، ومنو خلّاه يسوّيها. الغلط = +دقيقتين، ويزيد كل مرة.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 العب على التلفزيون</b> فوق — الخط والصور والفيديو يكبرون، ويطلع لكم كيف تضيفون اللعبة للشاشة الرئيسية عشان شريط سفاري يختفي.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الرمز</b> — لين ٦ موبايلات بنفس الرمز، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الرمز لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: رضا رجع ١:٥٠ بس الكاميرا تشوفه بالممر ٢:٣٥…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -1192,11 +1208,22 @@ apply()})();
 /* ---- "Play on TV" → Add to Home Screen walkthrough (hides the browser bars completely) ---- */
 let _installEv=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_installEv=e});
 function a2hs(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-const head='<h3>📺 وضع التلفزيون شغّال</h3><div class="h">✓ الخط والصور والفيديو أكبر، والعرض يتوزّع على الشاشة. اقلبوا الموبايل <b>بالعرض</b> وشغّلوا مشاركة الشاشة (Screen Mirroring) على التلفزيون.</div>';
+const head='<h3>📺 وضع التلفزيون شغّال</h3><div class="h">اقلبوا الموبايل <b>بالعرض</b> وشغّلوا <b>مشاركة الشاشة</b> على التلفزيون.</div>';
+const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5V4.2m0 0L8.9 7.3M12 4.2l3.1 3.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.6 10.3H5.2v9.5h13.6v-9.5h-2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const bar='<div class="a2h-bar"><i>‹</i><i>›</i><i class="hi">'+SHARE_SVG+'</i><i>☰</i><i>⧉</i></div>';
+const row='<div class="a2h-row"><span>إضافة إلى الشاشة الرئيسية</span><svg viewBox="0 0 24 24" fill="none"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="4.5" stroke="currentColor" stroke-width="1.9"/><path d="M12 8.2v7.6M8.2 12h7.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>';
+const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
 let body;
-if(_installEv)body='<div class="h">تبون شريط المتصفح يختفي نهائياً؟ ثبّتوا اللعبة كتطبيق — ضغطة وحدة:</div><div class="acts"><button class="btn" id="a2hsGo">📲 أضف للشاشة الرئيسية</button></div><div class="h" style="font-size:13px">بعد التثبيت افتحوا «قضية الشاليه» من الأيقونة. تقدّمكم محفوظ.</div>';
-else if(ios)body='<div class="h">تبون شريط سفاري يختفي نهائياً؟ الآيفون ما يسمح للموقع يسوّيها بنفسه، بس خطوتين:</div><div class="h">١. اضغطوا زر <b>المشاركة</b> <span style="display:inline-block;border:1.5px solid currentColor;border-radius:5px;padding:0 6px;font-size:13px">⬆︎</span> تحت الشاشة في سفاري.</div><div class="h">٢. انزلوا واختاروا <b>إضافة إلى الشاشة الرئيسية</b> ثم <b>إضافة</b>.</div><div class="h">افتحوا «قضية الشاليه» من الشاشة الرئيسية — تشتغل مثل التطبيق بدون أي شريط، وتقدّمكم محفوظ.</div>';
-else body='<div class="h">تبون شريط المتصفح يختفي نهائياً؟ افتحوا قائمة المتصفح <b>⋮</b> واختاروا <b>إضافة إلى الشاشة الرئيسية</b> أو <b>تثبيت التطبيق</b>، ثم افتحوا «قضية الشاليه» من الأيقونة. تقدّمكم محفوظ.</div>';
+if(_installEv)body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ ضغطة وحدة:</div><div class="acts"><button class="btn" id="a2hsGo">📲 أضف للشاشة الرئيسية</button></div><div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+else if(ios)body='<div class="a2h"><div class="a2h-t">تبون شريط سفاري يختفي؟ ٣ ضغطات:</div>'
+ +st('١','خلّوا الموبايل <b>عمودي</b> — بيطلع شريط سفاري تحت. اضغطوا زر المشاركة:',bar)
+ +st('٢','انزلوا بالقائمة لين تشوفون:',row)
+ +st('٣','اضغطوا <b>«إضافة»</b> فوق.','')
+ +'<div class="a2h-f">بتطلع أيقونة اللعبة بالشاشة الرئيسية — افتحوها منها واقلبوا الموبايل بالعرض. بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+else body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ خطوتين:</div>'
+ +st('١','افتحوا قائمة المتصفح:','<div class="a2h-bar" style="justify-content:flex-end"><i class="hi"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></i></div>')
+ +st('٢','واختاروا:',row)
+ +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
 sheet(head+body+'<div class="acts"><button class="btn" data-close>تمام</button></div>');
 const g=$('#a2hsGo');if(g)g.onclick=async()=>{try{_installEv.prompt();const r=await _installEv.userChoice;_installEv=null;if(r&&r.outcome==='accepted')$('#modal').classList.remove('on')}catch(e){}}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if(t){e.preventDefault();a2hs()}});
