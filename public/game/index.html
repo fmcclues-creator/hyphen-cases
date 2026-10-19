@@ -69,6 +69,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .a2h-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid #d7d9e0;border-radius:14px;padding:13px 15px;color:#1c1c1e;font-size:15px;font-weight:700}
 .a2h-row svg{width:23px;height:23px;flex:none}
 .a2h-f{font-size:13px;line-height:1.6;color:var(--muted)}
+.a2h-img{width:100%;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
 
 /* ---------- intro: case folder ---------- */
 #intro{background:#15110e}
@@ -1145,7 +1146,7 @@ const FAISAL={id:'faisal',n:'فيصل (البنك)',av:'p:faisal',last:'الحي
 const CALLTX='ألو؟ آنا فيصل، من البنك. آنا أدري إنتاو الشرطة وموبايل خالد وياكم، فقلت أتصل يمكن أحد يشيله. بس هالمكالمة سرّية، البنك ما يسمح لي أقول هالشي، فلا تسألوني أكثر. من سنين فيه تحويلات شهرية من حساب الشركة، كلها تروح لحساب واحد، وكلها معتمدة من واحد من اللي عندهم صلاحية على الحساب. والشهر هذا انسحب إيجار مخزن قديم بالشويخ، من حساب شخصي، مو من الشركة. هذا اللي أقدر أقوله. خلاص لازم أسكّر. ما اتصلت فيكم.';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 /* surface runtime errors so testers can report them instead of a silent black screen */
-window.addEventListener('error',e=>{try{let t=document.getElementById('errToast');if(!t){t=document.createElement('div');t.id='errToast';t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7a1f1a;color:#fff;font:13px/1.5 monospace;direction:ltr;padding:10px 12px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.5)';t.onclick=()=>t.remove();document.body.appendChild(t)}t.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?')}catch(x){}});
+window.addEventListener('error',e=>{try{console.error('[game]',e.message||e,'@'+(e.lineno||'?'))}catch(x){}});
 /* iOS: sounds started by timers (ringtone, message beep) are only allowed after the page was "touched" once — prime every audio element on the first tap */
 let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{try{const m=a.muted;a.muted=true;const pr=a.play();if(pr&&pr.then)pr.then(()=>{a.pause();a.currentTime=0;a.muted=m}).catch(()=>{a.muted=m})}catch(e){}});try{ac()}catch(e){}}
 ['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,primeAudio,{once:true,capture:true}));
@@ -1444,10 +1445,10 @@ const row='<div class="a2h-row"><span>إضافة إلى الشاشة الرئي�
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
 let body;
 if(_installEv)body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ ضغطة وحدة:</div><div class="acts"><button class="btn" id="a2hsGo">📲 أضف للشاشة الرئيسية</button></div><div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
-else if(ios)body='<div class="a2h"><div class="a2h-t">تبون شريط سفاري يختفي؟ ٣ ضغطات:</div>'
- +st('١','خلّوا الموبايل <b>عمودي</b> — بيطلع شريط سفاري تحت. اضغطوا زر المشاركة:',bar)
- +st('٢','انزلوا بالقائمة لين تشوفون:',row)
- +st('٣','اضغطوا <b>«إضافة»</b> فوق.','')
+else if(ios)body='<div class="a2h"><div class="a2h-t">تبون شريط سفاري يختفي؟ ٣ خطوات:</div>'
+ +st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
+ +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
+ +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
  +'<div class="a2h-f">بتطلع أيقونة اللعبة بالشاشة الرئيسية — افتحوها منها واقلبوا الموبايل بالعرض. بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
 else body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ خطوتين:</div>'
  +st('١','افتحوا قائمة المتصفح:','<div class="a2h-bar" style="justify-content:flex-end"><i class="hi"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></i></div>')
