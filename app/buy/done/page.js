@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { Header, Footer } from "../../components/Site";
+import PixelPurchase from "../../components/PixelPurchase";
 
 export default function Done({ searchParams }) {
   const code = searchParams?.code || "";
   const test = searchParams?.test === "1";
+  const paid = Number(process.env.PRICE_KWD || 4.75);
   const game = "/game";
   const play = `${game}#code=${code}`;
   const wa = `https://wa.me/?text=${encodeURIComponent(`رمز فريقنا لقضية خالد: ${code}\n${play}`)}`;
   return (
     <main className="wrap">
+      {!test && <PixelPurchase code={code} value={paid} currency="KWD" />}
       <Header />
       <div className="card">
         <h2>تم الدفع ✅ القضية صارت لكم</h2>

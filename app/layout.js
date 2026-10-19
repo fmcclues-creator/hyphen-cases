@@ -1,4 +1,5 @@
 import "./globals.css";
+import MetaPixel from "./components/MetaPixel";
 
 const SITE = "https://cases.hyphen-eventskw.com";
 const DESC =
@@ -96,7 +97,10 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }
