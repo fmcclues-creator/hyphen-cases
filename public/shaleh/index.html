@@ -59,6 +59,26 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #gate .btn{width:min(320px,100%)}
 #gate a{color:var(--muted);font-size:14px}
 
+/* ---------- chase: run in place ---------- */
+.runstage{position:relative;flex:1;overflow:hidden;background:#0a0c10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px}
+.runbg{position:absolute;inset:0;background:linear-gradient(#1b2330,#0b0e14 60%,#2a2418)}
+.runhud{position:relative;text-align:center}
+.runclock{font:900 72px/1 ui-monospace,Menlo,monospace;color:#ffd978}
+.runlbl{color:#aab2c2;font-size:14px}
+.runtrack{position:relative;width:min(92vw,520px)}
+.runpath{position:relative;height:60px}
+.runman{position:absolute;inset-inline-start:0;bottom:0;font-size:44px;font-style:normal;transition:inset-inline-start .2s;transform:scaleX(-1)}
+.runhome{position:absolute;inset-inline-start:0;top:0;font-size:18px;opacity:.6}
+.runannex{position:absolute;inset-inline-end:0;top:0;font-size:22px}
+.runbar{height:14px;border-radius:7px;background:#2c3139;overflow:hidden}
+.runbar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .2s}
+.rundist{text-align:center;color:#ffd978;font-size:18px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}
+.runtruck{position:absolute;bottom:14px;inset-inline-start:0;font-size:40px;transition:inset-inline-start 1s linear;transform:scaleX(-1)}
+.runintro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(0,0,0,.8);z-index:3}
+.runintro .h{max-width:40ch;color:#e9ecf2;font-size:16px;line-height:1.7}
+.runtap{position:relative;z-index:2;background:var(--tape);color:#fff;border:0;border-radius:999px;padding:22px 44px;font:800 24px Tajawal,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer}
+.runtap:active{transform:scale(.96)}
+
 /* ---------- intro: case folder ---------- */
 #intro{background:#15110e}
 #intro .wrap{padding:0;overflow:auto;background:
@@ -693,7 +713,8 @@ html.tv body{zoom:1.18}
         <div id="fieldOpen" hidden>
           <p><b>مخازن EASY STORAGE — الري</b>، مبنى B. الدورية وصلت ١:١٠ ظهراً. المكتب مسكّر يوم الجمعة، والكهرباء مقطوعة بالممر.</p>
           <button class="btn" id="goCorridor">🔦 شغّلوا الكشّاف بالممر</button>
-          <div id="fieldDoor" hidden><p>✅ لقينا الوحدة <b>B-17</b>. عليها قفل رقمي من ٤ أرقام.</p><button class="btn" id="goDoor">🔐 افتحوا القفل</button></div>
+          <div id="fieldChase" hidden><p>✅ لقينا <b>B-17</b>… وفجأة واحد طلع من الممر الثاني يركض للمواقف!</p><button class="btn" id="goChase">🏃 الحقوه!</button></div>
+          <div id="fieldDoor" hidden><p>✅ مسكتوه عند سيارته — <b>عبدالله</b>. «الشنطة مو لي!» وما يبي يعطي الرمز. الوحدة <b>B-17</b> عليها قفل رقمي من ٤ أرقام.</p><button class="btn" id="goDoor">🔐 افتحوا القفل</button></div>
           <div id="fieldFound" hidden><p>✅ الوحدة انفتحت. شنطة رياضة سودا… وداخلها علبة قطيفة حمرا.</p><button class="btn" id="goSolveF">🔍 حل القضية</button></div>
         </div>
       </div>
@@ -786,6 +807,21 @@ html.tv body{zoom:1.18}
 </section>
 
 <!-- ============ DOOR KEYPAD ============ -->
+<section class="screen" id="run">
+  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="runBack">‹ رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button></div>
+  <div class="runstage" id="runstage">
+    <div class="runbg"></div>
+    <div class="runhud">
+      <div class="runclock" id="runClock">60</div>
+      <div class="runlbl">ثانية قبل ما يوصل سيارته</div>
+    </div>
+    <div class="runtrack"><div class="runpath"><i class="runman" id="runMan">🏃</i><span class="runhome">🚓</span><span class="runannex">🚗</span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">٨٠ م</div></div>
+    <div class="runtruck" id="runTruck">🏃‍♂️</div>
+    <div class="runintro" id="runIntro"><div class="h">واحد طلع من الممر الثاني يركض للمواقف — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. على اللابتوب: اضغطوا الزر بسرعة.</div><button class="btn" id="runGo">🏃 الحقوه!</button></div>
+    <button class="runtap" id="runTap" hidden>اركض! 👟</button>
+    <div class="tmsg" id="runMsg"></div>
+  </div>
+</section>
 <section class="screen" id="door">
   <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="doorBack">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button></div>
   <div class="wrap">
@@ -847,7 +883,7 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261012';
 const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='6204';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,contract:false,door:false,call:false,timeline:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',room:''};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,chase:false,contract:false,door:false,call:false,timeline:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',room:''};
 function save(){try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
 function load(){try{const d=JSON.parse(localStorage.getItem(GAME)||'null');if(d&&d.start)Object.assign(S,d)}catch(e){}}
 function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField()}
@@ -859,14 +895,14 @@ const AR=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
 /* ---- sounds ---- */
 let _ac;function ac(){try{_ac=_ac||new (window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac}catch(e){return null}}
 function tone(f,t0,d,type,g){const c=ac();if(!c)return;const o=c.createOscillator(),v=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,c.currentTime+t0);v.gain.setValueAtTime(0,c.currentTime+t0);v.gain.linearRampToValueAtTime(g||0.25,c.currentTime+t0+0.005);v.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+t0+d);o.connect(v).connect(c.destination);o.start(c.currentTime+t0);o.stop(c.currentTime+t0+d+0.02)}
-const SFX={tap:()=>{tone(1400,0,0.045,'square',0.08);tone(900,0,0.06,'sine',0.12)},del:()=>tone(600,0,0.06,'sine',0.12),bad:()=>{tone(180,0,0.18,'sawtooth',0.12);tone(150,0.2,0.22,'sawtooth',0.12)},ok:()=>{tone(880,0,0.12,'sine',0.18);tone(1320,0.1,0.18,'sine',0.18);tone(1760,0.2,0.3,'sine',0.14)},beep:()=>{tone(1200,0,0.08,'sine',0.15);tone(1600,0.1,0.1,'sine',0.15)},found:()=>{tone(660,0,0.1,'sine',0.15);tone(990,0.08,0.2,'sine',0.15)}};
+const SFX={tap:()=>{tone(1400,0,0.045,'square',0.08);tone(900,0,0.06,'sine',0.12)},del:()=>tone(600,0,0.06,'sine',0.12),bad:()=>{tone(180,0,0.18,'sawtooth',0.12);tone(150,0.2,0.22,'sawtooth',0.12)},ok:()=>{tone(880,0,0.12,'sine',0.18);tone(1320,0.1,0.18,'sine',0.18);tone(1760,0.2,0.3,'sine',0.14)},beep:()=>{tone(1200,0,0.08,'sine',0.15);tone(1600,0.1,0.1,'sine',0.15)},found:()=>{tone(660,0,0.1,'sine',0.15);tone(990,0.08,0.2,'sine',0.15)},step:()=>tone(320,0,0.04,'square',0.05),horn:()=>{tone(740,0,0.22,'sawtooth',0.07);tone(560,0.22,0.22,'sawtooth',0.07)}};
 function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];el.innerHTML='';
   keys.forEach(k=>{const b=document.createElement('button');b.textContent=k;if(!k)b.disabled=true;if(k==='⌫')b.className='sm';
     b.onclick=()=>{if(k==='⌫'){v=v.slice(0,-1);SFX.del()}else if(v.length<4){v+=k;SFX.tap()}paint();if(v.length===4){const ok=onFull(v);if(ok)SFX.ok();else{SFX.bad();dots.classList.add('bad','shake');setTimeout(()=>{dots.classList.remove('bad','shake');v='';paint()},500)}}};el.appendChild(b)});
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، رسالة الجدّة، الأدلة، والمقابلات.</div><div class="h">٢. افتحوا موبايل بوعبدالعزيز (سامسونج — نقشة مو رقم).</div><div class="h">٣. داخل الموبايل: صورة سودا تحتاج كشّاف، صوتية فيها صوت ثاني، مكالمة تسوونها بنفسكم وتختارون الأسئلة، أحداث الليلة ترتّبونها، وصورة تالفة تصلّحونها.</div><div class="h">٤. لما تعرفون وين راح الذهب، تبويب <b>الميدان</b> بالملف يفتح: الدورية تروح وإنتو تشغّلون الكشّاف وتفتحون القفل.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذه، ومنو خلّاه يسوّيها. الغلط = +دقيقتين، ويزيد كل مرة.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 العب على التلفزيون</b> فوق — الخط والصور والفيديو يكبرون، ويطلع لكم كيف تضيفون اللعبة للشاشة الرئيسية عشان شريط سفاري يختفي.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">١. اقرأوا الملف: المحضر، رسالة الجدّة، الأدلة، والمقابلات.</div><div class="h">٢. افتحوا موبايل بوعبدالعزيز (سامسونج — نقشة مو رقم).</div><div class="h">٣. داخل الموبايل: صورة سودا تحتاج كشّاف، صوتية فيها صوت ثاني، مكالمة تسوونها بنفسكم وتختارون الأسئلة، أحداث الليلة ترتّبونها، وصورة تالفة تصلّحونها.</div><div class="h">٤. لما تعرفون وين راح الذهب، تبويب <b>الميدان</b> بالملف يفتح: الدورية تروح وإنتو تشغّلون الكشّاف، وتلحقون اللي يهرب بالركض بمكانكم، وتفتحون القفل.</div><div class="h">٥. بعدها <b>حل القضية</b>: منو أخذه، ومنو خلّاه يسوّيها. الغلط = +دقيقتين، ويزيد كل مرة.</div><div class="h">💡 التلميحات تفتح بالتدريج (الأول فوراً، الثاني بعد ٥ دقايق، الجواب بعد ١٠) وكل تلميح يضيف وقت.</div><div class="h">📱 <b>أكثر من موبايل:</b> اضغطوا <b>📲 شارك الرمز</b> وخلّوا ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦). اللي يفتحه واحد يطلع عند الكل — وزّعوا الشغل مثل غرفة الهروب.</div><div class="h">🔒 <b>الرمز لمرة وحدة:</b> أول ما تنحل القضية يخلص الرمز. وبعد ٣ ساعات من البداية ما تقدر أجهزة جديدة تنضم — فلا تأجّلون دخول ربعكم.</div><div class="h">📺 <b>للعرض على التلفزيون:</b> شغّلوا مشاركة الشاشة من الموبايل، اقلبوه بالعرض، واضغطوا <b>📺 العب على التلفزيون</b> فوق — الخط والصور والفيديو يكبرون، ويطلع لكم كيف تضيفون اللعبة للشاشة الرئيسية عشان شريط سفاري يختفي.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: رضا رجع ١:٥٠ بس الكاميرا تشوفه بالممر ٢:٣٥…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -902,8 +938,8 @@ $('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}"><img src=
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);sheet(`<h3>${ev.n}</h3><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`)};
 
 /* ---- field tab ---- */
-function refreshField(){$('#fieldLocked').hidden=!!S.seenStorage;$('#fieldOpen').hidden=!S.seenStorage;$('#goCorridor').hidden=!!S.corridor;$('#fieldDoor').hidden=!S.corridor;$('#goDoor').hidden=!!S.door;$('#fieldFound').hidden=!S.door;if(S.seenStorage)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
-$('#goCorridor').onclick=()=>torchStart('corridor');$('#goDoor').onclick=()=>show('door');
+function refreshField(){$('#fieldLocked').hidden=!!S.seenStorage;$('#fieldOpen').hidden=!S.seenStorage;$('#goCorridor').hidden=!!S.corridor;$('#fieldChase').hidden=!(S.corridor&&!S.chase);$('#fieldDoor').hidden=!S.chase;$('#goDoor').hidden=!!S.door;$('#fieldFound').hidden=!S.door;if(S.seenStorage)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
+$('#goCorridor').onclick=()=>torchStart('corridor');$('#goChase').onclick=()=>runStart();$('#goDoor').onclick=()=>show('door');
 
 /* ---- pattern lock ---- */
 (function(){const svg=$('#pat'),line=$('#patLine');const P=[];for(let r=0;r<3;r++)for(let c=0;c<3;c++)P.push([50+c*100,50+r*100]);
@@ -1033,12 +1069,12 @@ function tvCtrl(on){const pad=$('#tpad');pad.hidden=!on;$('#tdark').style.visibi
 /* ---- torch scenes ---- */
 const SCENES={
  courtyard:{dark:'courtyard_night',lit:'courtyard_night',intro:'سناب فهد · ١١:٣٦ م — الصورة سودا. شغّلوا الكشّاف ودوروا بالحوش.',spots:[{x:33,y:55,r:14,l:'شخص ثاني — تيشيرت أسود، وجهه ما يبين… ساعة ذهب تلمع'},{x:43,y:61,r:13,l:'رضا — راسه تحت'},{x:60,y:47,r:17,l:'اللاند كروزر البيضا'}],done:'١١:٣٥ م: رضا بالحوش عند السيارة مع شخص ثاني ما يبين وجهه — تيشيرت أسود وساعة ذهب. رضا مو نايم مثل ما قال. ✅',flag:'torch1',next:'voice',tvTitle:'سناب فهد · الخميس ١١:٣٦ م · الحوش'},
- corridor:{dark:'corridor_dark',lit:'corridor_lit',intro:'مخازن الري · مبنى B — الكهرباء مقطوعة. دوروا على الوحدة… وعلى أي شي على الأرض.',spots:[{x:71,y:12,r:13,l:'الوحدة B-17 — قفل رقمي'},{x:47,y:80,r:13,l:'بطاقة شنطة: «شاليه أم خالد · شهد 💍»'}],done:'لقينا B-17. وبطاقة شنطة شهد ساقطة جدّامها. ✅',flag:'corridor',next:'contract',tvTitle:'مخازن Easy Storage · مبنى B · الكهرباء مقطوعة'}};
+ corridor:{dark:'corridor_dark',lit:'corridor_lit',intro:'مخازن الري · مبنى B — الكهرباء مقطوعة. دوروا على الوحدة… وعلى أي شي على الأرض.',spots:[{x:71,y:12,r:13,l:'الوحدة B-17 — قفل رقمي'},{x:47,y:80,r:13,l:'بطاقة شنطة: «شاليه أم خالد · شهد 💍»'}],done:'لقينا B-17. وبطاقة شنطة شهد ساقطة جدّامها… وصوت خطوات تركض بالممر الثاني! ✅',flag:'corridor',next:'contract',tvTitle:'مخازن Easy Storage · مبنى B · الكهرباء مقطوعة'}};
 let T=null;
 function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
   if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
 function mark(s){$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${s.x}%;top:${s.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click()}else{show('phone')}T=null}
+function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click();if(!S.chase)setTimeout(runStart,500)}else{show('phone')}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
@@ -1105,6 +1141,21 @@ function renderTimeline(){const ok=!!S.timeline;const ord=ok?[0,1,2,3,4,5,6]:tlO
   $$('#tl [data-dn]').forEach(b=>b.onclick=()=>{const i=+b.dataset.dn;if(i<6){[tlOrder[i+1],tlOrder[i]]=[tlOrder[i],tlOrder[i+1]];SFX.tap();renderTimeline()}});
   const c=$('#tlCheck');if(c)c.onclick=()=>{const right=tlOrder.filter((k,i)=>k===i).length;if(right===7){S.timeline=true;save();stageAt('storage');SFX.ok();renderChatList();renderTimeline();setTimeout(()=>sheet('<h3>✅ الليلة صارت واضحة</h3><div class="h">الذهب طلع من الشاليه ٣:٠٢ بالسيارة البيضا — ٤ دقايق قبل ما جويس تبين بالممر. وين راحت السيارة؟ الرسائل النصية فيها شي من المرور، وواتساب <b>Easy Storage</b> انفتح.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}else{SFX.bad();S.pen+=30;save();$('#tlMsg').textContent=`${AR(right)} من ٧ بمكانها الصح. +٣٠ ثانية — حاولوا مرة ثانية.`}}}
 
+/* ---- CHASE: run in place ---- */
+const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,rising:false};
+function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ مسكتوه. عبدالله — «الشنطة مو لي».</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit}}
+function runExit(){runStop();show('file');$$('.tabs button')[5].click();refreshField()}
+$('#runBack').onclick=runExit;
+function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
+function onMotion(e){if(!RUN.on)return;const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.hypot(a.x||0,a.y||0,a.z||0);const now=Date.now();if(mag>13.5&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>230){RUN.lastStep=now;runStep()}}else if(mag<10.5)RUN.rising=false}
+function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();paintRun();if(RUN.steps>=RUN.need)runWin()}
+$('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted')window.addEventListener('devicemotion',onMotion)}else window.addEventListener('devicemotion',onMotion)}catch(e){}
+  $('#runTap').hidden=false;$('#runTap').onclick=runStep;
+  RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
+function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
+function runWin(){runStop();S.chase=true;save();stageAt('contract');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يفتح الباب… <b>عبدالله!</b><br>«الشنطة مو لي، والله مو لي.» وما يبي يعطي رمز الوحدة — الرمز بعقد الإيجار.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runFail(){runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ ركب سيارته وطلع من البوابة. +دقيقتين. الدورية لفّت ورجّعته للمواقف — مرة ثانية، اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
+
 /* ---- hints ---- */
 const HINTS={
  lock:['بوعبدالعزيز قال للشرطة: شكل النقشة أول حرف من اسم أمه. اسم الجدّة بأول سطر بالمحضر. وصورة الشاشة بالأدلة فيها أثر الإصبع.','اسمها لطيفة → حرف L: خط نازل من فوق، وبعدين خط لليمين من تحت. ابدأوا من النقطة اللي فوق على اليسار.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
@@ -1114,11 +1165,12 @@ const HINTS={
  timeline:['بالملاحظات فيه ملاحظة جديدة «🕒 رتّبوا أحداث الليلة». الأحداث بدون أوقات — الأوقات موجودة بالأدلة (الكاميرات)، وبالواتساب (السناب والصوتية)، وبالمحضر.','من الأول للآخر: الذهب يرجع للتيجوري بعد العشا ← سناب الحوش ← كامري رضا تطلع ← صوتية رضا ← شخص يدخل غرفة الجدّة ← اللاند كروزر تطلع ← جويس بالممر.','الجواب: ٩:٠٠ م الذهب للتيجوري · ١١:٣٥ السناب · ١٢:٣١ كامري رضا · ١:٥٥ الصوتية · ٢:٣٥ دخول الغرفة · ٣:٠٢ اللاند كروزر تطلع · ٣:٠٦ جويس بالممر. يعني الذهب طلع ٣:٠٢ قبل ما جويس تطلع من غرفتها.'],
  storage:['وين راحت السيارة البيضا بعد ٣ الفجر؟ الرسائل النصية فيها شي من المرور… وبالواتساب فيه شركة بوعبدالعزيز ما يعرفها.','رادار الخيران صوّر السيارة ٣:٠٧ رايحة <b>شمال</b> — طالعة من الخيران مو داخلة. وشركة Easy Storage تقول «تم فتح الوحدة B-17 ٣:٤٢». افتحوا محادثتها.','الجواب: مخازن Easy Storage بالري، الوحدة B-17. بعد ما تفتحون المحادثة، روحوا تبويب «🚓 الميدان» بالملف.'],
  corridor:['الدورية بالممر والكهرباء مقطوعة. من تبويب الميدان شغّلوا الكشّاف ودوروا على رقم الوحدة… وأي شي على الأرض.','لوحة الوحدة فوق على اليمين. وفيه شي صغير ساقط جدّام الباب على الأرض.','الجواب: B-17 عليها قفل رقمي، وبطاقة شنطة شهد ساقطة عندها — الشنطة اللي كانت بسيارة عبدالله يوم الخميس.'],
+ chase:['واحد طلع يركض من الممر الثاني للمواقف. اضغطوا «الحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يوصل سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
  contract:['رمز القفل بعقد الإيجار. Easy Storage طرّشت صورة العقد لبوعبدالعزيز يوم ١٩ سبتمبر — بس الصورة وصلت تالفة. اضغطوها.','بدّلوا الشرايح لين تكمل الصورة. ٣ منها مقلوبة: اضغطوا مرتين عشان تعدلونها.','الجواب: رمز الدخول ٦٢٠٤.'],
  solve:['منو دخل غرفة الجدّة ٢:٣٥؟ كاميرا الممر: قصير، قميص فاتح، راسه تحت اللوحة (١٧٠ سم). ومنو كان يضغط عليه بالحوش؟','رضا فتح التيجوري (المفتاح الاحتياطي معاه + الكاميرا). واللي خطّط وأخذ الذهب بسيارته وخبّاه: عبدالله — مديون، والعقد باسمه من قبل الرحلة بأسبوعين.','الجواب: أخذه من التيجوري <b>رضا</b>، واللي خلّاه يسوّيها <b>عبدالله</b>.']};
 const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
-const HNAME={lock:'فتح الموبايل',torch1:'سناب فهد',voice:'الصوتية',call:'مكالمة رضا',timeline:'ترتيب الليلة',storage:'وين راح الذهب',corridor:'الممر',contract:'الصورة التالفة',solve:'الاتهام'};
-function stage(){if(!S.unlocked)return 'lock';if(!S.torch1)return 'torch1';if(!S.voice)return 'voice';if(!S.call)return 'call';if(!S.timeline)return 'timeline';if(!S.seenStorage)return 'storage';if(!S.corridor)return 'corridor';if(!S.door)return 'contract';return 'solve'}
+const HNAME={lock:'فتح الموبايل',torch1:'سناب فهد',voice:'الصوتية',call:'مكالمة رضا',timeline:'ترتيب الليلة',storage:'وين راح الذهب',corridor:'الممر',chase:'المطاردة',contract:'الصورة التالفة',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.torch1)return 'torch1';if(!S.voice)return 'voice';if(!S.call)return 'call';if(!S.timeline)return 'timeline';if(!S.seenStorage)return 'storage';if(!S.corridor)return 'corridor';if(!S.chase)return 'chase';if(!S.door)return 'contract';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 $$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
@@ -1160,12 +1212,12 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked', 'فتح الموبايل'], ['torch1', 'سناب فهد'], ['voice', 'الصوتية'], ['call', 'مكالمة رضا'], ['timeline', 'ترتيب الليلة'], ['seenStorage', 'وين راح الذهب'], ['corridor', 'الممر'], ['door', 'قفل B-17']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
+function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked', 'فتح الموبايل'], ['torch1', 'سناب فهد'], ['voice', 'الصوتية'], ['call', 'مكالمة رضا'], ['timeline', 'ترتيب الليلة'], ['seenStorage', 'وين راح الذهب'], ['corridor', 'الممر'], ['chase', 'المطاردة'], ['door', 'قفل B-17']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
 /* ================= TEAM SYNC (several phones, one code) ================= */
-const SYNC_B=['unlocked', 'torch1', 'voice', 'call', 'timeline', 'seenStorage', 'corridor', 'contract', 'door'],SYNC_M=['pen', 'wrong', 'fahad', 'done', 'total'];
+const SYNC_B=['unlocked', 'torch1', 'voice', 'call', 'timeline', 'seenStorage', 'corridor', 'chase', 'contract', 'door'],SYNC_M=['pen', 'wrong', 'fahad', 'done', 'total'];
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
@@ -1211,7 +1263,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
-const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,contract:false,door:false,call:false,timeline:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,chase:false,contract:false,door:false,call:false,timeline:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){if(S.fahad===1)window.__ringLater=true; restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes', 'strips': 'chats', 'voice': 'chats'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
