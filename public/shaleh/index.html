@@ -95,6 +95,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .a2h-row svg{width:23px;height:23px;flex:none}
 .a2h-f{font-size:13px;line-height:1.6;color:var(--muted)}
 .a2h-img{width:100%;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+.castrow{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.castb{flex:1 1 46%;background:#1c2331;border:1px solid var(--line);color:#dfe3ea;border-radius:12px;padding:11px 10px;font:700 14px Tajawal,sans-serif;line-height:1.4;cursor:pointer}
+.castb.on{background:var(--tape);border-color:var(--tape);color:#fff}
 
 /* ---------- intro: case folder ---------- */
 #intro{background:#15110e}
@@ -834,7 +837,7 @@ html.tv body{zoom:1.18}
     </div>
     <div class="runtrack"><div class="runpath"><i class="runman" id="runMan">🏃</i><span class="runhome">🚓</span><span class="runannex">🚗</span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">٨٠ م</div></div>
     <div class="runtruck" id="runTruck">🏃‍♂️</div>
-    <div class="runintro" id="runIntro"><div class="h">واحد طلع من الممر الثاني يركض للمواقف — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. على اللابتوب: اضغطوا الزر بسرعة.</div><button class="btn" id="runGo">🏃 لحقوه!</button></div>
+    <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 تبون المطاردة على التلفزيون؟ افتحوا عليه <b dir="ltr">cases.hyphen-eventskw.com/tv</b> واكتبوا الرمز:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">بانتظار التلفزيون…</div></div><div class="runintro" id="runIntro"><div class="h">واحد طلع من الممر الثاني يركض للمواقف — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. على اللابتوب: اضغطوا الزر بسرعة.</div><button class="btn" id="runGo">🏃 لحقوه!</button></div>
     <button class="runtap" id="runTap" hidden>اركض! 👟</button>
     <div class="tmsg" id="runMsg"></div>
   </div>
@@ -1088,7 +1091,7 @@ const SCENES={
  courtyard:{dark:'courtyard_night',lit:'courtyard_night',intro:'سناب فهد · ١١:٣٦ م — الصورة سودا. شغّلوا الكشّاف ودوروا بالحوش.',spots:[{x:33,y:55,r:14,l:'شخص ثاني — تيشيرت أسود، وجهه ما يبين… ساعة ذهب تلمع'},{x:43,y:61,r:13,l:'رضا — راسه تحت'},{x:60,y:47,r:17,l:'اللاند كروزر البيضا'}],done:'١١:٣٥ م: رضا بالحوش عند السيارة مع شخص ثاني ما يبين وجهه — تيشيرت أسود وساعة ذهب. رضا مو نايم مثل ما قال. ✅',flag:'torch1',next:'voice',tvTitle:'سناب فهد · الخميس ١١:٣٦ م · الحوش'},
  corridor:{dark:'corridor_dark',lit:'corridor_lit',intro:'مخازن الري · مبنى B — الكهرباء مقطوعة. دوروا على الوحدة… وعلى أي شي على الأرض.',spots:[{x:71,y:12,r:13,l:'الوحدة B-17 — قفل رقمي'},{x:47,y:80,r:13,l:'بطاقة شنطة: «شاليه أم خالد · شهد 💍»'}],done:'لقينا B-17. وبطاقة شنطة شهد ساقطة جدّامها… وصوت خطوات تركض بالممر الثاني! ✅',flag:'corridor',next:'contract',tvTitle:'مخازن Easy Storage · مبنى B · الكهرباء مقطوعة'}};
 let T=null;
-function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
+function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
   if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
 function mark(s){$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${s.x}%;top:${s.y}%"><i></i><span>${s.l}</span></div>`)}
 function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click();if(!S.chase)setTimeout(runStart,500)}else{show('phone')}T=null}
@@ -1160,18 +1163,20 @@ function renderTimeline(){const ok=!!S.timeline;const ord=ok?[0,1,2,3,4,5,6]:tlO
 
 /* ---- CHASE: run in place ---- */
 const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,rising:false};
-function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ مسكتوه. عبدالله — «الشنطة مو لي».</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit}}
-function runExit(){runStop();show('file');$$('.tabs button')[5].click();refreshField()}
+function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();tvCfg().then(c=>{const b=$('#runTvBox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#runTvCode').textContent=tvRoom();$('#runTvSt').textContent=TV.live?'✅ التلفزيون متصل':'بانتظار التلفزيون…';tvConnect()}});runTv('idle');if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ مسكتوه. عبدالله — «الشنطة مو لي».</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit}}
+function runExit(){runTv('bye');runStop();show('file');$$('.tabs button')[5].click();refreshField()}
 $('#runBack').onclick=runExit;
-function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
+let _runSent=0;
+function runTv(state){if(!TV.live)return;const now=Date.now();if(state==='run'&&now-_runSent<250)return;_runSent=now;tvSend('run',{state,t:RUN.t,steps:RUN.steps,need:RUN.need});}
+function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
 function onMotion(e){if(!RUN.on)return;const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.hypot(a.x||0,a.y||0,a.z||0);const now=Date.now();if(mag>13.5&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>230){RUN.lastStep=now;runStep()}}else if(mag<10.5)RUN.rising=false}
 function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();paintRun();if(RUN.steps>=RUN.need)runWin()}
 $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted')window.addEventListener('devicemotion',onMotion)}else window.addEventListener('devicemotion',onMotion)}catch(e){}
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runStop();S.chase=true;save();stageAt('contract');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يفتح الباب… <b>عبدالله!</b><br>«الشنطة مو لي، والله مو لي.» وما يبي يعطي رمز الوحدة — الرمز بعقد الإيجار.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
-function runFail(){runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ ركب سيارته وطلع من البوابة. +دقيقتين. الدورية لفّت ورجّعته للمواقف — مرة ثانية، اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
+function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('contract');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يفتح الباب… <b>عبدالله!</b><br>«الشنطة مو لي، والله مو لي.» وما يبي يعطي رمز الوحدة — الرمز بعقد الإيجار.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ ركب سيارته وطلع من البوابة. +دقيقتين. الدورية لفّت ورجّعته للمواقف — مرة ثانية، اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */
 const HINTS={
@@ -1208,24 +1213,34 @@ apply()})();
 
 /* ---- "Play on TV" → Add to Home Screen walkthrough (hides the browser bars completely) ---- */
 let _installEv=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_installEv=e});
+function castMode(){try{return localStorage.getItem(GAME+'_cast')||''}catch(e){return ''}}
 function a2hs(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-const head='<h3>📺 وضع التلفزيون شغّال</h3><div class="h">اقلبوا الموبايل <b>بالعرض</b> وشغّلوا <b>مشاركة الشاشة</b> على التلفزيون.</div>';
+const cast=castMode();
+const head='<h3>\u{1F4FA} وضع التلفزيون شغّال</h3><div class="h">كيف بتعرضونها على التلفزيون؟</div>'
+ +'<div class="castrow"><button class="castb'+(cast==='mirror'?' on':'')+'" data-cast="mirror">\u{1F4F1} شاشة الموبايل نفسها<br><small>Screen Mirroring</small></button>'
+ +'<button class="castb'+(cast==='second'?' on':'')+'" data-cast="second">\u{1F4FA} التلفزيون شاشة ثانية<br><small>بدون مشاركة شاشة</small></button></div>';
 const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5V4.2m0 0L8.9 7.3M12 4.2l3.1 3.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.6 10.3H5.2v9.5h13.6v-9.5h-2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const bar='<div class="a2h-bar"><i>‹</i><i>›</i><i class="hi">'+SHARE_SVG+'</i><i>☰</i><i>⧉</i></div>';
-const row='<div class="a2h-row"><span>إضافة إلى الشاشة الرئيسية</span><svg viewBox="0 0 24 24" fill="none"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="4.5" stroke="currentColor" stroke-width="1.9"/><path d="M12 8.2v7.6M8.2 12h7.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>';
+const bar='<div class="a2h-bar"><i>\u2039</i><i>\u203A</i><i class="hi">'+SHARE_SVG+'</i><i>\u2630</i><i>\u29C9</i></div>';
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
-let body;
-if(_installEv)body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ ضغطة وحدة:</div><div class="acts"><button class="btn" id="a2hsGo">📲 أضف للشاشة الرئيسية</button></div><div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
-else if(ios)body='<div class="a2h"><div class="a2h-t">تبون شريط سفاري يختفي؟ ٣ خطوات:</div>'
- +st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
- +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
- +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
- +'<div class="a2h-f">بتطلع أيقونة اللعبة بالشاشة الرئيسية — افتحوها منها واقلبوا الموبايل بالعرض. بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
-else body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ خطوتين:</div>'
- +st('١','افتحوا قائمة المتصفح:','<div class="a2h-bar" style="justify-content:flex-end"><i class="hi"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></i></div>')
- +st('٢','واختاروا:',row)
- +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+let body='';
+if(cast==='second'){
+ body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
+  +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
+  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل رمز ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
+}else if(cast==='mirror'){
+ body='<div class="a2h"><div class="a2h-d">شغّلوا <b>مشاركة الشاشة</b> (Screen Mirroring) من الموبايل على التلفزيون، واقلبوا الموبايل <b>بالعرض</b>.</div>'
+  +'<div class="a2h-t">تبون شريط المتصفح يختفي؟</div>'
+  +(_installEv?'<div class="acts"><button class="btn" id="a2hsGo">\u{1F4F2} أضف للشاشة الرئيسية</button></div>'
+   :ios?st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
+       +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
+       +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
+   :'<div class="a2h-d">افتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
+  +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+}else{
+ body='<div class="a2h"><div class="a2h-f">اختاروا وحدة من فوق وبنوريكم الخطوات.</div></div>';
+}
 sheet(head+body+'<div class="acts"><button class="btn" data-close>تمام</button></div>');
+$$('[data-cast]').forEach(b=>b.onclick=()=>{try{localStorage.setItem(GAME+'_cast',b.dataset.cast)}catch(e){}a2hs()});
 const g=$('#a2hsGo');if(g)g.onclick=async()=>{try{_installEv.prompt();const r=await _installEv.userChoice;_installEv=null;if(r&&r.outcome==='accepted')$('#modal').classList.remove('on')}catch(e){}}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if(t){e.preventDefault();a2hs()}});
 

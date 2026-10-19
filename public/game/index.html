@@ -70,6 +70,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .a2h-row svg{width:23px;height:23px;flex:none}
 .a2h-f{font-size:13px;line-height:1.6;color:var(--muted)}
 .a2h-img{width:100%;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+.castrow{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.castb{flex:1 1 46%;background:#1c2331;border:1px solid var(--line);color:#dfe3ea;border-radius:12px;padding:11px 10px;font:700 14px Tajawal,sans-serif;line-height:1.4;cursor:pointer}
+.castb.on{background:var(--tape);border-color:var(--tape);color:#fff}
 
 /* ---------- intro: case folder ---------- */
 #intro{background:#15110e}
@@ -1437,24 +1440,34 @@ apply()})();
 
 /* ---- "Play on TV" → Add to Home Screen walkthrough (hides the browser bars completely) ---- */
 let _installEv=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_installEv=e});
+function castMode(){try{return localStorage.getItem(GAME+'_cast')||''}catch(e){return ''}}
 function a2hs(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-const head='<h3>📺 وضع التلفزيون شغّال</h3><div class="h">اقلبوا الموبايل <b>بالعرض</b> وشغّلوا <b>مشاركة الشاشة</b> على التلفزيون.</div>';
+const cast=document.getElementById('tvbox')?castMode():'mirror';
+const head='<h3>\u{1F4FA} وضع التلفزيون شغّال</h3>'
+ +'<div class="castrow" hidden><button class="castb'+(cast==='mirror'?' on':'')+'" data-cast="mirror">\u{1F4F1} شاشة الموبايل نفسها<br><small>Screen Mirroring</small></button>'
+ +'<button class="castb'+(cast==='second'?' on':'')+'" data-cast="second">\u{1F4FA} التلفزيون شاشة ثانية<br><small>بدون مشاركة شاشة</small></button></div>';
 const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5V4.2m0 0L8.9 7.3M12 4.2l3.1 3.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.6 10.3H5.2v9.5h13.6v-9.5h-2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const bar='<div class="a2h-bar"><i>‹</i><i>›</i><i class="hi">'+SHARE_SVG+'</i><i>☰</i><i>⧉</i></div>';
-const row='<div class="a2h-row"><span>إضافة إلى الشاشة الرئيسية</span><svg viewBox="0 0 24 24" fill="none"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="4.5" stroke="currentColor" stroke-width="1.9"/><path d="M12 8.2v7.6M8.2 12h7.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>';
+const bar='<div class="a2h-bar"><i>\u2039</i><i>\u203A</i><i class="hi">'+SHARE_SVG+'</i><i>\u2630</i><i>\u29C9</i></div>';
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
-let body;
-if(_installEv)body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ ضغطة وحدة:</div><div class="acts"><button class="btn" id="a2hsGo">📲 أضف للشاشة الرئيسية</button></div><div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
-else if(ios)body='<div class="a2h"><div class="a2h-t">تبون شريط سفاري يختفي؟ ٣ خطوات:</div>'
- +st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
- +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
- +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
- +'<div class="a2h-f">بتطلع أيقونة اللعبة بالشاشة الرئيسية — افتحوها منها واقلبوا الموبايل بالعرض. بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
-else body='<div class="a2h"><div class="a2h-t">تبون الشريط يختفي؟ خطوتين:</div>'
- +st('١','افتحوا قائمة المتصفح:','<div class="a2h-bar" style="justify-content:flex-end"><i class="hi"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></i></div>')
- +st('٢','واختاروا:',row)
- +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+let body='';
+if(cast==='second'){
+ body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
+  +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
+  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل رمز ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
+}else if(cast==='mirror'){
+ body='<div class="a2h"><div class="a2h-d">شغّلوا <b>مشاركة الشاشة</b> (Screen Mirroring) من الموبايل على التلفزيون، واقلبوا الموبايل <b>بالعرض</b>.</div>'
+  +'<div class="a2h-t">تبون شريط المتصفح يختفي؟</div>'
+  +(_installEv?'<div class="acts"><button class="btn" id="a2hsGo">\u{1F4F2} أضف للشاشة الرئيسية</button></div>'
+   :ios?st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
+       +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
+       +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
+   :'<div class="a2h-d">افتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
+  +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+}else{
+ body='<div class="a2h"><div class="a2h-f">اختاروا وحدة من فوق وبنوريكم الخطوات.</div></div>';
+}
 sheet(head+body+'<div class="acts"><button class="btn" data-close>تمام</button></div>');
+$$('[data-cast]').forEach(b=>b.onclick=()=>{try{localStorage.setItem(GAME+'_cast',b.dataset.cast)}catch(e){}a2hs()});
 const g=$('#a2hsGo');if(g)g.onclick=async()=>{try{_installEv.prompt();const r=await _installEv.userChoice;_installEv=null;if(r&&r.outcome==='accepted')$('#modal').classList.remove('on')}catch(e){}}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if(t){e.preventDefault();a2hs()}});
 

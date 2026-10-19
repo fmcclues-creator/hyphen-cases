@@ -38,6 +38,21 @@
 .done div{background:rgba(0,0,0,.85);border:1px solid var(--gold);color:#fff;font-size:clamp(18px,2.6vw,34px);padding:16px 30px;border-radius:16px;max-width:80vw;text-align:center;line-height:1.6}
 .title{position:absolute;top:60px;inset-inline:0;text-align:center;color:var(--gold);font-size:clamp(16px,2.2vw,28px);z-index:5;text-shadow:0 2px 8px #000}
 .counter{position:absolute;bottom:24px;left:24px;font:700 clamp(16px,2vw,26px) ui-monospace,Menlo,monospace;color:var(--gold);direction:ltr;z-index:5;background:rgba(0,0,0,.6);padding:6px 14px;border-radius:10px}
+
+#runScr{position:absolute;inset:0;z-index:9;display:none;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3vh,34px);background:linear-gradient(#141a24,#0a0c10 65%,#241f16);text-align:center;padding:4vh 4vw}
+#runScr.on{display:flex}
+#runScr .ttl{font:800 clamp(18px,2.4vw,34px)/1.3 Tajawal,sans-serif;color:#e9ecf2}
+#runScr .clock{font:900 clamp(70px,16vw,220px)/1 ui-monospace,Menlo,monospace;color:var(--gold);direction:ltr}
+#runScr .sub{font:700 clamp(14px,1.6vw,22px) Tajawal,sans-serif;color:#aab2c2}
+#runScr .track{width:min(88vw,1100px)}
+#runScr .path{position:relative;height:clamp(50px,8vh,96px)}
+#runScr .me{position:absolute;inset-inline-start:0;bottom:0;font-size:clamp(34px,6vw,76px);transform:scaleX(-1);transition:inset-inline-start .25s}
+#runScr .goal{position:absolute;inset-inline-end:0;bottom:6px;font-size:clamp(30px,5vw,64px)}
+#runScr .bar{height:clamp(14px,2.2vh,26px);border-radius:14px;background:#2c3139;overflow:hidden}
+#runScr .bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .25s}
+#runScr .dist{margin-top:10px;font:700 clamp(16px,2vw,30px) ui-monospace,Menlo,monospace;color:var(--gold)}
+#runScr .res{font:900 clamp(22px,3.4vw,54px)/1.4 Tajawal,sans-serif}
+#runScr .res.win{color:#4ad07e}#runScr .res.fail{color:#e4584a}
 </style>
 </head>
 <body>
@@ -58,7 +73,15 @@
     <div class="marks" id="marks"></div>
     <div class="title" id="ttl"></div>
     <div class="counter" id="cnt"></div>
-    <div class="wait on" id="wait"><h2>متصل ✓</h2><p id="waitTx">الشاشة جاهزة. على الموبايل اضغطوا «🔦 شغّلوا الكشّاف».</p></div>
+    <div class="wait on" id="wait"><h2>متصل ✓</h2><p id="waitTx">الشاشة جاهزة. على الموبايل اضغطوا «🔦 شغّلوا الكشّاف» أو «🏃 لحقوه».</p></div>
+    <div id="runScr">
+  <div class="ttl" id="runTtl">🏃 المطاردة — واحد يركض للمواقف</div>
+  <div class="clock" id="runT">60</div>
+  <div class="sub">ثانية قبل ما يوصل سيارته</div>
+  <div class="track"><div class="path"><i class="me" id="runMe">🏃</i><span class="goal">🚗</span></div>
+    <div class="bar"><b id="runB"></b></div><div class="dist" id="runD">٨٠ م</div></div>
+  <div class="res" id="runR"></div>
+</div>
     <div class="done" id="done"><div id="doneTx"></div></div>
   </div>
 </section>
@@ -81,12 +104,13 @@ async function join(){const c=$('#code').value;if(c.length!==4){$('#err').textCo
     .on('broadcast',{event:'beam'},({payload})=>{tx=payload.x;ty=payload.y;if(payload.on!==undefined)setOn(payload.on)})
     .on('broadcast',{event:'found'},({payload})=>mark(payload))
     .on('broadcast',{event:'done'},({payload})=>finish(payload))
+    .on('broadcast',{event:'run'},({payload})=>runShow(payload))
     .on('broadcast',{event:'bye'},()=>{$('#st').textContent='الموبايل طلع من المشهد';$('#wait').classList.add('on');$('#waitTx').textContent='ارجعوا للمشهد من الموبايل.'})
     .subscribe(status=>{if(status==='SUBSCRIBED'){$('#join').classList.remove('on');$('#play').classList.add('on');$('#roomLbl').textContent=room;$('#dot').classList.add('live');hello();setInterval(hello,3000)}
       else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){$('#err').textContent='ما قدرنا نتصل. جرّبوا مرة ثانية.';$('#go').disabled=false}});
   if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{})}
 function hello(){if(ch)ch.send({type:'broadcast',event:'hello',payload:{t:Date.now(),scene:scene?scene.id:null}})}
-function setScene(sc){if(scene&&scene.id===sc.id&&scene.seq===sc.seq)return;scene=sc;found={};$('#marks').innerHTML='';$('#done').classList.remove('on');$('#dark').style.backgroundImage=`url(${sc.base}/img/${sc.dark}.jpg)`;$('#lit').style.backgroundImage=`url(${sc.base}/img/${sc.lit}.jpg)`;$('#lit').classList.remove('full');$('#lit').style.opacity=0;$('#ttl').textContent=sc.title||'';$('#cnt').textContent=`0 / ${sc.n}`;$('#st').textContent='المشهد جاهز';$('#wait').classList.remove('on');
+function setScene(sc){const rs=document.getElementById('runScr');if(rs)rs.classList.remove('on');if(scene&&scene.id===sc.id&&scene.seq===sc.seq)return;scene=sc;found={};$('#marks').innerHTML='';$('#done').classList.remove('on');$('#dark').style.backgroundImage=`url(${sc.base}/img/${sc.dark}.jpg)`;$('#lit').style.backgroundImage=`url(${sc.base}/img/${sc.lit}.jpg)`;$('#lit').classList.remove('full');$('#lit').style.opacity=0;$('#ttl').textContent=sc.title||'';$('#cnt').textContent=`0 / ${sc.n}`;$('#st').textContent='المشهد جاهز';$('#wait').classList.remove('on');
   if(sc.on)setOn(true);(sc.found||[]).forEach(mark);if(sc.done)finish({text:sc.doneText});cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
 function setOn(on){$('#lit').style.opacity=on?1:0;$('#st').textContent=on?'🔦 الكشّاف شغّال — ميّلوا الموبايل':'المشهد جاهز'}
 /* image is drawn with background-size:contain, so convert % of image → % of stage */
@@ -94,6 +118,22 @@ function imgRect(){const st=$('#stage').getBoundingClientRect();const ar=scene&&
 function toStage(px,py){const r=imgRect();return{x:(r.x+px/100*r.w)/r.W*100,y:(r.y+py/100*r.h)/r.H*100}}
 function loop(){beam.x+=(tx-beam.x)*0.2;beam.y+=(ty-beam.y)*0.2;const p=toStage(beam.x,beam.y);const r=imgRect();const rad=Math.max(90,r.w*0.085);const m=`radial-gradient(circle at ${p.x}% ${p.y}%, #000 0 ${rad}px, transparent ${rad*1.7}px)`;const l=$('#lit');if(!l.classList.contains('full')){l.style.webkitMaskImage=m;l.style.maskImage=m}raf=requestAnimationFrame(loop)}
 function mark(s){if(found[s.i])return;found[s.i]=true;const p=toStage(s.x,s.y);$('#marks').insertAdjacentHTML('beforeend',`<div class="mark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`);$('#cnt').textContent=`${Object.keys(found).length} / ${scene?scene.n:'?'}`;try{ding()}catch(e){}}
+
+/* ---- chase ---- */
+const AR_=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
+ if(p.state==='bye'){sc.classList.remove('on');return}
+ sc.classList.add('on');document.getElementById('wait').classList.remove('on');
+ const need=p.need||70,steps=Math.min(need,p.steps||0),f=steps/need;
+ document.getElementById('runT').textContent=Math.max(0,p.t|0);
+ document.getElementById('runB').style.width=(f*100)+'%';
+ document.getElementById('runMe').style.insetInlineStart=(f*88)+'%';
+ document.getElementById('runD').textContent=AR_(Math.round(80*(1-f)))+' م';
+ const r=document.getElementById('runR');
+ r.className='res'+(p.state==='win'?' win':p.state==='fail'?' fail':'');
+ r.textContent=p.state==='win'?'🏁 مسكتوه! عبدالله.':p.state==='fail'?'❌ ركب سيارته وطلع.':'';
+ document.getElementById('st').textContent=p.state==='run'?'🏃 المطاردة شغّالة':'المطاردة جاهزة';
+ if(p.state==='win')try{ding()}catch(e){}}
 function finish(p){$('#lit').classList.add('full');$('#lit').style.opacity=1;$('#doneTx').textContent=p.text||'';$('#done').classList.add('on');$('#st').textContent='اكتمل المشهد ✅'}
 window.addEventListener('resize',()=>{$('#marks').innerHTML='';const f=found;found={};if(scene)(scene.found||[]).concat(Object.keys(f).map(i=>scene.spots&&scene.spots[i]).filter(Boolean)).forEach(mark)});
 let ac;function ding(){ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.35);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.4)}
