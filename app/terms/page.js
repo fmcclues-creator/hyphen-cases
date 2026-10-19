@@ -1,6 +1,10 @@
 import { Header, Footer } from "../components/Site";
 
-export const metadata = { title: "الشروط والأحكام · قضايا HYPHEN" };
+export const metadata = {
+  title: "الشروط والأحكام",
+  description: "شروط استخدام ألعاب قضايا HYPHEN وسياسة الشراء.",
+  alternates: { canonical: "/terms" },
+};
 
 export default function Terms() {
   return (

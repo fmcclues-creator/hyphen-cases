@@ -11,6 +11,17 @@ export const metadata = {
     type: "website",
   },
   twitter: { card: "summary_large_image", title: "THE MYSTERY ROUTE", description: "Saturday at Ktech · Sign up your team.", images: ["/reg-og.jpg"] },
+  alternates: { canonical: "/" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  robots: { index: true, follow: true },
 };
+
+export const viewport = { themeColor: "#0d1016" };
 
 export default function RegLayout({ children }) { return children; }

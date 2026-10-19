@@ -12,6 +12,8 @@ module.exports = {
       { source: "/game/manifest.json", headers: noStore },
       { source: "/shaleh", headers: noStore },
       { source: "/shaleh/index.html", headers: noStore },
+      { source: "/shaleh/manifest.json", headers: noStore },
+      { source: "/villa/manifest.json", headers: noStore },
       { source: "/tv", headers: noStore },
       { source: "/tv/index.html", headers: noStore },
       { source: "/villa", headers: noStore },

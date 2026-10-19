@@ -1,7 +1,20 @@
 import Link from "next/link";
 import { Header, Footer } from "../components/Site";
 
-export const metadata = { title: "عن HYPHEN · قضايا HYPHEN" };
+export const metadata = {
+  title: "عن HYPHEN",
+  description:
+    "HYPHEN Events شركة كويتية في مجال الفعاليات: الإنتاج والتنفيذ، تفعيلات العلامات التجارية، الأيام المفتوحة، والألعاب الجماعية اللي نصمّمها بأنفسنا.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    type: "website",
+    url: "https://cases.hyphen-eventskw.com/about",
+    title: "عن HYPHEN Events",
+    description:
+      "شركة كويتية في مجال الفعاليات: إنتاج وتنفيذ، تفعيلات للعلامات التجارية، أيام مفتوحة، وألعاب جماعية.",
+    images: [{ url: "/og/og.png", width: 1200, height: 630 }],
+  },
+};
 
 export default function About() {
   return (
