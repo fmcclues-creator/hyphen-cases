@@ -10,8 +10,12 @@ import { sendOrderMails } from "../../../lib/mail";
 export async function POST(req) {
   const body = await req.json().catch(() => ({}));
   const phone = String(body.phone || "").replace(/\D/g, "").slice(0, 15);
-  const email = String(body.email || "").slice(0, 120);
+  const email = String(body.email || "").trim().slice(0, 120);
   if (phone.length < 8) return Response.json({ ok: false, reason: "phone" }, { status: 400 });
+  // The code is delivered by email, so an order without a usable one strands the buyer.
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    return Response.json({ ok: false, reason: "email" }, { status: 400 });
+  }
 
   const listPrice = Number(process.env.PRICE_KWD || 4.75);
   const pr = await applyPromo(body.promo, listPrice);

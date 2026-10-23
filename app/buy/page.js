@@ -41,7 +41,7 @@ export default function Buy() {
     const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ phone, email, promo: usePromo }) });
     const j = await r.json().catch(() => ({}));
     setBusy(false);
-    if (!j.ok) return setErr(j.reason === "phone" ? "اكتبوا رقم موبايل صحيح" : j.reason?.startsWith("promo") ? "كود الخصم ما عاد يشتغل" : "صار خطأ، جرّبوا مرة ثانية");
+    if (!j.ok) return setErr(j.reason === "phone" ? "اكتبوا رقم موبايل صحيح" : j.reason === "email" ? "اكتبوا إيميل صحيح — بنرسل لكم الكود عليه" : j.reason?.startsWith("promo") ? "كود الخصم ما عاد يشتغل" : "صار خطأ، جرّبوا مرة ثانية");
     if (j.paymentUrl) window.location.href = j.paymentUrl;
     else window.location.href = `/buy/done?code=${j.code}${j.test ? "&test=1" : ""}`;
   }
@@ -56,8 +56,9 @@ export default function Buy() {
         <p>رمز واحد يفتح اللعبة على جهاز واحد لمدة ٧ أيام. الدفع بـ KNET أو بطاقة.</p>
         <label>رقم الموبايل</label>
         <input inputMode="tel" placeholder="965XXXXXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-        <label>الإيميل (اختياري)</label>
-        <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <label>الإيميل</label>
+        <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <div className="muted" style={{ fontSize: 13, marginTop: -4 }}>بنرسل لكم الكود على هالإيميل — تأكدوا إنه صحيح.</div>
         <label>كود خصم (إذا عندكم)</label>
         <div className="promo">
           <input placeholder="PROMO" value={promo} onChange={(e) => { setPromo(e.target.value.toUpperCase()); setPromoMsg(""); if (quote?.discount) quoteFor(""); }} />
