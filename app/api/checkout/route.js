@@ -1,6 +1,7 @@
 import { db, issueCodes } from "../../../lib/db";
 import { applyPromo, consumePromo } from "../../../lib/promo";
 import { createCheckout } from "../../../lib/hesabe";
+import { sendOrderMails } from "../../../lib/mail";
 
 // POST { phone, email, promo } -> creates an order and either:
 //  - total 0 (promo) or PAYMENT_MODE=test: marks paid, issues a code, returns { ok, code }
@@ -17,18 +18,37 @@ export async function POST(req) {
   if (!pr.ok) return Response.json({ ok: false, reason: pr.reason }, { status: 400 });
   const price = pr.price;
   const mode = process.env.PAYMENT_MODE || "test";
+  // Which case is being bought. Recorded on the order so the code issued — and
+  // the email that carries it — belong to the right game.
+  const game = ["khalid", "shaleh", "villa"].includes(body.game) ? body.game : "khalid";
 
   const client = db();
   const { data: order, error } = await client.from("orders")
-    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount })
+    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game })
     .select().single();
   if (error) return Response.json({ ok: false, reason: "db" }, { status: 500 });
 
   if (price === 0 || mode === "test") {
     await client.from("orders").update({ status: "paid", gateway_ref: price === 0 ? "PROMO" : "TEST" }).eq("id", order.id);
     await consumePromo(pr.promo);
-    const [code] = await issueCodes({ orderId: order.id });
-    return Response.json({ ok: true, code, test: mode === "test" && price > 0 });
+    const [code] = await issueCodes({ orderId: order.id, game });
+    const isTest = mode === "test" && price > 0;
+
+    // This branch never touches the webhook, so it has to send its own mail —
+    // a 100%-off promo is still a real customer who needs their code by email.
+    try {
+      const { data: row } = await client.from("codes").select("expires_at").eq("code", code).maybeSingle();
+      const res = await sendOrderMails({
+        order: { ...order, email, phone }, code, game, expiresAt: row?.expires_at, test: isTest,
+      });
+      Object.entries(res || {}).forEach(([who, r]) => {
+        if (!r?.ok) console.error("checkout mail not sent", who, order.id, r);
+      });
+    } catch (e) {
+      console.error("checkout mail threw", order.id, e);
+    }
+
+    return Response.json({ ok: true, code, test: isTest });
   }
 
   const site = process.env.SITE_URL || "";
