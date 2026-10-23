@@ -140,7 +140,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 #file{background:#3a3129}
 .paper{flex:1;min-height:0;overflow:auto;background:var(--paper);color:var(--paper-ink);font-family:var(--doc);font-size:18px;line-height:1.8;padding:18px 18px 40px;margin-inline:auto;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative}
 .paper::before{content:"";position:absolute;inset-inline:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--tape) 0 20px,transparent 20px 28px);opacity:.7}
-.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px 0;background:#3a3129}
+.tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;gap:6px;padding:10px 16px 0;background:#3a3129}.tabs::-webkit-scrollbar{display:none}.tabs{scrollbar-width:none}.tabs button{flex:none;scroll-snap-align:start}
 .tabs button{padding:8px 12px;border-radius:10px 10px 0 0;background:var(--paper-2);color:var(--paper-muted);font-family:var(--doc);font-size:15px;white-space:nowrap}
 @media (max-width:420px){.tabs button{padding:7px 10px;font-size:14px}}
 /* landscape phones: tabs as a side column, paper keeps full height */
