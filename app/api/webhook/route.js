@@ -1,6 +1,7 @@
 import { db, issueCodes } from "../../../lib/db";
 import { consumePromo } from "../../../lib/promo";
 import { parseCallback } from "../../../lib/hesabe";
+import { sendOrderMails } from "../../../lib/mail";
 
 // Payment gateways redirect here after payment. We verify the result
 // (never trust the redirect alone), then issue the code and show it.
@@ -45,7 +46,22 @@ export async function GET(req) {
   }
   await client.from("orders").update({ status: "paid", gateway_ref: ref || order.gateway_ref }).eq("id", orderId);
   await consumePromo(order.promo);
-  const [code] = await issueCodes({ orderId });
+  const game = order.game || "khalid";
+  const [code] = await issueCodes({ orderId, game });
+
+  // The buyer's only record of their code, and Dee's only notice of the sale.
+  // Deliberately awaited so a cold start can't cut the request off mid-send,
+  // and deliberately unable to fail the purchase: they get their code either way.
+  try {
+    const { data: row } = await client.from("codes").select("expires_at").eq("code", code).maybeSingle();
+    const res = await sendOrderMails({ order, code, game, expiresAt: row?.expires_at });
+    Object.entries(res || {}).forEach(([who, r]) => {
+      if (!r?.ok) console.error("order mail not sent", who, orderId, r);
+    });
+  } catch (e) {
+    console.error("order mail threw", orderId, e);
+  }
+
   return Response.redirect(`${site}/buy/done?code=${code}`, 302);
 }
 
