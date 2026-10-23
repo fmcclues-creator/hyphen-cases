@@ -455,6 +455,31 @@ html.tv body{zoom:1.18}
 .shcode{font-family:'Courier New',monospace;font-size:34px;letter-spacing:4px;direction:ltr;text-align:center;background:#0b0e14;border:2px dashed var(--line);border-radius:14px;padding:12px;margin:10px 0;color:#fff;user-select:all}
 .btn.wa{display:inline-block;background:#25d366;color:#07140c;padding:10px 20px;border-radius:12px;text-decoration:none;font-weight:700}.sheet .acts #shCopy{padding:10px 14px;border:1px solid var(--line);border-radius:12px}
 
+/* ---------- top bar: one row, everything else behind ☰ ---------- */
+.bar{flex-wrap:nowrap;overflow:hidden;gap:8px}
+.bar .mbtn{background:var(--line);font-weight:700;flex:none}
+.bar .timer{margin-inline-start:auto}
+#menuWrap{position:fixed;inset:0;z-index:120}
+#menuWrap[hidden]{display:none}
+#menuWrap .mbg{position:absolute;inset:0;background:rgba(0,0,0,.6);animation:mfade .18s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+#menuPanel{position:absolute;top:0;bottom:0;right:0;width:min(80vw,310px);
+  background:var(--panel);border-left:1px solid var(--line);box-shadow:-18px 0 40px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;gap:4px;overflow:auto;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px));
+  animation:mslide .2s cubic-bezier(.2,.7,.3,1)}
+@keyframes mslide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+#menuPanel .mhead{display:flex;align-items:center;justify-content:space-between;
+  font-weight:800;font-size:17px;padding:4px 6px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
+#menuPanel .mx{background:none;border:0;color:var(--muted);font-size:20px;padding:4px 8px;cursor:pointer}
+.mitem{display:flex;align-items:center;gap:12px;width:100%;text-align:start;
+  background:transparent;border:0;color:var(--fg);font:600 16px/1.3 inherit;
+  padding:14px 10px;border-radius:12px;cursor:pointer}
+.mitem:hover,.mitem:active{background:var(--line)}
+.mitem[hidden]{display:none}
+.mitem.red{background:var(--red);color:#fff;justify-content:center;font-weight:800}
+.mgap{flex:1;min-height:10px}
+
 /* ---------- landscape / TV layout: phone sideways or any wide screen ---------- */
 .apps{flex:1;min-height:0;display:flex;flex-direction:column}
 #side{display:none}
@@ -550,7 +575,7 @@ html.tv body{zoom:1.18}
   </div>
 </div>
 <section class="screen" id="file">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolveFile">🔍 حل القضية</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span></div>
   <div class="fileBody">
   <div class="tabs">
     <button class="on" data-tab="t1">محضر البلاغ</button>
@@ -651,7 +676,7 @@ html.tv body{zoom:1.18}
 
 <!-- ============ LOCK (3D) ============ -->
 <section class="screen" id="lock">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile1">📁 الملف</button></div>
   <div style="position:relative;flex:1;min-height:0">
     <div class="lockbg"></div><div id="three"></div>
     <div class="lock-title">اسحبوا لتدوير الموبايل</div>
@@ -667,7 +692,7 @@ html.tv body{zoom:1.18}
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button><button class="chip red" id="toSolve">🔍 حل القضية</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -788,7 +813,7 @@ html.tv body{zoom:1.18}
 
 <!-- ============ SOLVE ============ -->
 <section class="screen" id="solve">
-  <div class="bar"><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button><button class="chip ghost" data-hint>💡 Hint · تلميح</button><button class="chip ghost" data-tv>📺 العب على التلفزيون</button><button class="chip share" data-share hidden>📲 شارك الرمز</button><button class="chip ghost" data-home>🏠 الرئيسية</button><button class="chip ghost" data-book>📝 دفترنا</button><button class="chip ghost" data-rules>📖 Rules · القواعد</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="backToPhone">📱 رجوع</button></div>
   <div class="wrap">
     <div class="q"><h2>١. منو وراء اختفاء خالد؟</h2>
     <div class="pick" id="pickWho"></div></div>
@@ -833,6 +858,17 @@ html.tv body{zoom:1.18}
 <!-- ============ MODAL ============ -->
 <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 
+<div id="menuWrap" hidden><div class="mbg" data-mclose></div><nav id="menuPanel" aria-label="القائمة">
+<div class="mhead">القائمة<button class="mx" data-mclose aria-label="إغلاق">✕</button></div>
+<button class="mitem" data-hint>💡 <span>تلميح · Hint</span></button>
+<button class="mitem" data-book>📝 <span>دفترنا</span></button>
+<button class="mitem" data-rules>📖 <span>القواعد · Rules</span></button>
+<button class="mitem" data-share hidden>📲 <span>شارك الرمز</span></button>
+<button class="mitem" data-tv>📺 <span>العب على التلفزيون</span></button>
+<button class="mitem" data-home>🏠 <span>الرئيسية</span></button>
+<div class="mgap"></div>
+<button class="mitem red" id="toSolveFile">🔍 <span>حل القضية</span></button>
+</nav></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ================= DATA ================= */
@@ -1415,7 +1451,16 @@ $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('o
 
 /* ================= SOLVE ================= */
 function trySolve(){if(!S.unlocked)return sheet('<h3>🔒 مو بعد</h3><div class="h">قبل الاتهام لازم تفتحون <b>موبايل خالد</b> أولاً.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.notes)return sheet('<h3>🔒 مو بعد</h3><div class="h">فتحتوا الموبايل… بس باقي <b>الملاحظة المقفولة</b> في تطبيق الملاحظات. حلّوها أول، وبعدها تقدرون تتهمون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.notes2)return sheet('<h3>🔒 الأدلة ما تكفي</h3><div class="h">للحين ما عندكم أدلة كافية تتهمون أحد. كمّلوا التحقيق.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.merged)return sheet('<h3>🔒 الأدلة ما تكفي</h3><div class="h">للحين ما عندكم أدلة كافية تتهمون أحد. كمّلوا التحقيق.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');show('solve')}
-$('#toSolve').onclick=trySolve;$('#toSolveFile').onclick=trySolve;$('#toSolveSide').onclick=trySolve;$('#backToPhone').onclick=()=>show('phone');
+$('#toSolve')&&($('#toSolve').onclick=trySolve);$('#toSolveFile').onclick=trySolve;
+/* ---- slide-in menu ---- */
+(function(){const w=$('#menuWrap');
+ const close=()=>{w.hidden=true};
+ $$('[data-menu]').forEach(b=>b.onclick=()=>{w.hidden=false});
+ $$('[data-mclose]').forEach(b=>b.onclick=close);
+ $('#menuPanel').addEventListener('click',e=>{if(e.target.closest('.mitem'))close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+;$('#toSolveSide').onclick=trySolve;$('#backToPhone').onclick=()=>show('phone');
 $('#pickWho').innerHTML=SUSPECTS.map(s=>`<button data-who="${s.id}"><span class="av">${AV(s.id)}</span><b>${s.n}</b><small>${s.r}</small></button>`).join('');
 const AD=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,'');
 function plotVal(){const q=AD($('#plotQ').value),s2=AD($('#plotS').value);return (q&&s2)?q+'/'+s2:null}
