@@ -493,6 +493,11 @@ html.tv body{zoom:1.18}
 .mitem.red{background:var(--red);color:#fff;justify-content:center;font-weight:800}
 .mgap{flex:1;min-height:10px}
 
+.sheet .hopen{display:block;width:100%;text-align:start;font:inherit;font-size:16px;
+  color:#ffd978;background:rgba(255,217,120,.09);border:1px solid rgba(255,217,120,.38);
+  border-radius:12px;padding:11px 13px;margin:7px 0;line-height:1.6}
+.sheet .hopen small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+
 /* ---------- the timeline along the bottom ---------- */
 .screen{padding-bottom:var(--progh,0px)}
 #prog{position:fixed;inset-inline:0;bottom:0;z-index:90;display:none;
@@ -873,8 +878,8 @@ html.tv body{zoom:1.18}
     <p style="color:var(--muted);font-size:14px;margin:0">الشويخ الصناعية — اكتبوا رقم القطعة والقسيمة من الورق اللي بالموبايل.</p>
     <div class="plot" id="pickWhere"><label>قطعة <input id="plotQ" inputmode="numeric" maxlength="2" placeholder="٠"></label><label>قسيمة <input id="plotS" inputmode="numeric" maxlength="3" placeholder="٠٠"></label></div>
     </div>
-    <div class="q"><h2>٣. متى وصل خالد للمخزن؟</h2>
-    <p style="color:var(--muted);font-size:14px;margin:0">الوقت بالضبط، مثل ما سجّلته الكاميرا.</p>
+    <div class="q"><h2>٣. متى سجّلت الكاميرا سيارة ناصر عند المخزن؟</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0">الوقت بالضبط اللي مكتوب على اللقطة.</p>
     <div class="plot" id="pickWhen"><label>الساعة <input id="whH" inputmode="numeric" maxlength="2" placeholder="٠"></label><label>الدقيقة <input id="whM" inputmode="numeric" maxlength="2" placeholder="٠٠"></label><label>&nbsp;<select id="whAP" style="padding:12px;border-radius:12px;border:2px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:20px"><option value="pm">مساءً</option><option value="am">صباحاً</option></select></label></div>
     </div>
     <div class="fb" id="fb" hidden></div>
@@ -1575,11 +1580,43 @@ $('#edCancel').onclick=()=>{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}$('#e
 function stage(){if(S.screen==='lock')return 'lock';if(S.screen==='solve')return 'solve';return !S.notes?'note1':!S.notes2?'note2':!S.hidden?'hidden':!S.merged?'cctv':'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
-$$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
-  const body=list.map((h,i)=>{const lab=i===2?'الجواب مباشرة':`تلميح ${i+1}`;if(i<used)return `<div class="h">${h}</div>`;const wait=HINT_WAIT[i]-el;return `<div class="h lk">🔒 ${lab}${wait>0?` — يفتح بعد ${fmt(wait)}`:''}</div>`}).join('');
-  const ready=used<list.length&&el>=HINT_WAIT[used];const next=used<list.length?(used===2?'اكشف الجواب':`اكشف تلميح ${used+1}`)+` (${HINT_LAB[used]})`:'';
-  sheet(`<h3>💡 تلميحات ${({lock:'الرقم السري',note1:'الملاحظة الأولى',note2:'الملاحظة الثانية',hidden:'الألبوم المخفي',cctv:'لقطات الكاميرا',solve:'الاتهام'})[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
-  const u=$('#useHint');if(u)u.onclick=()=>{S.pen+=HINT_PEN[S.hints[st]];S.hints[st]++;save();b.click()}});
+/* The countdown was printed once and never touched again, so it sat at the same
+   number until you closed the sheet and opened it — it read as a stuck timer.
+   And the only way to take a hint was a button at the bottom: the rows naming
+   the hints, which are the thing you reach for, did nothing. */
+const ST_LAB={lock:'الرقم السري',note1:'الملاحظة الأولى',note2:'الملاحظة الثانية',
+              hidden:'الألبوم المخفي',cctv:'لقطات الكاميرا',solve:'الاتهام'};
+let _hintIv=null;
+function hintSheet(st){
+  S.hints=S.hints||{};S.hints[st]=S.hints[st]||0;
+  const list=HINTS[st],used=S.hints[st],el=onStage(st);
+  let ticking=false;
+  const rows=list.map((h,i)=>{
+    const lab=i===2?'الجواب مباشرة':'تلميح '+AR(i+1);
+    if(i<used)return `<div class="h">${h}</div>`;
+    if(i>used)return `<div class="h lk">🔒 ${lab} — بعد اللي قبله</div>`;
+    const wait=HINT_WAIT[i]-el;
+    if(wait>0){ticking=true;return `<div class="h lk">🔒 ${lab} — يفتح بعد ${AR(fmt(wait))}</div>`}
+    return `<button class="h hopen" data-hi="${i}">💡 ${lab}`
+      +`<small>اضغطوا للكشف · ${HINT_LAB[i]}</small></button>`;
+  }).join('');
+  sheet(`<h3>💡 تلميحات ${ST_LAB[st]||''}</h3>${rows}`
+    +`<div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`);
+  $$('#sheet [data-hi]').forEach(x=>x.onclick=()=>{
+    const i=+x.dataset.hi;S.pen+=HINT_PEN[i];S.hints[st]=i+1;save();openHints(st)});
+  return ticking;
+}
+/* taking a hint reveals the next one's countdown, so the ticking has to be
+   (re)started after every render, not only when the sheet is first opened */
+function openHints(st){
+  clearInterval(_hintIv);_hintIv=null;
+  if(!hintSheet(st))return;
+  _hintIv=setInterval(()=>{
+    if(!$('#modal').classList.contains('on')){clearInterval(_hintIv);_hintIv=null;return}
+    if(!hintSheet(st)){clearInterval(_hintIv);_hintIv=null}
+  },1000);
+}
+$$('[data-hint]').forEach(b=>b.onclick=()=>openHints(stage()));
 function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');$$('[data-close]').forEach(x=>x.onclick=()=>$('#modal').classList.remove('on'))}
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
 
