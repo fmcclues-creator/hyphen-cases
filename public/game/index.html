@@ -714,7 +714,7 @@ html.tv body{zoom:1.18}
         <div class="edrow"><span>الحدّة</span><input type="range" id="edSh" min="0" max="100" value="50"><b id="edShV">0</b></div>
         <div class="edrow"><span>التشبّع</span><input type="range" id="edSa" min="0" max="100" value="50"><b id="edSaV">0</b></div>
         <div class="edmsg" id="edMsg"></div>
-        <div class="edacts"><button id="edCancel">إلغاء</button><button id="edDone" class="y">تم</button></div>
+        <div class="edacts"><button id="edCancel">إلغاء</button></div>
       </div></div></div>
     <div class="app" id="a-ig"><div class="ah"><button data-back>‹</button><div>Instagram</div></div>
       <div class="ig">
@@ -1428,13 +1428,13 @@ function edReset(){ED.ex=50;ED.sh=50;ED.sa=50;ED.done=false;if(ED.hold){clearTim
 function edApply(){const im=edImg();if(!im)return;const v=k=>Math.round((ED[k]-50)*2);$('#edExV').textContent=v('ex');$('#edShV').textContent=v('sh');$('#edSaV').textContent=v('sa');
   if(CURP&&CURP.dark&&!S.merged){const dE=Math.abs(ED.ex-88),dS=Math.abs(ED.sh-78);const bright=ED.ex<88?0.1+0.9*(ED.ex/88):1+((ED.ex-88)/12)*2.2;const contrast=1+Math.min(1,dE/30)*0.9;const blur=Math.min(7,dS/7);
     im.className='';im.style.filter=`brightness(${bright.toFixed(2)}) contrast(${contrast.toFixed(2)}) blur(${blur.toFixed(1)}px) saturate(${(0.4+ED.sa/50*0.6).toFixed(2)})`;
-    const ok=ED.ex>=70&&dS<=30;const m=$('#edMsg');
-    if(ok){if(!ED.hold){ED.hold=setTimeout(edSolved,900)}m.className='edmsg';m.textContent='✓ واضحة… جاري الحفظ'}else{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}m.className='edmsg';m.textContent=ED.ex>=70?'الإضاءة تمام… عدّلوا الحدّة':ED.ex>=58?'قريب… زيدوا الإضاءة شوي':''}}
+    const ok=ED.ex>=60;const m=$('#edMsg');
+    if(ok){if(!ED.hold){ED.hold=setTimeout(edSolved,900)}m.className='edmsg';m.textContent='✓ واضحة… جاري الحفظ'}else{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}m.className='edmsg';m.textContent='زيدوا الإضاءة…'}}
   else{im.className='';im.style.filter=`brightness(${(0.5+ED.ex/100).toFixed(2)}) contrast(${(0.7+ED.sh/100*0.6).toFixed(2)}) saturate(${(ED.sa/50).toFixed(2)})`}}
 function edSolved(){ED.hold=null;if(S.merged)return;S.merged=true;save();stageAt('solve');SFX.ok();const m=$('#edMsg');m.className='edmsg ok';m.textContent='✓ تم حفظ التعديل';addCctvNote();renderPhotos();setTimeout(()=>{$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';openPhoto('cctv','album')},1100)}
 $('#edBtn').onclick=()=>{const ed=$('#editor');if(ed.hidden){ed.hidden=false;$('#photoInfo').hidden=true;$('#edBtn').textContent='';edReset()}else{$('#edCancel').click()}};
 $('#edCancel').onclick=()=>{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';const im=edImg();if(im){im.style.filter='';im.className=CURP&&CURP.dark&&!S.merged?'dark':''}};
-$('#edDone').onclick=()=>{if(CURP&&CURP.dark&&!S.merged&&ED.ex>=60){if(ED.hold){clearTimeout(ED.hold);ED.hold=null}edSolved();return}$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل'};
+
 ['edEx','edSh','edSa'].forEach(id=>{$('#'+id).oninput=e=>{ED[{edEx:'ex',edSh:'sh',edSa:'sa'}[id]]=+e.target.value;edApply()}});
 
 /* ================= HINTS ================= */
