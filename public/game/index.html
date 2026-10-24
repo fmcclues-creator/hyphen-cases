@@ -280,7 +280,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .ev b{display:block}.ev small{display:block;color:var(--muted)}
 .ev .note{grid-column:2;color:#e3e7ef;font-size:14px;background:#1c2331;padding:6px 10px;border-radius:8px;margin-top:4px}
 .dayh{padding:10px 12px 4px;font-weight:700;color:var(--tape-2);font-size:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:2px}.mh{grid-column:1/-1;padding:14px 8px 4px;font-size:13px;font-weight:700;color:var(--muted)}.mh:first-child{padding-top:8px}.seg{display:flex;gap:6px;padding:8px 12px;background:#111621;border-bottom:1px solid var(--line)}.seg button{flex:1;padding:7px;border-radius:9px;background:#1a2030;color:var(--muted);font:inherit;font-weight:700;font-size:13px}.seg button.on{background:#2a3344;color:#fff}.albs{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}.albs button{text-align:start;background:none;color:#e9ecf2;font:inherit}.albs .cov{aspect-ratio:1;border-radius:12px;overflow:hidden;background:#1a2030;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative}.albs .cov img{width:100%;height:100%;object-fit:cover;display:block}.albs .cov .lk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);font-size:40px}.albs b{display:block;margin-top:6px;font-size:14px}.albs small{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:2px;direction:ltr}
+.grid .mh{direction:rtl}.mh{grid-column:1/-1;padding:14px 8px 4px;font-size:13px;font-weight:700;color:var(--muted)}.mh:first-child{padding-top:8px}.seg{display:flex;gap:6px;padding:8px 12px;background:#111621;border-bottom:1px solid var(--line)}.seg button{flex:1;padding:7px;border-radius:9px;background:#1a2030;color:var(--muted);font:inherit;font-weight:700;font-size:13px}.seg button.on{background:#2a3344;color:#fff}.albs{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}.albs button{text-align:start;background:none;color:#e9ecf2;font:inherit}.albs .cov{aspect-ratio:1;border-radius:12px;overflow:hidden;background:#1a2030;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative}.albs .cov img{width:100%;height:100%;object-fit:cover;display:block}.albs .cov .lk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);font-size:40px}.albs b{display:block;margin-top:6px;font-size:14px}.albs small{color:var(--muted);font-size:12px}
 .grid button{aspect-ratio:1;background:#1a2030;border-radius:4px;overflow:hidden}
 .grid svg{width:100%;height:100%;display:block}
 .big{flex:1;min-height:0;display:flex;flex-direction:column;background:#000;overflow:auto;overscroll-behavior:contain}.big .img{min-height:180px}
@@ -962,7 +963,7 @@ const CHATS=[
   ['day','الاثنين'],['me','خلاص، فصلت ماجد الصبح وسكّرت صلاحيته على الحساب','٩:٤٠ ص'],['them','الله يعينك. كان لازم من زمان، الأرقام ما تكذب','٩:٤٥ ص'],['them','شفت تقرير الفرع الثالث؟ ممتاز 👌','١:٠٠ م'],['me','ما شاء الله، عقبال الباقي','١:١٠ م'],['them','المشتري يبي كل الحسابات من ٣ سنين للتدقيق الأحد. آنا أجهّزها','٥:٣٠ م'],['me','تمام. خلّ المحاسب يطرّش لي نسخة بعد','٥:٣٥ م'],['them','ليش؟ آنا أراجعها 😅','٥:٣٦ م'],['day','الأربعاء'],['them','خلاص يا بو عبدالله، أنا طالع. لا تطوّل انت بعد، منيرة بتزعل 😄','٦:١٥ م'],['me','هههه ماشي، عشر دقايق وأطلع','٦:١٦ م'],
   ['me','ناصر مر علي نتكلم عن الأرقام، تقدر تيي الحين؟','٨:٠٧ م'],['del','🚫 تم حذف هذه الرسالة','٨:٠٨ م'],['them','أي أرقام؟ 😅 ماشي ياي، عطني ثلث ساعة','٨:٠٩ م'],['them','وينك بو عبدالله؟ ما لقيتك بالمكتب. أنا طالع، كلمني','٨:٥٠ م']]},
  {id:'fahad',n:'فهد (المورّد)',av:'p:fahad',last:'٨:٤٥ م',u:1,msgs:[
-  ['day','الأربعاء'],['them','شوف الإيصال، نفس العيش ونفس اللحم وزعته حق غيرك الليلة وما أحد اشتكى. ادفع فلوسي!','٨:٤٥ م','receipt']]},
+  ['day','الأربعاء'],['them','شوف الإيصال، نفس العيش ونفس اللحم وزعته حق غيرك الليلة وما أحد اشتكى. ادفع فلوسي!','٨:٢٥ م','receipt']]},
  {id:'majed',n:'ماجد',av:'p:majed',last:'٨:٣٢ م',u:1,msgs:[
   ['day','الاثنين'],['them','فصلتني بعد سبع سنين؟! أنا معاك من أول يوم! الفلوس الناقصة مو آنا، وصدّقت كلامه عني؟ ما راح أنساها لك!','٩:٠٠ ص'],
   ['day','الأربعاء'],['them','سمعت إنك تدور علي. أنا بالديوانية من ٧. شوف الصورة وبطّل تتهمني. 😤','٨:٣٢ م','diwaniya']]},
@@ -1056,7 +1057,7 @@ const PHOTOS=[
  {id:'mcar',src:'img/majed_car.jpg',d:'2026-08-20T12:10',alb:'crazee',n:'ماجد',info:'٢٠ أغسطس ٢٠٢٦ · الفرع الأول',cap:'ماجد وسيارته الجديدة. نفس سيارة ناصر بالضبط 😄',ov:''},
  {id:'parking',d:'2026-10-01T20:34',alb:'',n:'مواقف المكتب',info:'الأربعاء ٨:٣٤ م · مكتب مجموعة خالد، الدور الثالث',cap:'سيارة خالد، وبجنبها لاند كروزر بيضاء عليها لزاق أحمر على الزجاج الخلفي.',ov:'20:34'},
  {id:'diwaniya',d:'2026-10-01T19:32',alb:'',n:'صورة من ماجد',info:'الأربعاء ٧:٣٢ م · مُستلمة من ماجد',cap:'ماجد مع أربعة أشخاص يتابعون المباراة. الساعة على الحائط تعرض ٧:٣٢.',ov:'19:32'},
- {id:'receipt',d:'2026-10-01T20:45',alb:'',n:'إيصال استلام',info:'الأربعاء ٨:٤٥ م · مُستلم من فهد',cap:'سوق الجملة، الساعة ٨:٢٠ م، توقيع فهد.',ov:'20:20'},
+ {id:'receipt',d:'2026-10-01T20:25',alb:'',n:'إيصال استلام',info:'الأربعاء ٨:٢٥ م · مُستلم من فهد',cap:'سوق الجملة، الساعة ٨:٢٠ م، توقيع فهد.',ov:'20:20'},
  {id:'karak',d:'2026-09-30T16:10',alb:'',n:'كرك',info:'الثلاثاء ٤:١٠ م · الشويخ الصناعية، شارع ٣',cap:'كوب كرك على طاولة كافتيريا. بالخلفية: أبواب مخازن.',ov:'16:10'},
  {id:'warehouse',d:'2026-09-30T16:25',alb:'',n:'المخزن القديم',info:'الثلاثاء ٤:٢٥ م · الشويخ الصناعية، شارع ٣',cap:'باب مخزن أزرق قديم مقفول. نفس الشارع اللي صوّر فيه الكرك.',ov:'16:25'},
  {id:'hospital',d:'2026-09-29T20:40',alb:'',n:'ممر المستشفى',info:'الاثنين ٨:٤٠ م · مستشفى مبارك',cap:'زار سالم ووالدته في المستشفى.',ov:'20:40'},
@@ -1410,7 +1411,7 @@ const APPS=[['chats','WhatsApp','#25d366',CHATS.reduce((a,c)=>a+c.u,0)],['ig','I
 const DOCK=[['calls','الهاتف','#2fcc5f',2],['chats','','#25d366',0],['ig','','linear-gradient(45deg,#f9ce34,#ee2a7b 50%,#6228d7)',0],['x1','','#fc3c44',0,1]];
 const ico=(a)=>`<button class="icon${a[4]?' dim':''}" data-app="${a[0]}" ${a[4]?'disabled':''}><span class="g" style="background:${a[2]}">${ICO[a[0]==='chats'?'wa':a[0]]}</span><span>${a[1]}</span>${a[3]?`<span class="b">${a[3]}</span>`:''}</button>`;
 $('#home').innerHTML=APPS.map(ico).join('')+`<div class="dock">${DOCK.map(ico).join('')}</div>`;
-function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(S.start){S.app=id;save()}if(id==='photos'||id==='album'){const l=$('#a-'+id+' .list');if(l)requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight})}}
+function openApp(id){if(id!=='chat')try{CURCHAT=null}catch(e){}$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(S.start){S.app=id;save()}if(id==='photos'||id==='album'){const l=$('#a-'+id+' .list');if(l)requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight})}}
 $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b&&!b.disabled)openApp(b.dataset.app)};
 /* ---- Notes app: list + detail ---- */
 const NOTES=[
@@ -1425,11 +1426,11 @@ const NOTES=[
 const CALL_NOTE={id:'call',t:'🎧 مكالمة فيصل (البنك) — نص المكالمة',d:'الحين',body:''};
 function addCctvNote(){if(!NOTES.find(n=>n.id==='cctv')){NOTES.unshift({id:'cctv',t:'📷 لقطة كاميرا البوابة (بعد التعديل)',d:'الحين',body:'الثلاثاء ٩:١٤ م — لاند كروزر بيضا واقفة عند بوابة مخزن الشويخ القديم، وعلى زجاجها الخلفي لزاق دلّة.\n\n— حُفظت من تطبيق الصور.'});renderNotes()}}
 function faisalFollow(){if(S.faisalFollow)return;S.faisalFollow=1;save();push(FAISAL,['them','ونسيت أقول لكم: آخر تحويل انسحب يوم الاثنين الماضي الساعة ١٢:٤٠ الظهر. من نفس الصلاحية اللي معتمدة من سنين.','الحين']);beep()}
-function addCallNote(){if(!NOTES.find(n=>n.id==='call')){CALL_NOTE.body='«'+CALLTX+'»\n\n— سُجّلت تلقائياً من المكالمة. تقدرون تعيدون سماعها من محادثة فيصل.';NOTES.unshift(CALL_NOTE);renderNotes();$$('#home [data-app=notes] .b').forEach(b=>b.remove());$$('#home [data-app=notes]').forEach(el=>el.insertAdjacentHTML('beforeend','<span class="b">1</span>'))}}
+function addCallNote(){return;/* the call is replayable from Faisal's chat */if(!NOTES.find(n=>n.id==='call')){CALL_NOTE.body='«'+CALLTX+'»\n\n— سُجّلت تلقائياً من المكالمة. تقدرون تعيدون سماعها من محادثة فيصل.';NOTES.unshift(CALL_NOTE);renderNotes();$$('#home [data-app=notes] .b').forEach(b=>b.remove());$$('#home [data-app=notes]').forEach(el=>el.insertAdjacentHTML('beforeend','<span class="b">1</span>'))}}
 function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':(n.lock===2&&!S.notes?'🔒 بعدها':'🔒 مقفولة')):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
 function openNote(id){const n=NOTES.find(x=>x.id===id);const v=$('#noteView'),st=$('#noteStore');$('#noteTitle').textContent=n.t;
   [...v.children].forEach(c=>{if(c.id)st.appendChild(c)});v.innerHTML='';
-  if(n.lock===2&&!S.notes){sheet('<h3>🔒 وحدة وحدة</h3><div class="h">افتحوا «ملاحظاتي (سري)» الأول — منها بتعرفون وش تدورون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}
+  if(n.lock===2&&!S.notes){sheet('<h3>🔒 وحدة وحدة</h3><div class="h">افتحوا «ملاحظاتي (سري)» الأول — منها بتعرفون شنو تدورون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}
   if(n.lock===1){v.appendChild($('#notesLock'));v.appendChild($('#notesBody'))}
   else if(n.lock===2){v.appendChild($('#notesLock2'));v.appendChild($('#notesBody2'))}
   else v.innerHTML=`<div class="plain"><h4>${n.t}</h4><small>${n.d}</small>${n.body}</div>`;
@@ -1442,14 +1443,18 @@ $$('[data-back]').forEach(b=>b.onclick=()=>openApp(b.dataset.back||'home'));
 const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
 function renderChatList(){$('#chatList').innerHTML=CHATS.map(c=>{const l=[...c.msgs].reverse().find(m=>m[0]!=='day');return `<button class="row" data-chat="${c.id}"><span class="av">${avh(c.av)}</span><span style="min-width:0"><span class="nm">${c.n}</span><span class="pv">${l[0]==='del'?'🚫 رسالة محذوفة':l[1]}</span></span><span class="tm${c.u?' u':''}">${c.last}${c.u?` <span class="b" style="display:inline-grid;min-width:18px;height:18px;border-radius:9px;background:var(--ok);color:#fff;font-size:11px;place-items:center">${c.u}</span>`:''}</span></button>`}).join('')}
 renderChatList();
-$('#chatList').onclick=e=>{const b=e.target.closest('[data-chat]');if(!b)return;const c=CHATS.find(x=>x.id===b.dataset.chat);
+let CURCHAT=null;
+$('#chatList').onclick=e=>{const b=e.target.closest('[data-chat]');if(!b)return;const c=CHATS.find(x=>x.id===b.dataset.chat);CURCHAT=c;
   $('#chatTitle').innerHTML=c.n+(c.grp?'<span class="sub">مجموعة</span>':'<span class="sub">آخر ظهور الأربعاء ٨:٤٠ م</span>');$('#chatAv').innerHTML=avh(c.av);
   $('#chatBody').innerHTML=c.msgs.map(m=>{if(m[0]==='day')return `<span class="day">${m[1]}</span>`;const ph=m[3]?`<span class="ph" data-photo="${m[3]}">${IMG(m[3])}</span>`:'';const who=m[4]?`<span class="who">${m[4]}</span>`:'';
     return `<div class="m ${m[0]==='del'?'them del':m[0]}">${who}${m[1]}${ph}<span class="t">${m[2]}</span></div>`}).join('');
   openApp('chat');$('#chatBody').scrollTop=1e6;if(c.id==='faisal'){c.u=0;renderChatList();qr()}else $('#qr').hidden=true};
 $('#chatBody').addEventListener('click',e=>{const v=e.target.closest('.vn');if(!v)return;const a=$('#'+v.dataset.au);if(!a)return;$$('.vn.playing').forEach(x=>x.classList.remove('playing'));if(!a.paused){a.pause();return}a.currentTime=0;a.play().catch(()=>{});v.classList.add('playing');a.onended=()=>v.classList.remove('playing')});
-function push(c,m){c.msgs.push(m);$('#chatBody').insertAdjacentHTML('beforeend',`<div class="m ${m[0]}">${m[1]}<span class="t">${m[2]}</span></div>`);$('#chatBody').scrollTop=1e6}
+function push(c,m){c.msgs.push(m);
+ if(CURCHAT!==c){c.u=(c.u||0)+1;try{renderChatList()}catch(e){}return}
+ $('#chatBody').insertAdjacentHTML('beforeend',`<div class="m ${m[0]}">${m[1]}<span class="t">${m[2]}</span></div>`);$('#chatBody').scrollTop=1e6}
 function qr(){const q=$('#qr');q.hidden=false;const c=FAISAL;
+  if(S.faisal>=4){replayBtn();return}
   if(S.faisal===1){q.innerHTML='<button data-q="x">⏳ فيصل بيتصل بعد شوي…</button>';q.onclick=null;}
   else if(false){
     q.onclick=e=>{const b=e.target.closest('[data-q]');if(!b)return;push(c,['me',b.dataset.q,'الحين']);q.innerHTML='';setTimeout(()=>{push(c,['them','شرطة؟ لا… ما أكتب هالشي. خلّني أتصل عليه.','الحين']);S.faisal=3;save();q.hidden=true;setTimeout(ring,3500)},1800)}}
@@ -1458,13 +1463,14 @@ function qr(){const q=$('#qr');q.hidden=false;const c=FAISAL;
   else q.hidden=true}
 $('#hostSim').onclick=()=>ring();
 $('#hostDone').onclick=()=>{$('#host').classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية','الحين']);replayBtn();setTimeout(faisalFollow,25000)};
-function replayBtn(){const q=$('#qr');q.hidden=false;q.innerHTML='<button data-replay>🔁 إعادة سماع المكالمة</button>';q.onclick=e=>{if(e.target.closest('[data-replay]'))ring()}}
-function ring(){const o=$('#callov');o.classList.add('on');$('#callSt').textContent='مكالمة واردة…';$('#callTx').textContent='';$('#callAns').hidden=false;$('#callEnd').hidden=true;const rg=$('#au-ring');rg.currentTime=0;rg.play().catch(()=>{});const rv=setInterval(()=>{if(!o.classList.contains('on')||$('#callAns').hidden){clearInterval(rv);rg.pause();rg.currentTime=0}},300);
+function replayBtn(){if(CURCHAT!==FAISAL)return;const q=$('#qr');q.hidden=false;q.innerHTML='<button data-replay>🔁 إعادة سماع المكالمة</button>';q.onclick=e=>{if(e.target.closest('[data-replay]'))ring()}}
+let _callIv=null,_ringIv=null;
+function ring(){clearInterval(_callIv);clearInterval(_ringIv);const o=$('#callov');o.classList.add('on');$('#callSt').textContent='مكالمة واردة…';$('#callTx').textContent='';$('#callAns').hidden=false;$('#callEnd').hidden=true;const rg=$('#au-ring');rg.currentTime=0;rg.play().catch(()=>{});const rv=_ringIv=setInterval(()=>{if(!o.classList.contains('on')||$('#callAns').hidden){clearInterval(rv);rg.pause();rg.currentTime=0}},300);
   $('#callAns').onclick=()=>{$('#callAns').hidden=true;$('#callEnd').hidden=false;$('#callSt').textContent='متصل';const w=CALLTX.split(' ');let i=0;const fa=$('#au-faisal');fa.currentTime=0;
-    const done=()=>{clearInterval(iv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();addCallNote();setTimeout(faisalFollow,25000)},1500)};
+    const done=()=>{clearInterval(_callIv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();setTimeout(faisalFollow,25000)},1500)};
     let step=380;const go=()=>{if(fa.duration&&isFinite(fa.duration))step=Math.max(150,(fa.duration*1000-600)/w.length)};go();fa.onloadedmetadata=go;fa.onended=done;fa.play().catch(()=>{});
-    var iv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
-  $('#callEnd').onclick=()=>{$('#au-faisal').pause();$('#au-ring').pause();o.classList.remove('on');if(S.faisal<4){S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();addCallNote();setTimeout(faisalFollow,25000)}}}
+    _callIv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
+  $('#callEnd').onclick=()=>{clearInterval(_callIv);clearInterval(_ringIv);$('#au-faisal').pause();$('#au-ring').pause();o.classList.remove('on');if(S.faisal<4){S.faisal=4;save();push(FAISAL,['them','📞 مكالمة منتهية · ٠:٢٧','الحين']);replayBtn();setTimeout(faisalFollow,25000)}}}
 $('#chatBody').onclick=e=>{const p=e.target.closest('[data-photo]');if(p)openPhoto(p.dataset.photo,'chat')};
 
 $('#igList').innerHTML=IGDM.map(c=>{const l=[...c.msgs].reverse().find(m=>m[0]!=='day');return `<button class="dm" data-dm="${c.id}"><span class="sav" style="overflow:hidden">${avh(c.av)}</span><span style="min-width:0;flex:1"><b>${c.n}</b><span class="pv">${l[1]}</span></span>${c.u?'<span style="width:8px;height:8px;border-radius:50%;background:#3797f0"></span>':''}</button>`}).join('');
@@ -1700,7 +1706,7 @@ function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hint
   if(S.unlocked&&!was.unlocked){$('#backPhone').hidden=false;if(S.screen==='lock'){$('#lockMsg').textContent='تم فتح الموبايل ✓ (من جهاز ثاني)';show('phone')}}
   if(S.notes&&!was.notes){$('#notesLock').hidden=true;$('#notesBody').hidden=false;stageAt('note2')}
   if(S.faisal&&!was.faisal){if(!CHATS.includes(FAISAL))CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;beep()}
-  if(S.faisal>=4&&was.faisal<4)addCallNote();
+  if(S.faisal>=4&&was.faisal<4)
   if(S.notes2&&!was.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;stageAt('cctv')}
   if(S.merged&&!was.merged){addCctvNote();stageAt('solve')}
   if(S.hidden&&!was.hidden)stageAt('cctv');
@@ -1752,7 +1758,7 @@ try{showShare()}catch(e){}
 syncStart();
 })();
 /* rebuild everything the player had already unlocked (idempotent, also used by multi-device sync) */
-function restoreUI(){if(S.faisal>=4){addCallNote();if(S.faisalFollow&&!FAISAL.msgs.some(m=>/آخر تحويل/.test(m[1])))FAISAL.msgs.push(['them','ونسيت أقول لكم: آخر تحويل انسحب يوم الاثنين الماضي الساعة ١٢:٤٠ الظهر. من نفس الصلاحية اللي معتمدة من سنين.','الحين'])}if(S.merged)addCctvNote();if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(S.faisal){if(!CHATS.includes(FAISAL))CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}else setTimeout(faisalArrives,9000)}renderNotes();renderChatList();renderPhotos();if(S.unlocked)$('#backPhone').hidden=false}
+function restoreUI(){if(S.faisal>=4){if(S.faisalFollow&&!FAISAL.msgs.some(m=>/آخر تحويل/.test(m[1])))FAISAL.msgs.push(['them','ونسيت أقول لكم: آخر تحويل انسحب يوم الاثنين الماضي الساعة ١٢:٤٠ الظهر. من نفس الصلاحية اللي معتمدة من سنين.','الحين'])}if(S.merged)addCctvNote();if(S.notes2){$('#notesLock2').hidden=true;$('#notesBody2').hidden=false}if(S.notes){$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(S.faisal){if(!CHATS.includes(FAISAL))CHATS.unshift(FAISAL);FAISAL.u=S.faisal>1?0:1;if(S.faisal<3){S.faisal=3;save();window.__ringLater=true}}else setTimeout(faisalArrives,9000)}renderNotes();renderChatList();renderPhotos();if(S.unlocked)$('#backPhone').hidden=false}
 window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code&&S.start)navigator.sendBeacon&&fetch(STORE+'/api/state',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({code,game:'khalid',device:deviceId(),state:syncPick()})})}catch(e){}});
 document.addEventListener('visibilitychange',save);
 (function(){const de=document.documentElement;const can=de.requestFullscreen||de.webkitRequestFullscreen;const bs=$$('[data-fs]');const ios=/iPhone|iPod/.test(navigator.userAgent);
