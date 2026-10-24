@@ -33,7 +33,7 @@
 <style>
 /* Tajawal has no چ and no گ. Without them the browser falls back mid-word to
    whatever font the phone happens to have, which breaks the Arabic joining and
-   leaves the letter standing on its own — «باچر» came out as «با» then a loose
+   leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -701,7 +701,7 @@ html.tv body{zoom:1.18}
     <h1>قضية <span>الشاليه</span></h1>
     <p>ليلة الخميس، تجمّعت العايلة في شاليه الخيران. الجمعة الصبح، تيجوري الجدّة فاضي — طقم ذهب شهد اللي بتتزوّج بعد شهر. الكل يقول: الشغّالة. الجدّة تقول: لا. موبايل بوعبدالعزيز بين إيديكم، وعندكم ساعة.</p>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق لين ٦ موبايلات بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>📺 شغّلوه على التلفزيون</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>📺 شغّلوه على التلفزيون</span></div>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟  — يكبّر الخط والصور ويوزّع العرض بالعرض، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
 </section>
@@ -958,7 +958,7 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-rules>📖 <span>القواعد · Rules</span></button>
 <button class="mitem" data-share hidden>📲 <span>شارك الكود</span></button>
 <button class="mitem" data-tv>📺 <span>العب على التلفزيون</span></button>
-<button class="mitem" data-home>🏠 <span>الرئيسية</span></button>
+<button class="mitem" data-home>🏠 <span>الرئيسية</span></button><button class="mitem" data-newcode>🔑 <span>كود ثاني</span></button>
 </nav></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
@@ -996,7 +996,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — لين ٦ موبايلات بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: رضا رجع ١:٥٠ بس الكاميرا تشوفه بالممر ٢:٣٥…"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -1057,7 +1057,7 @@ const CHATS=[
  {id:'fahad',n:'فهد 🎮',av:'🎮',last:'٨:٣١ ص',u:0,msgs:[['day','الخميس'],['them','<span class="snap" data-torch="courtyard">🌑<small>صورة · ١١:٣٦ م</small></span>','١١:٣٦ م'],['them','عمي شوف الحوش 👀 منو هذول؟','١١:٣٦ م'],['them','ما يبين شي بالصورة بس فيه اثنين عند السيارة','١١:٣٧ م'],['day','الجمعة'],['me','فهد، شفت شي امس؟','٨:٣٠ ص'],['them','…لا','٨:٣١ ص']]},
  {id:'reza',n:'رضا (السايق)',av:'p:reza',last:'٧:٥٥ ص',u:0,msgs:[['day','الخميس'],['me','رضا جهّز الشاليه، الكل ياي الساعة ٥','٤:٣٠ م'],['them','Yes baba، كله ready 👍','٤:٣٢ م'],['day','الجمعة'],['them','بابا، ثلج finish. أنا روح جمعية؟','١٢:٢٨ ص'],['them','<span class="vn" data-au="au-vn">▶<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>٠:١١</b></span><br><button class="chip analyze" data-voice>🔍 تحليل الصوت</button>','١:٥٥ ص'],['me','رضا تعال الصالة الحين','٧:٥٥ ص']]},
  {id:'abd',n:'عبدالله',av:'p:abdullah',last:'٨:٠٥ ص',u:0,msgs:[['day','١٩ سبتمبر'],['them','عمي، بيوصلك مسجات من شركة مخازن (Easy Storage) تجاهلها 🙏 حطيت رقمك للتواصل لأنه خطي فاصلينه. أثاث شقتنا القديمة','١٢:٠٠ م'],['me','ليش فاصلينه؟','١٢:١٠ م'],['them','سالفة فواتير، بتنحل','١٢:١١ م'],['day','الخميس'],['them','عمي لو سمحت، ١٢٠٠ دينار بس لين يوصل الراتب. البنك بيسحب السيارة الأسبوع الياي 😔','١٠:٤٥ م'],['me','ما عندي ولدي. كلم أبوك.','١٠:٥٢ م'],['them','أبوي نفس وضعي. خلاص.','١٠:٥٣ م'],['day','الجمعة'],['them','عمي اتصل بالشرطة. الشغّالة أكيد. لا تطوّلها.','٨:٠٥ ص']]},
- {id:'joyce',n:'Joyce (جويس)',av:'p:joyce',last:'١٠:٥٢ م',u:0,msgs:[['day','الخميس'],['them','Sir, tomorrow morning 7 I go Salmiya? Need send money Philippines, mama in hospital 🙏🙏','١٠:٤٠ م'],['me','بعدين جويس، باچر الكل نايم','١٠:٥٠ م'],['them','Ok sir sorry. Very urgent only 😢','١٠:٥٢ م']]},
+ {id:'joyce',n:'Joyce (جويس)',av:'p:joyce',last:'١٠:٥٢ م',u:0,msgs:[['day','الخميس'],['them','Sir, tomorrow morning 7 I go Salmiya? Need send money Philippines, mama in hospital 🙏🙏','١٠:٤٠ م'],['me','بعدين جويس، باجر الكل نايم','١٠:٥٠ م'],['them','Ok sir sorry. Very urgent only 😢','١٠:٥٢ م']]},
  {id:'mona',n:'منى (أم عبدالله)',av:'p:mona',last:'٧:٥٢ ص',u:0,msgs:[['day','الخميس'],['them','أمك نايمة عندنا بالصالة مع البنات، لا تصحّيها','١١:١٥ م'],['me','تمام','١١:١٦ م'],['day','الجمعة'],['them','التيجوري فاضي!!! تعال','٧:٣١ ص'],['them','لقيت ظرف فلوس بغرفة جويس. ٢٠٠ دينار. من وين لها؟؟','٧:٥٢ ص']]},
  {id:'saad',n:'سعد (أخوي)',av:'p:saad',last:'٨:١٥ ص',u:0,msgs:[['day','الخميس'],['them','أمي ورّت الذهب لشهد قدام الكل… الله يتمم','٩:١٠ م'],['me','إن شاء الله','٩:١٢ م'],['day','الجمعة'],['them','ولدي ما له علاقة، لا أحد يجيب سيرته','٨:١٥ ص']]},
  {id:'fam',n:'عايلة أم خالد 🏖',av:'🏖',last:'٧:٣٣ ص',u:0,grp:1,msgs:[['day','الخميس'],['them','وصلنا 🏖','٥:٠٥ م','plaque','شهد'],['them','ذهب يدّتي 😍😍','٨:٣٥ م','gold','شهد'],['them','ما شاء الله… عقبال بنات الكل 🙂','٨:٣٦ م','','منى'],['them','بوعبدالعزيز الكرك 😂','٩:٤٠ م','','فهد'],['day','الجمعة'],['them','التيجوري فاضي','٧:٣٣ ص','','منى']]},
@@ -1065,7 +1065,7 @@ const CHATS=[
  {id:'jam',n:'جمعية الخيران ✓',av:'🛒',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','عروض الويكند: ماي ٢ د.ك الكرتون · ثلج ٠.٥٠٠ · فحم ١.٥٠٠','١٠:٠٠ ص']]}];
 const SMS=[
  {id:'moroor',n:'المرور',last:'٣:٣٠ ص',u:1,msgs:[['day','الجمعة'],['them','وزارة الداخلية — الإدارة العامة للمرور: تم تسجيل مخالفة تجاوز السرعة على المركبة <b>٨٤٢٣١ KWT</b> (لاند كروزر — بيضا) طريق الخيران كم ١٢.٤ · الاتجاه: <b>شمال</b> · السرعة ٩٤/٦٠ · ٣:٠٧ ص. الغرامة ٥٠ د.ك.','٣:٣٠ ص','radar_0307']]},
- {id:'bank',n:'البنك',last:'الجمعة',u:0,msgs:[['day','الخميس'],['them','عملية شراء ٢٤.٧٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ ٧٧٠٢','٤:٥٥ م'],['day','الجمعة'],['them','عملية شراء ٣.٢٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ ١٠٩٤ (رضا)','١٢:٤٨ ص']]},
+ {id:'bank',n:'البنك',last:'الجمعة',u:0,msgs:[['day','الخميس'],['them','عملية شراء ٢٤.٧٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ٧٧٠٢','٤:٥٥ م'],['day','الجمعة'],['them','عملية شراء ٣.٢٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ١٠٩٤ (رضا)','١٢:٤٨ ص']]},
  {id:'zain',n:'Zain',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','فاتورتك لشهر سبتمبر: ٣٢.٠٠٠ د.ك. آخر موعد للدفع ١٠ أكتوبر.','٩:٠٠ ص']]},
  {id:'otp',n:'K-NET',last:'الخميس',u:0,msgs:[['day','الخميس'],['them','كود التحقق: ٤٤٠١٩٢. لا تشاركه مع أحد.','٤:٥٤ م']]},
  {id:'spam',n:'+965 6xx xxxxx',last:'الثلاثاء',u:0,msgs:[['day','الثلاثاء'],['them','عرض خاص على عزل الأسطح! اتصل الآن','١١:٠٠ ص']]}];
@@ -1341,7 +1341,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
 function open(){const c=code();if(!c)return;const link=STORE+'/shaleh#code='+c;const msg='تعالوا نحل قضية الشاليه مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
- sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (لين ٦ موبايلات)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
@@ -1391,6 +1391,27 @@ async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();cons
     else err.textContent=({not_found:'الكود غير صحيح',expired:'انتهت صلاحية الكود',used:'هالكود مستخدم من فريق ثاني',devices:'هالكود مفتوح على ٦ أجهزة — هذا الحد الأقصى',finished:'هالكود خلص — القضية انحلّت فيه. للعب مرة ثانية تحتاجون كود جديد',late:'هالفريق بدأ من أكثر من ٣ ساعات — ما ينفع تنضمّون من جهاز جديد الحين. الأجهزة اللي دخلت من البداية تكمّل عادي',format:'اكتبوا الكود مثل SHL-7342',wrong_game:'هالكود لقضية ثانية'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية'}catch(e){err.textContent='ما قدرنا نتحقق. تأكدوا من الإنترنت'}b.disabled=false}
 $('#gateGo').onclick=tryCode;document.addEventListener('click',e=>{if(e.target.closest('#toSolveSide'))show('solve')});$('#gateIn').addEventListener('keydown',e=>{if(e.key==='Enter')tryCode()});
 
+
+/* ---- a different team's code on this phone ---- */
+/* A «#code=» link opened while the game is already on screen only changes the
+   fragment: no reload, so boot never runs and the previous team's game stays
+   up. Reload, and the normal boot path verifies the code and clears the state. */
+addEventListener('hashchange',()=>{
+  const m=location.hash.match(/code=([A-Za-z]{3}-?\d{4})/);if(!m)return;
+  const c=m[1].toUpperCase(),p=savedPass();
+  if(p&&p.code===c)return;
+  location.reload();
+});
+/* Without this there is no way to enter a new code while an old pass is still
+   valid: the gate is skipped whenever the URL has no code on it. */
+$$('[data-newcode]').forEach(b=>b.onclick=()=>{
+  if(!confirm('بتبدأون بكود ثاني؟ اللي وصلتوا له بهالكود بيروح من هالموبايل.'))return;
+  try{localStorage.removeItem(GAME);localStorage.removeItem(GAME+'_pass')}catch(e){}
+  /* the running game still holds the old progress in memory, and a timer tick
+     would write it straight back before the page unloads */
+  try{Object.keys(S).forEach(k=>delete S[k]);S.start=0}catch(e){}
+  location.href=location.pathname;
+});
 /* ---- boot ---- */
 load();$('#buildv').textContent='v'+BUILD;(function(){const standalone=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;const t=$('#tvtip');if(t)t.hidden=standalone})();
 function splash(){return new Promise(res=>{const el=$('#splash');show('splash');try{const sa=$('#au-splash');sa.volume=0.6;sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;

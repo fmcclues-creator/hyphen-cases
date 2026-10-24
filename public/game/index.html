@@ -23,7 +23,7 @@
 <style>
 /* Tajawal has no چ and no گ. Without them the browser falls back mid-word to
    whatever font the phone happens to have, which breaks the Arabic joining and
-   leaves the letter standing on its own — «باچر» came out as «با» then a loose
+   leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -609,7 +609,7 @@ html.tv body{zoom:1.18}
       <div class="side"><small>رقم التصنيف</small><div>64219</div><small>رقم المجلد</small><div>63008</div></div>
     </div></div>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق لين ٦ موبايلات بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span></div>
     <button class="chip ghost" data-fs hidden style="padding:9px 16px;font-size:15px">⛶ Full screen · ملء الشاشة</button>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟ <button class="chip" data-tv style="margin:4px 0;font-size:15px">📺 العب على التلفزيون</button> — يكبّر الخط والصور ويوزّع العرض بالعرض، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
@@ -837,7 +837,7 @@ html.tv body{zoom:1.18}
         ٣. مفاتيح مخزن <mark>الشويخ</mark> القديم مع ناصر. يقول «فاضي من شهور»، فليش لين الحين ندفع إيجاره؟<br>
         ٤. بعد التوقيع أجلس معاه وأسمع منه. يمكن له عذر.
       </div>
-<div class="locked" id="notesLock2"><div style="font-size:44px">🔒</div><b>حساب المخزن</b><div class="hint">تلميح خالد لنفسه: «طلبية باچر»</div><div class="dots" id="ndots2"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad2"></div></div>
+<div class="locked" id="notesLock2"><div style="font-size:44px">🔒</div><b>حساب المخزن</b><div class="hint">تلميح خالد لنفسه: «طلبية باجر»</div><div class="dots" id="ndots2"><i></i><i></i><i></i><i></i></div><div class="pad" id="npad2"></div></div>
 <div class="notes" id="notesBody2" hidden><h4>حساب المخزن</h4>
         ناصر يقول المخزن «فاضي من شهور». طلبت كشف الكهرباء:
         <div class="bill"><div class="bh"><span>وزارة الكهرباء والماء والطاقة المتجددة</span><span>كشف استهلاك</span></div>
@@ -916,7 +916,7 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-rules>📖 <span>القواعد · Rules</span></button>
 <button class="mitem" data-share hidden>📲 <span>شارك الكود</span></button>
 <button class="mitem" data-tv>📺 <span>العب على التلفزيون</span></button>
-<button class="mitem" data-home>🏠 <span>الرئيسية</span></button>
+<button class="mitem" data-home>🏠 <span>الرئيسية</span></button><button class="mitem" data-newcode>🔑 <span>كود ثاني</span></button>
 <div class="mgap"></div>
 <button class="mitem red" id="toSolveFile">🔍 <span>حل القضية</span></button>
 </nav></div>
@@ -972,7 +972,7 @@ const CHATS=[
  {id:'diw',n:'ديوانية بو سعود',av:'☕',last:'٧:٥٢ م',u:3,grp:1,msgs:[
   ['day','الأربعاء'],['them','الليلة مباراة، منو ياي؟','٧:٥٠ م','','بو سعود'],['them','أنا ياي','٧:٥١ م','','جاسم'],['me','أنا بالمكتب، ما أقدر 😔','٧:٥٢ م'],['them','الله يعينك 😂','٧:٥٢ م','','بو سعود']]},
  {id:'kitchen',n:'مطبخ السالمية 🍳',av:'🍳',last:'٣:٤٥ م',u:0,grp:1,msgs:[
-  ['day','الأربعاء'],['them','بوعبدالله، شنو نطلب من فهد لباچر؟','٣:٣٠ م','','أبو حسين (الشيف)'],
+  ['day','الأربعاء'],['them','بوعبدالله، شنو نطلب من فهد لباجر؟','٣:٣٠ م','','أبو حسين (الشيف)'],
   ['me','<span class="vn" data-au="au-order">▶<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>٠:١٨</b></span>','٣:٤٠ م'],
   ['them','تمام بوعبدالله 👍 بنراجع كل شي قبل الاستلام','٣:٤٥ م','','أبو حسين (الشيف)']]},
  {id:'tal',n:'طلبات',av:'🍽️',last:'٧:٢٠ م',u:0,msgs:[
@@ -1300,7 +1300,7 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — لين ٦ موبايلات بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 /* team notebook (saved on this device) */
 function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch(e){}
@@ -1642,7 +1642,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
 function open(){const c=code();if(!c)return;const link=STORE+'/game#code='+c;const msg='تعالوا نحل قضية خالد مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
- sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (لين ٦ موبايلات)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
@@ -1709,6 +1709,27 @@ function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hint
   try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}syncPush()}
 function syncStart(){if(!syncCode())return;syncPull();setInterval(syncPull,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncPull()})}
 
+
+/* ---- a different team's code on this phone ---- */
+/* A «#code=» link opened while the game is already on screen only changes the
+   fragment: no reload, so boot never runs and the previous team's game stays
+   up. Reload, and the normal boot path verifies the code and clears the state. */
+addEventListener('hashchange',()=>{
+  const m=location.hash.match(/code=([A-Za-z]{3}-?\d{4})/);if(!m)return;
+  const c=m[1].toUpperCase(),p=savedPass();
+  if(p&&p.code===c)return;
+  location.reload();
+});
+/* Without this there is no way to enter a new code while an old pass is still
+   valid: the gate is skipped whenever the URL has no code on it. */
+$$('[data-newcode]').forEach(b=>b.onclick=()=>{
+  if(!confirm('بتبدأون بكود ثاني؟ اللي وصلتوا له بهالكود بيروح من هالموبايل.'))return;
+  try{localStorage.removeItem('khalid');localStorage.removeItem('khalid_pass')}catch(e){}
+  /* the running game still holds the old progress in memory, and a timer tick
+     would write it straight back before the page unloads */
+  try{Object.keys(S).forEach(k=>delete S[k]);S.start=0}catch(e){}
+  location.href=location.pathname;
+});
 /* ================= BOOT ================= */
 load();
 function splash(){return new Promise(res=>{const el=$('#splash');show('splash');try{const sa=$('#au-splash');sa.volume=0.6;sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;

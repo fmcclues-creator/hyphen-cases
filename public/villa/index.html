@@ -33,7 +33,7 @@
 <style>
 /* Tajawal has no چ and no گ. Without them the browser falls back mid-word to
    whatever font the phone happens to have, which breaks the Arabic joining and
-   leaves the letter standing on its own — «باچر» came out as «با» then a loose
+   leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -668,12 +668,12 @@ html.tv body{zoom:1.18}
 <section class="screen" id="gate">
   <div class="wrap">
     <div class="brand" style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 1010 160" style="width:110px;height:auto"><use href="#wm-use"/></svg><span>CASES</span></div>
-    <h1>رمز الفريق</h1>
-    <p>اكتبوا الرمز اللي وصلكم بعد الشراء، أو من المنظّم.</p>
+    <h1>كود الفريق</h1>
+    <p>اكتبوا الكود اللي وصلكم بعد الشراء، أو من المنظّم.</p>
     <input id="gateIn" placeholder="VLA-7342" maxlength="8" autocomplete="off" autocapitalize="characters">
     <div class="err" id="gateErr"></div>
     <button class="btn" id="gateGo">ادخل</button>
-    <a id="gateBuy" href="#" target="_blank" rel="noopener">ما عندكم رمز؟ اشتروا واحد</a>
+    <a id="gateBuy" href="#" target="_blank" rel="noopener">ما عندكم كود؟ اشتروا واحد</a>
   </div>
 </section>
 
@@ -698,7 +698,7 @@ html.tv body{zoom:1.18}
     <h1>قضية <span>الفيلا</span></h1>
     <p>بوفيصل بنى فيلته بيده سنة ١٤٠٧. يوم العيد قال جدّام الكل: «كتبت وصيتي، والفيلا لمن يسكن فيها»، وحطّها بالدرج. الثلاثاء الصبح توفّى بهدوء… وبعد العزا بيومين، الدرج فاضي. موبايله القديم بين إيديكم، وعندكم ساعة.</p>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق لين ٦ موبايلات بنفس الرمز</span><span>🔒 الرمز لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟  — يكبّر الخط والصور ويوزّع العرض بالعرض، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
 </section>
@@ -794,7 +794,7 @@ html.tv body{zoom:1.18}
     <div class="paper-foot">
       <button class="btn" id="toLock">📱 افتح موبايل بوفيصل</button>
       <button class="btn" id="toSolveFile" style="background:var(--tape)">🔍 حل القضية</button>
-      <div class="tvtip">📱 نفس الرمز يفتح على ٦ موبايلات والتقدّم مشترك — <b>📲 شارك الرمز</b> فوق. 📺 وللتلفزيون: <b>📺 العب على التلفزيون</b>.</div>
+      <div class="tvtip">📱 نفس الكود يفتح على ٦ موبايلات والتقدّم مشترك — <b>📲 شارك الكود</b> فوق. 📺 وللتلفزيون: <b>📺 العب على التلفزيون</b>.</div>
     </div>
   </div>
   </div>
@@ -945,7 +945,7 @@ html.tv body{zoom:1.18}
     <div id="willWrap" hidden class="willwrap"><img src="img/will_full.jpg" alt="" id="willImg"><div class="who" style="margin:10px 0 4px">🎙️ فيصل يقرأ الوصية جدّام العايلة</div><div class="gmtx" id="willTx"></div></div>
     <div class="lines" id="lines"></div>
     <div class="res" id="res" hidden></div>
-    <div id="again" hidden style="color:var(--muted);font-size:14px;line-height:1.7">🔒 خلص الرمز — القضية انحلّت. حابّين قضية ثانية؟ <a href="https://cases.hyphen-eventskw.com" style="color:#fff">cases.hyphen-eventskw.com</a></div>
+    <div id="again" hidden style="color:var(--muted);font-size:14px;line-height:1.7">🔒 خلص الكود — القضية انحلّت. حابّين قضية ثانية؟ <a href="https://cases.hyphen-eventskw.com" style="color:#fff">cases.hyphen-eventskw.com</a></div>
   </div>
 </section>
 
@@ -966,9 +966,9 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-hint>💡 <span>تلميح · Hint</span></button>
 <button class="mitem" data-book>📝 <span>دفترنا</span></button>
 <button class="mitem" data-rules>📖 <span>القواعد · Rules</span></button>
-<button class="mitem" data-share hidden>📲 <span>شارك الرمز</span></button>
+<button class="mitem" data-share hidden>📲 <span>شارك الكود</span></button>
 <button class="mitem" data-tv>📺 <span>العب على التلفزيون</span></button>
-<button class="mitem" data-home>🏠 <span>الرئيسية</span></button>
+<button class="mitem" data-home>🏠 <span>الرئيسية</span></button><button class="mitem" data-newcode>🔑 <span>كود ثاني</span></button>
 </nav></div>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1005,7 +1005,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الرمز</b> — لين ٦ موبايلات بنفس الرمز، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الرمز لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: الكاميرا ٦:١٤ — منو رايح الملحق؟"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -1053,15 +1053,15 @@ keypad($('#lpad'),$('#ldots'),v=>{if(v!==PIN){$('#lockMsg').textContent='رمز 
 const AV=id=>`<img src="img/p_${id}.jpg" alt="">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
 const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
 const CHATS=[
- {id:'fam',n:'عيال بوفيصل',av:'👨‍👩‍👧‍👦',last:'الخميس',u:3,grp:1,msgs:[['day','الثلاثاء'],['them','العزا بديوانية أبوي من المغرب. الله يرحمه','٩:٢٠ ص','','فيصل'],['them','وصلت الكويت الحين. الله يرحمه','١٠:٠٠ ص','','عبير'],['day','الخميس'],['them','منو فتح الدرج؟؟','٨:١٠ م','','فيصل'],['them','فيصل مو وقته','٨:١١ م','','عبير'],['them','الورقة ما لها قيمة قانونية أصلاً يا جماعة، بدون شهود','٨:١٥ م','','بومشعل'],['them','آنا وصلت الاثنين بالليل وما أعرف وين المكتب حتى','٨:١٧ م','','طلال'],['them','نورة كانت بروحها بالبيت. مو اتهام، هذا اللي صار','٨:٢٠ م','','عبير'],['them','حرام عليكم… أبوي ما برد بعد','٨:٣١ م','','نورة'],['them','باچر أبلّغ الشرطة. خلاص','٨:٤٠ م','','فيصل']]},
+ {id:'fam',n:'عيال بوفيصل',av:'👨‍👩‍👧‍👦',last:'الخميس',u:3,grp:1,msgs:[['day','الثلاثاء'],['them','العزا بديوانية أبوي من المغرب. الله يرحمه','٩:٢٠ ص','','فيصل'],['them','وصلت الكويت الحين. الله يرحمه','١٠:٠٠ ص','','عبير'],['day','الخميس'],['them','منو فتح الدرج؟؟','٨:١٠ م','','فيصل'],['them','فيصل مو وقته','٨:١١ م','','عبير'],['them','الورقة ما لها قيمة قانونية أصلاً يا جماعة، بدون شهود','٨:١٥ م','','بومشعل'],['them','آنا وصلت الاثنين بالليل وما أعرف وين المكتب حتى','٨:١٧ م','','طلال'],['them','نورة كانت بروحها بالبيت. مو اتهام، هذا اللي صار','٨:٢٠ م','','عبير'],['them','حرام عليكم… أبوي ما برد بعد','٨:٣١ م','','نورة'],['them','باجر أبلّغ الشرطة. خلاص','٨:٤٠ م','','فيصل']]},
  {id:'noura',n:'نورة ❤️',av:'p:noura',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه الدوا ✅ والغدا جاهز','١:٣٠ م'],['me','الله يسلمج يا بنتي','١:٤٥ م'],['them','طلال بيوصل الليلة إن شاء الله، فرشت له الصالة','٧:٠٠ م'],['them','يبه بومشعل عندك؟ لا تتعب نفسك بالكلام عن البيع، إنت تعبان','٩:٤٠ م'],['me','لا تخافين','٩:٤٥ م'],['them','تصبح على خير يبه ❤️','١١:٠٥ م']]},
- {id:'yaser',n:'ياسر (المحامي)',av:'p:yaser',last:'الأحد',u:0,msgs:[['day','قبل شهر'],['them','أبو فيصل، الوصية اللي كتبتها بخطك صحيحة، بس الأفضل شاهدين','١٠:٠٠ ص'],['me','شاهدي الله يا بوعلي','١٠:٣٠ ص'],['day','الأحد'],['them','صوّر لي الورقة يبه عشان أحفظ نسخة','٥:٠٠ م'],['me','<span class="ph" data-photo="will_corner">'+IMG('will_corner')+'</span>','٥:٢٠ م'],['them','هذي بس زاوية! صوّرها كاملة','٥:٢٥ م'],['me','باچر إن شاء الله','٥:٣٠ م']]},
+ {id:'yaser',n:'ياسر (المحامي)',av:'p:yaser',last:'الأحد',u:0,msgs:[['day','قبل شهر'],['them','أبو فيصل، الوصية اللي كتبتها بخطك صحيحة، بس الأفضل شاهدين','١٠:٠٠ ص'],['me','شاهدي الله يا بوعلي','١٠:٣٠ ص'],['day','الأحد'],['them','صوّر لي الورقة يبه عشان أحفظ نسخة','٥:٠٠ م'],['me','<span class="ph" data-photo="will_corner">'+IMG('will_corner')+'</span>','٥:٢٠ م'],['them','هذي بس زاوية! صوّرها كاملة','٥:٢٥ م'],['me','باجر إن شاء الله','٥:٣٠ م']]},
  {id:'bumishal',n:'بومشعل',av:'p:bumishal',last:'الاثنين',u:0,msgs:[['day','قبل أسبوعين'],['them','يبه عرض المستثمر ٣ ملايين على الأرض. فكّر بس','٨:٠٠ م'],['me','البيت مو للبيع','٨:٣٠ م'],['day','الاثنين'],['them','يبه آنا ياي لك بعد العشا نسولف شوي','٨:٥٠ م'],['me','تعال','٨:٥٥ م'],['them','<span class="miss">📵 مكالمة فايتة</span>','١١:٣٠ م']]},
  {id:'talal',n:'طلال',av:'p:talal',last:'الاثنين',u:1,msgs:[['day','الاثنين'],['them','يبه وصلت الكويت، ياي لك الحين من المطار','٨:٤٥ م'],['me','بانتظارك يا ولدي','٨:٥٠ م'],['them','يبه نمت؟ آنا بالمكتب… شفت الورقة بالدرج. ما فهمت السطر الثاني 🤔 نتكلم الصبح','١١:٤٠ م'],['them','لا تقول لفيصل إني قريتها','١١:٤١ م']]},
  {id:'faisal',n:'فيصل',av:'p:faisal',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','يبه البنك بيسحب على المحل. ممكن نتكلم عن الفيلا؟','٤:٠٠ م'],['me','بعد العيد نتكلم. والفيلا مكتوبة.','٤:٣٠ م'],['them','مكتوبة لمنو يبه؟','٤:٣١ م'],['me','لمن يسكن فيها. وإنت تعرف السطر الثاني لو قريت','٤:٤٠ م'],['them','؟؟','٤:٤١ م']]},
- {id:'hamad',n:'حمد (حفيدي) 🧒',av:'🧒',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يدو شلونك؟ باچر أمرّ عليك بعد المدرسة 🚗','٤:١٠ م'],['me','تعال يا حمد، آخذك الملحق أوريك راديو أول','٤:٢٠ م'],['them','😍😍','٤:٢١ م']]},
+ {id:'hamad',n:'حمد (حفيدي) 🧒',av:'🧒',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يدو شلونك؟ باجر أمرّ عليك بعد المدرسة 🚗','٤:١٠ م'],['me','تعال يا حمد، آخذك الملحق أوريك راديو أول','٤:٢٠ م'],['them','😍😍','٤:٢١ م']]},
  {id:'jam',n:'جمعية الرميثية ✓',av:'🛒',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','عروض الأسبوع: تمر ٢ د.ك · قهوة ١.٥٠٠','٩:٠٠ ص']]},
- {id:'diw',n:'ديوانية الثلاثاء ☕',av:'☕',last:'الاثنين',u:0,grp:1,msgs:[['day','الاثنين'],['them','بوفيصل، باچر الديوانية عندك؟','٦:٠٠ م','','بو خالد'],['me','إيه إن شاء الله. تعالاو','٦:١٠ م']]}];
+ {id:'diw',n:'ديوانية الثلاثاء ☕',av:'☕',last:'الاثنين',u:0,grp:1,msgs:[['day','الاثنين'],['them','بوفيصل، باجر الديوانية عندك؟','٦:٠٠ م','','بو خالد'],['me','إيه إن شاء الله. تعالاو','٦:١٠ م']]}];
 const CALLS=[{n:'ياسر (المحامي)',t:'الجمعة ١٠:٥٠ ص',k:'فايتة',bad:1},{n:'الإسعاف ١١٢',t:'الثلاثاء ٥:٥٠ ص',k:'صادرة · ٢ دقيقة'},{n:'فيصل',t:'الثلاثاء ٥:٤٥ ص',k:'صادرة · ٣ دقايق'},{n:'بومشعل',t:'الاثنين ١١:٣٠ م',k:'فايتة',bad:1},{n:'طلال',t:'الاثنين ٨:٤٠ م',k:'واردة · ١ دقيقة'},{n:'حمد (حفيدي)',t:'الاثنين ٤:٠٠ م',k:'واردة · ٤ دقايق'},{n:'المستشفى — د. أحمد',t:'الأحد',k:'واردة · ٦ دقايق'}];
 const PHOTOS=[
  {id:'eid',n:'العيد',info:'قبل ٤ أشهر · الصالة',cap:'الكل. والدرج وراي.'},
@@ -1107,7 +1107,7 @@ renderNotes();
 
 /* ---- voice recorder cleaning puzzle ---- */
 const REC={ctx:null,src:null,bp:null,noise:null,ngain:null,on:false,target:{f:0.62,r:0.5},tol:0.14,okSince:0};
-const MEMO_TX='«يا بوعلي… مساك الله بالخير. الوصية اللي كتبتها بخطّي… حطّيتها بالدرج مثل ما اتّفقنا. بس انتبه… فيها سطر ثاني تحت، ما أحد قراه. لا تخلّيهم يوقفون عند أول سطر… خلّهم يكمّلون. آنا تعبان شوي الليلة، باچر إن شاء الله أمرّ عليك.»';
+const MEMO_TX='«يا بوعلي… مساك الله بالخير. الوصية اللي كتبتها بخطّي… حطّيتها بالدرج مثل ما اتّفقنا. بس انتبه… فيها سطر ثاني تحت، ما أحد قراه. لا تخلّيهم يوقفون عند أول سطر… خلّهم يكمّلون. آنا تعبان شوي الليلة، باجر إن شاء الله أمرّ عليك.»';
 function recSetup(){if(REC.ctx)return true;const c=ac();if(!c)return false;const a=$('#au-memo');try{REC.src=c.createMediaElementSource(a)}catch(e){return false}
   REC.bp=c.createBiquadFilter();REC.bp.type='bandpass';REC.bp.Q.value=1.2;REC.ngain=c.createGain();const buf=c.createBuffer(1,c.sampleRate*2,c.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.5;REC.noise=c.createBufferSource();REC.noise.buffer=buf;REC.noise.loop=true;REC.noise.connect(REC.ngain).connect(c.destination);REC.noise.start();REC.ngain.gain.value=0;
   REC.src.connect(REC.bp).connect(c.destination);REC.ctx=c;return true}
@@ -1321,8 +1321,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
-function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nافتحوا الرابط وادخلوا الرمز '+c+'\n'+link;
- sheet(`<h3>📲 شارك الرمز</h3><div class="h">ربعكم يدخلون نفس الرمز على موبايلاتهم (لين ٦ موبايلات)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
@@ -1369,9 +1369,30 @@ async function gate(){if(!GATE_ON)return true;const m=(location.hash||'').match(
   show('gate');return new Promise(res=>{window.__gateOK=res})}
 async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';
   try{const j=await checkCode(code);if(j.ok){try{localStorage.setItem(GAME+'_pass',JSON.stringify({code,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);window.__gateOK&&window.__gateOK(true)}
-    else err.textContent=({not_found:'الرمز غير صحيح',expired:'انتهت صلاحية الرمز',used:'هالرمز مستخدم من فريق ثاني',devices:'هالرمز مفتوح على ٦ أجهزة — هذا الحد الأقصى',finished:'هالرمز خلص — القضية انحلّت فيه. للعب مرة ثانية تحتاجون رمز جديد',late:'هالفريق بدأ من أكثر من ٣ ساعات — ما ينفع تنضمّون من جهاز جديد الحين. الأجهزة اللي دخلت من البداية تكمّل عادي',format:'اكتبوا الرمز مثل VLA-7342',wrong_game:'هالرمز لقضية ثانية'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية'}catch(e){err.textContent='ما قدرنا نتحقق. تأكدوا من الإنترنت'}b.disabled=false}
+    else err.textContent=({not_found:'الكود غير صحيح',expired:'انتهت صلاحية الكود',used:'هالكود مستخدم من فريق ثاني',devices:'هالكود مفتوح على ٦ أجهزة — هذا الحد الأقصى',finished:'هالكود خلص — القضية انحلّت فيه. للعب مرة ثانية تحتاجون كود جديد',late:'هالفريق بدأ من أكثر من ٣ ساعات — ما ينفع تنضمّون من جهاز جديد الحين. الأجهزة اللي دخلت من البداية تكمّل عادي',format:'اكتبوا الكود مثل VLA-7342',wrong_game:'هالكود لقضية ثانية'})[j.reason]||'صار خطأ، جرّبوا مرة ثانية'}catch(e){err.textContent='ما قدرنا نتحقق. تأكدوا من الإنترنت'}b.disabled=false}
 $('#gateGo').onclick=tryCode;document.addEventListener('click',e=>{if(e.target.closest('#toSolveSide'))show('solve')});$('#gateIn').addEventListener('keydown',e=>{if(e.key==='Enter')tryCode()});
 
+
+/* ---- a different team's code on this phone ---- */
+/* A «#code=» link opened while the game is already on screen only changes the
+   fragment: no reload, so boot never runs and the previous team's game stays
+   up. Reload, and the normal boot path verifies the code and clears the state. */
+addEventListener('hashchange',()=>{
+  const m=location.hash.match(/code=([A-Za-z]{3}-?\d{4})/);if(!m)return;
+  const c=m[1].toUpperCase(),p=savedPass();
+  if(p&&p.code===c)return;
+  location.reload();
+});
+/* Without this there is no way to enter a new code while an old pass is still
+   valid: the gate is skipped whenever the URL has no code on it. */
+$$('[data-newcode]').forEach(b=>b.onclick=()=>{
+  if(!confirm('بتبدأون بكود ثاني؟ اللي وصلتوا له بهالكود بيروح من هالموبايل.'))return;
+  try{localStorage.removeItem(GAME);localStorage.removeItem(GAME+'_pass')}catch(e){}
+  /* the running game still holds the old progress in memory, and a timer tick
+     would write it straight back before the page unloads */
+  try{Object.keys(S).forEach(k=>delete S[k]);S.start=0}catch(e){}
+  location.href=location.pathname;
+});
 /* ---- boot ---- */
 load();$('#buildv').textContent='v'+BUILD;(function(){const standalone=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;const t=$('#tvtip');if(t)t.hidden=standalone})();
 function splash(){return new Promise(res=>{const el=$('#splash');show('splash');try{const sa=$('#au-splash');sa.volume=0.6;sa.currentTime=0;sa.play().catch(()=>{})}catch(e){}let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');setTimeout(res,700)};el.onclick=end;
