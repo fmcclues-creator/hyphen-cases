@@ -653,6 +653,53 @@ html.tv body{zoom:1.18}
 .roompan{position:absolute;top:0;bottom:0;left:0;will-change:transform;touch-action:none}
 .roompan img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .roomtilt{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font-size:13px;z-index:2}
+
+.sheet .hopen{display:block;width:100%;text-align:start;font:inherit;font-size:16px;
+  color:#ffd978;background:rgba(255,217,120,.09);border:1px solid rgba(255,217,120,.38);
+  border-radius:12px;padding:11px 13px;margin:7px 0;line-height:1.6}
+.sheet .hopen small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ---------- the timeline along the bottom ---------- */
+.screen{padding-bottom:var(--progh,0px)}
+#prog{position:fixed;inset-inline:0;bottom:0;z-index:90;display:none;
+  background:rgba(13,16,22,.97);border-top:1px solid var(--line);
+  font:600 12px var(--ui,Tajawal,sans-serif);color:var(--muted);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+#prog.on{display:block}
+#progTl{display:flex;align-items:center;gap:9px;padding:7px 14px;
+  -webkit-tap-highlight-color:transparent}
+#progTl .tlcap{flex:none;max-width:44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#progTl .tlchev{flex:none;font-size:10px;color:var(--muted);transition:transform .25s}
+.tlln{--nd:16px;flex:1;min-width:0;display:flex;align-items:flex-start;transition:padding .25s}
+.tlseg{flex:1;min-width:5px;height:2px;padding:0;border:0;display:block;
+  background:var(--line);margin-top:calc(var(--nd)/2 - 1px);transition:margin .25s}
+.tlseg.on{background:var(--tape)}
+.tlstep{flex:none;position:relative;display:block}
+.tlnd{display:grid;place-items:center;width:var(--nd);height:var(--nd);padding:0;
+  border-radius:50%;background:#1b2130;border:1.5px solid var(--line);
+  font-size:calc(var(--nd) * .52);line-height:1;color:var(--muted);
+  transition:width .25s,height .25s,font-size .25s}
+.tlstep.done .tlnd{background:var(--tape);border-color:var(--tape);color:#fff}
+.tlstep.now .tlnd{border-color:#ffd978;background:#2a2316;color:#ffd978;
+  box-shadow:0 0 0 3px rgba(255,217,120,.16)}
+.tlstep.now .tlnd::after{content:'';width:36%;height:36%;border-radius:50%;background:#ffd978}
+.tllbl{display:none;position:absolute;top:calc(var(--nd) + 7px);inset-inline-start:50%;
+  transform:translateX(50%);width:62px;text-align:center;font-style:normal;
+  font-size:10px;line-height:1.4;color:#6f7889}
+.tlstep.done .tllbl{color:#99a3b4}
+.tlstep.now .tllbl{color:#ffd978;font-weight:700}
+#prog.open #progTl{flex-wrap:wrap;padding-bottom:10px}
+#prog.open .tlcap{order:1;flex:1;max-width:none}
+#prog.open .tlchev{order:2;transform:rotate(180deg)}
+#prog.open .tlln{order:3;flex:0 0 100%;--nd:30px;margin-top:12px;
+  padding-inline:26px;padding-bottom:46px}
+#prog.open .tllbl{display:block}
+/* more steps than fit a phone: the line scrolls and keeps up with you */
+#prog.open .tlln.many{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;
+  padding-inline:16px;scrollbar-width:none}
+#prog.open .tlln.many::-webkit-scrollbar{display:none}
+#prog.open .tlln.many .tlstep{width:30px}
+#prog.open .tlln.many .tlseg{flex:0 0 42px}
 </style>
 </head>
 <body>
@@ -969,7 +1016,9 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-share hidden>📲 <span>شارك الكود</span></button>
 <button class="mitem" data-tv>📺 <span>العب على التلفزيون</span></button>
 <button class="mitem" data-home>🏠 <span>الرئيسية</span></button><button class="mitem" data-newcode>🔑 <span>كود ثاني</span></button>
-</nav></div>
+</nav>
+</div>
+<div id="prog"><div id="progTl" role="button" tabindex="0" aria-expanded="false" aria-label="خط التقدم"><span class="tlcap" id="progCap"></span><span class="tlln" id="progLn"></span><span class="tlchev">▲</span></div></div>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 window.addEventListener('error',e=>{try{console.error('[game]',e.message||e,'@'+(e.lineno||'?'))}catch(x){}});
@@ -987,9 +1036,36 @@ const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hy
 const GAME='villa', BUILD='261013';
 const PIN='1407';
 const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,memo:false,corner:false,cam:false,run:false,blow:false,room:false,album:false,call:false,yaser:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',roomTries:0};
-function save(){try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
+
+/* ---- the timeline along the bottom ---- */
+const STEPS=[['unlocked','فتح الموبايل'],['memo','التسجيل التالف'],['corner','زاوية الوصية'],['cam','كاميرا ٦:١٤'],['call','مكالمة صالح'],['run','الركض للملحق'],['blow','اللوحة'],['album','تفتيش الغرفة']];
+const PROG_LIVE=["file", "lock", "phone", "run", "blow", "room", "album", "solve"];
+function progOpen(v){const el=$('#prog');if(!el)return;
+ const open=v===undefined?!el.classList.contains('open'):!!v;
+ el.classList.toggle('open',open);
+ const t=$('#progTl');if(t)t.setAttribute('aria-expanded',open?'true':'false');
+ if(open)requestAnimationFrame(()=>{const n=$('#progLn .tlstep.now')||$('#progLn .tlstep');
+   if(n&&n.scrollIntoView)try{n.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}});}
+function updProg(){const el=$('#prog');if(!el)return;
+ const cur=[...$$('.screen')].find(x=>x.classList.contains('on'))?.id;
+ const live=S.start&&!S.done&&PROG_LIVE.includes(cur);
+ el.classList.toggle('on',!!live);
+ document.documentElement.style.setProperty('--progh',live?'32px':'0px');
+ if(!live){progOpen(false);return}
+ const dn=STEPS.map(([k])=>!!S[k]), n=dn.filter(Boolean).length, now=dn.indexOf(false);
+ const ln=$('#progLn');ln.classList.toggle('many',STEPS.length>6);
+ ln.innerHTML=STEPS.map((st,i)=>
+  (i?`<i class="tlseg${dn[i-1]?' on':''}"></i>`:'')+
+  `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}">`+
+  `<i class="tlnd">${dn[i]?'✓':i===now?'':'🔒'}</i>`+
+  `<em class="tllbl">${st[1]}</em></span>`).join('');
+ $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حل القضية':STEPS[now][1]);}
+(function(){const t=$('#progTl');if(!t)return;
+ t.onclick=()=>progOpen();
+ t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};})();
+function save(){try{updProg()}catch(e){}try{localStorage.setItem(GAME,JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
 function load(){try{const d=JSON.parse(localStorage.getItem(GAME)||'null');if(d&&d.start)Object.assign(S,d)}catch(e){}}
-function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField();if(id!=='run')runStop();if(id!=='blow')blowStop();if(id!=='phone')recStop()}
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));try{progOpen(false);updProg()}catch(e){}const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1500)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&!['intro','splash','gate','reveal'].includes(id))stageAt(stage());if(id==='file')refreshField();if(id!=='run')runStop();if(id!=='blow')blowStop();if(id!=='phone')recStop()}
 function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
@@ -1269,11 +1345,39 @@ const HNAME={lock:'فتح الموبايل',memo:'التسجيل التالف',c
 function stage(){if(!S.unlocked)return 'lock';if(!S.memo)return 'memo';if(!S.corner)return 'corner';if(!S.cam)return 'cam';if(!S.call)return 'call';if(!S.run)return 'run';if(!S.blow)return 'blow';if(!S.album)return 'room';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
-$$('[data-hint]').forEach(b=>b.onclick=()=>{const st=stage();S.hints[st]=S.hints[st]||0;const used=S.hints[st],list=HINTS[st],el=onStage(st);
-  const body=list.map((h,i)=>{const lab=i===2?'الجواب مباشرة':`تلميح ${i+1}`;if(i<used)return `<div class="h">${h}</div>`;const wait=HINT_WAIT[i]-el;return `<div class="h lk">🔒 ${lab}${wait>0?` — يفتح بعد ${fmt(wait)}`:''}</div>`}).join('');
-  const ready=used<list.length&&el>=HINT_WAIT[used];const next=used<list.length?(used===2?'اكشف الجواب':`اكشف تلميح ${used+1}`)+` (${HINT_LAB[used]})`:'';
-  sheet(`<h3>💡 تلميحات — ${HNAME[st]}</h3>${body}<div class="acts"><button class="btn lite" data-close>إغلاق</button>${ready?`<button class="btn" id="useHint">${next}</button>`:''}</div>`);
-  const u=$('#useHint');if(u)u.onclick=()=>{S.pen+=HINT_PEN[S.hints[st]];S.hints[st]++;save();b.click()}});
+/* The countdown was printed once and never touched again, so it held the same
+   number until you closed the sheet and reopened it — a timer that looked stuck.
+   And the rows naming the hints did nothing; the only control was a button at
+   the bottom of the sheet. */
+let _hintIv=null;
+function hintSheet(st){
+  S.hints=S.hints||{};S.hints[st]=S.hints[st]||0;
+  const list=HINTS[st],used=S.hints[st],el=onStage(st);
+  let ticking=false;
+  const rows=list.map((h,i)=>{
+    const lab=i===2?'الجواب مباشرة':'تلميح '+AR(i+1);
+    if(i<used)return `<div class="h">${h}</div>`;
+    if(i>used)return `<div class="h lk">🔒 ${lab} — بعد اللي قبله</div>`;
+    const wait=HINT_WAIT[i]-el;
+    if(wait>0){ticking=true;return `<div class="h lk">🔒 ${lab} — يفتح بعد ${AR(fmt(wait))}</div>`}
+    return `<button class="h hopen" data-hi="${i}">💡 ${lab}`
+      +`<small>اضغطوا للكشف · ${HINT_LAB[i]}</small></button>`;
+  }).join('');
+  sheet(`<h3>💡 تلميحات — ${HNAME[st]||''}</h3>${rows}`
+    +`<div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`);
+  $$('#sheet [data-hi]').forEach(x=>x.onclick=()=>{
+    const i=+x.dataset.hi;S.pen+=HINT_PEN[i];S.hints[st]=i+1;save();openHints(st)});
+  return ticking;
+}
+function openHints(st){
+  clearInterval(_hintIv);_hintIv=null;
+  if(!hintSheet(st))return;
+  _hintIv=setInterval(()=>{
+    if(!$('#modal').classList.contains('on')){clearInterval(_hintIv);_hintIv=null;return}
+    if(!hintSheet(st)){clearInterval(_hintIv);_hintIv=null}
+  },1000);
+}
+$$('[data-hint]').forEach(b=>b.onclick=()=>openHints(stage()));
 function sheet(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on');$$('[data-close]').forEach(x=>x.onclick=()=>$('#modal').classList.remove('on'))}
 
 /* ---- TV / maximize ---- */
