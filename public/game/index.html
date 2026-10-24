@@ -484,41 +484,42 @@ html.tv body{zoom:1.18}
 
 /* ---------- the timeline along the bottom ---------- */
 .screen{padding-bottom:var(--progh,0px)}
-#progBd{position:fixed;inset:0;z-index:89;background:rgba(0,0,0,.5)}
-#progBd[hidden]{display:none}
-#prog{position:fixed;inset-inline:0;bottom:0;z-index:90;display:none;flex-direction:column;
+#prog{position:fixed;inset-inline:0;bottom:0;z-index:90;display:none;
   background:rgba(13,16,22,.97);border-top:1px solid var(--line);
   font:600 12px var(--ui);color:var(--muted);
   padding-bottom:env(safe-area-inset-bottom,0px)}
-#prog.on{display:flex}
-/* the thin strip — always on screen while playing */
-#progTl{display:flex;align-items:center;gap:9px;padding:7px 14px;-webkit-tap-highlight-color:transparent}
+#prog.on{display:block}
+#progTl{display:flex;align-items:center;gap:9px;padding:7px 14px;
+  -webkit-tap-highlight-color:transparent}
 #progTl .tlcap{flex:none;max-width:44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#progTl .tlln{flex:1;display:flex;align-items:center;min-width:0}
-#progTl .tlseg{flex:1;height:2px;min-width:6px;padding:0;margin:0;display:block;background:var(--line);border:0}
-#progTl .tlseg.on{background:var(--tape)}
-#progTl .tlnd{flex:none;width:17px;height:17px;padding:0;margin:0;border-radius:50%;background:#1b2130;
-  border:1.5px solid var(--line);display:grid;place-items:center;
-  font-size:9px;line-height:1;color:var(--muted)}
-#progTl .tlnd.done{background:var(--tape);border-color:var(--tape);color:#fff;font-size:10px}
-#progTl .tlnd.now{border-color:#ffd978;background:#2a2316;color:#ffd978;
-  box-shadow:0 0 0 3px rgba(255,217,120,.16)}
 #progTl .tlchev{flex:none;font-size:10px;color:var(--muted);transition:transform .25s}
-#prog.open #progTl .tlchev{transform:rotate(180deg)}
-/* the panel it opens into */
-#progPanel{display:none;border-top:1px solid var(--line);padding:4px 14px 14px;max-height:54vh;overflow:auto}
-#prog.open #progPanel{display:block}
-#progPanel .tlst{display:flex;align-items:center;gap:11px;padding:10px 0;
-  border-bottom:1px solid rgba(40,48,64,.55)}
-#progPanel .tlst:last-child{border-bottom:0}
-#progPanel .tlic{flex:none;width:28px;height:28px;border-radius:50%;background:#1b2130;
-  border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;line-height:1}
-#progPanel .tlst.done .tlic{background:var(--tape);border-color:var(--tape);color:#fff}
-#progPanel .tlst.now .tlic{border-color:#ffd978;background:#2a2316;color:#ffd978}
-#progPanel .tlnm{flex:1;min-width:0;color:var(--fg);font-size:15px}
-#progPanel .tlst.lock .tlnm{color:var(--muted)}
-#progPanel .tltag{flex:none;font-size:12px;color:var(--muted)}
-#progPanel .tlst.now .tltag{color:#ffd978}
+/* the line itself — one element, it just grows */
+.tlln{--nd:17px;flex:1;min-width:0;display:flex;align-items:flex-start;
+  transition:padding .25s}
+.tlseg{flex:1;min-width:6px;height:2px;padding:0;border:0;display:block;
+  background:var(--line);margin-top:calc(var(--nd)/2 - 1px);transition:margin .25s}
+.tlseg.on{background:var(--tape)}
+.tlstep{flex:none;position:relative;display:block}
+.tlnd{display:grid;place-items:center;width:var(--nd);height:var(--nd);padding:0;
+  border-radius:50%;background:#1b2130;border:1.5px solid var(--line);
+  font-size:calc(var(--nd) * .52);line-height:1;color:var(--muted);
+  transition:width .25s,height .25s,font-size .25s}
+.tlstep.done .tlnd{background:var(--tape);border-color:var(--tape);color:#fff}
+.tlstep.now .tlnd{border-color:#ffd978;background:#2a2316;color:#ffd978;
+  box-shadow:0 0 0 3px rgba(255,217,120,.16)}
+.tlstep.now .tlnd::after{content:'';width:36%;height:36%;border-radius:50%;background:#ffd978}
+.tllbl{display:none;position:absolute;top:calc(var(--nd) + 7px);inset-inline-start:50%;
+  transform:translateX(50%);width:62px;text-align:center;font-style:normal;
+  font-size:10px;line-height:1.4;color:#6f7889}
+.tlstep.done .tllbl{color:#99a3b4}
+.tlstep.now .tllbl{color:#ffd978;font-weight:700}
+/* opened: the same line, bigger, with the names under it */
+#prog.open #progTl{flex-wrap:wrap;padding-bottom:10px}
+#prog.open .tlcap{order:1;flex:1;max-width:none}
+#prog.open .tlchev{order:2;transform:rotate(180deg)}
+#prog.open .tlln{order:3;flex:0 0 100%;--nd:30px;margin-top:12px;
+  padding-inline:26px;padding-bottom:46px}
+#prog.open .tllbl{display:block}
 
 /* ---------- landscape / TV layout: phone sideways or any wide screen ---------- */
 .apps{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -909,8 +910,7 @@ html.tv body{zoom:1.18}
 <div class="mgap"></div>
 <button class="mitem red" id="toSolveFile">🔍 <span>حل القضية</span></button>
 </nav></div>
-<div id="progBd" hidden></div>
-<div id="prog"><div id="progTl" role="button" tabindex="0" aria-expanded="false" aria-controls="progPanel" aria-label="خط التقدم"><span class="tlcap" id="progCap"></span><span class="tlln" id="progLn"></span><span class="tlchev">▲</span></div><div id="progPanel"></div></div>
+<div id="prog"><div id="progTl" role="button" tabindex="0" aria-expanded="false" aria-label="خط التقدم"><span class="tlcap" id="progCap"></span><span class="tlln" id="progLn"></span><span class="tlchev">▲</span></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ================= DATA ================= */
@@ -1259,8 +1259,7 @@ const STEPS=[['unlocked','فتح الموبايل'],['notes','الملاحظة �
 function progOpen(v){const el=$('#prog');if(!el)return;
  const open=v===undefined?!el.classList.contains('open'):!!v;
  el.classList.toggle('open',open);
- const t=$('#progTl');if(t)t.setAttribute('aria-expanded',open?'true':'false');
- const bd=$('#progBd');if(bd)bd.hidden=!open}
+ const t=$('#progTl');if(t)t.setAttribute('aria-expanded',open?'true':'false')}
 function updProg(){const el=$('#prog');if(!el)return;
  const live=S.start&&!S.done&&['file','phone','solve'].includes([...$$('.screen')].find(x=>x.classList.contains('on'))?.id);
  el.classList.toggle('on',!!live);
@@ -1269,18 +1268,13 @@ function updProg(){const el=$('#prog');if(!el)return;
  const dn=STEPS.map(([k])=>!!S[k]), n=dn.filter(Boolean).length, now=dn.indexOf(false);
  $('#progLn').innerHTML=STEPS.map((st,i)=>
   (i?`<i class="tlseg${dn[i-1]?' on':''}"></i>`:'')+
-  `<i class="tlnd ${dn[i]?'done':i===now?'now':''}">${dn[i]?'✓':i===now?'':'🔒'}</i>`).join('');
- $('#progCap').textContent=now<0?AR(n)+'/'+AR(STEPS.length)+' · حل القضية'
-  :AR(n)+'/'+AR(STEPS.length)+' · '+STEPS[now][1];
- $('#progPanel').innerHTML=STEPS.map((st,i)=>
-  `<div class="tlst ${dn[i]?'done':i===now?'now':'lock'}">`+
-  `<span class="tlic">${dn[i]?'✓':i===now?'●':'🔒'}</span>`+
-  `<span class="tlnm">${st[1]}</span>`+
-  `<span class="tltag">${dn[i]?'خلصت':i===now?'الحين':'مقفولة'}</span></div>`).join('');}
-(function(){const t=$('#progTl'),bd=$('#progBd');if(!t)return;
+  `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}">`+
+  `<i class="tlnd">${dn[i]?'✓':i===now?'':'🔒'}</i>`+
+  `<em class="tllbl">${st[1]}</em></span>`).join('');
+ $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حل القضية':STEPS[now][1]);}
+(function(){const t=$('#progTl');if(!t)return;
  t.onclick=()=>progOpen();
- t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};
- if(bd)bd.onclick=()=>progOpen(false);})();
+ t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};})();
 function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));try{progOpen(false);updProg()}catch(e){}const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(stage());if(id==='lock'&&!threeReady)initThree()}
 function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
