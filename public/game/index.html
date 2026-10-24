@@ -21,6 +21,16 @@
 <!-- seo:end -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Readex+Pro:wght@400;500;700&family=Grand+Hotel&display=swap">
 <style>
+/* Tajawal has no چ and no گ. Without them the browser falls back mid-word to
+   whatever font the phone happens to have, which breaks the Arabic joining and
+   leaves the letter standing on its own — «باچر» came out as «با» then a loose
+   چ. These four faces add just those two letters to the same family, so no
+   fallback happens and the word joins up. ~1.8KB each. */
+@font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
+@font-face{font-family:Tajawal;src:url('/fonts/kw-500.woff2') format('woff2');font-weight:500;unicode-range:U+0686,U+06AF;font-display:swap}
+@font-face{font-family:Tajawal;src:url('/fonts/kw-700.woff2') format('woff2');font-weight:700;unicode-range:U+0686,U+06AF;font-display:swap}
+@font-face{font-family:Tajawal;src:url('/fonts/kw-800.woff2') format('woff2');font-weight:800;unicode-range:U+0686,U+06AF;font-display:swap}
+
 /* Layout: one-screen app. Dark investigation room; the case file is cream paper; the phone is a framed device in the middle. */
 :root{
   --ink:#0d1016; --panel:#161b24; --line:#283040; --fg:#e9ecf2; --muted:#8e97a8;
@@ -992,8 +1002,8 @@ const CHATS=[
   ['day','الأربعاء'],['them','الفني خلّص، كل شَيْ تمام. وطلبية الخضرة وصلت','٢:٢٠ م'],['me','يعطيك العافية','٢:٢٥ م']]},
  {id:'bank',n:'البنك ✓',av:'🏦',last:'٧:١٩ م',u:0,msgs:[
   ['day','٣٠ سبتمبر'],['them','تم تنفيذ التحويل الدوري الشهري من حساب: شركة خالد للمطاعم. للاستفسار راجع الفرع.','٩:٠٠ ص'],
-  ['day','الثلاثاء'],['them','عملية شراء ١٢.٠٠٠ د.ك — محطة وقود الشويخ. البطاقة المنتهية بـ ٤٤١٢','٤:٠٢ م'],['them','عملية شراء ٠.٧٥٠ د.ك — كافتيريا الكرك. البطاقة المنتهية بـ ٤٤١٢','٤:٠٨ م'],
-  ['day','الأربعاء'],['them','رمز التحقق الخاص بك: ٨٣٠٢٩٤. لا تشاركه مع أحد.','٦:٤١ م'],['them','عملية شراء ٣.٧٥٠ د.ك — Talabat. البطاقة المنتهية بـ ٤٤١٢','٧:١٩ م']]},
+  ['day','الثلاثاء'],['them','عملية شراء ١٢.٠٠٠ د.ك — محطة وقود الشويخ. البطاقة المنتهية بـ٤٤١٢','٤:٠٢ م'],['them','عملية شراء ٠.٧٥٠ د.ك — كافتيريا الكرك. البطاقة المنتهية بـ٤٤١٢','٤:٠٨ م'],
+  ['day','الأربعاء'],['them','رمز التحقق الخاص بك: ٨٣٠٢٩٤. لا تشاركه مع أحد.','٦:٤١ م'],['them','عملية شراء ٣.٧٥٠ د.ك — Talabat. البطاقة المنتهية بـ٤٤١٢','٧:١٩ م']]},
  {id:'jazeera',n:'Jazeera Airways ✈️',av:'✈️',last:'الاثنين',u:0,msgs:[
   ['day','الاثنين'],['them','تم تأكيد حجزك: الكويت ← دبي، الجمعة ٣ أكتوبر ٦:١٥ م، مسافرين: ٢. رقم الحجز J9K7PL. رحلة سعيدة!','٢:٤٠ م'],['them','أضف حقيبة إضافية بخصم ٢٠٪ قبل السفر 🧳','٢:٤١ م']]},
  {id:'zain',n:'Zain',av:'📶',last:'الثلاثاء',u:0,msgs:[
@@ -1194,7 +1204,7 @@ const PHOTOS=[
  {id:'p253',src:'lib/p253.jpg',th:'th/p253.jpg',d:'2026-07-25T21:00',alb:'',n:'السينما',info:'٢٥ يوليو ٢٠٢٦ · الأفنيوز',cap:'',ov:''},
  {id:'p254',src:'lib/p254.jpg',th:'th/p254.jpg',d:'2026-08-16T12:00',alb:'',n:'شاليه الخيران',info:'١٦ أغسطس ٢٠٢٦ · شاليه الخيران',cap:'',ov:''},
  {id:'p255',src:'lib/p255.jpg',th:'th/p255.jpg',d:'2026-08-16T13:00',alb:'',n:'الخيران',info:'١٦ أغسطس ٢٠٢٦ · الخيران',cap:'الجت سكي',ov:''},
- {id:'p256',src:'lib/p256.jpg',th:'th/p256.jpg',d:'2026-09-04T20:30',alb:'',n:'گرص عگيلي',info:'٤ سبتمبر ٢٠٢٦ · الديوانية',cap:'',ov:''},
+ {id:'p256',src:'lib/p256.jpg',th:'th/p256.jpg',d:'2026-09-04T20:30',alb:'',n:'قرص عقيلي',info:'٤ سبتمبر ٢٠٢٦ · الديوانية',cap:'',ov:''},
  {id:'p257',src:'lib/p257.jpg',th:'th/p257.jpg',d:'2026-09-06T16:00',alb:'',n:'السيارة',info:'٦ سبتمبر ٢٠٢٦ · السيارة',cap:'الجديد',ov:''},
  {id:'p258',src:'lib/p258.jpg',th:'th/p258.jpg',d:'2026-05-14T15:00',alb:'',n:'غبار',info:'١٤ مايو ٢٠٢٦ · الكويت',cap:'',ov:''},
  {id:'p259',src:'lib/p259.jpg',th:'th/p259.jpg',d:'2025-12-12T09:00',alb:'',n:'الطيارة',info:'١٢ ديسمبر ٢٠٢٥ · الطيارة',cap:'منيرة نايمة 😂',ov:''},
