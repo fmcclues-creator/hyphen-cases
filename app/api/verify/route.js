@@ -32,10 +32,14 @@ export async function POST(req) {
     // once the team has solved the case the code is spent: no new phones can join
     const { data: gs } = await client.from("game_state").select("state").eq("code", norm).eq("game", row.game || "khalid").maybeSingle();
     if (gs?.state && Number(gs.state.done) > 0) return Response.json({ ok: false, reason: "finished" }, { headers: cors });
-    // and new phones can only join during the first JOIN_HOURS after the team pressed start
+    // and new phones can only join during the first JOIN_HOURS after the team pressed start.
+    // codes.join_until overrides that deadline for one team — used to give a team longer
+    // without touching the progress they already have.
     const JOIN_HOURS = 3;
     const startedAt = Number(gs?.state?.start) || 0;
-    if (startedAt && Date.now() - startedAt > JOIN_HOURS * 3600e3) return Response.json({ ok: false, reason: "late" }, { headers: cors });
+    const joinUntil = row.join_until ? new Date(row.join_until).getTime()
+      : (startedAt ? startedAt + JOIN_HOURS * 3600e3 : 0);
+    if (joinUntil && Date.now() > joinUntil) return Response.json({ ok: false, reason: "late" }, { headers: cors });
     if (devices.length >= DEVICES) return Response.json({ ok: false, reason: "devices" }, { headers: cors });
     if (devices.length === 0) await client.from("codes").update({ uses: row.uses + 1 }).eq("code", norm);
     await client.from("plays").insert({ code: norm, device });
