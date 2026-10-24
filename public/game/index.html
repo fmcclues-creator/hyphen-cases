@@ -1512,6 +1512,49 @@ keypad($('#hpad'),$('#hdots'),v=>{if(v!==HIDCODE)return false;S.hidden=true;save
 renderPhotos();
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p)};
 let CURP=null;function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id);CURP=p;$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';$('#photoTitle').textContent=p.n;$('#photoImg').innerHTML=`<div style="position:relative;max-width:100%">${PIMG(p).replace('<img ',p.dark&&!S.merged?'<img class="dark" ':'<img ')}${p.ov?`<span style="position:absolute;bottom:8px;left:10px;font:12px monospace;color:#ffd978;text-shadow:0 0 3px #000">${p.ov}</span>`:''}</div>`;$('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap||''}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo')}
+/* ---- swipe from one photo to the next ---- */
+/* Opening a photo used to be a dead end: back out to the grid for every one.
+   The run is whatever list you came in through, in the order it is shown. */
+function phSeq(){
+  const from=($('#a-photo [data-back]')||{dataset:{}}).dataset.back||'photos';
+  if(from==='album'&&CURP) return PHOTOS.filter(p=>p.alb===CURP.alb&&(S.merged?p.id!=='cctvdark':!p.hid))
+    .sort((x,y)=>x.d>y.d?1:-1);
+  if(from==='photos') return phList();
+  return CURP?[CURP]:[];            /* reached from a chat: nothing to run through */
+}
+function phStep(d){
+  if(!CURP) return;
+  if(!$('#editor').hidden) return;  /* mid-edit: the gesture belongs to the sliders */
+  const L=phSeq(), i=L.findIndex(p=>p.id===CURP.id);
+  if(i<0) return;
+  const n=L[i+d];
+  if(!n){const el=$('#photoImg');if(el){el.animate(
+    [{transform:'translateX(0)'},{transform:`translateX(${d>0?-14:14}px)`},{transform:'translateX(0)'}],
+    {duration:220,easing:'ease-out'})}return}
+  const from=($('#a-photo [data-back]')||{dataset:{}}).dataset.back||'photos';
+  openPhoto(n.id,from);
+  const el=$('#photoImg');
+  if(el)el.animate([{opacity:.35,transform:`translateX(${d>0?18:-18}px)`},{opacity:1,transform:'translateX(0)'}],
+    {duration:200,easing:'ease-out'});
+}
+(function(){
+  const big=$('#a-photo .big'); if(!big) return;
+  let x0=null,y0=null,t0=0;
+  big.addEventListener('touchstart',e=>{if(e.touches.length!==1){x0=null;return}
+    x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
+  big.addEventListener('touchend',e=>{
+    if(x0===null)return; const t=e.changedTouches[0];
+    const dx=t.clientX-x0, dy=t.clientY-y0; x0=null;
+    if(Date.now()-t0>900) return;                       /* a slow drag is not a swipe */
+    if(Math.abs(dx)<48 || Math.abs(dx)<Math.abs(dy)*1.4) return;   /* scrolling, not swiping */
+    phStep(dx<0?1:-1);                                  /* the grid runs left to right */
+  },{passive:true});
+  addEventListener('keydown',e=>{
+    if(!$('#a-photo').classList.contains('on'))return;
+    if(e.key==='ArrowLeft')phStep(1);
+    else if(e.key==='ArrowRight')phStep(-1);
+  });
+})();
 
 const ED={ex:50,sh:50,sa:50,hold:null,done:false};
 function edImg(){return $('#photoImg img')}
