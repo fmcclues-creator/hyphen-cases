@@ -480,6 +480,18 @@ html.tv body{zoom:1.18}
 .mitem.red{background:var(--red);color:#fff;justify-content:center;font-weight:800}
 .mgap{flex:1;min-height:10px}
 
+/* ---------- progress along the bottom ---------- */
+.screen{padding-bottom:var(--progh,0px)}
+#prog{position:fixed;inset-inline:0;bottom:0;z-index:90;display:none;
+  align-items:center;gap:10px;padding:5px 14px calc(5px + env(safe-area-inset-bottom,0px));
+  background:rgba(13,16,22,.94);border-top:1px solid var(--line);
+  font:600 12px Tajawal,sans-serif;color:var(--muted)}
+#prog.on{display:flex}
+#prog .track{flex:1;height:5px;border-radius:999px;background:var(--line);overflow:hidden}
+#prog .track b{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--red),#ffd978);transition:width .45s ease}
+#prog .lbl{flex:none;white-space:nowrap}
+
 /* ---------- landscape / TV layout: phone sideways or any wide screen ---------- */
 .apps{flex:1;min-height:0;display:flex;flex-direction:column}
 #side{display:none}
@@ -869,6 +881,7 @@ html.tv body{zoom:1.18}
 <div class="mgap"></div>
 <button class="mitem red" id="toSolveFile">🔍 <span>حل القضية</span></button>
 </nav></div>
+<div id="prog"><span class="lbl" id="progLbl"></span><span class="track"><b id="progBar"></b></span></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ================= DATA ================= */
@@ -1208,9 +1221,22 @@ window.addEventListener('error',e=>{try{console.error('[game]',e.message||e,'@'+
 /* iOS: sounds started by timers (ringtone, message beep) are only allowed after the page was "touched" once — prime every audio element on the first tap */
 let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{try{const m=a.muted;a.muted=true;const pr=a.play();if(pr&&pr.then)pr.then(()=>{a.pause();a.currentTime=0;a.muted=m}).catch(()=>{a.muted=m})}catch(e){}});try{ac()}catch(e){}}
 ['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,primeAudio,{once:true,capture:true}));
-function save(){try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
+function save(){try{updProg()}catch(e){}try{localStorage.setItem('khalid',JSON.stringify(S))}catch(e){}if(S.start&&typeof syncPush==='function')syncPush();if(typeof renderSide==='function')renderSide()}
 function load(){try{const d=JSON.parse(localStorage.getItem('khalid')||'null');if(d&&d.start)Object.assign(S,d)}catch(e){}}
-function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(stage());if(id==='lock'&&!threeReady)initThree()}
+
+/* ---- progress bar: the five things that have to happen ---- */
+const STEPS=[['unlocked','فتح الموبايل'],['notes','الملاحظة الأولى'],['notes2','الملاحظة الثانية'],
+             ['hidden','الألبوم المخفي'],['merged','الصورة']];
+function updProg(){const el=$('#prog');if(!el)return;
+ const live=S.start&&!S.done&&['file','phone','solve'].includes([...$$('.screen')].find(x=>x.classList.contains('on'))?.id);
+ el.classList.toggle('on',!!live);
+ document.documentElement.style.setProperty('--progh',live?'34px':'0px');
+ if(!live)return;
+ const n=STEPS.filter(([k])=>S[k]).length;
+ $('#progBar').style.width=(n/STEPS.length*100)+'%';
+ const next=STEPS.find(([k])=>!S[k]);
+ $('#progLbl').textContent=AR(n)+'/'+AR(STEPS.length)+(next?' · '+next[1]:' · حل القضية');}
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));try{updProg()}catch(e){}const sd=$('#side');if(sd){sd.hidden=!S.start;if(typeof renderSide==='function')renderSide()}if(id==='phone'&&window.__ringLater){window.__ringLater=false;setTimeout(ring,1200)}if(!['splash','gate'].includes(id)){S.screen=id;save()}if(S.start&&['lock','phone','solve'].includes(id))stageAt(stage());if(id==='lock'&&!threeReady)initThree()}
 function elapsed(){return S.start?Math.floor((Date.now()-S.start)/1000)+S.pen:0}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
@@ -1263,7 +1289,7 @@ keypad($('#pad'),$('#dots'),v=>{
   $('#lockMsg').textContent='تم فتح الموبايل ✓';S.unlocked=true;$('#backPhone').hidden=false;save();
   $('#lock').classList.add('open');setTimeout(()=>{show('phone');$('#lock').classList.remove('open')},900);return true});
 keypad($('#npad'),$('#ndots'),v=>{if(v!==NOTECODE)return false;openNotes();return true});
-keypad($('#npad2'),$('#ndots2'),v=>{if(v!==NOTECODE2)return false;S.notes2=true;save();stageAt('cctv');renderNotes();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
+keypad($('#npad2'),$('#ndots2'),v=>{if(!S.notes)return false;if(v!==NOTECODE2)return false;S.notes2=true;save();stageAt('cctv');renderNotes();$('#notesLock2').hidden=true;$('#notesBody2').hidden=false;renderPhotos();return true});
 function openNotes(){S.notes=true;save();stageAt('note2');renderNotes();$('#notesLock').hidden=true;$('#notesBody').hidden=false;if(!S.faisal)setTimeout(faisalArrives,9000)}
 function faisalArrives(){if(S.faisal)return;S.faisal=1;save();setTimeout(()=>{if(S.faisal<3){S.faisal=3;save();if(S.screen==='phone')ring();else window.__ringLater=true}},20000);CHATS.unshift(FAISAL);renderChatList();beep();$$('#home [data-app=chats]').forEach(el=>{const b=el.querySelector('.b');if(b)b.textContent=+b.textContent+1;else el.insertAdjacentHTML('beforeend','<span class="b">1</span>')})}
 function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g).connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.12)})}catch(e){}}
@@ -1326,7 +1352,7 @@ const APPS=[['chats','WhatsApp','#25d366',CHATS.reduce((a,c)=>a+c.u,0)],['ig','I
 const DOCK=[['calls','الهاتف','#2fcc5f',2],['chats','','#25d366',0],['ig','','linear-gradient(45deg,#f9ce34,#ee2a7b 50%,#6228d7)',0],['x1','','#fc3c44',0,1]];
 const ico=(a)=>`<button class="icon${a[4]?' dim':''}" data-app="${a[0]}" ${a[4]?'disabled':''}><span class="g" style="background:${a[2]}">${ICO[a[0]==='chats'?'wa':a[0]]}</span><span>${a[1]}</span>${a[3]?`<span class="b">${a[3]}</span>`:''}</button>`;
 $('#home').innerHTML=APPS.map(ico).join('')+`<div class="dock">${DOCK.map(ico).join('')}</div>`;
-function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(S.start){S.app=id;save()}}
+function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(S.start){S.app=id;save()}if(id==='photos'||id==='album'){const l=$('#a-'+id+' .list');if(l)requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight})}}
 $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b&&!b.disabled)openApp(b.dataset.app)};
 /* ---- Notes app: list + detail ---- */
 const NOTES=[
@@ -1342,9 +1368,10 @@ const CALL_NOTE={id:'call',t:'🎧 مكالمة فيصل (البنك) — نص �
 function addCctvNote(){if(!NOTES.find(n=>n.id==='cctv')){NOTES.unshift({id:'cctv',t:'📷 لقطة كاميرا البوابة (بعد التعديل)',d:'الحين',body:'الثلاثاء ٩:١٤ م — لاند كروزر بيضا واقفة عند بوابة مخزن الشويخ القديم، وعلى زجاجها الخلفي لزاق دلّة.\n\n— حُفظت من تطبيق الصور.'});renderNotes()}}
 function faisalFollow(){if(S.faisalFollow)return;S.faisalFollow=1;save();push(FAISAL,['them','ونسيت أقول لكم: آخر تحويل انسحب يوم الاثنين الماضي الساعة ١٢:٤٠ الظهر. من نفس الصلاحية اللي معتمدة من سنين.','الحين']);beep()}
 function addCallNote(){if(!NOTES.find(n=>n.id==='call')){CALL_NOTE.body='«'+CALLTX+'»\n\n— سُجّلت تلقائياً من المكالمة. تقدرون تعيدون سماعها من محادثة فيصل.';NOTES.unshift(CALL_NOTE);renderNotes();$$('#home [data-app=notes] .b').forEach(b=>b.remove());$$('#home [data-app=notes]').forEach(el=>el.insertAdjacentHTML('beforeend','<span class="b">1</span>'))}}
-function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':'🔒 مقفولة'):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
+function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':(n.lock===2&&!S.notes?'🔒 بعدها':'🔒 مقفولة')):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
 function openNote(id){const n=NOTES.find(x=>x.id===id);const v=$('#noteView'),st=$('#noteStore');$('#noteTitle').textContent=n.t;
   [...v.children].forEach(c=>{if(c.id)st.appendChild(c)});v.innerHTML='';
+  if(n.lock===2&&!S.notes){sheet('<h3>🔒 وحدة وحدة</h3><div class="h">افتحوا «ملاحظاتي (سري)» الأول — منها بتعرفون وش تدورون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}
   if(n.lock===1){v.appendChild($('#notesLock'));v.appendChild($('#notesBody'))}
   else if(n.lock===2){v.appendChild($('#notesLock2'));v.appendChild($('#notesBody2'))}
   else v.innerHTML=`<div class="plain"><h4>${n.t}</h4><small>${n.d}</small>${n.body}</div>`;
@@ -1398,7 +1425,7 @@ $('#callsBody').onclick=e=>{const b=e.target.closest('[data-vm]');if(!b)return;c
 $('#calBody').innerHTML=CAL.map(d=>`<div class="dayh">${d[0]}</div>`+d[1].map(e=>`<button class="ev" data-ev="1"><span class="t">${e[0]}</span><span><b>${e[1]}</b>${e[2]?`<small>${e[2]}</small>`:''}</span>${e[3]?`<span class="note" hidden>${e[3]}</span>`:''}</button>`).join('')).join('');
 $('#calBody').onclick=e=>{const b=e.target.closest('.ev');if(!b)return;const n=b.querySelector('.note');if(n)n.hidden=!n.hidden};
 
-function phList(){return PHOTOS.filter(p=>!p.hid&&p.alb!=='hidden').sort((a,b)=>a.d<b.d?1:-1)}
+function phList(){return PHOTOS.filter(p=>!p.hid&&p.alb!=='hidden').sort((a,b)=>a.d>b.d?1:-1)}
 function phBtn(p){return `<button data-p="${p.id}">${PIMG(p,1).replace('<img ',p.dark&&!S.merged?'<img class="dark" ':'<img ')}</button>`}
 function renderPhotos(){
   const L=phList();let last='';let html='';
@@ -1410,7 +1437,7 @@ function renderPhotos(){
     return `<button data-alb="${a.id}"><div class="cov">${cov?PIMG(cov,1):'📁'}</div><b>${a.n}</b><small>${PL(ps.length)}</small></button>`}).join('');
 }
 function openAlbum(id){const a=ALBUMS.find(x=>x.id===id);if(a.lock&&!S.hidden){openApp('hidlock');return}
-  const ps=PHOTOS.filter(p=>p.alb===id&&(S.merged?p.id!=='cctvdark':!p.hid)).sort((x,y)=>x.d<y.d?1:-1);
+  const ps=PHOTOS.filter(p=>p.alb===id&&(S.merged?p.id!=='cctvdark':!p.hid)).sort((x,y)=>x.d>y.d?1:-1);
   $('#albTitle').textContent=a.n;
   $('#albPhotos').innerHTML=ps.map(phBtn).join('');
   openApp('album')}
