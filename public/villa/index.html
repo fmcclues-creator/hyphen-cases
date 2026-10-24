@@ -963,7 +963,14 @@ html.tv body{zoom:1.18}
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 window.addEventListener('error',e=>{try{console.error('[game]',e.message||e,'@'+(e.lineno||'?'))}catch(x){}});
-let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{if(a.id==='au-memo')return;try{const m=a.muted;a.muted=true;const pr=a.play();if(pr&&pr.then)pr.then(()=>{a.pause();a.currentTime=0;a.muted=m}).catch(()=>{a.muted=m})}catch(e){}});try{ac()}catch(e){}}
+/* Unlock every clip on the first tap. This must finish inside that one tap:
+   pausing from the play() promise instead meant the pause landed whenever the
+   file finished buffering — often seconds later, on top of a clip the player
+   had since started, which cut it off a few seconds in. */
+let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio').forEach(a=>{if(a.id==='au-memo')return;try{  if(!a.paused)return;
+  const m=a.muted;a.muted=true;
+  const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{});
+  a.pause();a.currentTime=0;a.muted=m;}catch(e){}});try{ac()}catch(e){}}
 ['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,primeAudio,{once:true,capture:true}));
 
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
