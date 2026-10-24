@@ -491,7 +491,7 @@ html.tv body{zoom:1.18}
 #prog.on{display:flex}
 #prog .track{flex:1;height:5px;border-radius:999px;background:var(--line);overflow:hidden}
 #prog .track b{display:block;height:100%;width:0;border-radius:999px;
-  background:linear-gradient(90deg,var(--red),#ffd978);transition:width .45s ease}
+  background:linear-gradient(to left,var(--tape),#ffd978);transition:width .45s ease}
 #prog .lbl{flex:none;white-space:nowrap}
 
 /* ---------- landscape / TV layout: phone sideways or any wide screen ---------- */
@@ -1513,6 +1513,17 @@ $('#submit').onclick=()=>{const fb=$('#fb');
 /* The ending grows taller than the screen, so it scrolls: start at the top so the
    first video is the first thing seen, and follow new lines only when the player
    is already at the bottom — never yank them away from a video they're watching. */
+
+/* ---- full screen video turns the phone with it ----
+   Android and desktop expose the orientation API; iOS does not, but its own
+   full-screen player turns by itself unless the phone's rotation lock is on. */
+let _fsLocked=false;
+function fsLock(){try{const o=screen.orientation;
+ if(o&&o.lock)o.lock('landscape').then(()=>{_fsLocked=true},()=>{})}catch(e){}}
+function fsUnlock(){if(!_fsLocked)return;_fsLocked=false;try{screen.orientation.unlock()}catch(e){}}
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{
+ const el=document.fullscreenElement||document.webkitFullscreenElement;
+ if(el&&el.tagName==='VIDEO')fsLock();else fsUnlock()}));
 function rvTop(){const w=$('#reveal .wrap');if(w)requestAnimationFrame(()=>{w.scrollTop=0})}
 function rvFollow(){const w=$('#reveal .wrap');if(!w)return;
  if(w.scrollHeight-w.scrollTop-w.clientHeight>150)return;
