@@ -413,7 +413,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .fb{background:#2a1d1e;border:1px solid var(--tape);border-radius:12px;padding:12px 14px;line-height:1.7}
 
 /* ---------- reveal ---------- */
-#reveal .wrap{justify-content:center;align-items:center;text-align:center;gap:14px;background:radial-gradient(60% 50% at 50% 30%,#2a1d1e 0,transparent 70%),var(--ink)}
+#reveal .wrap{justify-content:flex-start;align-items:center;text-align:center;gap:14px;overflow:auto;-webkit-overflow-scrolling:touch;padding-block:18px 30px;background:radial-gradient(60% 50% at 50% 30%,#2a1d1e 0,transparent 70%),var(--ink)}
+#reveal .wrap>*{flex:none}
+#reveal .rv,#reveal #cfWrap,#reveal .lines p{scroll-margin-block:18px}
 .rv{width:min(100%,520px);aspect-ratio:16/9;border-radius:14px;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .fbacts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.fbacts .btn{flex:1;padding:10px}
 .lines{max-width:40ch;display:flex;flex-direction:column;gap:12px;font-size:19px;line-height:1.7}
@@ -1507,7 +1509,15 @@ $('#submit').onclick=()=>{const fb=$('#fb');
   S.done=elapsed();save();reveal()};
 
 /* ================= REVEAL ================= */
-function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}catch(e){}show('reveal');const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
+
+/* The ending grows taller than the screen, so it scrolls: start at the top so the
+   first video is the first thing seen, and follow new lines only when the player
+   is already at the bottom — never yank them away from a video they're watching. */
+function rvTop(){const w=$('#reveal .wrap');if(w)requestAnimationFrame(()=>{w.scrollTop=0})}
+function rvFollow(){const w=$('#reveal .wrap');if(!w)return;
+ if(w.scrollHeight-w.scrollTop-w.clientHeight>150)return;
+ requestAnimationFrame(()=>{try{w.scrollTo({top:w.scrollHeight,behavior:'smooth'})}catch(e){w.scrollTop=w.scrollHeight}})}
+function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}catch(e){}show('reveal');rvTop();const v=$('#rvVideo');v.hidden=false;v.currentTime=0;v.play().catch(()=>{});const cw=$('#cfWrap'),cf=$('#cfVideo');cw.hidden=false;let went=false;const goCf=()=>{if(went)return;went=true;v.pause();$('#rvSkip').hidden=true;cf.currentTime=0;cf.play().catch(()=>{});cw.scrollIntoView({behavior:'smooth',block:'center'})};v.onended=goCf;$('#rvSkip').hidden=false;$('#rvSkip').onclick=goCf;cf.onplay=()=>{if(!went){went=true;v.pause();$('#rvSkip').hidden=true}};const L=[
  [S.gaveUp?'ما حلّيتوها هالمرة… هذا اللي صار':'','الدوريات توصل لمخزن الشويخ القديم. الباب يتفتح…'],
  ['','خالد جالس على صندوق، راسه ملفوف، بس بخير.'],
  ['ناصر، وهو يطلع مطأطئ الرأس','«ما كان مخطط… لما واجهني اخترعت، وما عرفت شلون أوقف.»'],
