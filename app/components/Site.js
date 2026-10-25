@@ -10,7 +10,7 @@ export function Header() {
       <nav className="menu">
         <Link href="/#cases">القضايا</Link>
         <Link href="/about">عن HYPHEN</Link>
-        <Link href="/play">عندي رمز</Link>
+        <Link href="/play">عندي كود</Link>
         <a href="https://instagram.com/hyphen.events" target="_blank" rel="noreferrer">Instagram</a>
       </nav>
     </header>
@@ -28,7 +28,7 @@ export function Footer() {
         <a href="https://instagram.com/hyphen.events" target="_blank" rel="noreferrer">@hyphen.events</a>
         <Link href="/about">عن HYPHEN</Link>
         <Link href="/terms">الشروط والأحكام</Link>
-        <Link href="/play">عندي رمز</Link>
+        <Link href="/play">عندي كود</Link>
       </div>
       <div className="muted">© {new Date().getFullYear()} HYPHEN Events. منتج رقمي — لا استرجاع بعد الشراء.</div>
     </footer>

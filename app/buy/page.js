@@ -52,8 +52,8 @@ export default function Buy() {
     <main className="wrap">
       <Header />
       <form className="card" onSubmit={go}>
-        <h2>قضية خالد · رمز فريق</h2>
-        <p>رمز واحد يفتح اللعبة على جهاز واحد لمدة ٧ أيام. الدفع بـ KNET أو بطاقة.</p>
+        <h2>قضية خالد · كود فريق</h2>
+        <p>كود واحد يفتح اللعبة على جهاز واحد لمدة ٧ أيام. الدفع بـ KNET أو بطاقة.</p>
         <label>رقم الموبايل</label>
         <input inputMode="tel" placeholder="965XXXXXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         <label>الإيميل</label>
@@ -67,7 +67,7 @@ export default function Buy() {
         {promoMsg && <div className={quote?.discount ? "ok" : "err"}>{promoMsg}</div>}
         <div className="total"><span>الإجمالي</span><span>{quote && quote.discount > 0 && <s>{fmt(quote.listPrice)}</s>}<b>{total === null ? "—" : fmt(total)} د.ك</b></span></div>
         {err && <div className="err">{err}</div>}
-        <div style={{ marginTop: 20 }}><button className="cta" disabled={busy}>{busy ? "ثواني…" : total === 0 ? "احصل على الرمز" : "ادفع وابدأ"}</button></div>
+        <div style={{ marginTop: 20 }}><button className="cta" disabled={busy}>{busy ? "ثواني…" : total === 0 ? "احصل على الكود" : "ادفع وابدأ"}</button></div>
         <div className="muted" style={{ marginTop: 12 }}>بالشراء توافقون على <Link href="/terms">الشروط والأحكام</Link> — منتج رقمي، لا استرجاع.</div>
       </form>
       <Footer />

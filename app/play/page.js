@@ -17,7 +17,7 @@ export default function Play() {
     try {
       const r = await fetch("/api/verify", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code: c, device: deviceId() }) });
       const j = await r.json();
-      if (!j.ok) { setBusy(false); return setErr({ not_found: "الرمز غير صحيح", expired: "انتهت صلاحية الرمز", used: "هالرمز مستخدم على جهاز ثاني", format: "اكتبوا الرمز مثل KHD-7342" }[j.reason] || "صار خطأ، جرّبوا مرة ثانية"); }
+      if (!j.ok) { setBusy(false); return setErr({ not_found: "الكود غير صحيح", expired: "انتهت صلاحية الكود", used: "هالكود مستخدم على جهاز ثاني", format: "اكتبوا الكود مثل KHD-7342" }[j.reason] || "صار خطأ، جرّبوا مرة ثانية"); }
       const path = GAMES[j.game] || "/game";
       window.location.href = `${path}#code=${c}`;
     } catch { setBusy(false); setErr("ما قدرنا نتحقق. تأكدوا من الإنترنت"); }
@@ -26,7 +26,7 @@ export default function Play() {
     <main className="wrap">
       <Header />
       <form className="card" onSubmit={go}>
-        <h2>عندكم رمز؟</h2>
+        <h2>عندكم كود؟</h2>
         <p>اكتبوه هنا وبتنتقلون للعبة مباشرة.</p>
         <input placeholder="KHD-7342" value={code} onChange={(e) => { setCode(e.target.value.toUpperCase()); setErr(""); }} style={{ direction: "ltr", textAlign: "center", letterSpacing: 3, fontSize: 24 }} autoCapitalize="characters" autoComplete="off" />
         {err && <p style={{ color: "var(--red2)", marginTop: 10 }}>{err}</p>}

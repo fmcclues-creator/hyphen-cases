@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "عندي رمز",
-  description: "عندكم رمز فريق؟ اكتبوه هنا وندخّلكم على قضيتكم مباشرة.",
+  title: "عندي كود",
+  description: "عندكم كود فريق؟ اكتبوه هنا وندخّلكم على قضيتكم مباشرة.",
   alternates: { canonical: "/play" },
   robots: { index: true, follow: true },
 };

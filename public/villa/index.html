@@ -802,7 +802,7 @@ html.tv body{zoom:1.18}
         <dt>آخر مشاهدة</dt><dd>الاثنين ٩:٣٠ مساءً — بومشعل جالس مع المرحوم في المكتب، والدرج مغلق. الثلاثاء ٧:٢٠ صباحاً — فيصل يفتح الدرج بحضور طلال: <b>فاضي</b>.</dd>
         <dt>سبب الوفاة</dt><dd>طبيعية (قصور قلبي أثناء النوم، نحو ٢:٣٠ فجراً) — تقرير طبيب الإسعاف مرفق. لا شبهة جنائية في الوفاة.</dd>
         <dt>الموجودون بالفيلا ليلة الوفاة</dt><dd>المرحوم، <b>نورة</b> (تسكن معه)، <b>طلال</b> (وصل من لندن ٩:٠٠ م ونام بالصالة). <b>صالح</b> السائق يسكن بغرفة الحارس عند البوابة — غائب تلك الليلة.</dd>
-        <dt>الأجهزة</dt><dd>هاتف المرحوم (أندرويد، مقفول برمز ٤ أرقام). فيصل: «أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ عنده يوم بنينا البيت».</dd>
+        <dt>الأجهزة</dt><dd>هاتف المرحوم (أندرويد، مقفول بكود ٤ أرقام). فيصل: «أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ عنده يوم بنينا البيت».</dd>
         <dt>ملاحظة</dt><dd>المحامي <b>ياسر</b>: الوصية بخط اليد «صحيحة بس بدون شهود». لو ما ظهرت، تنقسم التركة بالتساوي.</dd>
         <dt>المطلوب</dt><dd>منو أخذ الوصية؟ وليش؟ ووين هي الحين؟</dd>
       </dl>
@@ -875,7 +875,7 @@ html.tv body{zoom:1.18}
     <div class="ez-lock">
       <div class="ez-clock">١١:٤٠</div>
       <div class="ez-date">الجمعة · ١٠ أكتوبر</div>
-      <div class="ez-hint">أدخلوا رمز القفل (٤ أرقام)</div>
+      <div class="ez-hint">أدخلوا كود القفل (٤ أرقام)</div>
       <div class="dots ez-dots" id="ldots"><i></i><i></i><i></i><i></i></div>
       <div class="pad ez-pad" id="lpad"></div>
       <div class="pat-msg" id="lockMsg"></div>
@@ -1145,7 +1145,7 @@ function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();s
 $('#goRun').onclick=()=>runStart();$('#goBlow').onclick=()=>blowStart();$('#goRoom').onclick=()=>roomStart();
 
 /* ---- PIN lock ---- */
-keypad($('#lpad'),$('#ldots'),v=>{if(v!==PIN){$('#lockMsg').textContent='رمز غلط';setTimeout(()=>$('#lockMsg').textContent='',900);return false}S.unlocked=true;save();$('#lockMsg').textContent='تم فتح الموبايل ✓';setTimeout(()=>{show('phone');openApp('home')},800);return true});
+keypad($('#lpad'),$('#ldots'),v=>{if(v!==PIN){$('#lockMsg').textContent='كود غلط';setTimeout(()=>$('#lockMsg').textContent='',900);return false}S.unlocked=true;save();$('#lockMsg').textContent='تم فتح الموبايل ✓';setTimeout(()=>{show('phone');openApp('home')},800);return true});
 
 /* ================= PHONE DATA ================= */
 const AV=id=>`<img src="img/p_${id}.jpg" alt="">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
@@ -1561,7 +1561,7 @@ let body='';
 if(cast==='second'){
  body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
   +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
-  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل رمز ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
+  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل كود ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
 }else if(cast==='mirror'){
  body='<div class="a2h"><div class="a2h-d">شغّلوا <b>مشاركة الشاشة</b> (Screen Mirroring) من الموبايل على التلفزيون، واقلبوا الموبايل <b>بالعرض</b>.</div>'
   +'<div class="a2h-t">تبون شريط المتصفح يختفي؟</div>'

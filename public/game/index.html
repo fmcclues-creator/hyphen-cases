@@ -588,7 +588,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="gate">
   <div class="wrap">
     <div class="brand" style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 1010 160" style="width:110px;height:auto"><use href="#wm-use"/></svg><span>CASES</span></div>
-    <h1>رمز الفريق</h1>
+    <h1>كود الفريق</h1>
     <p>اكتبوا الكود اللي وصلكم بعد الشراء، أو من المنظّم.</p><p style="font-size:13px">الكود لفريق واحد: يفتح على ٦ موبايلات، ويخلص بعد ما تنحل القضية.</p>
     <input id="gateIn" placeholder="KHD-7342" maxlength="8" autocomplete="off" autocapitalize="characters">
     <div class="err" id="gateErr"></div>
@@ -766,7 +766,7 @@ html.tv body{zoom:1.18}
       <div class="seg" id="phSeg"><button class="on" data-seg="lib">المكتبة</button><button data-seg="alb">الألبومات</button></div>
       <div class="list"><div class="grid" id="photoGrid"></div><div class="albs" id="albGrid" hidden></div></div></div>
     <div class="app" id="a-album"><div class="ah"><button data-back="photos">‹</button><div id="albTitle"></div></div><div class="list"><div class="grid" id="albPhotos"></div></div></div>
-    <div class="app" id="a-hidlock"><div class="ah"><button data-back="photos">‹</button><div>المخفي</div></div><div class="locked" style="background:#0b0e14;color:#fff"><div style="font-size:44px">🔒</div><b>الألبوم المخفي</b><div class="hint">محمي برمز من ٤ أرقام.<br>خالد ينسى الأرقام… بس منيرة ما تنسى.</div><div class="dots" id="hdots"><i></i><i></i><i></i><i></i></div><div class="pad" id="hpad"></div></div></div>
+    <div class="app" id="a-hidlock"><div class="ah"><button data-back="photos">‹</button><div>المخفي</div></div><div class="locked" style="background:#0b0e14;color:#fff"><div style="font-size:44px">🔒</div><b>الألبوم المخفي</b><div class="hint">محمي بكود من ٤ أرقام.<br>خالد ينسى الأرقام… بس منيرة ما تنسى.</div><div class="dots" id="hdots"><i></i><i></i><i></i><i></i></div><div class="pad" id="hpad"></div></div></div>
     <div class="app" id="a-photo"><div class="ah"><button data-back="photos">‹</button><div id="photoTitle" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div><button class="edbtn" id="edBtn">تعديل</button></div><div class="big"><div class="img" id="photoImg"></div><div class="info" id="photoInfo"></div>
       <div class="editor" id="editor" hidden>
         <div class="edrow"><span>الإضاءة</span><input type="range" id="edEx" min="0" max="100" value="50"><b id="edExV">0</b></div>
@@ -1011,7 +1011,7 @@ const CHATS=[
  {id:'bank',n:'البنك ✓',av:'🏦',last:'٧:١٩ م',u:0,msgs:[
   ['day','٣٠ سبتمبر'],['them','تم تنفيذ التحويل الدوري الشهري من حساب: شركة خالد للمطاعم. للاستفسار راجع الفرع.','٩:٠٠ ص'],
   ['day','الثلاثاء'],['them','عملية شراء ١٢.٠٠٠ د.ك — محطة وقود الشويخ. البطاقة المنتهية بـ٤٤١٢','٤:٠٢ م'],['them','عملية شراء ٠.٧٥٠ د.ك — كافتيريا الكرك. البطاقة المنتهية بـ٤٤١٢','٤:٠٨ م'],
-  ['day','الأربعاء'],['them','رمز التحقق الخاص بك: ٨٣٠٢٩٤. لا تشاركه مع أحد.','٦:٤١ م'],['them','عملية شراء ٣.٧٥٠ د.ك — Talabat. البطاقة المنتهية بـ٤٤١٢','٧:١٩ م']]},
+  ['day','الأربعاء'],['them','كود التحقق الخاص بك: ٨٣٠٢٩٤. لا تشاركه مع أحد.','٦:٤١ م'],['them','عملية شراء ٣.٧٥٠ د.ك — Talabat. البطاقة المنتهية بـ٤٤١٢','٧:١٩ م']]},
  {id:'jazeera',n:'Jazeera Airways ✈️',av:'✈️',last:'الاثنين',u:0,msgs:[
   ['day','الاثنين'],['them','تم تأكيد حجزك: الكويت ← دبي، الجمعة ٣ أكتوبر ٦:١٥ م، مسافرين: ٢. رقم الحجز J9K7PL. رحلة سعيدة!','٢:٤٠ م'],['them','أضف حقيبة إضافية بخصم ٢٠٪ قبل السفر 🧳','٢:٤١ م']]},
  {id:'zain',n:'Zain',av:'📶',last:'الثلاثاء',u:0,msgs:[
@@ -1717,7 +1717,7 @@ let body='';
 if(cast==='second'){
  body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
   +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
-  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل رمز ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
+  +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل كود ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
 }else if(cast==='mirror'){
  body='<div class="a2h"><div class="a2h-d">شغّلوا <b>مشاركة الشاشة</b> (Screen Mirroring) من الموبايل على التلفزيون، واقلبوا الموبايل <b>بالعرض</b>.</div>'
   +'<div class="a2h-t">تبون شريط المتصفح يختفي؟</div>'

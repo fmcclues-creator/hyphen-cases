@@ -25,7 +25,7 @@ export default function Home() {
       </section>
 
       <section className="steps" id="how">
-        <div className="step"><div className="n">١</div><b>اشتروا رمز الفريق</b><span>رمز واحد لكل فريق، يوصلكم فوراً.</span></div>
+        <div className="step"><div className="n">١</div><b>اشتروا كود الفريق</b><span>كود واحد لكل فريق، يوصلكم فوراً.</span></div>
         <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>افتحوا اللعبة من الموبايل واعرضوا الشاشة.</span></div>
         <div className="step"><div className="n">٣</div><b>افتحوا موبايل خالد</b><span>طلّعوا الرقم السري من ملف القضية.</span></div>
         <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>

@@ -1,22 +1,22 @@
 const SITE = "https://cases.hyphen-eventskw.com";
 const PRICE = Number(process.env.PRICE_KWD || 4.75).toFixed(3);
 const DESC =
-  "اشتروا رمز الفريق لقضية خالد — لعبة تحقيق باللهجة الكويتية، ساعة وحدة، لين ٦ موبايلات بنفس الرمز، تنلعب على التلفزيون.";
+  "اشتروا كود الفريق لقضية خالد — لعبة تحقيق باللهجة الكويتية، ساعة وحدة، لين ٦ موبايلات بنفس الكود، تنلعب على التلفزيون.";
 
 export const metadata = {
-  title: "اشترِ رمز الفريق",
+  title: "اشترِ كود الفريق",
   description: DESC,
   alternates: { canonical: "/buy" },
   openGraph: {
     type: "website",
     url: `${SITE}/buy`,
-    title: "قضية خالد · اشترِ رمز الفريق",
+    title: "قضية خالد · اشترِ كود الفريق",
     description: DESC,
     images: [{ url: "/og/og-khalid.png", width: 1200, height: 630, alt: "قضية خالد" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "قضية خالد · اشترِ رمز الفريق",
+    title: "قضية خالد · اشترِ كود الفريق",
     description: DESC,
     images: ["/og/og-khalid.png"],
   },
@@ -27,7 +27,7 @@ const PRODUCT = {
   "@type": "Product",
   name: "قضية خالد — لعبة تحقيق جماعية",
   description:
-    "اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين إيديكم، مقفول. ساعة وحدة، خمسة مشتبهين، ولين ٦ موبايلات بنفس الرمز.",
+    "اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين إيديكم، مقفول. ساعة وحدة، خمسة مشتبهين، ولين ٦ موبايلات بنفس الكود.",
   image: `${SITE}/og/og-khalid.png`,
   brand: { "@type": "Brand", name: "HYPHEN Events" },
   category: "ألعاب جماعية",

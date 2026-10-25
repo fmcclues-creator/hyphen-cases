@@ -8,7 +8,7 @@ export default function Done({ searchParams }) {
   const paid = Number(process.env.PRICE_KWD || 4.75);
   const game = "/game";
   const play = `${game}#code=${code}`;
-  const wa = `https://wa.me/?text=${encodeURIComponent(`رمز فريقنا لقضية خالد: ${code}\n${play}`)}`;
+  const wa = `https://wa.me/?text=${encodeURIComponent(`كود فريقنا لقضية خالد: ${code}\n${play}`)}`;
   return (
     <main className="wrap">
       {!test && <PixelPurchase code={code} value={paid} currency="KWD" />}
@@ -20,12 +20,12 @@ export default function Done({ searchParams }) {
           <a className="cta" href={play} style={{ display: "block", textAlign: "center", fontSize: 22, padding: "18px 24px" }}>ابدأ اللعبة الحين</a>
         </div>
         <div style={{ marginTop: 26, paddingTop: 18, borderTop: "1px solid rgba(255,255,255,.08)" }}>
-          <div className="muted" style={{ marginBottom: 8 }}>رمزكم — احفظوه إذا بتفتحون اللعبة من جهاز ثاني أو يوم ثاني:</div>
+          <div className="muted" style={{ marginBottom: 8 }}>كودكم — احفظوه إذا بتفتحون اللعبة من جهاز ثاني أو يوم ثاني:</div>
           <div className="code" style={{ fontSize: 28 }}>{code}</div>
-          <div className="muted" style={{ marginTop: 8, fontSize: 13 }}>الرمز يشتغل على جهاز واحد بس.</div>
+          <div className="muted" style={{ marginTop: 8, fontSize: 13 }}>الكود يشتغل على جهاز واحد بس.</div>
           {test && <div className="muted">وضع التجربة: ما انخصم شي.</div>}
           <div style={{ marginTop: 14 }}>
-            <a className="cta lite" href={wa}>أرسل الرمز على واتساب</a>
+            <a className="cta lite" href={wa}>أرسل الكود على واتساب</a>
           </div>
         </div>
       </div>

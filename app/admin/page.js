@@ -43,9 +43,9 @@ export default function Admin() {
     alert(JSON.stringify(j, null, 2));
   }
   async function cleanup() {
-    if (!confirm("حذف كل الطلبات التجريبية (TEST) والرموز اللي طلعت منها؟")) return;
+    if (!confirm("حذف كل الطلبات التجريبية (TEST) والأكواد اللي طلعت منها؟")) return;
     const r = await fetch("/api/admin/cleanup", { method: "POST", headers: H }); const j = await r.json();
-    alert(j.ok ? `تم حذف ${j.orders} طلب و ${j.codes} رمز تجريبي` : "صار خطأ"); load();
+    alert(j.ok ? `تم حذف ${j.orders} طلب و ${j.codes} كود تجريبي` : "صار خطأ"); load();
   }
   async function reset(code) {
     const c = (code || resetCode).trim().toUpperCase(); if (!c) return;
@@ -83,7 +83,7 @@ export default function Admin() {
         <h2>الطلبات</h2><button className="btn-sm" onClick={cleanup}>🧹 حذف الطلبات التجريبية</button> <button className="btn-sm" onClick={hesabeCheck}>🩺 فحص بوابة الدفع</button>
         {stats && <p>مدفوع: <b>{stats.paid}</b> · الإيراد: <b>{stats.revenue.toFixed(3)} د.ك</b> · غير مكتمل: {stats.pending}</p>}
         {orders.length === 0 ? <p className="muted">ما فيه طلبات بعد.</p> : (
-          <table><thead><tr><th>التاريخ</th><th>الموبايل</th><th>الإيميل</th><th>المبلغ</th><th>كود خصم</th><th>الدفع</th><th>الحالة</th><th>الرمز</th><th>الاستخدام</th></tr></thead>
+          <table><thead><tr><th>التاريخ</th><th>الموبايل</th><th>الإيميل</th><th>المبلغ</th><th>كود خصم</th><th>الدفع</th><th>الحالة</th><th>الكود</th><th>الاستخدام</th></tr></thead>
             <tbody>{orders.map((o) => <tr key={o.id}>
               <td style={{ whiteSpace: "nowrap" }}>{new Date(o.created_at).toLocaleString("ar-KW", { dateStyle: "short", timeStyle: "short" })}</td>
               <td className="mono">{o.phone || "—"}</td><td className="mono" style={{ fontSize: 12 }}>{o.email || "—"}</td>
@@ -115,23 +115,23 @@ export default function Admin() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
           <div><label>العدد</label><input type="number" value={count} onChange={(e) => setCount(e.target.value)} /></div>
           <div><label>صلاحية (أيام)</label><input type="number" value={days} onChange={(e) => setDays(e.target.value)} /></div>
-          <div><label>أجهزة لكل رمز</label><input type="number" value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></div>
+          <div><label>أجهزة لكل كود</label><input type="number" value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></div>
           <div><label>القضية</label><select value={game} onChange={(e) => setGame(e.target.value)}><option value="khalid">قضية خالد</option><option value="shaleh">قضية الشاليه</option><option value="villa">قضية الفيلا</option></select></div>
         </div>
         <label>ملاحظة (اسم الفعالية)</label><input value={note} onChange={(e) => setNote(e.target.value)} />
-        <div style={{ marginTop: 18 }}><button className="cta" onClick={gen}>ولّد الرموز</button></div>
+        <div style={{ marginTop: 18 }}><button className="cta" onClick={gen}>ولّد الأكواد</button></div>
         {made.length > 0 && <pre className="code" style={{ fontSize: 20, textAlign: "left" }}>{made.join("\n")}</pre>}
       </div>
 
       <div className="card">
         <h2>تصفير جهاز</h2>
-        <p>إذا مشتري غيّر موبايله أو مسح بياناته، صفّروا رمزه عشان يفتح من جهاز جديد.</p>
+        <p>إذا مشتري غيّر موبايله أو مسح بياناته، صفّروا كوده عشان يفتح من جهاز جديد.</p>
         <div className="promo"><input placeholder="KHD-7342" value={resetCode} onChange={(e) => setResetCode(e.target.value.toUpperCase())} /><button type="button" onClick={() => reset()}>صفّر</button></div>
       </div>
 
       <div className="card">
         <h2>أكواد الخصم</h2>
-        <p>نسبة مئوية، أو مبلغ ثابت بالدينار (يُستخدم إذا النسبة = ٠). كود بخصم ١٠٠٪ يعطي رمزاً مجانياً بدون دفع.</p>
+        <p>نسبة مئوية، أو مبلغ ثابت بالدينار (يُستخدم إذا النسبة = ٠). كود بخصم ١٠٠٪ يعطي كوداً مجانياً بدون دفع.</p>
         <label>الكود</label><input placeholder="RAMADAN" value={pf.code} onChange={(e) => setPf({ ...pf, code: e.target.value.toUpperCase() })} style={{ direction: "ltr", textAlign: "left" }} />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
           <div><label>نسبة ٪</label><input type="number" value={pf.percent} onChange={(e) => setPf({ ...pf, percent: e.target.value })} /></div>
@@ -150,8 +150,8 @@ export default function Admin() {
 
       {codes.length > 0 && (
         <div className="card" style={{ maxWidth: 960 }}>
-          <h2>آخر الرموز</h2>
-          <table><thead><tr><th>الرمز</th><th>القضية</th><th>الاستخدام</th><th>ينتهي</th><th>ملاحظة</th><th></th></tr></thead>
+          <h2>آخر الأكواد</h2>
+          <table><thead><tr><th>الكود</th><th>القضية</th><th>الاستخدام</th><th>ينتهي</th><th>ملاحظة</th><th></th></tr></thead>
             <tbody>{codes.map((c) => <tr key={c.code}><td className="mono">{c.code}</td><td>{c.game === "shaleh" ? "الشاليه" : c.game === "villa" ? "الفيلا" : "خالد"}</td><td>{c.uses}/{c.max_uses}</td><td>{new Date(c.expires_at).toLocaleDateString("ar-KW")}</td><td>{c.note || (c.order_id ? "شراء" : "")}</td><td>{c.uses > 0 && <button className="btn-sm" onClick={() => reset(c.code)}>صفّر</button>}</td></tr>)}</tbody>
           </table>
         </div>
