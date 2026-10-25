@@ -720,7 +720,7 @@ html.tv body{zoom:1.18}
       <h2>تسجيل صوتي وصل منيرة</h2>
       <div class="letter" style="margin-top:6px">هذا وصلني الساعة ١١:٥٠ بالليل، من رقم ما أعرفه، بعد ما ناصر بلّغ الشرطة. الصوت مو طبيعي… مو صوت إنسان. حوّلته لكم على طول.<br><br></div>
       <div class="rec">
-        <div style="display:flex;justify-content:space-between;font-family:var(--ui);font-size:13px;color:var(--paper-muted)"><span>رقم مجهول · الأربعاء ١١:٥٠ م</span><span>٠:١٦</span></div>
+        <div style="display:flex;justify-content:space-between;font-family:var(--ui);font-size:13px;color:var(--paper-muted)"><span>رقم مجهول · الأربعاء ١١:٥٠ م</span><span id="durR">٠:١٦</span></div>
         <div class="wave" id="wR"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="tx" id="txR"></div>
         <button class="pl" id="plR">▶ تشغيل</button>
@@ -1328,6 +1328,14 @@ $$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.cla
 $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
 $('#backPhone').onclick=()=>show('phone');
 $('#toFile1').onclick=$('#toFile2').onclick=()=>show('file');
+
+/* the length on the card comes from the file, so re-recording it can't leave
+   the label lying about how long the message is */
+(function(){const a=$('#au-ransom'),d=$('#durR');if(!a||!d)return;
+  const set=()=>{if(a.duration&&isFinite(a.duration)){
+    const t=Math.round(a.duration);
+    d.textContent=AR(Math.floor(t/60))+':'+AR(String(t%60).padStart(2,'0'))}};
+  a.addEventListener('loadedmetadata',set);set()})();
 
 /* ransom recording in the case file */
 $('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='خالد عندنا، واهوا بخير. إذا تمت الصفقة يوم الخميس، ما راح يرجع. لا تتصلون بالشرطة، ولا تدورون عليه. انطروا تعليماتنا.';
