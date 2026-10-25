@@ -1338,7 +1338,7 @@ $('#toFile1').onclick=$('#toFile2').onclick=()=>show('file');
   a.addEventListener('loadedmetadata',set);set()})();
 
 /* ransom recording in the case file */
-$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='خالد عندنا، واهوا بخير. إذا تمت الصفقة يوم الخميس، ما راح يرجع. لا تتصلون بالشرطة، ولا تدورون عليه. انطروا تعليماتنا.';
+$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='خالد عندنا، واهوا بخير. عارفين إنكم بلّغتوا الشرطة. ما يهم. إذا تمت الصفقة يوم الخميس، ما راح يرجع. لا تدورون عليه. انطروا تعليماتنا.';
   if(w.classList.contains('play')){a.pause();a.currentTime=0;w.classList.remove('play');b.textContent='🔁 إعادة';tx.textContent=T;return}
   w.classList.add('play');b.textContent='⏹ إيقاف';tx.textContent='';const words=T.split(' ');let n=0,step=500;const go=()=>{if(a.duration&&isFinite(a.duration))step=Math.max(150,(a.duration*1000-600)/words.length)};go();a.onloadedmetadata=go;
   a.currentTime=0;a.onended=()=>{clearInterval(iv);w.classList.remove('play');b.textContent='🔁 إعادة';tx.textContent=T};a.play().catch(()=>{});
