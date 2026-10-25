@@ -1145,7 +1145,7 @@ const PHOTOS=[
  {id:'will_corner',n:'IMG_0471',info:'الأحد ٥:٢٠ م · المكتب',cap:'الصورة اللي أرسلتها لياسر. زاوية الورقة بس.',lens:1},
  {id:'cam_0614',n:'كاميرا المدخل',info:'الثلاثاء ٦:١٤ ص · حُفظت تلقائياً من تطبيق الكاميرا',cap:'شخص بعباة يطلع من البيت للملحق… حامل ورقة مطوية على صدره.',cam:1},
  {id:'cam_0702',n:'كاميرا المدخل',info:'الثلاثاء ٧:٠٢ ص · حُفظت تلقائياً',cap:'فيصل وعبير وبومشعل وصالح يوصلون مع بعض.'},
- {id:'p_bufaisal',n:'آنا',info:'١٩٩٤ · المجلس',cap:'يوم كنت أصغر.'}];
+ {id:'p_bufaisal',n:'آنا',info:'١٩٩٤ · الديوانية',cap:'يوم كنت أصغر.'}];
 const NOTES=[
  {id:'meds',t:'أدويتي',d:'الأربعاء',body:'الضغط: الصبح والمغرب\nالسكر: بعد الغدا\nحبة القلب: ١١ بالليل — نورة تذكّرني'},
  {id:'album',t:'ألبوم الصور',d:'قبل شهر',body:'ألبوم الصور بغرفتي القديمة بالملحق.\nإذا صار لي شي، أول شي يفتحونه مع بعض.\nكل الصور فيه… وكل شي.'},
@@ -1249,7 +1249,7 @@ function roomStart(){show('room');$('#roomTip').textContent=S.album?'✅ الأ�
 $('#roomstage').onclick=e=>{if(e.currentTarget.dataset.moved)return;const h=e.target.closest('.hot');if(!h)return;const k=h.dataset.h;if(k==='albums'){SFX.found();albumOpen();return}S.roomTries++;if(S.roomTries%3===0){S.pen+=60;save();SFX.bad();$('#roomTip').textContent=HOT[k]+' (+٦٠ ثانية — ارجعوا للملاحظة بالموبايل)'}else{SFX.del();$('#roomTip').textContent=HOT[k]}};
 
 /* ---- ALBUM ---- */
-const PAGES=[{img:'p_bufaisal',cap:'١٩٩٤ — المجلس'},{img:'villa',cap:'الفيلا يوم كملت'},{img:'cam_0702',cap:'(صورة قديمة للعايلة عند البوابة)'},{img:'eid',cap:'العيد الماضي — الكل',lift:1},{img:'annex',cap:'غرفتي الأولى'}];
+const PAGES=[{img:'p_bufaisal',cap:'١٩٩٤ — الديوانية'},{img:'villa',cap:'الفيلا يوم كملت'},{img:'cam_0702',cap:'(صورة قديمة للعايلة عند البوابة)'},{img:'eid',cap:'العيد الماضي — الكل',lift:1},{img:'annex',cap:'غرفتي الأولى'}];
 let PG=0;
 function albumOpen(){show('album');PG=0;paintAlbum()}
 function paintAlbum(){const p=PAGES[PG];const found=S.album;$('#albumPage').innerHTML=`<div class="albumphoto${p.lift?' lift':''}" id="albPhoto">${IMG(p.img)}<div class="cap">${p.cap}</div></div>`+(p.lift&&found?`<div class="albumfound">${IMG('album_will')}<b>الوصية — وراء صورة العيد</b></div>`:'');$('#albNo').textContent=`صفحة ${AR(PG+1)} / ${AR(PAGES.length)}`;$('#albMsg').textContent=p.lift&&!found?'هالصفحة أثقل من غيرها… اضغطوا الصورة.':'قلّبوا الصفحات.';

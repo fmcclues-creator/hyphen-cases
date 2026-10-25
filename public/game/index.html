@@ -664,7 +664,7 @@ html.tv body{zoom:1.18}
     <div id="t2" hidden>
       <h2>رسالة من منيرة، زوجة خالد</h2>
       <div class="letter">
-        الله يخليكم، دوروا لي على خالد. أنا ما نمت من البارحة.<br>
+        الله يخليكم، دوروا لي على خالد. أنا ما نمت من امس.<br>
         ناصر ولد خالتي هو اللي راح المكتب ولقى الموبايل وبلّغ. الموبايل اللي بين يديكم هو كل اللي عندنا.<br>
         جبت لكم من البيت كل شي ممكن يفيدكم: صورة من بطاقته المدنية، دعوة عرسنا، شهادة ميلاد سارة، وقصاصة الجريدة اللي معلّقها في مكتبه من يوم فتح أول فرع.<br>
         خالد كل شهر يغيّر رقمه السري، اهوا جذي من زمان، دايماً يخاف أحد يدخل على شغله وأسراره بالشغل. ويقول إن الرقم لازم يكون شي صعب. مادري عنه صراحتا.<br>
@@ -851,7 +851,7 @@ html.tv body{zoom:1.18}
         <div class="bill"><div class="bh"><span>وزارة الكهرباء والماء والطاقة المتجددة</span><span>كشف استهلاك</span></div>
           <div class="br"><span>العنوان</span><b>الشويخ الصناعية · ق٣ · قسيمة ١٢ (مخزن)</b></div>
           <div class="br"><span>اسم المشترك</span><b>ناصر — عن مجموعة مطاعم خالد</b></div>
-          <div class="br"><span>الفترة</span><b>سبتمبر ٢٠٢٦</b></div>
+          <div class="br"><span>الفترة</span><b>سبتمبر ٢٠٢٥</b></div>
           <div class="br"><span>الاستهلاك</span><b><mark>١,١٨٠ ك.و.س</mark></b></div>
           <div class="br"><span>آخر ٣ أشهر</span><b>٩٨٠ · ١,٠٥٠ · ١,١٨٠</b></div>
           <div class="br"><span>المبلغ</span><b>٢٣٫٦٠٠ د.ك — مدفوع (كي نت)</b></div></div>
@@ -1029,7 +1029,7 @@ const CHATS=[
 ];
 
 const IGDM=[
- {id:'abdul',n:'abdulrahman.restaurants',av:'p:abdul',u:1,msgs:[['day','الثلاثاء'],['them','سمعت عن الخميس 👀 مبروك مقدماً يا بو عبدالله','٦:١٠ م'],['me','منو قال لك؟','٦:١٢ م'],['them','ناصر، البارحة بالديوانية. ليش، سر؟ 😅','٦:١٣ م']]},
+ {id:'abdul',n:'abdulrahman.restaurants',av:'p:abdul',u:1,msgs:[['day','الثلاثاء'],['them','سمعت عن الخميس 👀 مبروك مقدماً يا بو عبدالله','٦:١٠ م'],['me','منو قال لك؟','٦:١٢ م'],['them','ناصر، امس بالديوانية. ليش، سر؟ 😅','٦:١٣ م']]},
  {id:'nasser',n:'nasir_q8.kw',av:'p:nasser',u:0,msgs:[['day','قبل أسبوعين'],['them','شوف المخزن القديم بالشويخ. أبي أرجّعه شغّال بعد الصفقة، مخزن مركزي للفروع','٣:٤٠ م','warehouse'],['me','ليش لين الحين ندفع إيجاره وهو فاضي؟','٣:٥٥ م'],['them','عشان ما نخسر الموقع 😄 خلّها علي','٤:٠٠ م']]},
  {id:'cust1',n:'noura.alq8',av:'👩',u:0,msgs:[['day','الاثنين'],['them','طلبنا من فرع السالمية والبرقر وصل بارد 😕','٨:٠٠ م'],['me','أعتذر منك، طرّشي لي رقم الطلب والمرة الياية علينا 🙏','٨:١٥ م'],['them','شكراً 🙏','٨:٢٠ م']]},
  {id:'cust2',n:'bader_eats',av:'🧢',u:0,msgs:[['day','الأسبوع الماضي'],['them','أحسن مجبوس بالكويت والله 🔥🔥','١١:٠٠ م'],['me','تسلم يا بدر ❤️','١١:٣٠ م']]},
@@ -1330,7 +1330,7 @@ $('#backPhone').onclick=()=>show('phone');
 $('#toFile1').onclick=$('#toFile2').onclick=()=>show('file');
 
 /* ransom recording in the case file */
-$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='إلى عائلة خالد. خالد عندنا وهو بخير. إذا تم توقيع الصفقة يوم الخميس، لن يرجع. لا تتصلوا بالشرطة ولا تدوّرون. انتظروا تعليماتنا.';
+$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='خالد عندنا، واهوا بخير. إذا تمت الصفقة يوم الخميس، ما راح يرجع. لا تتصلون بالشرطة، ولا تدورون عليه. انطروا تعليماتنا.';
   if(w.classList.contains('play')){a.pause();a.currentTime=0;w.classList.remove('play');b.textContent='🔁 إعادة';tx.textContent=T;return}
   w.classList.add('play');b.textContent='⏹ إيقاف';tx.textContent='';const words=T.split(' ');let n=0,step=500;const go=()=>{if(a.duration&&isFinite(a.duration))step=Math.max(150,(a.duration*1000-600)/words.length)};go();a.onloadedmetadata=go;
   a.currentTime=0;a.onended=()=>{clearInterval(iv);w.classList.remove('play');b.textContent='🔁 إعادة';tx.textContent=T};a.play().catch(()=>{});
