@@ -734,6 +734,40 @@ html.tv body{zoom:1.18}
 .padlock.open .lbody{box-shadow:0 18px 34px rgba(0,0,0,.55),
   inset 0 2px 0 rgba(255,255,255,.45),inset 0 -3px 6px rgba(0,0,0,.35),
   0 0 0 3px rgba(58,163,106,.6)}
+
+/* ---------- the chalet plan ---------- */
+.mp-plan{width:100%;height:auto;display:block;margin:12px 0 10px;
+  border-radius:12px;background:#f6f1e4;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.mp-yard{fill:url(#mpSand)}
+.mp-wall{fill:none;stroke:#7a6a4d;stroke-width:3}
+.mp-gate{stroke:#b4442e;stroke-width:5;stroke-linecap:round}
+.mp-bld{fill:#e6dcc6;stroke:#8c7a57;stroke-width:2}
+.mp-room{fill:#fbf7ec;stroke:#a8956f;stroke-width:1.5}
+.mp-hall{fill:#ece3cf;stroke:#a8956f;stroke-width:1.5}
+.mp-table,.mp-safe{fill:#d8c79c;stroke:#8c7a57;stroke-width:1.5}
+.mp-pool{fill:#bcdbe4;stroke:#7fa9b5;stroke-width:1.5}
+.mp-car rect{fill:#dcd3bd;stroke:#8c7a57;stroke-width:1.5}
+.mp-door{stroke:#b4442e;stroke-width:3;stroke-linecap:round}
+.mp-road{stroke:#c3b795;stroke-width:6;stroke-linecap:round;stroke-dasharray:14 9}
+.mp-rm,.mp-sm,.mp-off{fill:#5c4f36;text-anchor:middle;direction:rtl;
+  font-family:inherit;font-weight:700}
+.mp-rm{font-size:13px}
+.mp-sm{font-size:10.5px;fill:#7a6a4d;font-weight:500}
+.mp-off{font-size:11px;fill:#9a8a66;font-weight:500}
+.mp-pin{cursor:pointer}
+.mp-pin circle:not(.mp-hit){fill:#b4442e;stroke:#fff;stroke-width:2.5}
+.mp-pin .mp-hit{fill:transparent;stroke:none}
+.mp-pin text{fill:#fff;font-size:13px;font-weight:800;text-anchor:middle;
+  dominant-baseline:central;pointer-events:none}
+.mp-pin.shut circle:not(.mp-hit){fill:#b3aa96}
+.mp-pin.on circle:not(.mp-hit){stroke:#1b2a1f;stroke-width:3.5}
+.mp-card{background:var(--paper,#fbf7ec);border:1px solid rgba(0,0,0,.14);
+  border-radius:12px;padding:12px 14px;min-height:72px}
+.mp-card h4{margin:0 0 6px;font-size:15px}
+.mp-card .mp-row{display:flex;gap:8px;padding:4px 0;align-items:flex-start;
+  border-top:1px dashed rgba(0,0,0,.12)}
+.mp-card .mp-row:first-of-type{border-top:0}
+.mp-card .mp-t{flex:none;font-weight:800;color:#b4442e;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -804,7 +838,7 @@ html.tv body{zoom:1.18}
     <button data-tab="t3">الأدلة</button>
     <button data-tab="t4">الأشخاص</button>
     <button data-tab="t5">المقابلات</button>
-    <button data-tab="t6">🚓 الميدان</button>
+    <button data-tab="t7">🗺️ مخطط الشاليه</button><button data-tab="t6">🚓 الميدان</button>
   </div>
   <div class="paper">
     <div id="t1">
@@ -861,7 +895,76 @@ html.tv body{zoom:1.18}
         <div class="iv"><div class="ivh"><img src="img/p_mona.jpg" alt=""><div><b>منى</b><small>زوجة سعد · ٠:١٩</small></div></div><video playsinline controls preload="none" poster="video/iv_mona.jpg" src="video/iv_mona.mp4"></video></div>
       </div>
     </div>
-    <div id="t6" hidden>
+    <div id="t7" hidden>
+  <h2>مخطط الشاليه</h2>
+  <div class="h">شاليه أم خالد · الخيران · قطعة ٤ · شاليه ٤٢. اضغطوا أي رقم بالمخطط
+  وبيطلع لكم اللي صار فيه وبأي وقت. الأرقام الرمادية ما وصلتوا لها بعد.</div>
+  <svg class="mp-plan" id="mpPlan" viewBox="0 0 400 540" role="img"
+       aria-label="مخطط شاليه أم خالد">
+    <defs>
+      <pattern id="mpSand" width="14" height="14" patternUnits="userSpaceOnUse">
+        <rect width="14" height="14" fill="#efe6d4"/>
+        <circle cx="4" cy="5" r="1" fill="#e0d4bb"/><circle cx="10" cy="11" r="1" fill="#e0d4bb"/>
+      </pattern>
+    </defs>
+
+    <!-- the road and what lies off the plot -->
+    <text class="mp-off" x="200" y="16">طريق الخيران</text>
+    <path class="mp-road" d="M14 26 H386"/>
+    <text class="mp-off" x="92" y="45">الجمعية ←</text>
+    <text class="mp-off" x="312" y="45">→ المخازن</text>
+
+    <!-- the plot -->
+    <rect class="mp-wall" x="12" y="52" width="376" height="470" rx="6"/>
+    <rect class="mp-yard" x="12" y="52" width="376" height="470" rx="6"/>
+
+    <!-- the gate -->
+    <path class="mp-gate" d="M150 52 H250"/>
+    <text class="mp-rm" x="200" y="92">البوابة</text>
+
+    <!-- the courtyard and the two cars -->
+    <text class="mp-rm" x="200" y="188">الحوش · المواقف</text>
+    <g class="mp-car"><rect x="52" y="124" width="76" height="40" rx="7"/>
+      <text class="mp-sm" x="90" y="149">كامري</text></g>
+    <g class="mp-car"><rect x="262" y="124" width="84" height="40" rx="7"/>
+      <text class="mp-sm" x="304" y="149">لاند كروزر</text></g>
+
+    <!-- the building -->
+    <rect class="mp-bld" x="28" y="204" width="344" height="252" rx="5"/>
+    <rect class="mp-room" x="36" y="212" width="328" height="78" rx="4"/>
+    <text class="mp-rm" x="200" y="246">الصالة</text>
+    <rect class="mp-table" x="166" y="252" width="68" height="26" rx="4"/>
+    <text class="mp-sm" x="200" y="269">الطاولة</text>
+
+    <!-- the corridor -->
+    <rect class="mp-hall" x="36" y="298" width="328" height="34" rx="4"/>
+    <text class="mp-rm" x="200" y="320">ممر الغرف</text>
+
+    <!-- the rooms off it -->
+    <rect class="mp-room" x="36" y="340" width="104" height="108" rx="4"/>
+    <text class="mp-rm" x="92" y="380">غرفة الجدّة</text>
+    <rect class="mp-safe" x="62" y="392" width="52" height="34" rx="4"/>
+    <text class="mp-sm" x="88" y="413">التيجوري</text>
+    <path class="mp-door" d="M88 340 v-8"/>
+
+    <rect class="mp-room" x="150" y="340" width="100" height="108" rx="4"/>
+    <text class="mp-rm" x="204" y="392">غرفة جويس</text>
+    <path class="mp-door" d="M200 340 v-8"/>
+
+    <rect class="mp-room" x="260" y="340" width="104" height="108" rx="4"/>
+    <text class="mp-rm" x="312" y="372">الديوانية</text>
+    <text class="mp-rm" x="312" y="392">وغرف</text>
+    <path class="mp-door" d="M312 340 v-8"/>
+
+    <!-- the pool, and the sea beyond it -->
+    <rect class="mp-pool" x="130" y="472" width="140" height="38" rx="18"/>
+    <text class="mp-sm" x="200" y="496">المسبح</text>
+
+    <g id="mpPins"></g>
+  </svg>
+  <div class="mp-card" id="mpCard"><div class="h">اضغطوا رقم بالمخطط.</div></div>
+</div>
+<div id="t6" hidden>
       <h2>🚓 الميدان</h2>
       <p class="note-tech">لما تعرفون وين راح الذهب، الدورية تروح. هذا اللي يصير هناك.</p>
       <div class="field" id="fieldBox">
@@ -1126,7 +1229,7 @@ const NARR_T=['الجمعة، ٣ أكتوبر. شاليه أم خالد، الخ
 function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(_callIv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*1900+1800;const step=Math.max(1500,(total-1200)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else{clearInterval(_callIv)}},step);if(a){a.onended=()=>setTimeout(end,1200)}setTimeout(end,total+2500);$('#narrSkip').onclick=end}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
 $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})));
-$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));['t1','t2','t3','t4','t5','t6'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();['t1','t2','t3','t4','t5','t6','t7'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
 $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
 $('#toFile1').onclick=$('#toFile2').onclick=$('#doorBack').onclick=()=>show('file');
 $('#backToPhone').onclick=()=>show('phone');
@@ -1149,8 +1252,65 @@ const EV=[
 $('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><figcaption><b>${e.n}</b></figcaption></figure>`).join('');
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);sheet(`<h3>${ev.n}</h3><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`)};
 
+/* ---- the plan's pins: each one says only what the evidence says ---- */
+const MPINS=[
+ {n:1,x:200,y:66,t:'البوابة · كاميرا',need:null,
+  rows:[['١٢:٣١ ص','كامري رضا تطلع من البوابة.'],
+        ['٣:٠٢ ص','اللاند كروزر البيضا تطلع.'],
+        ['٤:٣٣ ص','اللاند كروزر ترجع.']],
+  note:'الكاميرا تصوّر البوابة بس — اللي يتمشّى داخل السور ما ينصوّر.'},
+ {n:2,x:60,y:180,t:'الحوش · المواقف',need:'torch1',
+  rows:[['١١:٣٦ م','سناب فهد: رضا وشخص ثاني عند اللاند كروزر — تيشيرت أسود وساعة ذهب تلمع. وجهه ما يبين.']],
+  note:'رضا قال إنه كان نايم.'},
+ {n:3,x:326,y:236,t:'الصالة · الطاولة',need:null,
+  rows:[['٨:٣٠ م','الطقم كامل على الطاولة جدّام العايلة كلها. آخر مرة ينشاف.'],
+        ['بعد العشا','الجدّة ترجّع الذهب للتيجوري.']]},
+ {n:4,x:60,y:315,t:'ممر الغرف · كاميرا',need:null,
+  rows:[['٢:٣٥ ص','شخص قصير، قميص فاتح، يدخل غرفة الجدّة. راسه <b>تحت</b> اللوحة. الصورة ضبابية.'],
+        ['٣:٠٦ ص','جويس بالممر وبإيدها شي — كوب؟ الصورة مو واضحة.']],
+  note:'هذا الدليل اللي اتهموا جويس فيه.'},
+ {n:5,x:52,y:356,t:'غرفة الجدّة · التيجوري',need:null,
+  rows:[['عند الباب','اللوحة النحاسية مثبّتة على ارتفاع ١٧٠ سم.'],
+        ['٧:٣٥ ص','التيجوري فاضي. لا كسر ولا خدوش — انفتح بمفتاح.']],
+  note:'اللي مرّ تحت اللوحة أقصر من ١٧٠ سم.'},
+ {n:6,x:166,y:356,t:'غرفة جويس',need:null,
+  rows:[['٧:٥٠ ص','ظرف فيه ٢٠٠ دينار. منى تقول «لقته»، والجدّة تقول هي اللي عطته.']]},
+ {n:7,x:40,y:40,t:'برّا الشاليه · الطريق',need:null,
+  rows:[['١٢:٤٨ ص','إيصال جمعية الخيران — ثلج ×٤، ماي ×٢. بطاقة رضا.'],
+        ['٣:٠٧ ص','رادار طريق الخيران كم ١٢٫٤ — لاند كروزر بيضا، ٩٤ كم/س، الاتجاه شمال.']],
+  note:'شمال معناها طالعة من الخيران، مو داخلة.'},
+ {n:8,x:350,y:40,t:'مخازن Easy Storage · مبنى B',need:'seenStorage',
+  rows:[['الوحدة','B-17 — قفل بأربع عجلات، والكهرباء مقطوعة.'],
+        ['الكود','بعقد الإيجار اللي وصل صورة لموبايل بوعبدالعزيز… بس الصورة تالفة.']]}
+];
+function mpOpen(p){
+  const c=$('#mpCard');
+  $$('#mpPins .mp-pin').forEach(g=>g.classList.toggle('on',+g.dataset.n===p.n));
+  if(p.need&&!S[p.need]){
+    c.innerHTML='<div class="h">هذا المكان ما وصلتوا له بعد. كمّلوا وبينفتح.</div>';
+    return;
+  }
+  c.innerHTML=`<h4>${p.t}</h4>`
+    +p.rows.map(r=>`<div class="mp-row"><span class="mp-t">${r[0]}</span><span>${r[1]}</span></div>`).join('')
+    +(p.note?`<div class="h" style="margin-top:8px">${p.note}</div>`:'');
+}
+function mpDraw(){
+  const host=$('#mpPins');if(!host)return;
+  host.innerHTML=MPINS.map(p=>
+    `<g class="mp-pin${p.need&&!S[p.need]?' shut':''}" data-n="${p.n}" tabindex="0" role="button">
+       <circle class="mp-hit" cx="${p.x}" cy="${p.y}" r="22"></circle>
+       <circle cx="${p.x}" cy="${p.y}" r="13"></circle>
+       <text x="${p.x}" y="${p.y}">${p.need&&!S[p.need]?'؟':AR(p.n)}</text>
+     </g>`).join('');
+  host.querySelectorAll('.mp-pin').forEach(g=>{
+    const p=MPINS.find(x=>x.n===+g.dataset.n);
+    g.onclick=()=>mpOpen(p);
+    g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();mpOpen(p)}};
+  });
+}
+
 /* ---- field tab ---- */
-function refreshField(){$('#fieldLocked').hidden=!!S.seenStorage;$('#fieldOpen').hidden=!S.seenStorage;$('#goCorridor').hidden=!!S.corridor;$('#fieldChase').hidden=!(S.corridor&&!S.chase);$('#fieldDoor').hidden=!S.chase;$('#goDoor').hidden=!!S.door;$('#fieldFound').hidden=!S.door;if(S.seenStorage)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
+function refreshField(){try{mpDraw()}catch(e){}$('#fieldLocked').hidden=!!S.seenStorage;$('#fieldOpen').hidden=!S.seenStorage;$('#goCorridor').hidden=!!S.corridor;$('#fieldChase').hidden=!(S.corridor&&!S.chase);$('#fieldDoor').hidden=!S.chase;$('#goDoor').hidden=!!S.door;$('#fieldFound').hidden=!S.door;if(S.seenStorage)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
 $('#goCorridor').onclick=()=>torchStart('corridor');$('#goChase').onclick=()=>runStart();$('#goDoor').onclick=()=>show('door');
 
 /* ---- pattern lock ---- */
@@ -1287,7 +1447,7 @@ let T=null;
 function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
   if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
 function mark(s){$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${s.x}%;top:${s.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$$('.tabs button')[5].click();if(!S.chase)setTimeout(runStart,500)}else{show('phone')}T=null}
+function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$('.tabs button[data-tab=t6]').click();if(!S.chase)setTimeout(runStart,500)}else{show('phone')}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
@@ -1409,7 +1569,7 @@ function renderTimeline(){const ok=!!S.timeline;const ord=ok?[0,1,2,3,4,5,6]:tlO
 /* ---- CHASE: run in place ---- */
 const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,rising:false};
 function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();tvCfg().then(c=>{const b=$('#runTvBox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#runTvCode').textContent=tvRoom();$('#runTvSt').textContent=TV.live?'✅ التلفزيون متصل':'بانتظار التلفزيون…';tvConnect()}});runTv('idle');if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ مسكتوه. عبدالله — «الجنطة مو مالتي».</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit}}
-function runExit(){runTv('bye');runStop();show('file');$$('.tabs button')[5].click();refreshField()}
+function runExit(){runTv('bye');runStop();show('file');$('.tabs button[data-tab=t6]').click();refreshField()}
 $('#runBack').onclick=runExit;
 let _runSent=0;
 function runTv(state){if(!TV.live)return;const now=Date.now();if(state==='run'&&now-_runSent<250)return;_runSent=now;tvSend('run',{state,t:RUN.t,steps:RUN.steps,need:RUN.need});}
