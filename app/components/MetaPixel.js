@@ -4,8 +4,9 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-// "HYPHEN Cases" dataset, owned by the findmyclues business portfolio.
-export const PIXEL_ID = "2541273796376071";
+// "HYPHEN Cases Website" dataset, owned by the hyphen.cases business portfolio
+// (same portfolio as the hyphen.cases ad account, so ads can use its data).
+export const PIXEL_ID = "970720322267744";
 
 /**
  * Meta pixel base code. The snippet fires the first PageView itself; this
