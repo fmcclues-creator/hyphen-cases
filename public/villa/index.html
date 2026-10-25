@@ -700,6 +700,26 @@ html.tv body{zoom:1.18}
 #prog.open .tlln.many::-webkit-scrollbar{display:none}
 #prog.open .tlln.many .tlstep{width:30px}
 #prog.open .tlln.many .tlseg{flex:0 0 42px}
+
+/* ---------- the plaque is scratched off with a coin ---------- */
+.blowsrc{display:none}
+/* .blowimg turns pointer events off for the two plaque photos; the dust layer
+   is the one thing here you are meant to touch */
+.blowcv{touch-action:none;cursor:none;pointer-events:auto}
+.scoin{position:absolute;width:46px;height:46px;border-radius:50%;pointer-events:none;
+  left:0;top:0;transform:translate(-50%,-50%);z-index:3;
+  background:
+    radial-gradient(circle at 36% 30%,#fff6d8 0 8%,#e7cb86 32%,#b9975a 58%,#8a6d3a 82%,#6b5329 100%);
+  box-shadow:0 3px 8px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,248,220,.55),
+             inset 0 -3px 6px rgba(0,0,0,.35);
+  transition:transform .12s}
+.scoin::after{content:'';position:absolute;inset:4px;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(0,0,0,.16) 0 3deg,transparent 3deg 7deg);
+  opacity:.5}
+.scoin[hidden]{display:none}
+.scoin.rub{transform:translate(-50%,-50%) scale(.9)}
+.scoin.big{position:static;display:inline-block;width:30px;height:30px;
+  transform:none;vertical-align:-8px;margin-inline-end:8px}
 </style>
 </head>
 <body>
@@ -937,9 +957,11 @@ html.tv body{zoom:1.18}
   <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="blowBack">‹ رجوع</button></div>
   <div class="blowstage" id="blowstage">
     <img src="img/plaque_clean.jpg" alt="" class="blowimg" id="blowClean" draggable="false">
-    <img src="img/plaque_dust.jpg" alt="" class="blowimg blowdust" id="blowDust" draggable="false">
+    <img src="img/plaque_dust.jpg" alt="" class="blowsrc" id="blowDust" draggable="false">
+    <canvas class="blowimg blowcv" id="blowCv"></canvas>
+    <div class="scoin" id="scoin" hidden></div>
     <div class="blowkey" id="blowKey" hidden>🔑</div>
-    <div class="tintro" id="blowIntro"><div class="h">اللوحة فوق الباب مغطّاة تراب. <b>انفخوا على الموبايل</b> (قرّبوه من فمكم) لين ينشال التراب. إذا ما اشتغل المايك، افركوا الشاشة بإصبعكم.</div><button class="btn" id="blowGo">💨 جاهزين</button></div>
+    <div class="tintro" id="blowIntro"><div class="h"><span class="scoin big" aria-hidden="true"></span>اللوحة فوق الباب مغطّاة تراب. <b>افركوا الشاشة بإصبعكم</b> — مثل ما تفركون كرت الشحن بالفلس — لين تقدرون تقرون اللوحة.<br>وإذا تبون، قرّبوا الموبايل من فمكم و<b>انفخوا</b>.</div><button class="btn" id="blowGo">جاهزين ›</button></div>
     <div class="tmsg" id="blowMsg"></div>
   </div>
 </section>
@@ -1234,14 +1256,148 @@ function runWin(){runStop();S.run=true;save();stageAt('blow');SFX.ok();$('#runTa
 function runFail(){runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ وصلوا قبلكم ووقفوا عند الباب. +دقيقتين. جرّبوا مرة ثانية — اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- BLOW dust ---- */
-const BL={on:false,dust:1,stream:null,an:null,raf:0,rub:0};
-function blowStart(){show('blow');$('#blowIntro').hidden=!!S.blow;$('#blowMsg').innerHTML='';BL.dust=S.blow?0:1;$('#blowDust').style.opacity=BL.dust;$('#blowKey').hidden=!S.blow;if(S.blow){$('#blowMsg').innerHTML=`<div class="h">✅ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». والمفتاح وراء اللوحة.</div><button class="btn" id="blowDone">🚪 ادخلوا</button>`;$('#blowDone').onclick=roomStart}}
-$('#blowGo').onclick=async()=>{$('#blowIntro').hidden=true;BL.on=true;BL.rub=0;const st=$('#blowstage');st.onpointermove=ev=>{if(BL.on&&(ev.buttons||ev.pointerType==='touch')){BL.rub+=1;if(BL.rub%4===0)BL.dust=Math.max(0,BL.dust-0.012)}};
-  const buf=new Uint8Array(256);let last=performance.now();const loop=now=>{if(!BL.on)return;const dt=(now-last)/1000;last=now;if(BL.an){BL.an.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v}const rms=Math.sqrt(s/buf.length);if(rms>0.08)BL.dust=Math.max(0,BL.dust-dt*0.45*Math.min(2,rms*8))}$('#blowDust').style.opacity=BL.dust;if(BL.dust<=0.02){blowWin();return}BL.raf=requestAnimationFrame(loop)};BL.raf=requestAnimationFrame(loop);
-  $('#blowMsg').innerHTML='<div class="h">💨 انفخوا على الموبايل… أو افركوا الشاشة.</div>';
-  try{const gum=navigator.mediaDevices.getUserMedia({audio:true});const to=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),8000));BL.stream=await Promise.race([gum,to]);if(!BL.on){blowStop();return}const c=ac();const src=c.createMediaStreamSource(BL.stream);BL.an=c.createAnalyser();BL.an.fftSize=512;src.connect(BL.an);$('#blowMsg').innerHTML='<div class="h">💨 انفخوا!</div>'}catch(e){BL.an=null;if(BL.on)$('#blowMsg').innerHTML='<div class="h">المايك مو متاح — افركوا الشاشة بإصبعكم بسرعة.</div>'}};
-function blowStop(){BL.on=false;cancelAnimationFrame(BL.raf);if(BL.stream){BL.stream.getTracks().forEach(t=>t.stop());BL.stream=null}const st=$('#blowstage');if(st)st.onpointermove=null}
-function blowWin(){blowStop();S.blow=true;save();stageAt('room');SFX.found();$('#blowDust').style.opacity=0;$('#blowKey').hidden=false;$('#blowMsg').innerHTML=`<div class="h">✨ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». وفيه مفتاح معلّق وراء اللوحة!</div>`;$('#blowKey').onclick=()=>{SFX.ok();$('#blowMsg').innerHTML=`<div class="h">🔑 الباب انفتح.</div><button class="btn" id="blowDone">🚪 ادخلوا الغرفة</button>`;$('#blowDone').onclick=roomStart}}
+const BL={on:false,dust:1,stream:null,an:null,raf:0,rub:0,cx:null,marks:[],W:0,H:0,dx:0,dy:0,dw:0,dh:0,sc:1,px:null,cleared:0,moves:0,fit:null};
+/* ---- the dust layer is a canvas you scratch, like a recharge card ---- */
+function blowFit(){
+  const cv=$('#blowCv'),im=$('#blowDust'),st=$('#blowstage');
+  if(!cv||!im||!st||!im.naturalWidth)return false;
+  const W=st.clientWidth,H=st.clientHeight;
+  if(!W||!H)return false;
+  /* the canvas covers the whole stage, exactly like the two plaque photos, and
+     the dust is painted inside it on the same rectangle object-fit:contain
+     gives the clean photo — so the two line up whatever shape the stage is */
+  BL.sc=Math.min(2,window.devicePixelRatio||1);
+  cv.width=Math.round(W*BL.sc);cv.height=Math.round(H*BL.sc);
+  BL.W=W;BL.H=H;
+  const k=Math.min(W/im.naturalWidth,H/im.naturalHeight);
+  BL.dw=im.naturalWidth*k;BL.dh=im.naturalHeight*k;
+  BL.dx=(W-BL.dw)/2;BL.dy=(H-BL.dh)/2;
+  BL.cx=cv.getContext('2d');
+  blowDraw();
+  return true;
+}
+function blowDraw(){
+  const cx=BL.cx;if(!cx)return;
+  cx.setTransform(BL.sc,0,0,BL.sc,0,0);
+  cx.globalCompositeOperation='source-over';
+  cx.clearRect(0,0,BL.W,BL.H);
+  cx.drawImage($('#blowDust'),BL.dx,BL.dy,BL.dw,BL.dh);
+  /* the dusty photo differs from the clean one only on the plaque itself, so
+     rubbing anywhere else would look like nothing is happening. A sandy wash
+     over the whole picture gives the finger something to take off wherever it
+     goes, and the plaque underneath is still the thing worth uncovering */
+  const g=cx.createLinearGradient(BL.dx,BL.dy,BL.dx+BL.dw,BL.dy+BL.dh);
+  g.addColorStop(0,'rgba(206,183,139,.62)');
+  g.addColorStop(.5,'rgba(186,163,122,.52)');
+  g.addColorStop(1,'rgba(214,195,156,.6)');
+  cx.fillStyle=g;cx.fillRect(BL.dx,BL.dy,BL.dw,BL.dh);
+  let s=20260101;const rnd=()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff;
+  for(let i=0;i<900;i++){
+    /* one ramp for all three channels, so every speck is sand and none of them
+       comes out pink or green */
+    const t=rnd();
+    cx.fillStyle=`rgba(${150+t*90|0},${132+t*84|0},${100+t*72|0},${.12+rnd()*.26})`;
+    cx.beginPath();
+    cx.arc(BL.dx+rnd()*BL.dw,BL.dy+rnd()*BL.dh,.5+rnd()*1.9,0,6.284);
+    cx.fill();
+  }
+  cx.globalCompositeOperation='destination-out';
+  cx.lineCap=cx.lineJoin='round';
+  /* replaying the strokes keeps the scratch through a rotation */
+  BL.marks.forEach(m=>{
+    cx.lineWidth=m[4];
+    cx.beginPath();
+    cx.moveTo(BL.dx+m[0]*BL.dw,BL.dy+m[1]*BL.dh);
+    cx.lineTo(BL.dx+m[2]*BL.dw,BL.dy+m[3]*BL.dh);
+    cx.stroke();
+  });
+}
+/* where the plaque sits inside the photo — what you actually have to uncover */
+const BLQ={x:.26,y:.06,w:.48,h:.27};
+function blowCleared(){
+  const cv=$('#blowCv');if(!cv||!BL.dw)return 0;
+  if(!BL.px){BL.px=document.createElement('canvas');BL.px.width=64;BL.px.height=32}
+  const c=BL.px.getContext('2d');
+  c.clearRect(0,0,64,32);
+  c.drawImage(cv,(BL.dx+BLQ.x*BL.dw)*BL.sc,(BL.dy+BLQ.y*BL.dh)*BL.sc,
+                 BLQ.w*BL.dw*BL.sc,BLQ.h*BL.dh*BL.sc,0,0,64,32);
+  const d=c.getImageData(0,0,64,32).data;let gone=0;
+  for(let i=3;i<d.length;i+=4)if(d[i]<40)gone++;
+  return gone/(64*32);
+}
+function blowStart(){
+  show('blow');
+  $('#blowIntro').hidden=!!S.blow;$('#blowMsg').innerHTML='';
+  BL.dust=S.blow?0:1;BL.marks=[];BL.cleared=0;BL.moves=0;
+  const cv=$('#blowCv');
+  if(cv){cv.style.opacity=BL.dust;cv.hidden=!!S.blow}
+  $('#scoin').hidden=true;
+  $('#blowKey').hidden=!S.blow;
+  const fit=()=>{if(!blowFit()){const im=$('#blowDust');im.onload=()=>blowFit()}};
+  fit();BL.fit=fit;window.addEventListener('resize',fit);
+  if(S.blow){$('#blowMsg').innerHTML=`<div class="h">✅ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». والمفتاح وراء اللوحة.</div><button class="btn" id="blowDone">🚪 ادخلوا</button>`;$('#blowDone').onclick=roomStart}
+}
+$('#blowGo').onclick=async()=>{
+  $('#blowIntro').hidden=true;BL.on=true;BL.rub=0;
+  const cv=$('#blowCv'),coin=$('#scoin'),st=$('#blowstage');
+  if(!BL.cx)blowFit();
+  const RPX=23;                                  /* the coin's own radius on screen */
+  let last=null;
+  const at=ev=>{const r=cv.getBoundingClientRect();
+    return [((ev.clientX-r.left)-BL.dx)/BL.dw,((ev.clientY-r.top)-BL.dy)/BL.dh]};
+  const moveCoin=ev=>{const r=st.getBoundingClientRect();
+    coin.hidden=false;coin.style.left=(ev.clientX-r.left)+'px';coin.style.top=(ev.clientY-r.top)+'px'};
+  const scratch=(a,b)=>{
+    BL.marks.push([a[0],a[1],b[0],b[1],RPX*2]);
+    const cx=BL.cx;if(!cx)return;
+    cx.globalCompositeOperation='destination-out';
+    cx.lineCap=cx.lineJoin='round';cx.lineWidth=RPX*2;
+    cx.beginPath();
+    cx.moveTo(BL.dx+a[0]*BL.dw,BL.dy+a[1]*BL.dh);
+    cx.lineTo(BL.dx+b[0]*BL.dw,BL.dy+b[1]*BL.dh);
+    cx.stroke();
+    if(++BL.moves%5===0){BL.cleared=blowCleared();
+      if(BL.cleared>=0.85){blowWin();return}}
+  };
+  cv.onpointerdown=ev=>{if(!BL.on)return;
+    try{cv.setPointerCapture(ev.pointerId)}catch(e){}
+    coin.classList.add('rub');moveCoin(ev);last=at(ev);scratch(last,last)};
+  cv.onpointermove=ev=>{if(!BL.on)return;
+    if(ev.pointerType!=='touch')moveCoin(ev);
+    if(!last||!(ev.buttons||ev.pointerType==='touch'))return;
+    moveCoin(ev);const p=at(ev);scratch(last,p);last=p;BL.rub++};
+  cv.onpointerup=cv.onpointercancel=()=>{last=null;coin.classList.remove('rub')};
+  cv.onpointerleave=()=>{if(window.matchMedia('(hover:hover)').matches)coin.hidden=true};
+  $('#blowMsg').innerHTML='<div class="h">افركوا اللوحة بإصبعكم… أو انفخوا على الموبايل.</div>';
+  /* blowing fades whatever is still covered — a second way in, not the only one */
+  const buf=new Uint8Array(256);let t0=performance.now();
+  const loop=now=>{if(!BL.on)return;const dt=(now-t0)/1000;t0=now;
+    if(BL.an){BL.an.getByteTimeDomainData(buf);let s=0;
+      for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v}
+      const rms=Math.sqrt(s/buf.length);
+      if(rms>0.08)BL.dust=Math.max(0,BL.dust-dt*0.45*Math.min(2,rms*8))}
+    if(cv)cv.style.opacity=BL.dust;
+    if(BL.dust<=0.02){blowWin();return}
+    BL.raf=requestAnimationFrame(loop)};
+  BL.raf=requestAnimationFrame(loop);
+  try{
+    const gum=navigator.mediaDevices.getUserMedia({audio:true});
+    const to=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),8000));
+    BL.stream=await Promise.race([gum,to]);
+    if(!BL.on){blowStop();return}
+    const c=ac();const src=c.createMediaStreamSource(BL.stream);
+    BL.an=c.createAnalyser();BL.an.fftSize=512;src.connect(BL.an);
+  }catch(e){BL.an=null}
+};
+function blowStop(){
+  BL.on=false;cancelAnimationFrame(BL.raf);
+  if(BL.stream){BL.stream.getTracks().forEach(t=>t.stop());BL.stream=null}
+  if(BL.fit){window.removeEventListener('resize',BL.fit);BL.fit=null}
+  const cv=$('#blowCv');if(cv)cv.onpointerdown=cv.onpointermove=cv.onpointerup=cv.onpointercancel=cv.onpointerleave=null;
+  const co=$('#scoin');if(co){co.hidden=true;co.classList.remove('rub')}
+  const st=$('#blowstage');if(st)st.onpointermove=null;
+}
+function blowWin(){blowStop();S.blow=true;save();stageAt('room');SFX.found();const cv=$('#blowCv');if(cv){cv.hidden=true}$('#blowKey').hidden=false;$('#blowMsg').innerHTML=`<div class="h">✨ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». وفيه مفتاح معلّق وراء اللوحة!</div>`;$('#blowKey').onclick=()=>{SFX.ok();$('#blowMsg').innerHTML=`<div class="h">🔑 الباب انفتح.</div><button class="btn" id="blowDone">🚪 ادخلوا الغرفة</button>`;$('#blowDone').onclick=roomStart}}
 
 /* ---- ROOM search ---- */
 const HOT={wardrobe:'الكبت: دشاديش مكويّة وغتر. ولا ورقة.',bisht:'البشت: جيوبه فاضية… ريحة العود.',bed:'تحت الفراش والمخدة: لا شي.',radio:'الراديو: ما يشتغل. الحين مو وقته.',frames:'الصور على الجدار: العرس، والعيال صغار. ما فيه شي وراها.'};
