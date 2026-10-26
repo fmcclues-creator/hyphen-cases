@@ -128,7 +128,9 @@ export default function Home() {
                 {r.img
                   ? <img src={`/reactions/${r.img}`} alt="" loading="lazy" />
                   : <blockquote>«{r.text}»</blockquote>}
-                <figcaption>{r.who}{r.where ? <span> · {r.where}</span> : null}</figcaption>
+                {(r.who || r.where) && (
+                  <figcaption>{r.who}{r.where ? <span>{r.who ? " · " : ""}{r.where}</span> : null}</figcaption>
+                )}
               </figure>
             ))}
           </div>
