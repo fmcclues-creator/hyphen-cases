@@ -720,6 +720,23 @@ html.tv body{zoom:1.18}
 .scoin.rub{transform:translate(-50%,-50%) scale(.9)}
 .scoin.big{position:static;display:inline-block;width:30px;height:30px;
   transform:none;vertical-align:-8px;margin-inline-end:8px}
+
+/* ---------- the run, as a shot you are inside of ---------- */
+.runvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .5s;pointer-events:none}
+.runvid.on{opacity:1}
+/* the HUD has to stay readable over moving footage */
+.runstage.hasvid .runbg{background:#000}
+.runstage.hasvid::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 42%,rgba(0,0,0,.08),rgba(0,0,0,.62) 78%);
+  z-index:1}
+.runstage.hasvid .runhud,.runstage.hasvid .runtrack,
+.runstage.hasvid .runtruck{z-index:2}
+.runstage.hasvid .runclock{text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.runstage.hasvid .runlbl{text-shadow:0 1px 8px rgba(0,0,0,.9)}
+.runstage.hasvid .rundist{text-shadow:0 1px 8px rgba(0,0,0,.9)}
+.runstage.hasvid .runbar{box-shadow:0 2px 14px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){.runvid{display:none}}
 </style>
 </head>
 <body>
@@ -1245,13 +1262,64 @@ function ring(){clearInterval(_callIv);const o=$('#callov');o.classList.add('on'
 /* ---- RUN in place ---- */
 const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,lastMag:0,rising:false};
 function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();if(S.run){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ وصلتوا الملحق قبلهم.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=()=>{show('file');$$('.tabs button')[5].click()}}}
+/* ---- the shot's speed is the player's speed ---- */
+const RV={el:null,want:0,have:0,raf:0,last:0,beats:[]};
+function rvInit(){
+  if(RV.el)return;
+  const st=$('#runstage'); if(!st)return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const v=document.createElement('video');
+  v.className='runvid';v.src='video/run.mp4';v.loop=true;v.muted=true;
+  v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
+  v.preload='auto';
+  /* no clip, no change: the gradient and the bar carry on as before */
+  v.addEventListener('error',()=>{st.classList.remove('hasvid');v.remove();RV.el=null});
+  v.addEventListener('loadeddata',()=>{st.classList.add('hasvid');v.classList.add('on')});
+  st.insertBefore(v,st.firstChild);
+  RV.el=v;
+}
+function rvStart(){
+  rvInit(); if(!RV.el)return;
+  RV.beats=[];RV.want=0;RV.have=0.06;RV.last=performance.now();
+  try{RV.el.currentTime=0;RV.el.playbackRate=0.06;const p=RV.el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
+  cancelAnimationFrame(RV.raf);RV.raf=requestAnimationFrame(rvTick);
+}
+function rvStop(){
+  cancelAnimationFrame(RV.raf);RV.raf=0;
+  if(!RV.el)return;
+  try{RV.el.pause()}catch(e){}
+  RV.el.classList.remove('on');
+}
+function rvBeat(){
+  /* keep the last few footfalls; their spacing is the cadence */
+  const now=performance.now();
+  RV.beats.push(now);
+  if(RV.beats.length>5)RV.beats.shift();
+}
+function rvTick(now){
+  if(!RV.el){RV.raf=0;return}
+  const dt=Math.min(0.1,(now-RV.last)/1000);RV.last=now;
+  let cad=0;
+  if(RV.beats.length>1){
+    const span=(RV.beats[RV.beats.length-1]-RV.beats[0])/1000;
+    cad=span>0?(RV.beats.length-1)/span:0;
+    /* a footfall that never arrives means they stopped */
+    const since=(now-RV.beats[RV.beats.length-1])/1000;
+    if(since>0.9)cad=0; else if(since>0.45)cad*=0.45;
+  }
+  /* about two and a half steps a second is the clip's own pace */
+  RV.want=Math.max(0.06,Math.min(2.2,cad/2.5));
+  RV.have+=(RV.want-RV.have)*Math.min(1,dt*5.5);
+  try{RV.el.playbackRate=RV.have}catch(e){}
+  RV.raf=requestAnimationFrame(rvTick);
+}
 function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
 function onMotion(e){if(!RUN.on)return;const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.hypot(a.x||0,a.y||0,a.z||0);const now=Date.now();if(mag>13.5&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>230){RUN.lastStep=now;runStep()}}else if(mag<10.5)RUN.rising=false}
-function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();paintRun();if(RUN.steps>=RUN.need)runWin()}
+function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();rvBeat();paintRun();if(RUN.steps>=RUN.need)runWin()}
 $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted')window.addEventListener('devicemotion',onMotion)}else window.addEventListener('devicemotion',onMotion)}catch(e){}
-  $('#runTap').hidden=false;$('#runTap').onclick=runStep;try{const tr=$('#au-truck');tr.volume=0.25;tr.currentTime=0;tr.play().catch(()=>{})}catch(e){}
+  $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();try{const tr=$('#au-truck');tr.volume=0.25;tr.currentTime=0;tr.play().catch(()=>{})}catch(e){}
   RUN.iv=setInterval(()=>{RUN.t--;try{$('#au-truck').volume=Math.min(1,0.25+(60-RUN.t)/60)}catch(e){}paintRun();if(RUN.t%10===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
-function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion);try{$('#au-truck').pause()}catch(e){}}
+function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion);try{$('#au-truck').pause()}catch(e){}}
 function runWin(){runStop();S.run=true;save();stageAt('blow');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 وصلتوا! بومشعل ورجاله بعدهم عند البوابة.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=()=>{show('file');$$('.tabs button')[5].click();setTimeout(blowStart,300)}}
 function runFail(){runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ وصلوا قبلكم ووقفوا عند الباب. +دقيقتين. جرّبوا مرة ثانية — اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
@@ -1333,7 +1401,12 @@ function blowStart(){
   if(cv){cv.style.opacity=BL.dust;cv.hidden=!!S.blow}
   $('#scoin').hidden=true;
   $('#blowKey').hidden=!S.blow;
-  const fit=()=>{if(!blowFit()){const im=$('#blowDust');im.onload=()=>blowFit()}};
+  /* the stage has no size on the frame the screen is shown, and a cached dust
+     image fires no load event — so keep trying for a few frames either way,
+     otherwise the plaque sits black behind the instructions */
+  let tries=0;
+  const fit=()=>{if(blowFit())return;const im=$('#blowDust');im.onload=()=>blowFit();
+    if(tries++<40)requestAnimationFrame(fit)};
   fit();BL.fit=fit;window.addEventListener('resize',fit);
   if(S.blow){$('#blowMsg').innerHTML=`<div class="h">✅ «بُني هذا البيت عام ١٤٠٧ هـ — ويبقى مفتوحاً لأهله». والمفتاح وراء اللوحة.</div><button class="btn" id="blowDone">🚪 ادخلوا</button>`;$('#blowDone').onclick=roomStart}
 }

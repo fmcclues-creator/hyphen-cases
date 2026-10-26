@@ -17,6 +17,18 @@ export async function POST(req) {
     return Response.json({ ok: false, reason: "email" }, { status: 400 });
   }
 
+  // Bought as a present: the code goes to the friend's inbox instead of the buyer's.
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const gift = body.gift ? {
+    gift_to_email: String(body.giftEmail || "").trim().slice(0, 120),
+    gift_to_name: String(body.giftName || "").trim().slice(0, 60) || null,
+    gift_from: String(body.giftFrom || "").trim().slice(0, 60) || null,
+    gift_msg: String(body.giftMsg || "").trim().slice(0, 300) || null,
+  } : {};
+  if (body.gift && !EMAIL.test(gift.gift_to_email)) {
+    return Response.json({ ok: false, reason: "gift_email" }, { status: 400 });
+  }
+
   const listPrice = Number(process.env.PRICE_KWD || 4.75);
   const pr = await applyPromo(body.promo, listPrice);
   if (!pr.ok) return Response.json({ ok: false, reason: pr.reason }, { status: 400 });
@@ -28,7 +40,7 @@ export async function POST(req) {
 
   const client = db();
   const { data: order, error } = await client.from("orders")
-    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game })
+    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game, ...gift })
     .select().single();
   if (error) return Response.json({ ok: false, reason: "db" }, { status: 500 });
 
@@ -52,7 +64,7 @@ export async function POST(req) {
       console.error("checkout mail threw", order.id, e);
     }
 
-    return Response.json({ ok: true, code, test: isTest });
+    return Response.json({ ok: true, code, test: isTest, gift: !!gift.gift_to_email });
   }
 
   const site = process.env.SITE_URL || "";

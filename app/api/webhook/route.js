@@ -62,7 +62,7 @@ export async function GET(req) {
     console.error("order mail threw", orderId, e);
   }
 
-  return Response.redirect(`${site}/buy/done?code=${code}`, 302);
+  return Response.redirect(`${site}/buy/done?code=${code}${order.gift_to_email ? "&gift=1" : ""}`, 302);
 }
 
 // Hesabe may POST the result instead of GET on some setups.
