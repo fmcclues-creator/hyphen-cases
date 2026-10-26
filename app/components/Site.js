@@ -41,7 +41,7 @@ export function WhatsAppButton() {
   return (
     <a className="wabtn" href={WA_HREF} target="_blank" rel="noreferrer" aria-label="راسلونا على واتساب">
       <WaMark size={34} />
-      <span>سؤال؟ راسلونا</span>
+      <span>عندكم سؤال؟</span>
     </a>
   );
 }
