@@ -82,19 +82,34 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .ok{color:var(--ok);font-size:14px;margin-top:6px}
 .btn-sm{padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:13px;cursor:pointer}
 @media (max-width:760px){.menu{gap:14px;font-size:14px}.menu a:nth-child(4){display:none}.ftr{grid-template-columns:1fr}}
+/* on a narrow phone the header keeps القضايا, عندي كود and واتساب */
+@media (max-width:560px){.menu{gap:10px;font-size:13px}.menu a:nth-child(2){display:none}.wa-chip{padding:5px 10px}}
 /* the WhatsApp button, pinned through every scroll */
-.wabtn{position:fixed;inset-inline-end:16px;bottom:16px;z-index:60;
-  display:inline-flex;align-items:center;gap:9px;
-  background:#25d366;color:#07310f;text-decoration:none;font-weight:800;font-size:15px;
-  padding:12px 18px 12px 15px;border-radius:999px;
-  box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 4px rgba(37,211,102,.14)}
-.wabtn:hover{background:#2ee472}
+.wabtn{position:fixed;inset-inline-end:22px;bottom:22px;z-index:60;
+  display:inline-flex;align-items:center;gap:12px;
+  background:#25d366;color:#06290c;text-decoration:none;font-weight:800;font-size:19px;
+  padding:16px 26px 16px 22px;border-radius:999px;
+  box-shadow:0 14px 40px rgba(0,0,0,.5),0 0 0 6px rgba(37,211,102,.15)}
+.wabtn:hover{background:#2ee472;box-shadow:0 16px 46px rgba(0,0,0,.55),0 0 0 8px rgba(37,211,102,.2)}
 .wabtn svg{flex:none}
-/* the button sits over the footer on a phone, so the page ends a little higher */
+/* the button floats over the end of the page, so the footer makes room */
+.ftr{padding-bottom:110px}
+
+/* the same offer, in the header and spelled out at the foot of the page */
+.wa-chip{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(37,211,102,.14);color:#2ee472!important;border:1px solid rgba(37,211,102,.45);
+  border-radius:999px;padding:6px 12px;font-weight:700}
+.wa-chip:hover{background:rgba(37,211,102,.24)}
+.wa-wide{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:6px;padding:16px;border-radius:14px;text-decoration:none;
+  background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.38);
+  color:#2ee472;font-weight:700;font-size:17px;text-align:center}
+.wa-wide:hover{background:rgba(37,211,102,.2)}
+.wa-wide b{color:#fff;font-weight:800}
+
 @media (max-width:560px){
-  .wabtn{inset-inline-end:12px;bottom:12px;padding:12px;gap:0}
-  .wabtn span{display:none}
-  .ftr{padding-bottom:84px}
+  .wabtn{inset-inline-end:14px;bottom:14px;font-size:17px;padding:14px 20px 14px 16px;gap:10px}
+  .wa-wide{flex-wrap:wrap;font-size:15px;padding:14px}
 }
 @media print{.wabtn{display:none}}
 
@@ -127,8 +142,8 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .fit-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .fit{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 14px;min-width:0;
   display:block;text-decoration:none;color:inherit}
-a.fit{border-color:#3a3245}
-a.fit:hover{border-color:var(--red)}
+a.fit{border-color:var(--red);box-shadow:0 0 0 4px rgba(196,56,45,.08)}
+a.fit:hover{border-color:var(--red2);box-shadow:0 0 0 6px rgba(196,56,45,.14)}
 .fit-e{font-size:26px;line-height:1;margin-bottom:10px}
 .fit b{display:block;font-size:16px;margin-bottom:4px}
 .fit span{color:var(--muted);font-size:13px;line-height:1.6}
@@ -145,7 +160,8 @@ a.fit:hover{border-color:var(--red)}
 /* players' own words */
 .says{padding-block:34px 10px;border-top:1px solid var(--line)}
 .say-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.say{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.say{margin:0;background:var(--panel);border:1px solid var(--red);border-radius:16px;padding:18px;min-width:0;
+  box-shadow:0 0 0 4px rgba(196,56,45,.08)}
 .say blockquote{margin:0;font-size:17px;line-height:1.75;color:var(--fg)}
 .say img{width:100%;height:auto;border-radius:10px;display:block}
 .say figcaption{color:var(--muted);font-size:13px;padding-top:12px}

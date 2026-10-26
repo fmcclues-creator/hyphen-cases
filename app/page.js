@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Header, Footer } from "./components/Site";
+import { Header, Footer, WA_HREF } from "./components/Site";
 import { reactions } from "./reactions";
 
 const SHOTS = [
@@ -15,10 +15,10 @@ const FITS = [
   { e: "🏡", t: "زوارة أهل", s: "من ١٣ سنة يقدرون يشاركون" },
   { e: "💅", t: "عزيمة بنات", s: "قهوة، وقضية، وتهاوش على الجاني" },
   { e: "🎂", t: "عيد ميلاد", s: "فعالية حلوة حق عيد ميلاد" },
-  { e: "💼", t: "فعالية شركة", s: "قضية مخصّصة باسم شركتكم، أو بطولة بين الفرق", href: "https://wa.me/96594426426" },
-  // last on purpose: everything above sells the group, this one catches the
-  // person browsing on their own who was about to close the tab
   { e: "🕵️", t: "بروحك", s: "ما عندك فريق؟ القضية تقدر تحلّها بروحك بعد" },
+  // last, and the only one outlined: it is the one card that asks for a
+  // conversation rather than a purchase
+  { e: "💼", t: "فعالية شركة", s: "قضية مخصّصة باسم شركتكم، أو بطولة بين الفرق", href: WA_HREF },
 ];
 
 const FAQ = [
@@ -60,7 +60,7 @@ export default function Home() {
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. عندكم ساعة وحدة، و٥ مشتبهين، وواحد منهم يچذب.</p>
           <div className="cta-row">
-            <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
+            <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك</span></Link>
             <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
           </div>
           <div className="facts">
