@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header, Footer } from "../components/Site";
+import { pixelTrack } from "../components/pixelTrack";
 
 const fmt = (n) => Number(n).toFixed(3);
 
@@ -14,7 +15,12 @@ export default function Buy() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
-  useEffect(() => { quoteFor(""); }, []);
+  useEffect(() => {
+    // Funnel step 1: they tapped «ابدأ التحقيق» and reached the checkout form.
+    quoteFor("").then((j) => {
+      pixelTrack("InitiateCheckout", { value: Number(j?.price) || 0, currency: "KWD", content_name: "قضية خالد" });
+    });
+  }, []);
 
   async function quoteFor(code) {
     const r = await fetch("/api/promo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ promo: code }) });
@@ -42,7 +48,16 @@ export default function Buy() {
     const j = await r.json().catch(() => ({}));
     setBusy(false);
     if (!j.ok) return setErr(j.reason === "phone" ? "اكتبوا رقم موبايل صحيح" : j.reason === "email" ? "اكتبوا إيميل صحيح — بنرسل لكم الكود عليه" : j.reason?.startsWith("promo") ? "كود الخصم ما عاد يشتغل" : "صار خطأ، جرّبوا مرة ثانية");
-    if (j.paymentUrl) window.location.href = j.paymentUrl;
+    if (j.paymentUrl) {
+      // Funnel step 2: details accepted, heading to KNET/card payment. Give the
+      // pixel a moment to send before the browser leaves the page.
+      await Promise.race([
+        pixelTrack("AddPaymentInfo", { value: Number(total) || 0, currency: "KWD", content_name: "قضية خالد" })
+          .then(() => new Promise((res) => setTimeout(res, 400))),
+        new Promise((res) => setTimeout(res, 1500)),
+      ]);
+      window.location.href = j.paymentUrl;
+    }
     else window.location.href = `/buy/done?code=${j.code}${j.test ? "&test=1" : ""}`;
   }
 

@@ -11,7 +11,7 @@ export default function Home() {
         <div>
           <div className="kicker">القضية الأولى</div>
           <h1>قضية <span>خالد</span></h1>
-          <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين يديكم، مقفل. عندكم ساعة وحدة، وخمسة مشتبهين.</p>
+          <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين يديكم، مقفول. عندكم ساعة وحدة، وخمسة مشتبهين.</p>
           <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك</span></Link>
           <div className="facts"><span>⏱ ساعة واحدة</span><span>👥 العب بفريق أو لوحدك</span><span>📺 على التلفزيون</span><span>🇰🇼 باللهجة الكويتية</span></div>
         </div>
