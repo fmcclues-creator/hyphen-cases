@@ -14,7 +14,7 @@
 // The section stays off the page while this list is empty.
 
 export const reactions = [
-  { text: "وايد استانسنا، ما هگيت بتعجبني" },
+  { text: "وايد استانسنا، ما هجيت بتعجبني" },
   { text: "غير عن المعتاد، حلوة يعطيكم العافية" },
   { text: "نبي نجرب بعد!! ونااسة، تهاوشنا وايد 😂" },
 ];
