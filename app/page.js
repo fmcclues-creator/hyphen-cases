@@ -14,7 +14,7 @@ const FITS = [
   { e: "🛋️", t: "ديوانية", s: "كل واحد بموبايله، وكلكم على نفس القضية" },
   { e: "🏡", t: "زوارة أهل", s: "من ١٣ سنة يقدرون يشاركون" },
   { e: "💅", t: "عزيمة بنات", s: "قهوة، وقضية، وتهاوش على الجاني" },
-  { e: "🎂", t: "عيد ميلاد", s: "فعالية حلوة حق ميلاد" },
+  { e: "🎂", t: "عيد ميلاد", s: "فعالية حلوة حق عيد ميلاد" },
   { e: "💼", t: "فعالية شركة", s: "قضية مخصّصة باسم شركتكم، أو بطولة بين الفرق", href: "https://wa.me/96594426426" },
   // last on purpose: everything above sells the group, this one catches the
   // person browsing on their own who was about to close the tab
