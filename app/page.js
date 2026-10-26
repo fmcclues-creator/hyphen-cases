@@ -6,16 +6,16 @@ const SHOTS = [
   { src: "/shots/file.jpg", cap: "ملف القضية — بلاغ الاختفاء، أقوال المشتبهين، والأوراق اللي سلّمتها زوجته. منه تطلّعون كود الموبايل." },
   { src: "/shots/lock.jpg", cap: "موبايل خالد… مقفول. ٤ أرقام، والجواب مخبّى بين أوراق الملف." },
   { src: "/shots/chat.jpg", cap: "محادثاته كلها جدّامكم — واحد منهم كاتب شي ما يتوافق مع اللي قاله بالتحقيق." },
-  { src: "/shots/interviews.jpg", cap: "مقابلات مصوّرة مع كل مشتبه. اسمعوهم زين… وقارنوهم بالموبايل." },
-  { src: "/shots/accuse.jpg", cap: "اللحظة الأخيرة: منو، ووين، ومتى. سمّوا الجاني وشوفوا إذا صبتوا." },
+  { src: "/shots/interviews.jpg", cap: "مقابلات مصوّرة مع كل مشتبه. سمعوهم زين… وقارنوهم بالموبايل." },
+  { src: "/shots/accuse.jpg", cap: "اللحظة الأخيرة: منو، ووين، ومتى. سمّاو الجاني وشوفاو إذا جبتوها صح." },
 ];
 
 const FITS = [
-  { e: "🛋️", t: "ليلة ديوانية", s: "الربع حول التلفزيون بدل ما كل واحد بموبايله" },
-  { e: "🏡", t: "عزيمة عايلة", s: "من ١٣ سنة لين الجدّة — كلهم يشاركون" },
-  { e: "💅", t: "ليلة بنات", s: "قهوة، وقضية، وصياح على الجاني" },
-  { e: "🎂", t: "عيد ميلاد", s: "فعالية ساعة تجمع الكل بدل الانتظار" },
-  { e: "💼", t: "فعالية شركة", s: "فرق تتنافس — منو يوصل للجاني أول" },
+  { e: "🛋️", t: "ديوانية" },
+  { e: "🏡", t: "عزيمة مع عايلتكم", s: "من ١٣ سنة يقدرون يشاركون" },
+  { e: "💅", t: "عزيمة بنات" },
+  { e: "🎂", t: "عيد ميلاد" },
+  { e: "💼", t: "فعالية شركة", s: "تواصلاو معانا للأسعار — قضية مفصّلة على شركتكم، أو بطولة قضايا بين الفرق", href: "https://wa.me/96594426426" },
 ];
 
 const FAQ = [
@@ -25,14 +25,14 @@ const FAQ = [
   },
   {
     q: "جم واحد يقدر يلعب؟",
-    a: "الكود لفريق واحد، وينفتح لين ٦ موبايلات بنفس الوقت — كل واحد يكتب نفس الكود ويشوفون نفس التقدّم. أما عدد اللي حول الشاشة فمفتوح — ٣ أو ١٢، ما يفرق.",
+    a: "الكود لفريق واحد، ويفتح على ٦ موبايلات — كل واحد يكتب نفس الكود ويشوفون نفس التقدّم. أما عدد اللي حول الشاشة فمفتوح — ٣ أو ١٢، ما يفرق.",
   },
   {
     q: "مناسبة للمراهقين؟",
     a: "إي. ما فيها دم ولا مشاهد مخيفة — قراءة ومحادثات واستنتاج. نقترحها من ١٣ سنة وفوق، والأصغر يلعبون ضمن الفريق مع الكبار.",
   },
   {
-    q: "وإذا ما خلّصنا بالساعة؟",
+    q: "وإذا ما خلّصنا بساعة؟",
     a: "ما يصير شي — ما فيه شي يقفل عليكم. الساعة هدف مو حد: الوقت يستمر ويتسجّل بالنتيجة النهائية، وتقدرون تكمّلون لين تسمّون الجاني. القضية مصمّمة تنحل بساعة تقريباً.",
   },
   {
@@ -41,7 +41,7 @@ const FAQ = [
   },
   {
     q: "شلون يوصلنا الكود؟",
-    a: "على الإيميل، فوراً بعد الدفع. تدفعون بـKNET أو بطاقة. وإذا ما وصل خلال دقايق، شيكوا على الـspam أو راسلونا واتساب على ٩٤٤٢٦٤٢٦.",
+    a: "على الإيميل، فوراً بعد الدفع. تدفعون بـKNET أو بطاقة. وإذا ما وصل خلال دقايق، شيكاو على الـspam أو راسلونا واتساب على ٩٤٤٢٦٤٢٦.",
   },
 ];
 
@@ -57,11 +57,11 @@ export default function Home() {
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. عندكم ساعة وحدة، و٥ مشتبهين، وواحد منهم يچذب.</p>
           <div className="cta-row">
-            <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+            <Link className="cta" href="/buy">بداو التحقيق <span className="price">{price} د.ك</span></Link>
             <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
           </div>
           <div className="facts">
-            <span>⏱ ساعة وحدة</span><span>👥 لين ٦ موبايلات بكود واحد</span>
+            <span>⏱ ساعة وحدة</span><span>👥 يفتح على ٦ موبايلات</span>
             <span>📺 على التلفزيون</span>
           </div>
         </div>
@@ -84,24 +84,28 @@ export default function Home() {
       <section className="fits">
         <h2>مناسبة لـ</h2>
         <div className="fit-row">
-          {FITS.map((f) => (
-            <div className="fit" key={f.t}>
-              <div className="fit-e" aria-hidden="true">{f.e}</div>
-              <b>{f.t}</b><span>{f.s}</span>
-            </div>
-          ))}
+          {FITS.map((f) => {
+            const As = f.href ? "a" : "div";
+            return (
+              <As className="fit" key={f.t} {...(f.href ? { href: f.href, target: "_blank", rel: "noopener" } : {})}>
+                <div className="fit-e" aria-hidden="true">{f.e}</div>
+                <b>{f.t}</b>
+                {f.s && <span>{f.s}</span>}
+              </As>
+            );
+          })}
         </div>
       </section>
 
       <section className="steps" id="how">
-        <div className="step"><div className="n">١</div><b>اشتروا كود الفريق</b><span>كود واحد لكل فريق، يوصلكم على الإيميل فوراً.</span></div>
-        <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>افتحوا اللعبة من الموبايل واعرضوا الشاشة.</span></div>
-        <div className="step"><div className="n">٣</div><b>افتحوا موبايل خالد</b><span>طلّعوا الرقم السري من ملف القضية.</span></div>
-        <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
+        <div className="step"><div className="n">١</div><b>شتراو كود الفريق</b><span>كود واحد لكل فريق، يوصلكم على الإيميل فوراً.</span></div>
+        <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>فتحاو اللعبة من الموبايل وعرضاو الشاشة.</span></div>
+        <div className="step"><div className="n">٣</div><b>فتحاو موبايل خالد</b><span>طلّعاو الرقم السري من ملف القضية.</span></div>
+        <div className="step"><div className="n">٤</div><b>سمّاو الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
       </section>
 
       <section className="shots" id="look">
-        <h2>شوفوا اللعبة</h2>
+        <h2>شوفاو اللعبة</h2>
         <div className="shot-row">
           {SHOTS.map((s) => (
             <figure className="shot" key={s.src}>
@@ -131,16 +135,6 @@ export default function Home() {
         </section>
       )}
 
-      <section className="faq" id="faq">
-        <h2>أسئلة قبل ما تشترون</h2>
-        {FAQ.map((f) => (
-          <details className="qa" key={f.q}>
-            <summary>{f.q}</summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
-      </section>
-
       <section className="cases" id="cases">
         <h2>القضايا</h2>
         <div className="grid">
@@ -163,11 +157,21 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="faq" id="faq">
+        <h2>أسئلة قبل ما تشترون</h2>
+        {FAQ.map((f) => (
+          <details className="qa" key={f.q}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </section>
+
       <section className="last">
         <h2>جاهزين؟</h2>
-        <p>كود واحد، فريق واحد، ساعة وحدة — لين ٦ موبايلات، وصالح ٧ أيام.</p>
+        <p>كود واحد، فريق واحد، ساعة وحدة — على ٦ موبايلات، وصالح ٧ أيام.</p>
         <div className="cta-row">
-          <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+          <Link className="cta" href="/buy">بداو التحقيق <span className="price">{price} د.ك</span></Link>
           <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
         </div>
       </section>

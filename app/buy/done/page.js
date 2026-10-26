@@ -33,7 +33,7 @@ export default function Done({ searchParams }) {
             {gift ? "نفس الكود — إذا تبون تعطونه بنفسكم:" : "كودكم — احفظوه إذا بتفتحون اللعبة من جهاز ثاني أو يوم ثاني:"}
           </div>
           <div className="code" style={{ fontSize: 28 }}>{code}</div>
-          <div className="muted" style={{ marginTop: 8, fontSize: 13 }}>كود واحد لفريق واحد — ينفتح لين ٦ موبايلات، وصالح ٧ أيام.</div>
+          <div className="muted" style={{ marginTop: 8, fontSize: 13 }}>كود واحد لفريق واحد — يفتح على ٦ موبايلات، وصالح ٧ أيام.</div>
           {test && <div className="muted">وضع التجربة: ما انخصم شي.</div>}
           <div style={{ marginTop: 14 }}>
             <a className="cta lite" href={wa}>{gift ? "أرسلوا الكود على واتساب" : "أرسل الكود على واتساب"}</a>
