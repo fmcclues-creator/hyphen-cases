@@ -82,6 +82,22 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .ok{color:var(--ok);font-size:14px;margin-top:6px}
 .btn-sm{padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:13px;cursor:pointer}
 @media (max-width:760px){.menu{gap:14px;font-size:14px}.menu a:nth-child(4){display:none}.ftr{grid-template-columns:1fr}}
+/* the WhatsApp button, pinned through every scroll */
+.wabtn{position:fixed;inset-inline-end:16px;bottom:16px;z-index:60;
+  display:inline-flex;align-items:center;gap:9px;
+  background:#25d366;color:#07310f;text-decoration:none;font-weight:800;font-size:15px;
+  padding:12px 18px 12px 15px;border-radius:999px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 4px rgba(37,211,102,.14)}
+.wabtn:hover{background:#2ee472}
+.wabtn svg{flex:none}
+/* the button sits over the footer on a phone, so the page ends a little higher */
+@media (max-width:560px){
+  .wabtn{inset-inline-end:12px;bottom:12px;padding:12px;gap:0}
+  .wabtn span{display:none}
+  .ftr{padding-bottom:84px}
+}
+@media print{.wabtn{display:none}}
+
 /* buy: for me / as a gift */
 .tabs2{display:flex;gap:6px;background:#0b0e14;border:1px solid var(--line);border-radius:12px;
   padding:4px;margin:4px 0 14px}

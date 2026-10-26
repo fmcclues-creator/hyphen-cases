@@ -1,5 +1,6 @@
 import "./globals.css";
 import MetaPixel from "./components/MetaPixel";
+import { WhatsAppButton } from "./components/Site";
 
 const SITE = "https://cases.hyphen-eventskw.com";
 const DESC =
@@ -100,6 +101,7 @@ export default function RootLayout({ children }) {
       <body>
         <MetaPixel />
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );
