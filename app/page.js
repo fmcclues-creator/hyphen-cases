@@ -62,7 +62,7 @@ export default function Home() {
           </div>
           <div className="facts">
             <span>⏱ ساعة وحدة</span><span>👥 لين ٦ موبايلات بكود واحد</span>
-            <span>📺 على التلفزيون</span><span>🇰🇼 باللهجة الكويتية</span>
+            <span>📺 على التلفزيون</span>
           </div>
         </div>
 

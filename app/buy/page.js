@@ -105,7 +105,7 @@ export default function Buy() {
             <label>إيميله</label>
             <input type="email" placeholder="name@example.com" value={giftEmail} onChange={(e) => setGiftEmail(e.target.value)} required />
             <label>من منو؟</label>
-            <input placeholder="اسمكم — عشان يعرف منو مهديها" value={giftFrom} onChange={(e) => setGiftFrom(e.target.value)} />
+            <input placeholder="اسمكم" value={giftFrom} onChange={(e) => setGiftFrom(e.target.value)} />
             <label>رسالة قصيرة (اختياري)</label>
             <input placeholder="كل عام وانتي بخير 🎁" maxLength={300} value={giftMsg} onChange={(e) => setGiftMsg(e.target.value)} />
             <div className="sep" />
@@ -113,7 +113,7 @@ export default function Buy() {
         )}
 
         <label>رقم موبايلكم</label>
-        <input inputMode="tel" placeholder="965XXXXXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+        <input inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         <label>{gift ? "إيميلكم (للإيصال)" : "الإيميل"}</label>
         <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <div className="muted" style={{ fontSize: 13, marginTop: -4 }}>
