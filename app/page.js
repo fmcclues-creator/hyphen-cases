@@ -7,7 +7,7 @@ const SHOTS = [
   { src: "/shots/lock.jpg", cap: "موبايل خالد… مقفول. ٤ أرقام، والجواب مخبّى بين أوراق الملف." },
   { src: "/shots/chat.jpg", cap: "محادثاته كلها جدّامكم — واحد منهم كاتب شي ما يتوافق مع اللي قاله بالتحقيق." },
   { src: "/shots/interviews.jpg", cap: "مقابلات مصوّرة مع كل مشتبه. سمعوهم زين… وقارنوهم بالموبايل." },
-  { src: "/shots/accuse.jpg", cap: "اللحظة الأخيرة: منو، ووين، ومتى. سمّاوا الجاني وشوفاوا إذا جبتوها صح." },
+  { src: "/shots/accuse.jpg", cap: "اللحظة الأخيرة: منو، ووين، ومتى. سمّوا الجاني وشوفوا إذا جبتوها صح." },
 ];
 
 const FITS = [
@@ -44,7 +44,7 @@ const FAQ = [
   },
   {
     q: "شلون يوصلنا الكود؟",
-    a: "على الإيميل، فوراً بعد الدفع. تدفعون بـKNET أو بطاقة. وإذا ما وصل خلال دقايق، شيكاوا على الـspam أو راسلونا واتساب على ٩٤٤٢٦٤٢٦.",
+    a: "على الإيميل، فوراً بعد الدفع. تدفعون بـKNET أو بطاقة. وإذا ما وصل خلال دقايق، دوّروا عليه بالـspam أو راسلونا واتساب على ٩٤٤٢٦٤٢٦.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function Home() {
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. عندكم ساعة وحدة، و٥ مشتبهين، وواحد منهم يچذب.</p>
           <div className="cta-row">
-            <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
+            <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
             <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
           </div>
           <div className="facts">
@@ -101,14 +101,14 @@ export default function Home() {
       </section>
 
       <section className="steps" id="how">
-        <div className="step"><div className="n">١</div><b>اشتراوا كود الفريق</b><span>كود واحد لكل فريق، يوصلكم على الإيميل فوراً.</span></div>
-        <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>فتحاوا اللعبة من الموبايل وعرضاوا الشاشة.</span></div>
-        <div className="step"><div className="n">٣</div><b>فتحاوا موبايل خالد</b><span>طلّعاوا الرقم السري من ملف القضية.</span></div>
-        <div className="step"><div className="n">٤</div><b>سمّاوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
+        <div className="step"><div className="n">١</div><b>اشتروا كود الفريق</b><span>كود واحد لكل فريق، يوصلكم على الإيميل فوراً.</span></div>
+        <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>فتحوا اللعبة من الموبايل وعرضوا الشاشة.</span></div>
+        <div className="step"><div className="n">٣</div><b>فتحوا موبايل خالد</b><span>طلّعوا الرقم السري من ملف القضية.</span></div>
+        <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
       </section>
 
       <section className="shots" id="look">
-        <h2>شوفاوا اللعبة</h2>
+        <h2>شوفوا اللعبة</h2>
         <div className="shot-row">
           {SHOTS.map((s) => (
             <figure className="shot" key={s.src}>
@@ -176,7 +176,7 @@ export default function Home() {
         <h2>جاهزين؟</h2>
         <p>كود واحد، فريق واحد، ساعة وحدة — على ٦ موبايلات، وصالح ٧ أيام.</p>
         <div className="cta-row">
-          <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
+          <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
           <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
         </div>
       </section>
