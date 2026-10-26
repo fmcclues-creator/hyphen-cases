@@ -60,7 +60,7 @@ export default function Home() {
           <h1>قضية <span>خالد</span></h1>
           <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. عندكم ساعة وحدة، و٥ مشتبهين، وواحد منهم يچذب.</p>
           <div className="cta-row">
-            <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+            <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
             <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
           </div>
           <div className="facts">
@@ -176,7 +176,7 @@ export default function Home() {
         <h2>جاهزين؟</h2>
         <p>كود واحد، فريق واحد، ساعة وحدة — على ٦ موبايلات، وصالح ٧ أيام.</p>
         <div className="cta-row">
-          <Link className="cta" href="/buy">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+          <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
           <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
         </div>
       </section>
