@@ -61,7 +61,7 @@ export function Footer() {
         <Link href="/play">عندي كود</Link>
       </div>
       <a className="wa-wide" href={WA_HREF} target="_blank" rel="noreferrer">
-        <WaMark size={24} /> عندكم سؤال؟ راسلونا على واتساب <b dir="ltr">+965 9442 6426</b>
+        <WaMark size={24} /> عندكم سؤال؟ تواصلوا معانا الحين <b dir="ltr">+965 9442 6426</b>
       </a>
       <div className="muted">© {new Date().getFullYear()} HYPHEN Events. منتج رقمي — لا استرجاع بعد الشراء.</div>
     </footer>
