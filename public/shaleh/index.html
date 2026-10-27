@@ -1597,11 +1597,21 @@ function rvInit(){
   const st=$('#runstage'); if(!st)return;
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   const v=document.createElement('video');
-  v.className='runvid';v.src='video/run.mp4';v.loop=true;v.muted=true;
+  v.className='runvid';v.loop=true;v.muted=true;
+  /* webm first — smaller, and what Chrome and Android reach for;
+     the mp4 is there for Safari and iOS, which need H.264 */
+  ['video/run.webm|video/webm','video/run.mp4|video/mp4'].forEach(s=>{
+    const [src,type]=s.split('|');const el=document.createElement('source');
+    el.src=src;el.type=type;v.appendChild(el)});
   v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
   v.preload='auto';
-  /* no clip, no change: the gradient and the bar carry on as before */
-  v.addEventListener('error',()=>{st.classList.remove('hasvid');v.remove();RV.el=null});
+  /* no clip, no change: the gradient and the bar carry on as before. with
+     <source> children a dead list fires no error on the element itself,
+     so a short deadline stands in for it */
+  const drop=()=>{st.classList.remove('hasvid');v.remove();RV.el=null};
+  v.addEventListener('error',drop);
+  const deadline=setTimeout(()=>{if(RV.el===v&&v.readyState<2)drop()},5000);
+  v.addEventListener('loadeddata',()=>clearTimeout(deadline));
   v.addEventListener('loadeddata',()=>{st.classList.add('hasvid');v.classList.add('on')});
   st.insertBefore(v,st.firstChild);
   RV.el=v;
