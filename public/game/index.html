@@ -491,6 +491,15 @@ html.tv body{zoom:1.18}
 .mitem:hover,.mitem:active{background:var(--line)}
 .mitem[hidden]{display:none}
 .mitem.red{background:var(--red);color:#fff;justify-content:center;font-weight:800}
+.chip.solvenow{background:var(--red);color:#fff;font-weight:800;border:0;
+  animation:solvepulse 2.4s ease-in-out infinite}
+@keyframes solvepulse{0%,100%{box-shadow:0 0 0 0 rgba(196,56,45,.55)}
+  60%{box-shadow:0 0 0 7px rgba(196,56,45,0)}}
+@media (prefers-reduced-motion:reduce){.chip.solvenow{animation:none}}
+.tlstep.tlsolve{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.tlstep.tlsolve .tlnd{border-color:var(--red);color:#e2574b;background:#2a1512}
+.tlstep.tlsolve.ready .tlnd{background:var(--red);border-color:var(--red);color:#fff}
+.tlstep.tlsolve.ready .tllbl{color:#ff9a8c;font-weight:800}
 .mgap{flex:1;min-height:10px}
 
 .sheet .hopen{display:block;width:100%;text-align:start;font:inherit;font-size:16px;
@@ -751,7 +760,7 @@ html.tv body{zoom:1.18}
 
 <!-- ============ PHONE UI ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="host" id="host">📞 للمنظّم: الفريق يطلب اتصال من فيصل على <b id="hostNum"></b><span class="sp"></span><button class="chip" id="hostDone">تم الاتصال</button><button class="chip ghost" id="hostSim">اتصال داخل اللعبة</button></div>
   <div class="stage"><div class="device">
     <div class="callov" id="callov"><div><div class="av"><img src="img/p_faisal.jpg" alt=""></div><div class="nm">فيصل (البنك)</div><div class="st" id="callSt">مكالمة WhatsApp واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -1297,8 +1306,16 @@ function updProg(){const el=$('#prog');if(!el)return;
   (i?`<i class="tlseg${dn[i-1]?' on':''}"></i>`:'')+
   `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}">`+
   `<i class="tlnd">${dn[i]?'✓':i===now?'':'🔒'}</i>`+
-  `<em class="tllbl">${st[1]}</em></span>`).join('');
- $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حل القضية':STEPS[now][1]);}
+  `<em class="tllbl">${st[1]}</em></span>`).join('')
+  /* the case does not end with the last clue — it ends when they name him,
+     and teams were finishing the evidence and then sitting there. so the
+     strip runs one step past the clues, and that step is a button. */
+  +`<i class="tlseg${dn[dn.length-1]?' on':''}"></i>`
+  +`<button class="tlstep tlsolve${now<0?' ready':''}" id="tlSolve" type="button">`
+  +`<i class="tlnd">🔎</i><em class="tllbl">حلّوا القضية</em></button>`;
+ const ts=$('#tlSolve');if(ts)ts.onclick=e=>{e.stopPropagation();trySolve()};
+ $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حلّوا القضية':STEPS[now][1]);
+ const bar=$('#toSolveBar');if(bar)bar.hidden=!(S.merged&&!S.done);}
 (function(){const t=$('#progTl');if(!t)return;
  t.onclick=()=>progOpen();
  t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};})();
@@ -1580,7 +1597,11 @@ function edApply(){const im=edImg();if(!im)return;const v=k=>Math.round((ED[k]-5
     const ok=ED.ex>=60;const m=$('#edMsg');
     if(ok){if(!ED.hold){ED.hold=setTimeout(edSolved,900)}m.className='edmsg';m.textContent='✓ واضحة… جاري الحفظ'}else{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}m.className='edmsg';m.textContent='زيدوا الإضاءة…'}}
   else{im.className='';im.style.filter=`brightness(${(0.5+ED.ex/100).toFixed(2)}) contrast(${(0.7+ED.sh/100*0.6).toFixed(2)}) saturate(${(ED.sa/50).toFixed(2)})`}}
-function edSolved(){ED.hold=null;if(S.merged)return;S.merged=true;save();stageAt('solve');SFX.ok();const m=$('#edMsg');m.className='edmsg ok';m.textContent='✓ تم حفظ التعديل';addCctvNote();renderPhotos();setTimeout(()=>{$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';openPhoto('cctv','album')},1100)}
+function edSolved(){ED.hold=null;if(S.merged)return;S.merged=true;save();stageAt('solve');SFX.ok();const m=$('#edMsg');m.className='edmsg ok';m.textContent='✓ تم حفظ التعديل';addCctvNote();renderPhotos();setTimeout(()=>{$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';openPhoto('cctv','album')},1100);
+  /* the last clue is in hand. teams read it, nodded, and waited for the game
+     to do something — so the game asks. long enough after the reveal that
+     they have looked at the photo first. */
+  setTimeout(()=>{if(S.done)return;sheet('<h3>🔎 خلصت الأدلة</h3>'+'<div class="h">هذي آخر دليل. تبون تحلّون القضية الحين؟</div>'+'<div class="acts"><button class="btn" id="goSolve">🔎 حلّوا القضية</button>'+'<button class="btn lite" data-close>نراجع شوي</button></div>');const g=$('#goSolve');if(g)g.onclick=()=>{$('#modal').classList.remove('on');trySolve()}},3600)}
 $('#edBtn').onclick=()=>{const ed=$('#editor');if(ed.hidden){ed.hidden=false;$('#photoInfo').hidden=true;$('#edBtn').textContent='';edReset()}else{$('#edCancel').click()}};
 $('#edCancel').onclick=()=>{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';const im=edImg();if(im){im.style.filter='';im.className=CURP&&CURP.dark&&!S.merged?'dark':''}};
 
@@ -1639,6 +1660,7 @@ $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('o
 /* ================= SOLVE ================= */
 function trySolve(){if(!S.unlocked)return sheet('<h3>🔒 مو بعد</h3><div class="h">قبل الاتهام لازم تفتحون <b>موبايل خالد</b> أولاً.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.notes)return sheet('<h3>🔒 مو بعد</h3><div class="h">فتحتوا الموبايل… بس باقي <b>الملاحظة المقفولة</b> في تطبيق الملاحظات. حلّوها أول، وبعدها تقدرون تتهمون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.notes2)return sheet('<h3>🔒 الأدلة ما تكفي</h3><div class="h">للحين ما عندكم أدلة كافية تتهمون أحد. كمّلوا التحقيق.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');if(!S.merged)return sheet('<h3>🔒 الأدلة ما تكفي</h3><div class="h">للحين ما عندكم أدلة كافية تتهمون أحد. كمّلوا التحقيق.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');show('solve')}
 $('#toSolve')&&($('#toSolve').onclick=trySolve);$('#toSolveFile').onclick=trySolve;
+$('#toSolveBar').onclick=trySolve;
 /* ---- slide-in menu ---- */
 (function(){const w=$('#menuWrap');
  const close=()=>{w.hidden=true};
