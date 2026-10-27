@@ -497,7 +497,8 @@ html.tv body{zoom:1.18}
   60%{box-shadow:0 0 0 7px rgba(196,56,45,0)}}
 @media (prefers-reduced-motion:reduce){.chip.solvenow{animation:none}}
 .tlstep.tlsolve{background:none;border:0;padding:0;cursor:pointer;font:inherit}
-.tlstep.tlsolve .tlnd{border-color:var(--red);color:#e2574b;background:#2a1512}
+.tlstep.tlsolve[disabled]{cursor:default;opacity:.8}
+.tlstep.tlsolve .tlnd{border-color:var(--line);color:var(--muted);background:#1b2130}
 .tlstep.tlsolve.ready .tlnd{background:var(--red);border-color:var(--red);color:#fff}
 .tlstep.tlsolve.ready .tllbl{color:#ff9a8c;font-weight:800}
 .mgap{flex:1;min-height:10px}
@@ -675,7 +676,7 @@ html.tv body{zoom:1.18}
       <div class="letter">
         الله يخليكم، دوروا لي على خالد. أنا ما نمت من امس.<br>
         ناصر ولد خالتي هو اللي راح المكتب ولقى الموبايل وبلّغ. الموبايل اللي بين يديكم هو كل اللي عندنا.<br>
-        جبت لكم من البيت كل شي ممكن يفيدكم: صورة من بطاقته المدنية، دعوة عرسنا، شهادة ميلاد سارة، وقصاصة الجريدة اللي معلّقها في مكتبه من يوم فتح أول فرع.<br>
+        جبت لكم من البيت كل شي ممكن يفيدكم: صورة من بطاقته المدنية، دعوة عرسنا، شهادة ميلاد سارة، وصفحة الجريدة اللي معلّقها في مكتبه من يوم فتح أول فرع.<br>
         خالد كل شهر يغيّر رقمه السري، اهوا جذي من زمان، دايماً يخاف أحد يدخل على شغله وأسراره بالشغل. ويقول إن الرقم لازم يكون شي صعب. مادري عنه صراحتا.<br>
         آخر مرة سألته قال لي إن رقمه الحين اهو <b>اليوم اللي بدا فيه كل شي</b>.<br>
         وما اتوقع قصده يوم زواجنا بس جربوا.<br>
@@ -961,7 +962,7 @@ const WRONG={
  loc:'الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.',
  time:'الجاني والمكان صح، بس الوقت غلط. الكاميرا تكتب الوقت على اللقطة… شوفوها زين.'};
 const HINTS={
- lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','قصاصة الجريدة: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
+ lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','الجريدة المعلّقة بمكتبه: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
  note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفولة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','افتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. افتحوا الملاحظة الأولى.'],
  note2:['الملاحظة الثانية رقمها من الفويس نوت حق خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» واقروها زين — تقول وين الصور.'],
  hidden:['الملاحظة الثانية تقول إن لقطة الكاميرا بالألبوم المخفي بالصور، ورقمه «منيرة تعرفه». ارجعوا لواتساب منيرة واقروا كلامها من شهر… مكان بارد 🥶 ورقم غرفة، وعمر.','المكان البارد الوحيد بين ألبومات السفر: لندن. فيه صورة لباب غرفة الفندق عليها رقم. والعمر: عمر سارة — شوفوا كيكة عيد ميلادها بألبوم «سارة».','الجواب: <b>١٢٠٨</b> — غرفة ١٢ وعمر سارة ٨. افتحوا الألبوم المخفي من «الألبومات».'],
@@ -1311,8 +1312,11 @@ function updProg(){const el=$('#prog');if(!el)return;
      and teams were finishing the evidence and then sitting there. so the
      strip runs one step past the clues, and that step is a button. */
   +`<i class="tlseg${dn[dn.length-1]?' on':''}"></i>`
-  +`<button class="tlstep tlsolve${now<0?' ready':''}" id="tlSolve" type="button">`
-  +`<i class="tlnd">🔎</i><em class="tllbl">حلّوا القضية</em></button>`;
+  /* locked until the evidence is in — the step is there so they can see the
+     case ends on it, not so they can jump to it early */
+  +`<button class="tlstep tlsolve${now<0?' ready':''}" id="tlSolve" type="button"`
+  +`${now<0?'':' disabled'}><i class="tlnd">${now<0?'🔎':'🔒'}</i>`
+  +`<em class="tllbl">حلّوا القضية</em></button>`;
  const ts=$('#tlSolve');if(ts)ts.onclick=e=>{e.stopPropagation();trySolve()};
  $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حلّوا القضية':STEPS[now][1]);
  const bar=$('#toSolveBar');if(bar)bar.hidden=!(S.merged&&!S.done);}
@@ -1601,7 +1605,7 @@ function edSolved(){ED.hold=null;if(S.merged)return;S.merged=true;save();stageAt
   /* the last clue is in hand. teams read it, nodded, and waited for the game
      to do something — so the game asks. long enough after the reveal that
      they have looked at the photo first. */
-  setTimeout(()=>{if(S.done)return;sheet('<h3>🔎 خلصت الأدلة</h3>'+'<div class="h">هذي آخر دليل. تبون تحلّون القضية الحين؟</div>'+'<div class="acts"><button class="btn" id="goSolve">🔎 حلّوا القضية</button>'+'<button class="btn lite" data-close>نراجع شوي</button></div>');const g=$('#goSolve');if(g)g.onclick=()=>{$('#modal').classList.remove('on');trySolve()}},3600)}
+  setTimeout(()=>{if(S.done)return;sheet('<h3>🔎 خلصت الأدلة</h3>'+'<div class="h">هذا آخر دليل. تبون تحلّون القضية الحين؟</div>'+'<div class="acts"><button class="btn" id="goSolve">🔎 حلّوا القضية</button>'+'<button class="btn lite" data-close>نراجع شوي</button></div>');const g=$('#goSolve');if(g)g.onclick=()=>{$('#modal').classList.remove('on');trySolve()}},3600)}
 $('#edBtn').onclick=()=>{const ed=$('#editor');if(ed.hidden){ed.hidden=false;$('#photoInfo').hidden=true;$('#edBtn').textContent='';edReset()}else{$('#edCancel').click()}};
 $('#edCancel').onclick=()=>{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}$('#editor').hidden=true;$('#photoInfo').hidden=false;$('#edBtn').textContent='تعديل';const im=edImg();if(im){im.style.filter='';im.className=CURP&&CURP.dark&&!S.merged?'dark':''}};
 
