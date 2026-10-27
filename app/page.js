@@ -156,8 +156,8 @@ export default function Home() {
           </div>
           <div className="case soon">
             <div className="tag">قريباً</div>
-            <b>قضية الفيلا</b>
-            <span>وصية مختفية · ٦ مشتبهين · ساعة واحدة · فيها حركة!</span>
+            <b>قضية الوصية</b>
+            <span>ميراث · ٦ مشتبهين · ساعة واحدة · فيها مطاردة</span>
           </div>
         </div>
       </section>
