@@ -675,6 +675,17 @@ html.tv body{zoom:1.18}
   background:var(--line);margin-top:calc(var(--nd)/2 - 1px);transition:margin .25s}
 .tlseg.on{background:var(--tape)}
 .tlstep{flex:none;position:relative;display:block}
+/* the case ends on naming them, so the strip runs one step past the clues */
+.chip.solvenow{background:var(--red);color:#fff;font-weight:800;border:0;
+  animation:solvepulse 2.4s ease-in-out infinite}
+@keyframes solvepulse{0%,100%{box-shadow:0 0 0 0 rgba(196,56,45,.55)}
+  60%{box-shadow:0 0 0 7px rgba(196,56,45,0)}}
+@media (prefers-reduced-motion:reduce){.chip.solvenow{animation:none}}
+.tlstep.tlsolve{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.tlstep.tlsolve[disabled]{cursor:default;opacity:.8}
+.tlstep.tlsolve .tlnd{border-color:var(--line);color:var(--muted);background:#1b2130}
+.tlstep.tlsolve.ready .tlnd{background:var(--red);border-color:var(--red);color:#fff}
+.tlstep.tlsolve.ready .tllbl{color:#ff9a8c;font-weight:800}
 .tlnd{display:grid;place-items:center;width:var(--nd);height:var(--nd);padding:0;
   border-radius:50%;background:#1b2130;border:1.5px solid var(--line);
   font-size:calc(var(--nd) * .52);line-height:1;color:var(--muted);
@@ -902,7 +913,7 @@ html.tv body{zoom:1.18}
 
 <!-- ============ PHONE ============ -->
 <section class="screen" id="phone">
-  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button></div>
+  <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="stage"><div class="device ez">
     <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_saleh.jpg" alt=""></div><div class="nm">صالح (السائق)</div><div class="st" id="rcSt">جاري الاتصال…</div></div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
     <div class="callov" id="callov"><div><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344"><img src="img/p_yaser.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><div class="nm">ياسر المحامي</div><div class="st" id="callSt">مكالمة واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
@@ -1097,8 +1108,17 @@ function updProg(){const el=$('#prog');if(!el)return;
   (i?`<i class="tlseg${dn[i-1]?' on':''}"></i>`:'')+
   `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}">`+
   `<i class="tlnd">${dn[i]?'✓':i===now?'':'🔒'}</i>`+
-  `<em class="tllbl">${st[1]}</em></span>`).join('');
- $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حل القضية':STEPS[now][1]);}
+  `<em class="tllbl">${st[1]}</em></span>`).join('')
+  /* teams were finishing the evidence and then waiting, because nothing said
+     the case was still open. locked until the clues are in — it is there so
+     they can see where this ends, not so they can jump to it. */
+  +`<i class="tlseg${dn[dn.length-1]?' on':''}"></i>`
+  +`<button class="tlstep tlsolve${now<0?' ready':''}" id="tlSolve" type="button"`
+  +`${now<0?'':' disabled'}><i class="tlnd">${now<0?'🔎':'🔒'}</i>`
+  +`<em class="tllbl">حلّوا القضية</em></button>`;
+ const ts=$('#tlSolve');if(ts)ts.onclick=e=>{e.stopPropagation();trySolve()};
+ $('#progCap').textContent=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حلّوا القضية':STEPS[now][1]);
+ const bar=$('#toSolveBar');if(bar)bar.hidden=!(S.album&&!S.done);}
 (function(){const t=$('#progTl');if(!t)return;
  t.onclick=()=>progOpen();
  t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};})();
@@ -1137,6 +1157,7 @@ $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
 $('#toFile1').onclick=$('#toFile2').onclick=$('#runBack').onclick=$('#blowBack').onclick=$('#roomBack').onclick=()=>show('file');
 $('#albumBack').onclick=()=>show('room');
 $('#backToPhone').onclick=()=>show('phone');
+$('#toSolveBar').onclick=()=>trySolve();
 $('#toSolveFile').onclick=$('#goSolveF').onclick=()=>trySolve();
 function trySolve(){if(!S.album){sheet('<h3>🔒 مو الحين</h3><div class="h">الاتهام يفتح بعد ما تلقون الوصية بنفسكم.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}show('solve')}
 
