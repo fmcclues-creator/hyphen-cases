@@ -1587,7 +1587,13 @@ $('#edCancel').onclick=()=>{if(ED.hold){clearTimeout(ED.hold);ED.hold=null}$('#e
 ['edEx','edSh','edSa'].forEach(id=>{$('#'+id).oninput=e=>{ED[{edEx:'ex',edSh:'sh',edSa:'sa'}[id]]=+e.target.value;edApply()}});
 
 /* ================= HINTS ================= */
-function stage(){if(S.screen==='lock')return 'lock';if(S.screen==='solve')return 'solve';return !S.notes?'note1':!S.notes2?'note2':!S.hidden?'hidden':!S.merged?'cctv':'solve'}
+/* The hint button lives in the menu, which is open on every screen — so the
+   stage has to be the puzzle they are actually on, not the screen they happen
+   to be looking at. Reading the case file for the phone code IS the lock
+   puzzle; keying off the lock screen handed those players the note-one hint,
+   which points at WhatsApp and photos they cannot reach yet, and charged them
+   a minute for it. Nothing is reachable until the phone opens. */
+function stage(){if(S.screen==='solve')return 'solve';if(!S.unlocked)return 'lock';return !S.notes?'note1':!S.notes2?'note2':!S.hidden?'hidden':!S.merged?'cctv':'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 /* The countdown was printed once and never touched again, so it sat at the same
