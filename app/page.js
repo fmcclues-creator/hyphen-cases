@@ -146,18 +146,18 @@ export default function Home() {
           <Link href="/buy" className="case on">
             <div className="tag">متوفّرة</div>
             <b>قضية خالد</b>
-            <span>اختفاء · ٥ مشتبهين · ساعة واحدة</span>
+            <span>اختفاء · ٥ مشتبهين</span>
             <em>{price} د.ك</em>
           </Link>
           <div className="case soon">
             <div className="tag">قريباً</div>
             <b>قضية الشاليه</b>
-            <span>سرقة · ٦ مشتبهين · ساعة واحدة · كشّاف على التلفزيون</span>
+            <span>سرقة · ٦ مشتبهين · كشّاف على التلفزيون</span>
           </div>
           <div className="case soon">
             <div className="tag">قريباً</div>
             <b>قضية الوصية الضايعة</b>
-            <span>ميراث · ٦ مشتبهين · ساعة واحدة · فيها مطاردة</span>
+            <span>ميراث · ٦ مشتبهين · فيها مطاردة</span>
           </div>
         </div>
       </section>
