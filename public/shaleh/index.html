@@ -1808,7 +1808,7 @@ const WHERE={unlocked:'الملف: محضر البلاغ و«عن المبلّغ
  seenStorage:'الرسائل ← المرور، وبعدها واتساب ← Easy Storage',
  corridor:'الملف ← 🚓 الميدان',
  chase:'الملف ← 🚓 الميدان',
- door:'واتساب ← Easy Storage ← صورة العقد التالفة'};
+ door:'القفل بالملف ← 🚓 الميدان · والكود من واتساب ← Easy Storage ← صورة العقد التالفة'};
 const HNAME={lock:'فتح الموبايل',torch1:'صورة فهد',voice:'الفويس نوت',call:'مكالمة رضا',timeline:'ترتيب الليلة',storage:'وين راح الذهب',corridor:'الممر',chase:'المطاردة',contract:'الصورة التالفة',solve:'الاتهام'};
 function stage(){if(!S.unlocked)return 'lock';if(!S.torch1)return 'torch1';if(!S.voice)return 'voice';if(!S.call)return 'call';if(!S.timeline)return 'timeline';if(!S.seenStorage)return 'storage';if(!S.corridor)return 'corridor';if(!S.chase)return 'chase';if(!S.door)return 'contract';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
