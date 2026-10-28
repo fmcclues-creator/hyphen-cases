@@ -933,7 +933,7 @@ html.tv body{zoom:1.18}
       <div class="sus"><div class="av"><img src="img/p_saad.jpg" alt=""></div><div><b>سعد (بوعبدالله)</b><small>الابن الثاني · ٥٠ سنة · تاجر · والد عبدالله</small><q>«آنا ومنى نمنا ١٠:٣٠. الشغّالة. ولدي ما له علاقة.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_mona.jpg" alt=""></div><div><b>منى</b><small>زوجة سعد · ٤٥ سنة · والدة شهد وعبدالله</small><q>«آنا اللي فتحت التيجوري الصبح. وآنا اللي لقيت الظرف بغرفتها.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_shahad.jpg" alt=""></div><div><b>شهد</b><small>الحفيدة · ٢٤ سنة · العروس</small><q>شاهدة: شافت الجدّة تعطي جويس المبلغ.</q></div></div>
-      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small>الحفيد · ١٩ سنة · صاحي طول الليل يلعب</small><q>ما أخذوا أقواله — رجع البيت مع أبوه قبل الفجر.</q></div></div>
+      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small>الحفيد · ١٩ سنة · ١٦٨ سم · صاحي طول الليل يلعب بالحوش</small><q>«آنا صوّرت الحوش ودزّيت الصورة لعمي. ما عرفت منو هم، الدنيا ظلمة. ما نمت إلا بعد الفجر.»</q></div></div>
     </div>
     <div id="t5" hidden>
       <h2>المقابلات المسجّلة</h2>
@@ -1393,7 +1393,7 @@ $('#goCorridor').onclick=()=>torchStart('corridor');$('#goChase').onclick=()=>ru
 })();
 
 /* ================= PHONE DATA ================= */
-const AV=id=>`<img src="img/p_${id}.jpg" alt="">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
+const AV=id=>id==='fahad'?'<span style="display:grid;place-items:center;width:100%;height:100%;background:#2a3344;font-size:22px">🎮</span>':`<img src="img/p_${id}.jpg" alt="">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
 const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
 const CHATS=[
  {id:'shahad',n:'شهد 💍',av:'p:shahad',last:'٨:٥٥ ص',u:2,msgs:[['day','الخميس'],
@@ -1421,6 +1421,9 @@ const CHATS=[
   ['them','عمي عيّدت عليك بس ما رديت 😅 متى ترجع من السفر؟','٨:٤٠ م'],
   ['me','رجعنا امس. تعال الشاليه الويكند.','٩:٠٠ م'],
   ['them','إن شاء الله، بس بوي يقول لازم أرجع البيت بالليل، عندي اختبار السبت 😩','٩:٠٢ م'],
+  ['them','عمي… تقدر تسلّفني ٢٠٠؟ أرجّعهم لك أول الشهر 🙏 بس لا تقول لبوي','٩:٣٠ م'],
+  ['me','حق شنو يا فهد؟','٩:٤٠ م'],
+  ['them','…شي بسيط. نسّيها عمي','٩:٤٢ م'],
   ['day','الخميس'],
   ['them','عمي أنا بالحوش مع الشباب، جبت الجهاز ونلعب على التلفزيون 🎮','٨:٤٥ م'],
   ['them','الكرك اللي سويته نار والله 😂','٩:٤١ م'],
@@ -1428,7 +1431,8 @@ const CHATS=[
   ['them','عمي شوف الحوش 👀 منو هذول؟','١١:٣٦ م'],
   ['them','ما يبين شي بالصورة بس فيه اثنين عند السيارة','١١:٣٧ م'],
   ['them','عمي؟','١١:٤٩ م'],
-  ['them','خلاص بوي ياي ياخذني. بنروح البيت','١٢:٠٥ ص'],
+  ['them','عمي الشباب راحوا وآنا باقي. ما عندي نوم','١٢:٠٥ ص'],
+  ['them','بوي زعلان مني إني ما رجعت البيت 😬','٢:١٠ ص'],
   ['day','الجمعة'],
   ['me','فهد، شفت شي امس؟','٨:٣٠ ص'],
   ['them','…لا','٨:٣١ ص']]},
@@ -1621,7 +1625,7 @@ $('#stripShuffle').onclick=sshuffle;
 function openStrips(){openApp('strips');if(S.contract){$('#board').classList.add('done');order=[...Array(N).keys()];flipped=Array(N).fill(false);sbuild();$('#stripDone').hidden=false;$('#stripMsg').textContent='✅ الصورة كملت'}else{$('#stripDone').hidden=true;sshuffle()}}
 
 /* ---- voice match ---- */
-const VOPTS=[['saad','سعد'],['bu','بوعبدالعزيز'],['abdullah','عبدالله'],['joyce','جويس'],['mona','منى']];
+const VOPTS=[['saad','سعد'],['bu','بوعبدالعزيز'],['abdullah','عبدالله'],['fahad','فهد'],['joyce','جويس'],['mona','منى']];
 function openVoice(){openApp('voice');$('#vmatch').innerHTML=VOPTS.map(v=>`<button class="vopt${S.voice&&v[0]==='abdullah'?' on':''}" data-v="${v[0]}"><span class="av">${AV(v[0])}</span><b>${v[1]}</b></button>`).join('');$('#voiceMsg').textContent=S.voice?'✅ تطابق: عبدالله — كان يم رضا الساعة ١:٥٥':''}
 $('#vmatch').onclick=e=>{const b=e.target.closest('[data-v]');if(!b||S.voice)return;if(b.dataset.v==='abdullah'){S.voice=true;save();stageAt('storage');SFX.ok();b.classList.add('on');$('#voiceMsg').textContent='✅ تطابق: عبدالله — كان يم رضا الساعة ١:٥٥';renderCalls();setTimeout(()=>sheet('<h3>📞 اسألوا رضا بنفسكم</h3><div class="h">رضا بالديوانية الحين. من تطبيق <b>الهاتف</b> اضغطوا <b>اتصل برضا</b> واختاروا أسئلتكم — لو تهجّمتوا عليه بيسكّر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),900);/* فهد waits until they have finished with رضا */}else{SFX.bad();S.pen+=60;save();$('#voiceMsg').textContent='❌ مو هو. انضافت دقيقة على وقتكم. اسمعوا المقابلات مرة ثانية.'}};
 
@@ -1707,7 +1711,7 @@ $('#torchOn').onclick=async()=>{$('#tintro').hidden=true;T.on=true;T.tx=50;T.ty=
 function openB17(){S.door=true;save();stageAt('solve');setTimeout(()=>{sheet(`<h3>🔓 B-17 انفتحت</h3><img src="img/ending_bag.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">جنطة رياضة سودا… نفس اللي كانت بسيارة عبدالله يوم الخميس. وداخلها العلبة الحمرا. الذهب كامل.</div><div class="acts"><button class="btn" id="afterDoor">🔍 حل القضية</button></div>`);$('#afterDoor').onclick=()=>{$('#modal').classList.remove('on');show('solve')}},700);}
 
 /* ---- solve ---- */
-const SUS=[['reza','رضا','السايق'],['abdullah','عبدالله','الحفيد'],['saad','سعد','الابن الثاني'],['mona','منى','زوجة سعد'],['joyce','جويس','العاملة'],['bu','بوعبدالعزيز','المبلّغ']];
+const SUS=[['reza','رضا','السايق'],['abdullah','عبدالله','الحفيد'],['saad','سعد','الابن الثاني'],['mona','منى','زوجة سعد'],['joyce','جويس','العاملة'],['bu','بوعبدالعزيز','المبلّغ'],['fahad','فهد','الحفيد الصغير']];
 const pick=(el,key)=>{$(el).innerHTML=SUS.map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
 pick('#pickWho','who');pick('#pickWhy','why');
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
@@ -1716,7 +1720,7 @@ function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset
    is marked on its own now; the written clue stays as it was. */
 const accMark=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;`
   +`color:${ok?'#5bc47a':'#e06a5a'}"><b style="font-size:16px">${ok?'✓':'✗'}</b><span>${label}</span></div>`;
-const WRONG={joyce:'جويس كانت بالممر ٣:٠٦ صح، ومحتاجة فلوس صح… بس الذهب كان طالع من البوابة من ٣:٠٢ بالسيارة البيضا. وجويس ما عندها سيارة ولا مفتاح تيجوري. منو عنده المفتاح وكان صاحي؟',bu:'المبلّغ نايم من ١١:٣٠، وموبايله يثبت. دوروا على اللي ما كان نايم.',saad:'سعد نايم مع منى من ١٠:٣٠. منو اللي كاميرا الحوش وصورة فهد شافته صاحي؟',mona:'منى فتحت التيجوري الصبح جدّام الكل — لو هي اللي أخذته، ما كانت تفتحها قدامهم. ومنو دخل الغرفة ٢:٣٥؟'};
+const WRONG={fahad:'فهد كان بالحوش، وصاحي، وطوله ١٦٨ — يمر تحت اللوحة بسهولة. بس هو اللي صوّر الحوش ١١:٣٦ ودزّ الصورة لعمه نفس اللحظة. منو السارق اللي يصوّر السرقة ويطرّشها لصاحب البيت؟ بس ليش كذب الصبح وقال «لا»؟ فيه أحد ماسك عليه شي — دوروا بمحادثته.',joyce:'جويس كانت بالممر ٣:٠٦ صح، ومحتاجة فلوس صح… بس الذهب كان طالع من البوابة من ٣:٠٢ بالسيارة البيضا. وجويس ما عندها سيارة ولا مفتاح تيجوري. منو عنده المفتاح وكان صاحي؟',bu:'المبلّغ نايم من ١١:٣٠، وموبايله يثبت. دوروا على اللي ما كان نايم.',saad:'سعد نايم مع منى من ١٠:٣٠. منو اللي كاميرا الحوش وصورة فهد شافته صاحي؟',mona:'منى فتحت التيجوري الصبح جدّام الكل — لو هي اللي أخذته، ما كانت تفتحها قدامهم. ومنو دخل الغرفة ٢:٣٥؟'};
 $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='reza'&&S.why==='abdullah';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120*Math.min(3,S.wrong+1);S.wrong++;save();let msg;
   if(S.who==='abdullah'&&S.why==='reza')msg='قريب… بس بالعكس. منو اللي دخل غرفة الجدّة ٢:٣٥ (شخص قصير، قميص فاتح)؟ ومنو اللي كان يضغط عليه بالحوش ويقول «ما لك خيار»؟';
