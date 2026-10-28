@@ -796,7 +796,7 @@ html.tv body{zoom:1.18}
     <h1>قضية <span>الفيلا</span></h1>
     <p>بوفيصل بنى فيلته بيده سنة ١٤٠٧. يوم العيد قال جدّام الكل: «كتبت وصيتي، والفيلا لمن يسكن فيها»، وحطّها بالدرج. الثلاثاء الصبح توفّى بهدوء… وبعد العزا بيومين، الدرج فاضي. موبايله القديم بين إيديكم، وعندكم ساعة.</p>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثير بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟  — يكبّر الخط والصور ويضبط عرض الشاشة، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
 </section>
@@ -1143,7 +1143,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، فتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثير بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: الكاميرا ٦:١٤ — منو رايح الملحق؟"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -1182,7 +1182,7 @@ $('#docGrid').onclick=openEv;$('#evGrid').onclick=openEv;
 /* ---- field tab ---- */
 function fieldReady(){return S.memo&&S.corner&&S.cam&&S.call}
 function refreshField(){const r=fieldReady();$('#fieldLocked').hidden=r;$('#fieldOpen').hidden=!r;$('#goRun').hidden=S.run;$('#fieldDoor').hidden=!S.run;$('#goBlow').hidden=S.blow;$('#fieldRoom').hidden=!S.blow;$('#goRoom').hidden=S.album;$('#fieldFound').hidden=!S.album;if(r)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
-function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. افتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
+function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. فتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
 $('#goRun').onclick=()=>runStart();$('#goBlow').onclick=()=>blowStart();$('#goRoom').onclick=()=>roomStart();
 
 /* ---- PIN lock ---- */
@@ -1596,7 +1596,7 @@ function addSalehNote(){addNote('saleh_call','📞 مكالمة صالح — ن�
 /* ---- hints ---- */
 const HINTS={
  lock:['فيصل قال بالمحضر: أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ هو يوم بنينا البيت. دوروا بالوثائق.','شهادة ملكية الأرض فيها تاريخ الإفراز بالهجري. السنة بس — ٤ أرقام.','الجواب: ١٤٠٧.'],
- memo:['افتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
+ memo:['فتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
  corner:['بالصور فيه صورة زاوية الوصية اللي أرسلها المرحوم لياسر. افتحوها واضغطوا «افحصوا بالعدسة».','الورق يحتفظ بأثر القلم. مرّروا العدسة على الفراغ اللي تحت السطر الأول وثبّتوها.','الجواب: السطر الثاني «على أن تبقى بيتاً مفتوحاً لإخوتها».'],
  cam:['بالصور فيه لقطة من كاميرا المدخل الساعة ٦:١٤ الفجر. افتحوها واضغطوا «كبّروا».','منو كان داخل البيت الفجر؟ الكل وصل ٧:٠٢ إلا… ارجعوا للمحضر: الموجودون ليلة الوفاة.','الجواب: اللي بالعباة طالعة من البيت للملحق، حاملة ورقة — ٤٨ دقيقة قبل ما يوصل أحد.'],
  call:['اتصلوا بصالح بنفسكم من تطبيق <b>الهاتف</b> (زر «اتصل بصالح»). أسئلة هادية — لو اتهمتوه أو جبتوا سيرة الفلوس يسكّر.','ابدأوا: وين كان ← منو معاه مفتاح الملحق غيره ← ومنو كلّمه الثلاثاء قبل ٧ الصبح.','الجواب: صالح يقول إن نورة اتصلت فيه ٥:٣٠ الفجر تسأل عن نسخة مفتاح الملحق اللي بدرج المطبخ. يعني رايحة الملحق.'],
@@ -1666,7 +1666,7 @@ const bar='<div class="a2h-bar"><i>\u2039</i><i>\u203A</i><i class="hi">'+SHARE_
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
 let body='';
 if(cast==='second'){
- body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
+ body='<div class="a2h"><div class="a2h-d">فتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
   +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
   +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل كود ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
 }else if(cast==='mirror'){
@@ -1676,8 +1676,8 @@ if(cast==='second'){
    :ios?st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
        +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
        +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
-   :'<div class="a2h-d">افتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
-  +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+   :'<div class="a2h-d">فتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
+  +'<div class="a2h-f">بعدها فتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
 }else{
  body='<div class="a2h"><div class="a2h-f">اختاروا وحدة من فوق وبنوريكم الخطوات.</div></div>';
 }
@@ -1689,8 +1689,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
-function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
- sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nفتحوا الرابط وادخلوا الكود '+c+'\n'+link;
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثير)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
