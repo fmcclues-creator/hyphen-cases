@@ -100,13 +100,16 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .runlbl{color:#aab2c2;font-size:14px}
 .runtrack{position:relative;width:min(92vw,520px)}
 .runpath{position:relative;height:60px}
-.runman{position:absolute;inset-inline-start:0;bottom:0;font-size:44px;font-style:normal;transition:inset-inline-start .2s;transform:scaleX(-1)}
+/* both of these travel inline-start → inline-end, which is right → left here,
+   and the emoji already face left. flipping them made the runner face the way
+   he had come — he read as running backwards. */
+.runman{position:absolute;inset-inline-start:0;bottom:0;font-size:44px;font-style:normal;transition:inset-inline-start .2s}
 .runhome{position:absolute;inset-inline-start:0;top:0;font-size:18px;opacity:.6}
 .runannex{position:absolute;inset-inline-end:0;top:0;font-size:22px}
 .runbar{height:14px;border-radius:7px;background:#2c3139;overflow:hidden}
 .runbar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .2s}
 .rundist{text-align:center;color:#ffd978;font-size:18px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}
-.runtruck{position:absolute;bottom:14px;inset-inline-start:0;font-size:40px;transition:inset-inline-start 1s linear;transform:scaleX(-1)}
+.runtruck{position:absolute;bottom:14px;inset-inline-start:0;font-size:40px;transition:inset-inline-start 1s linear}
 .runintro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(0,0,0,.8);z-index:3}
 .runintro .h{max-width:40ch;color:#e9ecf2;font-size:16px;line-height:1.7}
 .runtap{position:relative;z-index:2;background:var(--tape);color:#fff;border:0;border-radius:999px;padding:22px 44px;font:800 24px Tajawal,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer}
