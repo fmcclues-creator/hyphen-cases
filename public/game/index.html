@@ -26,6 +26,11 @@
    leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
+@font-face{font-family:kwj;src:url('/fonts/kwj-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:kwj;src:url('/fonts/kwj-700.woff2') format('woff2');font-weight:700;font-display:swap}
+/* چ and گ live in a subset font, so a word carrying one was shaped across two
+   fonts and the join broke. the whole word renders in one Arabic font instead. */
+.kw{font-family:kwj,var(--ui)}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-500.woff2') format('woff2');font-weight:500;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-700.woff2') format('woff2');font-weight:700;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -232,7 +237,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .status .bat{color:var(--tape-2)}
 .app{flex:1;min-height:0;display:none;flex-direction:column;background:#0b0e14}
 .app.on{display:flex}
-.home{flex:1;padding:18px 16px 12px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:max-content;gap:18px 10px;align-content:start;position:relative;background:
+.home{flex:1;padding:18px 16px 120px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:max-content;gap:18px 10px;align-content:start;position:relative;background:
  radial-gradient(70% 40% at 50% 0%,#24304a 0,transparent 70%),linear-gradient(180deg,#0f1420,#05070b)}
 .icon{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:#e3e7ef;position:relative}
 .icon .g{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;font-size:28px;box-shadow:inset 0 -6px 12px rgba(0,0,0,.25)}
@@ -304,7 +309,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .icon{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .icon .g{box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-size:0;position:relative;overflow:hidden}
 .icon .g svg{width:34px;height:34px;display:block}
-.dock{grid-column:1/-1;margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);position:relative;z-index:1}
+.dock{grid-column:1/-1;position:absolute;inset-inline:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);z-index:1}
 .dock .icon span:last-child{display:none}
 .lockbg{position:absolute;inset:0;background:url("img/couple.jpg") center 30%/cover;opacity:.45;filter:blur(3px)}
 /* instagram */
@@ -1888,4 +1893,22 @@ bs.forEach(b=>{b.hidden=false;b.onclick=()=>{if(can&&!ios){const full=document.f
 sheet('<h3>⛶ ملء الشاشة على الآيفون</h3><div class="h">سفاري على الآيفون ما يسمح للمواقع تملأ الشاشة بنفسها، بس تقدرون تخفون شريطه بخطوتين:</div><div class="h">١. اضغطوا الأيقونة الصغيرة <b>يسار شريط العنوان</b> (تكون <b>aA</b> أو <b>⋯</b> حسب نسخة الآيفون). شريط العنوان يكون تحت لما الموبايل عمودي، وفوق لما يكون أفقي.</div><div class="h">٢. اختاروا <b>إخفاء شريط الأدوات · Hide Toolbar</b>.</div><div class="h">يرجع الشريط إذا ضغطتوا أعلى الشاشة — أعيدوا الخطوتين.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')}});
 const upd=()=>{const full=document.fullscreenElement||document.webkitFullscreenElement;bs.forEach(b=>b.textContent=full?'⤡ Exit · خروج من ملء الشاشة':'⛶ Full screen · ملء الشاشة')};document.addEventListener('fullscreenchange',upd);document.addEventListener('webkitfullscreenchange',upd)})();
 (function(){const ios=/iPhone|iPad/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);const standalone=window.navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;$('#tvtip').hidden=standalone})();
+
+/* any word with چ or گ must be shaped by a single font, or the letters sit apart */
+(function(){const RX=/[\u0600-\u06FF\u0750-\u077F]*[\u0686\u06AF][\u0600-\u06FF\u0750-\u077F]*/;
+ const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1};
+ function walk(root){if(!root)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
+    const p=n.parentNode;if(!p||SKIP[p.nodeName]||p.classList&&p.classList.contains('kw'))return 2;
+    return RX.test(n.nodeValue)?1:2}});
+  const hits=[];while(w.nextNode())hits.push(w.currentNode);
+  hits.forEach(n=>{const f=document.createDocumentFragment();let s=n.nodeValue,m;
+    while((m=s.match(RX))){if(m.index)f.appendChild(document.createTextNode(s.slice(0,m.index)));
+      const e=document.createElement('span');e.className='kw';e.textContent=m[0];f.appendChild(e);
+      s=s.slice(m.index+m[0].length)}
+    if(s)f.appendChild(document.createTextNode(s));n.parentNode.replaceChild(f,n)})}
+ let q=false;const run=()=>{q=false;walk(document.body)};
+ const obs=new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(run)});
+ const go=()=>{walk(document.body);obs.observe(document.body,{childList:true,subtree:true,characterData:true})};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
 </script>
