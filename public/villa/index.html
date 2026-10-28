@@ -1728,7 +1728,20 @@ window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code
 
 /* ---- gate ---- */
 const GATE_ON=true;
-function deviceId(){try{let d=localStorage.getItem('hyphen_dev')||localStorage.getItem(GAME+'_dev')||localStorage.getItem('khalid_dev');if(!d){d=crypto.randomUUID()}localStorage.setItem('hyphen_dev',d);return d}catch(e){return 'nodevice'}}
+/* A code was burning six phone slots for four phones. Four of the ids were
+   minted inside 2.5 seconds — one phone, opened repeatedly from a WhatsApp
+   link, each tap a fresh in-app webview with empty storage, each one minting
+   a new uuid. So the id no longer depends on storage having survived. */
+function deviceSig(){try{const n=navigator,s=screen;
+  const raw=[n.userAgent,n.language,n.hardwareConcurrency,n.maxTouchPoints,
+    s.width,s.height,s.colorDepth,new Date().getTimezoneOffset(),
+    (Intl.DateTimeFormat().resolvedOptions()||{}).timeZone].join('|');
+  let h1=0x811c9dc5,h2=0x01000193;
+  for(let i=0;i<raw.length;i++){const c=raw.charCodeAt(i);
+    h1=Math.imul(h1^c,16777619)>>>0; h2=Math.imul(h2+c,2246822519)>>>0}
+  const hex=n=>('00000000'+n.toString(16)).slice(-8);
+  return 'sig-'+hex(h1)+hex(h2)+hex(h1^h2)}catch(e){return null}}
+function deviceId(){try{let d=localStorage.getItem('hyphen_dev')||localStorage.getItem(GAME+'_dev')||localStorage.getItem('khalid_dev');if(!d)d=deviceSig()||crypto.randomUUID();try{localStorage.setItem('hyphen_dev',d)}catch(e){}return d}catch(e){return deviceSig()||'nodevice'}}
 function savedPass(){try{const p=JSON.parse(localStorage.getItem(GAME+'_pass')||'null');if(p&&new Date(p.expires_at)>new Date())return p}catch(e){}return null}
 async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME})});return r.json()}
 $('#gateBuy').href=STORE+'/buy?game='+GAME;
