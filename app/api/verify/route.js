@@ -24,7 +24,10 @@ export async function POST(req) {
 
   // One code = one team. The team can open it on up to DEVICES phones (they share progress);
   // `uses` counts activated teams against max_uses, not phones.
-  const DEVICES = 6;
+  // Six is what the game promises a team. We allow a few more before refusing,
+  // because a phone that reopens the link from WhatsApp can still arrive as a
+  // stranger, and locking a paying team out is worse than an extra slot.
+  const DEVICES = 10;
   const { data: plays } = await client.from("plays").select("device").eq("code", norm);
   const devices = [...new Set((plays || []).map((p) => p.device))];
   if (!devices.includes(device)) {
