@@ -660,6 +660,8 @@ html.tv body{zoom:1.18}
 .rc-q{width:100%;display:grid;gap:6px}.rc-q button{text-align:right;padding:10px 12px;border-radius:12px;background:#2a3344;color:#fff;font-size:14px;line-height:1.5;border:1px solid var(--line)}
 .callov.rc .btns button{width:54px;height:54px;font-size:24px}
 .rcall-btn{background:rgba(58,163,106,.12)}
+.rc-as{flex:none;margin:0 10px 8px;padding:7px 10px;border-radius:10px;background:#2a2316;border:1px solid #6b5a2a;color:#ffd978;font-size:12.5px;line-height:1.5;text-align:center}
+.rc-as b{color:#ffe9a8}
 .tl{display:grid;gap:6px;margin-top:10px}.tl .it{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px;background:#fff;color:#1a1f2a;border:1px solid #d7d2c4;border-radius:12px;padding:8px 10px;font-size:14px;line-height:1.5}.tl .it .n{background:#e9e4d6;color:#1a1f2a}.tl .it .mv button{background:#e9e4d6;color:#1a1f2a}
 .tl .it .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#2a3344;font-size:12px;margin-inline-end:6px}
 .tl .it .mv{display:flex;flex-direction:column;gap:2px}.tl .it .mv button{width:32px;height:24px;border-radius:7px;background:#2a3344;color:#fff;font-size:12px}
@@ -1053,7 +1055,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="stage"><div class="device sam">
-    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div class="nm">رضا (السايق)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
+    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_reza.jpg" alt=""></div><div class="nm">رضا (السايق)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-as">📱 إنتوا تتصلون من موبايل <b>بوعبدالعزيز</b> — رضا يحسبه هو اللي يكلّمه</div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
     <div class="callov" id="callov"><div><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344">🎮</div><div class="nm">فهد (ولد أخوي)</div><div class="st" id="callSt">مكالمة واردة…</div></div><div class="tx" id="callTx"></div><div class="btns"><button class="end" id="callEnd" hidden>📵</button><button class="ans" id="callAns">📞</button></div></div>
     <div class="status"><span>الجمعة ١٢:٠٥ م</span><span>📶 🔋 ٣٤٪</span></div>
     <div class="apps">
@@ -1741,7 +1743,8 @@ function rezaCall(){if(S.call)return;
     sep.textContent='— اتصلتوا مرة ثانية —';L.appendChild(sep);L.scrollTop=1e6}
   const rg=$('#au-ring');try{rg.currentTime=0;rg.play().catch(()=>{})}catch(e){}
   setTimeout(()=>{rg.pause();$('#rcSt').textContent='٠:٠١';
-    if(!back)rcLine('رضا يحسب إن بوعبدالعزيز هو اللي يكلّمه — خلّوه يحسب.','sys');
+    rcLine(back?'رد عليكم على طول — باقي يحسبكم بوعبدالعزيز.'
+          :'رد وهو يحسب إنه يكلّم بوعبدالعزيز. خلّوه يحسب — لا تقولون إنكم الشرطة.','sys');
     rcSay(RCS.hung?'…ألو بابا. sorry… آنا خايف شوي. تفضل.'
           :back?'ألو بابا… باقي شي؟'
           :'ألو… بابا؟ أنا في الديوانية. خير؟',()=>{RCS.hung=false;rcAsk()})},2200);
