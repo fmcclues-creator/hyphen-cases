@@ -223,7 +223,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .sus .av{width:64px;height:64px;border-radius:6px;background:var(--paper-2);display:grid;place-items:center;font-weight:700;font-size:20px;color:var(--paper-muted)}
 .sus b{display:block;font-size:19px}
 .sus small{display:block;color:var(--paper-muted);font-size:14px}
-.sus q{display:block;margin-top:6px;quotes:"«" "»"}
+.sus q{display:block;margin-top:6px;quotes:none}
 .paper-foot{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));background:#3a3129;display:flex;gap:10px;justify-content:center;flex-shrink:0;box-shadow:0 -8px 20px rgba(0,0,0,.35)}
 .paper-foot .btn{flex:1;max-width:520px;padding:16px;font-size:18px;animation:glow 2s infinite}
 @keyframes glow{50%{box-shadow:0 0 0 6px rgba(226,87,75,.25)}}
@@ -893,8 +893,8 @@ html.tv body{zoom:1.18}
       <blockquote class="letter gm">
         جويس بنتي. عشرين سنة رضا، وثمان سنين جويس، ما ضاعت منّي إبرة.<br>
         المبلغ آنا عطيتها. الخميس العصر، وشهد شافتني.<br>
-        اللي أخذ الذهب واحد من اللي نامو تحت سقفي… وآنا شاكّة. بس ما أقدر أقول.<br>
-        دوروا إنتاو. ولا تظلمون أحد.
+        اللي أخذ الذهب واحد من اللي نامو تحت سقفي… وهذا اللي يوجعني.<br>
+        دوروا إنتوا. ولا تظلمون أحد.
       </blockquote>
       <h3>رسالة شهد للمحقق (واتساب، ٨:٥٠ ص)</h3>
       <div class="rec"><b>شهد (٢٤) — الحفيدة، العروس</b><div class="tx">«يدّتي عطت جويس الظرف الخميس العصر وآنا واقفة يمّها. قالت لها "عشان تحوّلين لأمج". عمي ما يبي يسمع. الله يسامحهم.»</div></div>
@@ -962,8 +962,10 @@ html.tv body{zoom:1.18}
 
     <!-- the building -->
     <rect class="mp-bld" x="28" y="204" width="344" height="252" rx="5"/>
-    <rect class="mp-room" x="36" y="212" width="328" height="78" rx="4"/>
-    <text class="mp-rm" x="200" y="246">الصالة</text>
+    <rect class="mp-room" x="120" y="212" width="244" height="78" rx="4"/>
+    <text class="mp-rm" x="242" y="246">الصالة</text>
+    <rect class="mp-room" x="36" y="212" width="76" height="78" rx="4"/>
+    <text class="mp-rm" x="74" y="246">المطبخ</text>
     <rect class="mp-table" x="166" y="252" width="68" height="26" rx="4"/>
     <text class="mp-sm" x="200" y="269">الطاولة</text>
 
@@ -997,7 +999,7 @@ html.tv body{zoom:1.18}
 </div>
 <div id="t6" hidden>
       <h2>🚓 الميدان</h2>
-      <p class="note-tech">لما تعرفون وين راح الذهب، الدورية تروح. هذا اللي يصير هناك.</p>
+      <p class="note-tech">أول ما تطلّعون وين راح الذهب، الدورية تتحرّك — وكل اللي يصير هناك ينزل هنا.</p>
       <div class="field" id="fieldBox">
         <div class="h" id="fieldLocked">🔒 ما عندنا عنوان لين الحين. دوروا بالموبايل: وين راحت السيارة البيضا بعد ٣ الفجر؟</div>
         <div id="fieldOpen" hidden>
@@ -1028,8 +1030,8 @@ html.tv body{zoom:1.18}
       <div class="sam-date">الجمعة ٣ أكتوبر</div>
       <div class="notif"><span style="width:40px;height:40px;border-radius:50%;background:#2fcc5f;display:grid;place-items:center;font-size:20px">💬</span><div><b>شهد</b><span>عمي والله ماما عطتها المبلغ…</span></div><small>٨:٥٠ ص</small></div>
       <div class="notif"><span style="width:40px;height:40px;border-radius:50%;background:#444;display:grid;place-items:center;font-size:20px">📦</span><div><b>Easy Storage</b><span>✅ تم فتح الوحدة B-17 · بوابة ٢</span></div><small>٣:٤٢ ص</small></div>
-      <div class="pat-hint">ارسموا النقشة. تلميح بوعبدالعزيز للشرطة: «شكل النقشة أول حرف من اسم أمي».</div>
       <svg class="pat" id="pat" viewBox="0 0 300 300"><polyline id="patLine" points="" fill="none" stroke="#5ac8fa" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg>
+      <div class="pat-hint">بوعبدالعزيز سلّم موبايله وراح المخفر يكمّل أقواله — ما نقدر ننطره. كل اللي قاله للمحقق: «النقشة أول حرف من اسم اللي الشاليه باسمها».</div>
       <div class="pat-msg" id="patMsg"></div>
     </div>
   </div></div>
@@ -1205,7 +1207,7 @@ const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='6204';
 const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,torch1:false,voice:false,seenStorage:false,corridor:false,chase:false,contract:false,door:false,call:false,timeline:false,fahad:0,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
-const STEPS=[['unlocked','فتح الموبايل'],['torch1','سناب فهد'],['voice','الفويس نوت'],['call','مكالمة رضا'],['timeline','ترتيب الليلة'],['seenStorage','وين راح الذهب'],['corridor','الممر'],['chase','المطاردة'],['door','الصورة التالفة']];
+const STEPS=[['unlocked','فتح الموبايل'],['torch1','سناب فهد'],['voice','الفويس نوت'],['call','المكالمة'],['timeline','ترتيب الليلة'],['seenStorage','وين راح الذهب'],['corridor','الممر'],['chase','المطاردة'],['door','الصورة التالفة']];
 const PROG_LIVE=["file", "lock", "phone", "torch", "run", "door", "solve"];
 function progOpen(v){const el=$('#prog');if(!el)return;
  const open=v===undefined?!el.classList.contains('open'):!!v;
@@ -1279,10 +1281,10 @@ function trySolve(){if(!S.door){sheet('<h3>🔒 مو الحين</h3><div class="
 
 /* ---- evidence grid (file) ---- */
 const EV=[
- {id:'plaque',n:'لوحة مدخل الشاليه',cap:'«شاليه أم خالد · ١٩٩٨». اللوحة مثبّتة على ارتفاع ١٧٠ سم عند باب غرفة الجدّة.'},
+ {id:'plaque',n:'اللوحة النحاسية · باب غرفة الجدّة',cap:'«شاليه أم خالد · ١٩٩٨». مثبّتة على ارتفاع ١٧٠ سم بالضبط.'},
  {id:'smudge',n:'شاشة موبايل بوعبدالعزيز',cap:'أثر الأصابع على الشاشة — مسار النقشة واضح لو ميّلتوا الصورة.'},
  {id:'gold',n:'الذهب على الطاولة · ٨:٣٠ م',cap:'الطقم كامل جدّام العايلة كلها. آخر مرة ينشاف.'},
- {id:'safe',n:'التيجوري · الجمعة ٧:٣٥ ص',cap:'فاضي. لا كسر ولا خدوش — فُتحت بمفتاح.'},
+ {id:'safe',n:'التيجوري · الجمعة ٧:٣٥ ص',cap:'فاضي. لا كسر ولا خدوش — انفتح بمفتاح.'},
  {id:'envelope',n:'الظرف من غرفة جويس · ٧:٥٠ ص',cap:'٢٠٠ دينار. منى «لقته». (الجدّة تقول هي اللي عطته.)'},
  {id:'receipt',n:'إيصال جمعية الخيران',cap:'الجمعة ١٢:٤٨ ص — ثلج ×٤، ماي ×٢. بطاقة رضا.'},
  {id:'cam_gate_0031',n:'كاميرا البوابة · ١٢:٣١ ص',cap:'كامري رضا تطلع.'},
@@ -1309,7 +1311,7 @@ const MPINS=[
  {n:4,x:60,y:315,t:'ممر الغرف · كاميرا',need:null,
   rows:[['٢:٣٥ ص','شخص قصير، قميص فاتح، يدخل غرفة الجدّة. راسه <b>تحت</b> اللوحة. الصورة ضبابية.'],
         ['٣:٠٦ ص','جويس بالممر وبإيدها شي — كوب؟ الصورة مو واضحة.']],
-  note:'هذا الدليل اللي اتهموا جويس فيه.'},
+  note:'الكاميرا حطّها سعد على الممر يراقب أمه — ٧٨ سنة وتقوم بالليل. وهذا الدليل اللي اتهموا جويس فيه.'},
  {n:5,x:52,y:356,t:'غرفة الجدّة · التيجوري',need:null,
   rows:[['عند الباب','اللوحة النحاسية مثبّتة على ارتفاع ١٧٠ سم.'],
         ['٧:٣٥ ص','التيجوري فاضي. لا كسر ولا خدوش — انفتح بمفتاح.']],
