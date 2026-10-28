@@ -1696,6 +1696,11 @@ const SUS=[['reza','رضا','السايق'],['abdullah','عبدالله','الح
 const pick=(el,key)=>{$(el).innerHTML=SUS.map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
 pick('#pickWho','who');pick('#pickWhy','why');
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
+/* A wrong accusation used to be one word — «no» — on two answers at once,
+   so a team that had half of it right could not tell which half. Each answer
+   is marked on its own now; the written clue stays as it was. */
+const accMark=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;`
+  +`color:${ok?'#5bc47a':'#e06a5a'}"><b style="font-size:16px">${ok?'✓':'✗'}</b><span>${label}</span></div>`;
 const WRONG={joyce:'جويس كانت بالممر ٣:٠٦ صح، ومحتاجة فلوس صح… بس الذهب كان طالع من البوابة من ٣:٠٢ بالسيارة البيضا. وجويس ما عندها سيارة ولا مفتاح تيجوري. منو عنده المفتاح وكان صاحي؟',bu:'المبلّغ نايم من ١١:٣٠، وموبايله يثبت. دوروا على اللي ما كان نايم.',saad:'سعد نايم مع منى من ١٠:٣٠. منو اللي كاميرا الحوش وصورة فهد شافته صاحي؟',mona:'منى فتحت التيجوري الصبح جدّام الكل — لو هي اللي أخذته، ما كانت تفتحها قدامهم. ومنو دخل الغرفة ٢:٣٥؟'};
 $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='reza'&&S.why==='abdullah';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120*Math.min(3,S.wrong+1);S.wrong++;save();let msg;
@@ -1703,7 +1708,9 @@ $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='reza'&&S.why==='ab
   else if(S.who==='reza')msg='رضا فتح التيجوري، صح. بس هو ما يبي الذهب لنفسه — منو اللي خلّاه؟ شوفوا منو كان معاه الحوش ١١:٣٥، ومنو صوته بالفويس نوت، ومنو اسمه بالعقد.';
   else if(S.why==='abdullah')msg='عبدالله وراها، صح. بس منو اللي دخل الغرفة فعلياً؟ المفتاح الاحتياطي مع منو؟ وكاميرا الممر ٢:٣٥.';
   else msg=WRONG[S.who]||WRONG[S.why]||'مو هذا. ارجعوا للكاميرات والمواعيد.';
-  fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +${['دقيقتين','٤ دقايق','٦ دقايق'][Math.min(2,S.wrong-1)]}.</b><br>${msg}<div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
+  fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +${['دقيقتين','٤ دقايق','٦ دقايق'][Math.min(2,S.wrong-1)]}.</b>`
+    +accMark(S.who==='reza','منو أخذ الذهب')+accMark(S.why==='abdullah','ومنو خلّاه يسوّيها')
+    +`<div style="margin-top:6px">${msg}</div><div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
 
 /* ---- reveal ---- */
 

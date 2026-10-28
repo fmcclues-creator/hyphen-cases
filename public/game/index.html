@@ -1689,13 +1689,41 @@ function sel(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who
 $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(b){S.who=b.dataset.who;sel()}};
 if(S.where&&S.where.includes('/')){const [q,s2]=S.where.split('/');$('#plotQ').value=q;$('#plotS').value=s2}
 if(S.when){const m=S.when.match(/^(am|pm)(\d+):(\d+)$/);if(m){$('#whAP').value=m[1];$('#whH').value=m[2];$('#whM').value=m[3]}}
+/* Three answers went in and one flat «no» came back, naming only the first
+   thing that was wrong. A team with the man and the place right, a minute out
+   on a timestamp they had to read off a dark frame, learned nothing from
+   submitting — one of them submitted thirty-two times, another gave up with
+   the whole case solved. Each answer is now marked on its own, the clue for a
+   wrong one sharpens the more they try, and the way out appears only once
+   they have really been stuck. */
+const WHEN_MIN=w=>{const m=/^(am|pm)(\d+):(\d+)$/.exec(w||'');
+  return m?(m[1]==='pm'?720:0)+((+m[2])%12)*60+(+m[3]):null};
+const WHEN_WANT=21*60+14;                       /* ٩:١٤ م */
+const okWhen=()=>{const v=WHEN_MIN(S.when);return v!==null&&Math.abs(v-WHEN_WANT)<=1};
+const TIME_MORE=['الجاني والمكان صح، بس الوقت غلط. الكاميرا تكتب الوقت على اللقطة… شوفوها زين.',
+ 'الوقت مكتوب على اللقطة نفسها، بالزاوية. إذا ما يبين، ارجعوا عدّلوا الإضاءة والحدّة أكثر.',
+ 'اللقطة مساءً، بين ٩ و١٠. باقي عليكم الدقيقة — وهي مكتوبة على الصورة.'];
+const LOC_MORE=['الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.',
+ 'الفاتورة مكتوب عليها العنوان كامل: الشويخ الصناعية، قطعة ورقم قسيمة. اقروه حرف حرف.'];
 $('#submit').onclick=()=>{const fb=$('#fb');
-  if(S.who!=='nasser'||S.where!=='3/12'||S.when!=='pm9:14'){S.wrong++;save();fb.hidden=false;
-    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:S.where!=='3/12'?WRONG.loc:WRONG.time)+'</div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
-    $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
-    $('#fbGive').onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
-    fb.scrollIntoView({behavior:'smooth'});return}
-  S.done=elapsed();save();reveal()};
+  const a=S.who==='nasser', b=S.where==='3/12', c=okWhen();
+  if(a&&b&&c){S.done=elapsed();save();reveal();return}
+  S.wrong++;save();
+  const row=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:6px 0;`
+    +`color:${ok?'var(--ok,#5bc47a)':'var(--tape-2,#e06a5a)'}">`
+    +`<b style="font-size:16px">${ok?'✓':'✗'}</b><span>${label}</span></div>`;
+  const tier=i=>Math.min(i.length-1,Math.max(0,S.wrong-1));
+  const msg=!a?(WRONG[S.who]||'مو هو. ارجعوا لأقوالهم وقارنوها بالموبايل.')
+           :!b?LOC_MORE[tier(LOC_MORE)]
+              :TIME_MORE[tier(TIME_MORE)];
+  fb.hidden=false;
+  fb.innerHTML=`<div style="margin-bottom:8px">${row(a,'منو وراء اختفاء خالد')}${row(b,'وين خالد الحين')}${row(c,'وقت الكاميرا')}</div>`
+    +`<div>${msg}</div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button>`
+    +(S.wrong>=3?'<button class="btn lite" id="fbGive">اكشفوا الحقيقة</button>':'')+`</div>`;
+  $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
+  const g=$('#fbGive');
+  if(g)g.onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
+  fb.scrollIntoView({behavior:'smooth'})};
 
 /* ================= REVEAL ================= */
 
