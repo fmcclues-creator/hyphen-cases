@@ -1287,7 +1287,8 @@ function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(
 $$('[data-book]').forEach(b=>b.onclick=notebook);
 function recover(){try{$('#narr').hidden=true;$('#callov').classList.remove('on');$('#modal').classList.remove('on');['au-ring','au-fahad','au-vn','au-gm','au-splash','au-narr'].forEach(i=>{const a=$('#'+i);if(a)a.pause()});tvSend('bye',{});torchStop();const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
 $$('[data-home]').forEach(b=>b.onclick=recover);
-const NARR_T=['الجمعة، ٣ أكتوبر. شاليه أم خالد، الخيران.','الساعة ٧:٣٠ الصبح، منى فتحت التيجوري… فاضي.','٨:١٠ — الشرطة. ٨:٤٥ — جويس، الشغّالة، في المخفر.','الجدّة تقول: بنتي ما تسوّيها.','العايلة رفضت تسلّم موبايلاتها… إلا بوعبدالعزيز.','موبايله بين إيديكم. عندكم ساعة.'];
+/* the captions have to say what the narrator says, or the screen argues with the voice */
+const NARR_T=['ليلة الخميس، العايلة كلها تجمّعت في شاليه الخيران.','وبالصبح… تيجوري الجدّة فاضي — ذهب شهد، اللي بتعرّس بعد شهر.','الكل يقول: الشغّالة. والجدّة تقول: لا.','موبايل بوعبدالعزيز بين إيديكم… وعندكم ساعة وحدة.'];
 function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(_callIv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*1900+1800;const step=Math.max(1500,(total-1200)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else{clearInterval(_callIv)}},step);if(a){a.onended=()=>setTimeout(end,1200)}setTimeout(end,total+2500);$('#narrSkip').onclick=end}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
 $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})));
@@ -1306,7 +1307,7 @@ const EV=[
  {id:'gold',n:'الذهب على الطاولة · ٨:٣٠ م',cap:'الطقم كامل جدّام العايلة كلها. آخر مرة ينشاف.'},
  {id:'safe',n:'التيجوري · الجمعة ٧:٣٥ ص',cap:'فاضي. لا كسر ولا خدوش — انفتح بمفتاح.'},
  {id:'envelope',n:'الظرف من غرفة جويس · ٧:٥٠ ص',cap:'٢٠٠ دينار. منى «لقته». (الجدّة تقول هي اللي عطته.)'},
- {id:'receipt',n:'إيصال جمعية الخيران',cap:'الجمعة ١٢:٤٨ ص — ثلج ×٤، ماي ×٢. بطاقة رضا.'},
+ {id:'receipt',n:'إيصال جمعية الخيران',cap:'الجمعة ١٢:٤٨ ص — ثلج ٢ كيس، ماي ١٢ قارورة. ٢.٧٥٠ د.ك، بطاقة رضا.'},
  {id:'cam_gate_0031',n:'كاميرا البوابة · ١٢:٣١ ص',cap:'كامري رضا تطلع.'},
  {id:'cam_hall_0235',n:'كاميرا الممر · ٢:٣٥ ص',cap:'شخص قصير، قميص فاتح، يدخل غرفة الجدّة. راسه <b>تحت</b> اللوحة النحاسية (١٧٠ سم). الصورة ضبابية.'},
  {id:'cam_gate_0302',n:'كاميرا البوابة · ٣:٠٢ ص',cap:'اللاند كروزر البيضا تطلع.'},
