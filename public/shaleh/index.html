@@ -933,7 +933,7 @@ html.tv body{zoom:1.18}
       <div class="sus"><div class="av"><img src="img/p_saad.jpg" alt=""></div><div><b>سعد (بوعبدالله)</b><small>الابن الثاني · ٥٠ سنة · تاجر · والد عبدالله</small><q>«آنا ومنى نمنا ١٠:٣٠. الشغّالة. ولدي ما له علاقة.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_mona.jpg" alt=""></div><div><b>منى</b><small>زوجة سعد · ٤٥ سنة · والدة شهد وعبدالله</small><q>«آنا اللي فتحت التيجوري الصبح. وآنا اللي لقيت الظرف بغرفتها.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_shahad.jpg" alt=""></div><div><b>شهد</b><small>الحفيدة · ٢٤ سنة · العروس</small><q>شاهدة: شافت الجدّة تعطي جويس المبلغ.</q></div></div>
-      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small>الحفيد · ١٩ سنة · ١٦٨ سم · صاحي طول الليل يلعب بالحوش</small><q><span id="susFahad">«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.</span></q></div></div>
+      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small id="susFahadSub">الحفيد · ١٩ سنة · شاهد</small><q><span id="susFahad">«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.</span></q></div></div>
     </div>
     <div id="t5" hidden>
       <h2>المقابلات المسجّلة</h2>
@@ -1601,12 +1601,16 @@ renderPhotos();
 /* فهد told the police «ما شفت شي» on the Friday morning. What he actually
    saw — and who has a hold on him — only comes out after he rings his uncle,
    so his second statement appears then, not in the file from the start. */
-function renderFahad(){const v=$('#ivFahad'),nt=$('#ivNote'),st=$('#susFahad');
+function renderFahad(){const v=$('#ivFahad'),nt=$('#ivNote'),st=$('#susFahad'),sb=$('#susFahadSub');
  const out=S.fahad>=2;
  if(v)v.hidden=!out; if(nt)nt.hidden=!out;
+ if(sb)sb.innerHTML=out
+  ?'الحفيد · ١٩ سنة · <b>١٦٨ سم</b> · صاحي طول الليل بالحوش · <b style="color:#7a1f1a">⚠️ تحوّل من شاهد إلى مشتبه</b>'
+  :'الحفيد · ١٩ سنة · شاهد';
  if(st)st.textContent=out
   ?'«صوّرت الحوش ودزّيت الصورة لعمي. ما نمت إلا بعد الفير.» — غيّر أقواله بعد مكالمته.'
-  :'«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.'}
+  :'«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.';
+ if(typeof selPick==='function'&&$('#pickWho')){pick('#pickWho','who');pick('#pickWhy','why');selPick()}}
 function renderLab(){const el=$('#labCard');if(!el)return;
  if(S.voice){el.innerHTML='<b>🎧 تسجيل صوتي · واتساب رضا · ١:٥٥ ص</b>'
    +'<div class="note-tech" style="margin-top:6px">✅ طابقنا الصوت الثاني مع عيّنات المقابلات. '
@@ -1724,7 +1728,7 @@ function openB17(){S.door=true;save();stageAt('solve');setTimeout(()=>{sheet(`<h
 
 /* ---- solve ---- */
 const SUS=[['reza','رضا','السايق'],['abdullah','عبدالله','الحفيد'],['saad','سعد','الابن الثاني'],['mona','منى','زوجة سعد'],['joyce','جويس','العاملة'],['bu','بوعبدالعزيز','المبلّغ'],['fahad','فهد','الحفيد الصغير']];
-const pick=(el,key)=>{$(el).innerHTML=SUS.map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
+const pick=(el,key)=>{$(el).innerHTML=SUS.filter(s=>s[0]!=='fahad'||S.fahad>=2).map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
 pick('#pickWho','who');pick('#pickWhy','why');
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
 /* A wrong accusation used to be one word — «no» — on two answers at once,
