@@ -933,16 +933,18 @@ html.tv body{zoom:1.18}
       <div class="sus"><div class="av"><img src="img/p_saad.jpg" alt=""></div><div><b>سعد (بوعبدالله)</b><small>الابن الثاني · ٥٠ سنة · تاجر · والد عبدالله</small><q>«آنا ومنى نمنا ١٠:٣٠. الشغّالة. ولدي ما له علاقة.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_mona.jpg" alt=""></div><div><b>منى</b><small>زوجة سعد · ٤٥ سنة · والدة شهد وعبدالله</small><q>«آنا اللي فتحت التيجوري الصبح. وآنا اللي لقيت الظرف بغرفتها.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_shahad.jpg" alt=""></div><div><b>شهد</b><small>الحفيدة · ٢٤ سنة · العروس</small><q>شاهدة: شافت الجدّة تعطي جويس المبلغ.</q></div></div>
-      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small>الحفيد · ١٩ سنة · ١٦٨ سم · صاحي طول الليل يلعب بالحوش</small><q>«آنا صوّرت الحوش ودزّيت الصورة لعمي. ما عرفت منو هم، الدنيا ظلمة. ما نمت إلا بعد الفجر.»</q></div></div>
+      <div class="sus"><div class="av" style="font-size:28px;display:grid;place-items:center">🎮</div><div><b>فهد</b><small>الحفيد · ١٩ سنة · ١٦٨ سم · صاحي طول الليل يلعب بالحوش</small><q><span id="susFahad">«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.</span></q></div></div>
     </div>
     <div id="t5" hidden>
       <h2>المقابلات المسجّلة</h2>
       <p class="note-tech">أقوال الأسرة أُخذت في ديوانية الشاليه الجمعة الصبح. أقوال العاملة في مخفر الخيران.</p>
+      <p class="note-tech" id="ivNote" hidden style="color:#7a1f1a">⚠️ أُضيفت أقوال ثانية لفهد بعد مكالمته.</p>
       <div class="ivg">
         <div class="iv"><div class="ivh"><img src="img/p_joyce.jpg" alt=""><div><b>جويس</b><small>العاملة · في المخفر · ٠:٣٠</small></div></div><video playsinline controls preload="none" poster="video/iv_joyce.jpg" src="video/iv_joyce.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_reza.jpg" alt=""><div><b>رضا</b><small>السايق · ٠:٢٣</small></div></div><video playsinline controls preload="none" poster="video/iv_reza.jpg" src="video/iv_reza.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_abdullah.jpg" alt=""><div><b>عبدالله</b><small>الحفيد · ٠:٢٠</small></div></div><video playsinline controls preload="none" poster="video/iv_abdullah.jpg" src="video/iv_abdullah.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_saad.jpg" alt=""><div><b>سعد</b><small>الابن الثاني · ٠:٢١</small></div></div><video playsinline controls preload="none" poster="video/iv_saad.jpg" src="video/iv_saad.mp4"></video></div>
+        <div class="iv" id="ivFahad" hidden><div class="ivh"><span class="av" style="width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#2a3344;font-size:20px">🎮</span><div><b>فهد</b><small>الحفيد · أقوال ثانية · بعد مكالمته بعمه</small></div></div><video playsinline controls preload="none" poster="video/iv_fahad.jpg" src="video/iv_fahad.mp4"></video></div>
         <div class="iv"><div class="ivh"><img src="img/p_mona.jpg" alt=""><div><b>منى</b><small>زوجة سعد · ٠:١٩</small></div></div><video playsinline controls preload="none" poster="video/iv_mona.jpg" src="video/iv_mona.mp4"></video></div>
       </div>
     </div>
@@ -1293,7 +1295,7 @@ const NARR_T=['ليلة الخميس، العايلة كلها تجمّعت في
 function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(_callIv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*1900+1800;const step=Math.max(1500,(total-1200)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else{clearInterval(_callIv)}},step);if(a){a.onended=()=>setTimeout(end,1200)}setTimeout(end,total+2500);$('#narrSkip').onclick=end}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
 $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})));
-$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();if(b.dataset.tab==='t3'){try{renderLab()}catch(e){}}if(b.dataset.tab==='t8'){try{if(!tlTry())renderTimeline()}catch(e){}}['t1','t2','t3','t4','t5','t6','t7','t8'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();if(b.dataset.tab==='t3'){try{renderLab()}catch(e){}}if(b.dataset.tab==='t5'){try{renderFahad()}catch(e){}}if(b.dataset.tab==='t8'){try{if(!tlTry())renderTimeline()}catch(e){}}['t1','t2','t3','t4','t5','t6','t7','t8'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
 $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
 $('#toFile1').onclick=$('#toFile2').onclick=$('#doorBack').onclick=()=>show('file');
 $('#backToPhone').onclick=()=>show('phone');
@@ -1595,6 +1597,15 @@ renderPhotos();
 /* notes */
 /* the voice match is lab work on a seized recording — it sat as a button
    inside the chat, which read like a feature of WhatsApp */
+/* فهد told the police «ما شفت شي» on the Friday morning. What he actually
+   saw — and who has a hold on him — only comes out after he rings his uncle,
+   so his second statement appears then, not in the file from the start. */
+function renderFahad(){const v=$('#ivFahad'),nt=$('#ivNote'),st=$('#susFahad');
+ const out=S.fahad>=2;
+ if(v)v.hidden=!out; if(nt)nt.hidden=!out;
+ if(st)st.textContent=out
+  ?'«صوّرت الحوش ودزّيت الصورة لعمي. ما نمت إلا بعد الفير.» — غيّر أقواله بعد مكالمته.'
+  :'«ما شفت شي.» — أقوال مختصرة، والشرطة ما ضغطت عليه.'}
 function renderLab(){const el=$('#labCard');if(!el)return;
  if(S.voice){el.innerHTML='<b>🎧 تسجيل صوتي · واتساب رضا · ١:٥٥ ص</b>'
    +'<div class="note-tech" style="margin-top:6px">✅ طابقنا الصوت الثاني مع عيّنات المقابلات. '
@@ -1634,7 +1645,7 @@ const CALLTX='عمي… آنا ما قلت لأحد. الساعة ١١ ونص ش
 let _callIv=null;
 function ring(){clearInterval(_callIv);if($('#rcall').classList.contains('on')){setTimeout(ring,6000);return}const o=$('#callov');o.classList.add('on');$('#callSt').textContent='مكالمة واردة…';$('#callTx').textContent='';$('#callAns').hidden=false;$('#callEnd').hidden=true;const rg=$('#au-ring');rg.currentTime=0;rg.play().catch(()=>{});const rv=setInterval(()=>{if(!o.classList.contains('on')||$('#callAns').hidden){clearInterval(rv);rg.pause();rg.currentTime=0}},300);
   $('#callAns').onclick=()=>{$('#callAns').hidden=true;$('#callEnd').hidden=false;$('#callSt').textContent='متصل · يوشوش';const w=CALLTX.split(' ');let i=0;const fa=$('#au-fahad');fa.currentTime=0;
-    const done=()=>{clearInterval(_callIv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.fahad=2;save();addCallNote()},1500)};
+    const done=()=>{clearInterval(_callIv);$('#callTx').textContent=CALLTX;$('#callSt').textContent='انتهت المكالمة';setTimeout(()=>{o.classList.remove('on');S.fahad=2;save();addCallNote();try{renderFahad()}catch(e){}},1500)};
     let step=380;const go=()=>{if(fa.duration&&isFinite(fa.duration))step=Math.max(150,(fa.duration*1000-600)/w.length)};go();fa.onloadedmetadata=go;fa.onended=done;fa.play().catch(()=>{});
     _callIv=setInterval(()=>{$('#callTx').textContent=w.slice(0,++i).join(' ')},step)};
   $('#callEnd').onclick=()=>{clearInterval(_callIv);$('#au-fahad').pause();$('#au-ring').pause();o.classList.remove('on');S.fahad=2;save();addCallNote()}}
@@ -1725,8 +1736,11 @@ $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='reza'&&S.why==='ab
   S.pen+=120*Math.min(3,S.wrong+1);S.wrong++;save();let msg;
   if(S.who==='abdullah'&&S.why==='reza')msg='قريب… بس بالعكس. منو اللي دخل غرفة الجدّة ٢:٣٥ (شخص قصير، قميص فاتح)؟ ومنو اللي كان يضغط عليه بالحوش ويقول «ما لك خيار»؟';
   else if(S.who==='reza')msg='رضا فتح التيجوري، صح. بس هو ما يبي الذهب لنفسه — منو اللي خلّاه؟ شوفوا منو كان معاه الحوش ١١:٣٥، ومنو صوته بالفويس نوت، ومنو اسمه بالعقد.';
+  /* when the named suspect is wrong, say why THAT person is wrong — the ticks
+     above already tell them whether the second answer landed */
+  else if(WRONG[S.who])msg=WRONG[S.who];
   else if(S.why==='abdullah')msg='عبدالله وراها، صح. بس منو اللي دخل الغرفة فعلياً؟ المفتاح الاحتياطي مع منو؟ وكاميرا الممر ٢:٣٥.';
-  else msg=WRONG[S.who]||WRONG[S.why]||'مو هذا. ارجعوا للكاميرات والمواعيد.';
+  else msg=WRONG[S.why]||'مو هذا. ارجعوا للكاميرات والمواعيد.';
   fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +${['دقيقتين','٤ دقايق','٦ دقايق'][Math.min(2,S.wrong-1)]}.</b>`
     +accMark(S.who==='reza','منو دخل الغرفة')+accMark(S.why==='abdullah','ومنو كان وراه')
     +`<div style="margin-top:6px">${msg}</div><div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
@@ -2129,7 +2143,7 @@ if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){if(S.fahad===1)window.__ringLater=true; restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes', 'strips': 'chats', 'voice': 'chats'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
 syncStart();
 })();
-function restoreUI(){try{renderLab()}catch(e){}if(S.fahad>=2)addCallNote();if(S.call)addRezaNote();try{renderTimeline()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
+function restoreUI(){try{renderLab();renderFahad()}catch(e){}if(S.fahad>=2)addCallNote();if(S.call)addRezaNote();try{renderTimeline()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
 
 
 /* ---- slide-in menu ---- */
