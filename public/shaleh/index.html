@@ -1031,8 +1031,7 @@ html.tv body{zoom:1.18}
           <div id="fieldCall" hidden><p>قبل ما توصل الدورية بيته — اتصلوا عليه من <b>هاتف المخفر</b>. اطلبوا الرقم بنفسكم.</p><button class="btn" id="goSalem">☎️ هاتف المخفر</button></div>
           <div id="fieldSc" hidden></div>
           <div id="fieldChase" hidden><p>سالم سكّر الخط… والدورية اللي واقفة عند بيته شافته يطلع يركض من الباب الخلفي صوب سيارته!</p><button class="btn" id="goChase">🏃 لحقوه!</button></div>
-          <div id="fieldCorridor" hidden><p>✅ مسكناه قبل ما يركب. بجيبه ورقة: <b>«مخزن الشاطئ القديم · B3»</b>. وباقي يحلف: «صندوق مقفول، هو قفّله جدّامي، وما أعرف كوده» — وما يقول منو. الدورية بالمخزن — والكهرباء مقطوعة.</p><button class="btn" id="goCorridor">🔦 شغّلوا الكشّاف بالمخزن</button></div>
-          <div id="fieldDoor" hidden><p>✅ لقينا الصندوق المعدني على الرف <b>B3</b>، وورقة ممزّقة بخط يد. القفل ٤ أرقام — وسالم ما يعرفها. منو كتب الورقة؟</p><button class="btn" id="goDoor">🔐 فتحوا القفل</button></div>
+          <div id="fieldDoor" hidden><p>✅ مسكناه قبل ما يركب. بجيبه ورقة: <b>«مخزن الشاطئ القديم · B3»</b>. وباقي يحلف: «صندوق مقفول، هو قفّله جدّامي، وما أعرف كوده» — وما يقول منو.</p><p>الدورية راحت المخزن: الصندوق المعدني على الرف <b>B3</b>، قفل ٤ أرقام. وجنبه ورقة ممزّقة بخط يد:</p><figure class="ev" style="max-width:260px;margin:6px auto"><img src="img/note_b3.jpg" alt="" onerror="this.closest('figure').remove()"><figcaption><b>«أرقام الأقفال: آخر ٤ من أول فاتورة»</b></figcaption></figure><p>منو كتبها؟ وأي فاتورة؟</p><button class="btn" id="goDoor">🔐 فتحوا القفل</button></div>
           <div id="fieldFound" hidden><p>✅ الصندوق انفتح. العلبة… والذهب كامل.</p><button class="btn" id="goSolveF">🔍 حل القضية</button></div>
         </div>
       </div>
@@ -1230,10 +1229,10 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261029';
 const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='4729';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
-const STEPS=[['unlocked','فتح الموبايل'],['clips','فيديو المسبح'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['corridor','المخزن'],['door','القفل']];
+const STEPS=[['unlocked','فتح الموبايل'],['clips','فيديو المسبح'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];
 const PROG_LIVE=["file", "lock", "phone", "torch", "run", "door", "solve", "station"];
 function progOpen(v){const el=$('#prog');if(!el)return;
  const open=v===undefined?!el.classList.contains('open'):!!v;
@@ -1399,11 +1398,11 @@ function mpDraw(){
 /* ---- field tab ---- */
 function refreshField(){try{mpDraw()}catch(e){}
  $('#fieldLocked').hidden=!!S.timeline;$('#fieldPlate').hidden=!(S.timeline&&!S.plate);$('#fieldOpen').hidden=!S.plate;
- $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldChase').hidden=!(S.scall&&!S.chase);try{renderScLog()}catch(e){}$('#fieldCorridor').hidden=!(S.chase&&!S.corridor);$('#fieldDoor').hidden=!(S.corridor&&!S.door);$('#fieldFound').hidden=!S.door;
+ $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldChase').hidden=!(S.scall&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
  if(S.timeline&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
 $('#goPlate').onclick=()=>{if(S.plate)return;S.plate=true;save();stageAt('scall');SFX.ok();refreshField();
  setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا رقمه بعد. الدورية طلعت له — اتصلوا عليه من هاتف المخفر قبل ما توصل.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
-$('#goCorridor').onclick=()=>torchStart('storeroom');$('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$('#stBack').onclick=()=>{show('file');$('.tabs button[data-tab=t6]').click()};$('#goDoor').onclick=()=>show('door');
+$('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$('#stBack').onclick=()=>{show('file');$('.tabs button[data-tab=t6]').click()};$('#goDoor').onclick=()=>show('door');
 
 
 /* ---- pattern lock ---- */
@@ -1600,8 +1599,8 @@ function tvCtrl(on){const pad=$('#tpad');pad.hidden=!on;$('#tdark').style.visibi
 
 /* ---- torch scenes ---- */
 const SCENES={
- rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:62,y:42,r:16,l:'سيارة سودا — جي إم سي يوكن. مو من سيارات العايلة'},{x:27,y:30,r:11,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:55,y:62,r:8,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'timeline',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'},
- storeroom:{dark:'storeroom_dark',lit:'storeroom_lit',intro:'مخزن الشاطئ القديم — الكهرباء مقطوعة. دوروا على الرف B3… وعلى أي ورقة.',spots:[{x:72,y:15,r:12,l:'الرف B3 — صندوق معدني بقفل أربع أرقام'},{x:58,y:88,r:10,l:'ورقة ممزّقة بخط يد: «أرقام الأقفال: آخر ٤ من أول فاتورة»'}],done:'لقينا الصندوق على الرف B3 — قفل أربع أرقام. وورقة ممزّقة بخط يد: «أرقام الأقفال: آخر أربع من أول فاتورة». أول فاتورة… حق منو؟ ووين شفتوها؟ ✅',flag:'corridor',next:'door',tvTitle:'مخزن الشاطئ القديم · الكهرباء مقطوعة'}};
+ rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:62,y:42,r:16,l:'سيارة سودا — جي إم سي يوكن. مو من سيارات العايلة'},{x:27,y:30,r:11,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:55,y:62,r:8,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'timeline',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'}
+};
 let T=null;
 function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
   if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
@@ -1609,7 +1608,7 @@ function spotAt(s){const st=$('#tstage');if(!st||!T)return {x:s.x,y:s.y};const W
   if(W/H>ar){const dh=W/ar,oy=(H-dh)/2;return {x:s.x,y:(oy+s.y/100*dh)/H*100}}
   const dw=H*ar,ox=(W-dw)/2;return {x:(ox+s.x/100*dw)/W*100,y:s.y}}
 function mark(s){const p=spotAt(s);$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$('.tabs button[data-tab=t6]').click()}else{show('file');$('.tabs button[data-tab=t3]').click();if(S.torch1&&!S.timeline)setTimeout(()=>sheet('<h3>🕒 صار عندكم كل الأوقات</h3><div class="h">السيارة الغريبة ٤:٠٥، وفهد مو بالمسبح ٣:٥٢، ورضا برّا. افتحوا تبويب <b>🕒 خط اليوم</b> ورتّبوا اليوم من الأول للآخر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
+function torchExit(){tvSend('bye',{});torchStop();{show('file');$('.tabs button[data-tab=t3]').click();if(S.torch1&&!S.timeline)setTimeout(()=>sheet('<h3>🕒 صار عندكم كل الأوقات</h3><div class="h">السيارة الغريبة ٤:٠٥، وفهد مو بالمسبح ٣:٥٢، ورضا برّا. افتحوا تبويب <b>🕒 خط اليوم</b> ورتّبوا اليوم من الأول للآخر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
@@ -1883,7 +1882,7 @@ $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('corridor');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يركب… <b>سالم!</b><br>بجيبه ورقة: «مخزن الشاطئ القديم · B3». ويحلف: «صندوق مقفول، هو قفّله جدّامي… والله ما أعرف كوده» — وما يقول منو.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يركب… <b>سالم!</b><br>بجيبه ورقة: «مخزن الشاطئ القديم · B3». ويحلف: «صندوق مقفول، هو قفّله جدّامي… والله ما أعرف كوده» — وما يقول منو.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
 function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ ركب سيارته وطلع. +دقيقتين. الدورية الثانية سدّت عليه الشارع ورجّعته — مرة ثانية، اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */
@@ -1895,8 +1894,7 @@ const HINTS={
  scall:['المرور عطونا رقم سالم — بتبويب 🚓 الميدان. من <b>هاتف المخفر</b> اطلبوا الرقم بنفسكم: الرقم الغلط ما يرن. أول مرة بيسكّر بوجهكم — اتصلوا مرة ثانية.','اسألوه بهدوء: وين كان، شنو أخذ، ومنو قفّل الصندوق. لو اتهمتوه بيسكّر ويركض — بتوصلون للمطاردة بس بدون معلوماته، وبدقيقة زيادة.','الجواب: الرقم <span dir="ltr">66047291</span>. وهو يعترف إنه استلم صندوق مقفول من «واحد» ما يبي يسمّيه، وإن هاللي عطاه قفّله جدّامه وما عطاه الكود.'],
  plate:['اللوحة اللي لقيتوها بالكشّاف — المرور يقدر يقول منو صاحبها. تبويب <b>🚓 الميدان</b> بالملف.','اضغطوا «اطلبوا بيانات اللوحة».','الجواب: سالم، ٣١ سنة، الفنطاس — مو من العايلة. الدورية راحت له.'],
  chase:['سالم طلع يركض من الباب الخلفي. اضغطوا «لحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يركب سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
- corridor:['المخزن القديم بالشاطئ والكهرباء مقطوعة. من تبويب الميدان شغّلوا الكشّاف ودوروا على الرف B3… وعلى أي ورقة.','الصندوق فوق على الرف يمين. وفيه ورقة ممزّقة على الأرض جدّام الرف.','الجواب: الصندوق المعدني بقفل ٤ أرقام، وورقة بخط يد: «أرقام الأقفال: آخر أربع من أول فاتورة». منو بالعايلة عنده شغل وفواتير؟'],
- door:['«آخر أربع من أول فاتورة» — منو عنده شغل وفواتير؟ فهد طرّش أول فاتورة حق معرضه لأبوه يوم طلب فلوس: واتساب ← فهد ← ١٢ سبتمبر.','رقم الفاتورة <span dir="ltr">Q-4729</span>. آخر أربع أرقام.','الجواب: الكود ٤٧٢٩.'],
+ door:['الورقة اللي لقتها الدورية جنب الصندوق — بتبويب الميدان: «آخر أربع من أول فاتورة». منو عنده شغل وفواتير؟ فهد طرّش أول فاتورة حق معرضه لأبوه يوم طلب فلوس: واتساب ← فهد ← ١٢ سبتمبر.','رقم الفاتورة <span dir="ltr">Q-4729</span>. آخر أربع أرقام.','الجواب: الكود ٤٧٢٩.'],
  solve:['ثلاث أسئلة: منو فتح التيجوري وأخذ الذهب؟ منو استلم الصندوق عند البوابة الخلفية وخشّه؟ وشلون انفتح التيجوري بدون كسر — منو كان يعرف الكود؟','اللي اختفى من المسبح ٣:٥٢، واللي كان يساعد أبوه يوم تركيب التيجوري، واللي مديون — واللي فاتورته فتحت القفل. واللي سيارته ٤١٨٧٢.','فهد أخذه. سالم ساعده. وفهد عرف الكود يوم ساعد أبوه يركّب التيجوري بالصيف — بواتساب بوعبدالرزاق مع عبدالرزاق، ١٤ يوليو.']};
 const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
 /* teams kept getting stuck not on the puzzle but on finding it. this says
@@ -1908,10 +1906,9 @@ const WHERE={unlocked:'الملف: محضر البلاغ و«عن بوعبدال
  plate:'الملف ← 🚓 الميدان ← بيانات اللوحة',
  scall:'الملف ← 🚓 الميدان ← هاتف المخفر',
  chase:'الملف ← 🚓 الميدان',
- corridor:'الملف ← 🚓 الميدان',
- door:'القفل بالملف ← 🚓 الميدان · والكود من واتساب ← فهد ← الفاتورة'};
-const HNAME={lock:'فتح الموبايل',clips:'فيديو المسبح',torch1:'الكاميرا الخلفية',timeline:'ترتيب اليوم',plate:'صاحب السيارة',scall:'مكالمة سالم',chase:'المطاردة',corridor:'المخزن',door:'القفل',solve:'الاتهام'};
-function stage(){if(!S.unlocked)return 'lock';if(!S.clips)return 'clips';if(!S.torch1)return 'torch1';if(!S.timeline)return 'timeline';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.chase)return 'chase';if(!S.corridor)return 'corridor';if(!S.door)return 'door';return 'solve'}
+ door:'القفل بالملف ← 🚓 الميدان · الورقة هناك، والفاتورة بواتساب ← فهد'};
+const HNAME={lock:'فتح الموبايل',clips:'فيديو المسبح',torch1:'الكاميرا الخلفية',timeline:'ترتيب اليوم',plate:'صاحب السيارة',scall:'مكالمة سالم',chase:'المطاردة',door:'القفل',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.clips)return 'clips';if(!S.torch1)return 'torch1';if(!S.timeline)return 'timeline';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 /* The countdown was printed once and never touched again, so it held the same
@@ -2002,12 +1999,12 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['clips','فيديو المسبح'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['corridor','المخزن'],['door','القفل']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
+function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['clips','فيديو المسبح'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
 /* ================= TEAM SYNC (several phones, one code) ================= */
-const SYNC_B=['unlocked','clips','torch1','timeline','plate','scall','chase','corridor','door'],SYNC_M=['pen','wrong','done','total'];
+const SYNC_B=['unlocked','clips','torch1','timeline','plate','scall','chase','door'],SYNC_M=['pen','wrong','done','total'];
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
@@ -2104,7 +2101,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
-const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run','station'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
