@@ -928,7 +928,7 @@ html.tv body{zoom:1.18}
       <p class="note-tech">الكل كان بالشاليه الجمعة، والكل باقي فيه الحين.</p>
       <div class="sus"><div class="av"><img src="img/p_bu.jpg" alt="" onerror="this.style.display='none'"></div><div><b>بوعبدالرزاق (عبدالعزيز)</b><small>الابن الأكبر · ٥٥ سنة · صاحب الموبايل · اشترى التيجوري لأمه</small><q>«كنت برّا مع العايلة. ما انتبهت لشي غريب… هذا تلفوني، خذه.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_fahad.jpg" alt="" onerror="this.style.display='none'"></div><div><b>فهد</b><small>ولد بوعبدالرزاق الصغير · ٢٩ سنة · شريك بمعرض سيارات</small><q>«كنت مع العيال برّا. إي، دشّيت آخذ شاحني ورديت على طول. شفيها؟»</q></div></div>
-      <div class="sus"><div class="av"><img src="img/p_razzag.jpg" alt="" onerror="this.style.display='none'"></div><div><b>عبدالرزاق</b><small>ولد بوعبدالرزاق الكبير · ٣١ سنة · يدرس الماجستير بلندن · مو بالشاليه</small><q>اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد.</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_razzag.jpg" alt="" onerror="this.style.display='none'"></div><div><b>عبدالرزاق</b><small>ولد بوعبدالرزاق الكبير · ٣١ سنة · يدرس الماجستير بلندن · مو بالشاليه</small><q>يتصل فيس تايم على موبايل أبوه من ٧:٤٢ م وما أحد يرد عليه.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_noura.jpg" alt="" onerror="this.style.display='none'"></div><div><b>نورة</b><small>الحفيدة · ٢٦ سنة · ربّتها الجدّة بعد وفاة أبوها · الذهب موعود لها</small><q>«طلبت منها أجرّب إسوارة وهي وافقت. باقي الذهب ما لمسته.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_muneera.jpg" alt="" onerror="this.style.display='none'"></div><div><b>منيرة</b><small>بنت الجدّة · ٤٩ سنة · أم عبدالله</small><q>«تضايقت إن الذهب كله بيروح لنورة، صح. بس أمي ما أبوقها. كنت برّا أجهّز الأكل وجويس معاي.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_buabdullah.jpg" alt="" onerror="this.style.display='none'"></div><div><b>بوعبدالله</b><small>زوج منيرة · ٥٢ سنة · هو اللي بلّغ</small><q>«كنت عند المسبح أغلب الوقت. رحت الكراج أدوّر عدّة البحر ورديت.»</q></div></div>
@@ -1063,7 +1063,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="stage"><div class="device sam">
-    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_razzag.jpg" alt=""></div><div class="nm">عبدالرزاق (ولدي · لندن)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-as">📱 إنتوا تردّون من موبايل <b>بوعبدالرزاق</b> — عبدالرزاق يحسب أبوه هو اللي يكلّمه</div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
+    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_razzag.jpg" alt=""></div><div class="nm">عبدالرزاق (ولدي · لندن)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-as">📹 فيس تايم على موبايل <b>بوعبدالرزاق</b> — عبدالرزاق يشوفكم بالكاميرا ويدري إنكم الشرطة</div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button><button class="ans" id="rcAns" hidden>📞</button></div></div>
     <div class="status"><span>الجمعة ٨:٣٠ م</span><span>📶 🔋 ٢٧٪</span></div>
     <div class="apps">
     <div class="app on" id="a-home"><div class="home" id="home"></div></div>
@@ -1575,7 +1575,7 @@ function spotAt(s){const st=$('#tstage');if(!st||!T)return {x:s.x,y:s.y};const W
   if(W/H>ar){const dh=W/ar,oy=(H-dh)/2;return {x:s.x,y:(oy+s.y/100*dh)/H*100}}
   const dw=H*ar,ox=(W-dw)/2;return {x:(ox+s.x/100*dw)/W*100,y:s.y}}
 function mark(s){const p=spotAt(s);$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$('.tabs button[data-tab=t6]').click()}else{show('file');$('.tabs button[data-tab=t3]').click();if(S.torch1&&!S.call)setTimeout(()=>sheet('<h3>📞 منو صاحب السيارة؟</h3><div class="h">فهد ما يقول. بس أخوه <b>عبدالرزاق</b> اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد — «أبي أقولك شي عن فهد». من تطبيق <b>الهاتف</b> ردّوا عليه إنتوا. هو يحسبكم أبوه.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
+function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$('.tabs button[data-tab=t6]').click()}else{show('file');$('.tabs button[data-tab=t3]').click();if(S.torch1&&!S.call){window.__ringLater=true;setTimeout(()=>sheet('<h3>📹 موبايل بوعبدالرزاق يرنّ</h3><div class="h">فيس تايم من <b>عبدالرزاق</b> — أخو فهد اللي بلندن. حاول على أبوه ٧:٤٢ م وما رد أحد، وهو يعيد. افتحوا الموبايل وردّوا عليه.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
@@ -1681,14 +1681,14 @@ let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lin
 
 /* ---- call عبدالرزاق: 3 rounds, one right question each; accusing his brother makes him hang up ---- */
 const RC=[
- {ask:[['فهد كلّمك هالأيام؟','…إي يبه. قبل أسبوعين. قال لي لا أقولك. شغل السيارات اللي مع سالم خسر، وهو مديون… وايد.',1],['عبدالرزاق، فهد هو اللي أخذ الذهب؟','يبه؟! شلون تقول جذي عن أخوي… أنا ما قلت هالشي. خلاص أنا بسكّر.',0],['شلون لندن؟ الدراسة؟','زينة يبه الحمدلله… بس مو وقته. سمعت عن الذهب من منيرة وقلبي مو مرتاح.',2]]},
- {ask:[['منو سالم هذا؟','شريكه بمعرض السيارات، سالم الفضلي… سيارته جي إم سي سودا. يبه فهد ما يدري إني أعرف، لا تقول له.',1],['ليش ما قلت لي من قبل؟','…لأنه أخوي يبه. حلّفني. أنا آسف.',2],['إنت كنت تدري وساكت؟! إنت متورّط معاه؟','……يبه أنا بلندن! شلون أتورّط… خلاص ما أقدر أكمّل.',0]]},
- {ask:[['فهد طرّش لي فاتورة المعرض بسبتمبر — ليش؟','عشان يثبت لك إن الشغل حقيقي يوم طلب فلوس. أول فاتورة حقهم… يبه هو يعتز فيها، يقول «هذي البداية».',1],['كان معه أحد الجمعة؟','يبه أنا بلندن… بس فهد قال لي الخميس إن سالم بيمر عليه الشاليه الجمعة «ياخذ غرض».',2],['لو شفت فهد الحين شنو تقوله؟','…ما أدري يبه. تكفى لا تقوله إني قلت لك.',2]]}];
+ {ask:[['فهد كلّمك هالأيام؟','…إي. قبل أسبوعين. حلّفني ما أقول حق أبوي. شغل السيارات اللي مع سالم خسر، وهو مديون… وايد.',1],['فهد هو اللي أخذ الذهب؟','أخوي مو حرامي! …خلاص، ما أبي أكمّل.',0],['وين إنت الحين؟','بلندن، أدرس ماجستير. سمعت عن الذهب من منيرة وقلبي مو مرتاح.',2]]},
+ {ask:[['منو سالم هذا؟','شريكه بمعرض السيارات، سالم الفضلي… سيارته جي إم سي سودا. تكفون لا تقولون لفهد إني قلت.',1],['ليش ما قلت لأبوك من قبل؟','…لأنه أخوي. حلّفني. أنا آسف.',2],['إنت تدري وساكت؟ يعني متورّط معاه؟','أنا بلندن! شلون أتورّط… خلاص ما أقدر أكمّل.',0]]},
+ {ask:[['فهد طرّش لأبوه فاتورة المعرض بسبتمبر — ليش؟','عشان يثبت له إن الشغل حقيقي يوم طلب فلوس. أول فاتورة حقهم… هو يعتز فيها، يقول «هذي البداية».',1],['كان معه أحد الجمعة؟','أنا بلندن… بس فهد قال لي الخميس إن سالم بيمر عليه الشاليه الجمعة «ياخذ غرض».',2],['لو شفت فهد الحين شنو تقوله؟','…ما أدري. تكفون لا تقولون له إني قلت لكم.',2]]}];
 let rc={r:0,n:0,busy:false};
-function razzagCall(){if(S.call)return;
+function razzagCall(incoming){if(S.call)return;
   const back=RCS.log.length>0;
   rc={r:RCS.r,n:0,busy:false,used:RCS.used};
-  const o=$('#rcall');o.classList.add('on');$('#rcQ').innerHTML='';$('#rcSt').textContent='يرنّ…';
+  const o=$('#rcall');o.classList.add('on');$('#rcQ').innerHTML='';$('#rcSt').textContent=incoming?'فيس تايم · مكالمة واردة…':'يرنّ…';$('#rcAns').hidden=!incoming;$('#rcEnd').hidden=!!incoming;
   /* what he already said is still on the screen, greyed back */
   const L=$('#rcLog');L.innerHTML='';
   if(back){RCS.log.forEach(([t,cls])=>{const d=document.createElement('div');
@@ -1696,12 +1696,12 @@ function razzagCall(){if(S.call)return;
     const sep=document.createElement('div');sep.className='m sys';
     sep.textContent='— اتصلتوا مرة ثانية —';L.appendChild(sep);L.scrollTop=1e6}
   const rg=$('#au-ring');try{rg.currentTime=0;rg.play().catch(()=>{})}catch(e){}
-  setTimeout(()=>{rg.pause();$('#rcSt').textContent='٠:٠١';
-    rcLine(back?'رد عليكم على طول — باقي يحسبكم أبوه.'
-          :'رد وهو يحسب إنه يكلّم أبوه. خلّوه يحسب — لا تقولون إنكم الشرطة.','sys');
-    rcSay(RCS.hung?'…ألو يبه. آسف… أنا خايف على فهد. تفضل.'
-          :back?'ألو يبه… باقي شي؟'
-          :'ألو… يبه؟ أخيراً! شصار عندكم؟ يدّتي بخير؟',()=>{RCS.hung=false;rcAsk()})},2200);
+  const go=()=>{rg.pause();$('#rcAns').hidden=true;$('#rcEnd').hidden=false;$('#rcSt').textContent='٠:٠١';
+    rcLine(back?'رد عليكم على طول.':'عبدالرزاق شاف الزي بالكاميرا.','sys');
+    rcSay(RCS.hung?'…آسف. أنا خايف على أخوي. اسألوا.'
+          :back?'…باقي شي؟'
+          :'…إنتوا مو أبوي. هذا تلفون أبوي… إنتوا الشرطة؟ شصار؟ يدّتي بخير؟',()=>{RCS.hung=false;rcAsk()})};
+  if(incoming){$('#rcAns').onclick=go;window.__rcGo=go}else setTimeout(go,2200);
   let sec=-2;rc.iv=setInterval(()=>{if(!o.classList.contains('on')){clearInterval(rc.iv);return}sec++;if(sec>0)$('#rcSt').textContent=fmt(sec)},1000)}
 /* He hangs up, they ring back — what he has already answered stays answered;
    the call picks up where it broke off. */
@@ -1711,18 +1711,19 @@ function rcSay(t,then){RCS.log.push([t,'']);const L=$('#rcLog');const d=document
 function rcAsk(){const round=RC[rc.r];if(!round){rcSuccess();return}
   rc.used=rc.used||{};
   const left=round.ask.map((q,i)=>[q,i]).filter(([,i])=>!rc.used[rc.r+':'+i]);
-  if(!left.length){rcLine('عبدالرزاق: يبه… خلاص؟','sys');setTimeout(rcHangup,900,true);return}
+  if(!left.length){rcLine('عبدالرزاق: …خلاص؟','sys');setTimeout(rcHangup,900,true);return}
   $('#rcQ').innerHTML=left.map(([q,i])=>`<button data-i="${i}">${q[0]}</button>`).join('');
   $$('#rcQ button').forEach(b=>b.onclick=()=>{if(rc.busy)return;rc.busy=true;const q=round.ask[+b.dataset.i];rc.used[rc.r+':'+b.dataset.i]=1;$('#rcQ').innerHTML='';rcLine(q[0],'me');rc.n++;
-    rcSay(q[1],()=>{rc.busy=false;if(q[2]===0){rcHangup();return}if(q[2]===1)rc.r++;if(rc.n>=5&&rc.r<3){rcLine('عبدالرزاق: يبه عندي محاضرة، أكلمك بعدين…','sys');setTimeout(rcHangup,900,true);return}rcAsk()})})}
+    rcSay(q[1],()=>{rc.busy=false;if(q[2]===0){rcHangup();return}if(q[2]===1)rc.r++;if(rc.n>=5&&rc.r<3){rcLine('عبدالرزاق: عندي محاضرة، أكلمكم بعدين…','sys');setTimeout(rcHangup,900,true);return}rcAsk()})})}
 function rcHangup(soft){const o=$('#rcall');clearInterval(rc.iv);$('#rcQ').innerHTML='';RCS.r=rc.r;RCS.used=rc.used||{};if(!soft)RCS.hung=true;if(!soft){S.pen+=60;save();SFX.bad();rcLine('📵 عبدالرزاق سكّر الخط. انضافت دقيقة على وقتكم','sys')}else rcLine('📵 انتهت المكالمة','sys');
-  setTimeout(()=>{o.classList.remove('on');sheet(soft?'<h3>📵 انتهت المكالمة</h3><div class="h">ما وصلتوا لشي. اتصلوا مرة ثانية — ثلاث أسئلة صح تكفي: شغل فهد، منو سالم، والفاتورة.</div><div class="acts"><button class="btn" data-close>تمام</button></div>':'<h3>📵 عبدالرزاق سكّر</h3><div class="h">لما تتهمون أخوه مباشرة يسكّر. انضافت دقيقة على وقتكم — تقدرون تتصلون مرة ثانية الحين، بس خلّوا الأسئلة هادية.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1400)}
+  setTimeout(()=>{o.classList.remove('on');sheet(soft?'<h3>📵 انتهت المكالمة</h3><div class="h">ما وصلتوا لشي. اتصلوا عليه مرة ثانية من تطبيق الهاتف — ثلاث أسئلة صح تكفي: شغل فهد، منو سالم، والفاتورة.</div><div class="acts"><button class="btn" data-close>تمام</button></div>':'<h3>📵 عبدالرزاق سكّر</h3><div class="h">لما تتهمون أخوه مباشرة يسكّر. انضافت دقيقة على وقتكم — اتصلوا عليه مرة ثانية من تطبيق الهاتف، بس خلّوا الأسئلة هادية.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1400)}
 function rcSuccess(){clearInterval(rc.iv);S.call=true;save();stageAt('timeline');SFX.ok();
   rcLine('🤔 فهد مديون، شريكه سالم، وسالم «بيمر الشاليه الجمعة ياخذ غرض». والفاتورة بواتساب فهد.','sys');
   rcLine('📵 انتهت المكالمة','sys');
   setTimeout(()=>{$('#rcall').classList.remove('on');addRazzagNote();renderTimeline();
     sheet('<h3>🤔 عبدالرزاق قال اللي عنده</h3><div class="h">انحفظ نص المكالمة بملاحظات الموبايل. والحين صار عندكم كل الأوقات — افتحوا الملف، تبويب <b>🕒 خط اليوم</b>، ورتّبوا اليوم من الأول للآخر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},2600)}
-$('#rcEnd').onclick=()=>{clearInterval(rc.iv);$('#rcall').classList.remove('on')};
+$('#rcEnd').onclick=()=>{clearInterval(rc.iv);$('#au-ring').pause();$('#rcall').classList.remove('on')};
+function ring(){if(S.call||!S.torch1||$('#rcall').classList.contains('on'))return;razzagCall(true)}
 function addRazzagNote(){if(NOTES.find(n=>n.id==='razzag'))return;NOTES.unshift({id:'razzag',t:'📞 مكالمة عبدالرزاق — نص المكالمة',d:'الحين',body:'عبدالرزاق: «شغل السيارات اللي مع سالم خسر، وهو مديون… وايد.»\nعبدالرزاق: «شريكه سالم الفضلي… سيارته جي إم سي سودا.»\nعبدالرزاق: «أول فاتورة حقهم… هو يعتز فيها.»\nعبدالرزاق: «سالم بيمر عليه الشاليه الجمعة ياخذ غرض.»\n\n— الفاتورة بواتساب فهد، ١٢ سبتمبر.'});renderNotes()}
 /* ---- timeline: put the day in order (no times shown — they are in the evidence) ---- */
 const TL=[
@@ -1853,7 +1854,7 @@ const HINTS={
  lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وهو يفكّر بالإنجليزي: أول حرف من Latifa هو L. وصورة شاشته بالأدلة فيها أثر الإصبع لو تبون تتأكدون.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
  clips:['عبدالله وحمد صوّروا المسبح مرتين — الفيديوهات بـ<b>المعرض</b> بموبايل بوعبدالرزاق. شوفوا الخلفية، مو المسبح.','بالفيديو الأول ٢:٢٠ فهد واقف عند باب الشاليه. افتحوا الثاني ٣:٥٢… ودوروا عليه.','الجواب: فهد مو موجود بفيديو ٣:٥٢. يقول دشّ ياخذ شاحن ٣:٣٨ «ورجع على طول» — بس ما أحد شافه لين العصر.'],
  torch1:['الكاميرا الخلفية فريمها أسود — بالملف، تبويب <b>الأدلة</b>. اضغطوه وشغّلوا الكشّاف. (تقدرون تطلّعونه على التلفزيون من cases.hyphen-eventskw.com/tv)','ثبّتوا الضوء ثانية على كل شي يبين: السيارة، والشباك اللي يمّها، واللوحة.','الجواب: جي إم سي سودا غريبة ٤:٠٥ عند البوابة الخلفية، وصندوق معدني ينعطى لها من شباك الديوانية. اللوحة ٤١٨٧٢.'],
- call:['عبدالرزاق — أخو فهد اللي بلندن — اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد. المكالمة الفايتة بتطبيق <b>الهاتف</b> — ردّوا عليه إنتوا.','هو يحسبكم أبوه، فلا تقولون إنكم الشرطة. اسألوه عن فهد وشغله بهدوء — لو اتهمتوا فهد مباشرة بيسكّر، وتقدرون تتصلون مرة ثانية.','اسألوه: فهد كلّمك؟ منو سالم؟ وليش فهد طرّش الفاتورة؟ — ثلاث أسئلة وبيقول كل شي.'],
+ call:['عبدالرزاق — أخو فهد اللي بلندن — يتصل فيس تايم على موبايل أبوه. ردّوا عليه — ولو فاتتكم، مكالمته الفايتة بتطبيق <b>الهاتف</b>.','هو يشوفكم ويدري إنكم الشرطة، وخايف على أخوه. اسألوه عن فهد وشغله بهدوء — لو اتهمتوا فهد مباشرة بيسكّر، وتقدرون تتصلون عليه مرة ثانية.','اسألوه: فهد كلّمك؟ منو سالم؟ وليش فهد طرّش الفاتورة؟ — ثلاث أسئلة وبيقول كل شي.'],
  timeline:['بالملف تبويب «🕒 خط اليوم» — مسوّدة المحقّق. كل حدث وقته بدليل: المعرض، الكاميرا الخلفية، واتساب العايلة ونورة، والمحضر.','من الأول للآخر: الذهب على الطاولة ← إسوارة نورة ← الجدّة تقفل ← فيديو المسبح الأول ← رضا يطلع ← فيديو المسبح الثاني ← السيارة الغريبة.','الجواب: ١٢:٣٠ الذهب · ١٢:٤٥ الإسوارة · ١:٠٠ القفل · ٢:٢٠ الفيديو الأول · ٣:١٠ رضا يطلع · ٣:٥٢ الفيديو الثاني · ٤:٠٥ السيارة.'],
  plate:['اللوحة اللي لقيتوها بالكشّاف — المرور يقدر يقول منو صاحبها. تبويب <b>🚓 الميدان</b> بالملف.','اضغطوا «اطلبوا بيانات اللوحة».','الجواب: سالم الفضلي — شريك فهد بالمعرض. الدورية راحت له.'],
  chase:['سالم طلع يركض من الباب الخلفي. اضغطوا «لحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يركب سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
@@ -1866,7 +1867,7 @@ const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','
 const WHERE={unlocked:'الملف: محضر البلاغ و«عن بوعبدالرزاق»',
  clips:'المعرض ← فيديو المسبح ٣:٥٢',
  torch1:'الملف ← الأدلة ← الكاميرا الخلفية (الفريم الأسود)',
- call:'الهاتف ← مكالمة عبدالرزاق الفايتة',
+ call:'ردّوا على فيس تايم عبدالرزاق · أو الهاتف ← مكالمته الفايتة',
  timeline:'الملف ← 🕒 خط اليوم',
  plate:'الملف ← 🚓 الميدان ← بيانات اللوحة',
  chase:'الملف ← 🚓 الميدان',
@@ -2052,7 +2053,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
 const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,call:false,timeline:false,plate:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
-if(S.start){restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
+if(S.start){if(S.torch1&&!S.call)window.__ringLater=true;restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
 syncStart();
 })();
 function restoreUI(){if(S.call)addRazzagNote();try{renderTimeline()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
