@@ -457,6 +457,7 @@ button.row.callable:active{background:rgba(47,204,95,.18)}
 .pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .pick button,.loc button{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .pick button.on,.loc button.on{border-color:var(--tape-2);background:#2a1d1e}
+.pick.how{grid-template-columns:1fr 1fr}.pick.how button{align-items:flex-start;text-align:right}.pick.how small{color:var(--muted);font-size:12px}
 .pick .av{width:54px;height:54px;border-radius:50%;background:#2a3344;display:grid;place-items:center;font-size:24px;font-weight:700}
 .pick small{color:var(--muted);font-size:12px}
 .loc{display:grid;gap:8px}
@@ -1171,6 +1172,8 @@ html.tv body{zoom:1.18}
     <div class="pick" id="pickWho"></div></div>
     <div class="q"><h2>٢. ومنو استلم الصندوق وخشّه؟</h2>
     <div class="pick" id="pickWhy"></div></div>
+    <div class="q"><h2>٣. وشلون انفتح التيجوري بدون كسر؟</h2>
+    <div class="pick how" id="pickHow"></div></div>
     <div class="fb" id="fb" hidden></div>
     <button class="btn" id="submit" disabled>تأكيد الاتهام</button>
     <p style="color:var(--muted);font-size:13px;margin:0">الاتهام الغلط يضيف دقيقتين، والثاني ٤، والثالث ٦.</p>
@@ -1227,7 +1230,7 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261029';
 const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='4729';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,wrong:0,code:'',room:''};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
 const STEPS=[['unlocked','فتح الموبايل'],['clips','فيديو المسبح'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['corridor','المخزن'],['door','القفل']];
@@ -1420,10 +1423,28 @@ $('#goCorridor').onclick=()=>torchStart('storeroom');$('#goChase').onclick=()=>r
 const AV=id=>`<img src="img/p_${id}.jpg" alt="" onerror="this.replaceWith(document.createTextNode('👤'))">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
 const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
 const CHATS=[
- {id:'razzag',n:'عبدالرزاق 🎓',av:'🎓',last:'٧:٤٠ م',u:2,msgs:[['day','١٤ يوليو'],
-  ['me','ركّبنا التيجوري الجديد حق يدّتك اليوم. أخوك فهد ساعدني فيه 💪','٦:٣٠ م','safe'],
+ {id:'razzag',n:'عبدالرزاق 🎓',av:'🎓',num:'+44 7700 900214',last:'٧:٤٠ م',u:2,msgs:[['day','١٢ سبتمبر ٢٠٢٥'],
+  ['them','هلا يبه، هذا رقمي اليديد 🇬🇧','٤:١٠ م'],
+  ['me','هلا حبيبي شلونك؟ وصلت السكن؟','٤:٢٥ م'],
+  ['them','وصلت الحمدلله. البرد من الحين 🥶','٤:٣٠ م','london_street'],
+  ['me','البس زين. ولا تنسى تكلم يدّتك، تسأل عنك كل يوم','٤:٣٢ م'],
+  ['them','إن شاء الله يبه ❤️','٤:٣٣ م'],
+  ['day','٣ أكتوبر ٢٠٢٥'],
+  ['me','إنت وينك؟ ليش ما تدزلي مسجات؟','٧:٤٠ م'],
+  ['them','<span></span>','٨:٠٥ م','london_class'],
+  ['them','هلا يبه حبيبي آسف، إن شاء الله أكلمك. عاد تدري آنا ما أحب المسجات، راح أدق عليك والله','٨:٠٦ م'],
+  ['me','دق على يدّتك قبلي 😄','٨:١٠ م'],
+  ['day','٢٠ نوفمبر ٢٠٢٥'],
+  ['them','يبه الجو ثلج 😂','٥:٥٠ م','london_snow'],
+  ['me','الله يعينك. نزل لك التحويل؟','٦:١٥ م'],
+  ['them','نزل، شكراً يبه ❤️','٦:١٦ م'],
+  ['day','١٤ يوليو'],
+  ['me','ركّبنا التيجوري الجديد حق يدّتك اليوم. أخوك فهد ساعدني فيه 💪','٦:٣٠ م','safe_new'],
   ['me','حطّت كود جديد وتقول ما راح تعطيه أحد 😂 حتى آنا','٦:٣٢ م'],
   ['them','😂😂 يدّتي أقوى من التيجوري. سلّم لي عليها وعلى فهد','٩:١٠ م'],
+  ['day','٢٠ أغسطس'],
+  ['them','يبه الماجستير بيخلص بالشتا إن شاء الله 🎓','٣:٠٠ م'],
+  ['me','الله يوفقك يا ولدي. أمك مشتاقة','٣:٢٠ م'],
   ['day','الأربعاء'],
   ['them','يبه شلونك؟ شلون يدّتي؟ عمتي منيرة تقول بتييب الذهب الشاليه 😅','٩:١٠ م'],
   ['me','أمك عنيدة. الكل بيكون الجمعة إن شاء الله.','٩:٣٠ م'],
@@ -1525,8 +1546,8 @@ function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+i
 $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(b&&!b.disabled)openApp(b.dataset.app)};
 $$('[data-back]').forEach(b=>b.onclick=()=>openApp(b.dataset.back||'home'));
 function renderChatList(){$('#chatList').innerHTML=CHATS.map(c=>{const l=[...c.msgs].reverse().find(m=>m[0]!=='day');const pv=l[1].replace(/<[^>]+>/g,' ').trim().slice(0,40);return `<button class="row" data-chat="${c.id}"><span class="av">${avh(c.av)}</span><span style="min-width:0"><span class="nm">${c.n}</span><span class="pv">${pv}</span></span><span class="tm${c.u?' u':''}">${c.last}${c.u?` <span class="b" style="display:inline-grid;min-width:18px;height:18px;border-radius:9px;background:var(--ok);color:#fff;font-size:11px;place-items:center">${c.u}</span>`:''}</span></button>`}).join('')}
-function openChat(c){$('#chatTitle').innerHTML=c.n+(c.grp?'<span class="sub">مجموعة</span>':c.biz?'<span class="sub">حساب تجاري</span>':'<span class="sub">آخر ظهور الجمعة ٧:٥٨ م</span>');$('#chatAv').innerHTML=avh(c.av);
-  $('#chatBody').innerHTML=c.msgs.map(m=>{if(m[0]==='day')return `<span class="day">${m[1]}</span>`;const ph=m[3]?`<span class="ph" data-photo="${m[3]}">${IMG(m[3])}</span>`:'';const who=m[4]?`<span class="who">${m[4]}</span>`:'';return `<div class="m ${m[0]}">${who}${m[1]}${ph}<span class="t">${m[2]}</span></div>`}).join('');
+function openChat(c){$('#chatTitle').innerHTML=c.n+(c.grp?'<span class="sub">مجموعة</span>':c.biz?'<span class="sub">حساب تجاري</span>':c.num?'<span class="sub" dir="ltr">'+c.num+'</span>':'<span class="sub">آخر ظهور الجمعة ٧:٥٨ م</span>');$('#chatAv').innerHTML=avh(c.av);
+  $('#chatBody').innerHTML=c.msgs.map(m=>{if(m[0]==='day')return `<span class="day">${m[1]}</span>`;const ph=m[3]?`<span class="ph" data-photo="${m[3]}">${IMG(m[3])}</span>`:'';const who=m[4]?`<span class="who">${m[4]}</span>`:'';return `<div class="m ${m[0]}">${who}${m[1]==='<span></span>'?'':m[1]}${ph}<span class="t">${m[2]}</span></div>`}).join('');
   c.u=0;renderChatList();openApp('chat');$('#chatBody').scrollTop=1e6}
 $('#chatList').onclick=e=>{const b=e.target.closest('[data-chat]');if(!b)return;openChat(CHATS.find(x=>x.id===b.dataset.chat))};
 $('#chatBody').addEventListener('click',e=>{const ph=e.target.closest('[data-photo]');if(ph){openPhoto(ph.dataset.photo,'chat');return}});
@@ -1543,7 +1564,7 @@ function renderCalls(){
 renderCalls();
 
 /* photos */
-const PH_EXTRA={gold_show:{n:'يدّتي والعقد',info:'الجمعة ١٢:٣٤ م · الطاولة',cap:'نورة طرّشتها بقروب العايلة.'},receipt:{n:'فاتورة الجمعية',info:'الجمعة ٣:٢٢ م · جمعية الخيران',cap:'ثلج، فحم، عصير. الدفع ببطاقة رضا، ٤.٢٥٠ د.ك.'},
+const PH_EXTRA={safe_new:{n:'التيجوري الجديد',info:'١٤ يوليو · غرفة أمي',cap:'يوم التركيب. فهد ساعدني.'},london_street:{n:'لندن',info:'١٢ سبتمبر ٢٠٢٥',cap:'أول يوم لعبدالرزاق بلندن.'},london_class:{n:'المحاضرة',info:'٣ أكتوبر ٢٠٢٥',cap:'عبدالرزاق بالمحاضرة — رد على «وينك؟».'},london_snow:{n:'ثلج',info:'٢٠ نوفمبر ٢٠٢٥',cap:'لندن.'},gold_show:{n:'يدّتي والعقد',info:'الجمعة ١٢:٣٤ م · الطاولة',cap:'نورة طرّشتها بقروب العايلة.'},receipt:{n:'فاتورة الجمعية',info:'الجمعة ٣:٢٢ م · جمعية الخيران',cap:'ثلج، فحم، عصير. الدفع ببطاقة رضا، ٤.٢٥٠ د.ك.'},
  invoice_q4729:{n:'فاتورة المعرض',info:'١٢ سبتمبر · معرض فهد للسيارات',cap:'أول فاتورة حق معرض فهد — رقمها <b dir="ltr">Q-4729</b>. طرّشها لأبوه «عشان تشوف إن الشغل حقيقي» يوم طلب فلوس.'}};
 function renderPhotos(){$('#photoGrid').innerHTML=PHOTOS.map(p=>`<button data-p="${p.id}" style="position:relative">${IMG(p.id)}${p.vid?'<span style="position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#fff;text-shadow:0 2px 8px #000;pointer-events:none">▶</span>':''}</button>`).join('')}
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'photos')};
@@ -1639,7 +1660,9 @@ function openB17(){S.door=true;save();stageAt('solve');setTimeout(()=>{sheet(`<h
 const SUS=[['fahad','فهد','ولد بوعبدالرزاق'],['salem','سالم','صاحب السيارة'],['noura','نورة','الحفيدة'],['muneera','منيرة','بنت الجدّة'],['buabdullah','بوعبدالله','زوج منيرة'],['joyce','جويس','العاملة'],['reza','رضا','السايق'],['bu','بوعبدالرزاق','صاحب الموبايل']];
 const pick=(el,key)=>{$(el).innerHTML=SUS.map(s=>`<button data-${key}="${s[0]}"><span class="av">${AV(s[0])}</span><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');$(el).onclick=e=>{const b=e.target.closest(`[data-${key}]`);if(!b)return;S[key]=b.dataset[key];save();selPick()}};
 pick('#pickWho','who');pick('#pickWhy','why');
-function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
+const HOW=[['break','كسر القفل','وعفّس الغرفة بعدها'],['key','بمفتاح احتياطي','من درج الجدّة'],['install','عرف الكود يوم التركيب','كان يساعد أبوه'],['joyce','جويس عطته الكود','شافته يوم الغسيل'],['watch','شاف الجدّة تفتحه','الجمعة الظهر']];
+(function(){const el=$('#pickHow');if(!el)return;el.innerHTML=HOW.map(h=>`<button data-how="${h[0]}"><b>${h[1]}</b><small>${h[2]}</small></button>`).join('');el.onclick=e=>{const b=e.target.closest('[data-how]');if(!b)return;S.how=b.dataset.how;save();selPick()}})();
+function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$$('[data-how]').forEach(b=>b.classList.toggle('on',b.dataset.how===S.how));$('#submit').disabled=!(S.who&&S.why&&S.how)}
 /* Each answer is marked on its own, so a team that had half of it right can
    tell which half; the written clue says why the named person is wrong. */
 const accMark=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;`
@@ -1653,14 +1676,15 @@ const WRONG={
  bu:'بوعبدالرزاق كان برّا مع العايلة، وهو اللي سلّم موبايله للشرطة بنفسه. اللي يسرق ما يعطي الشرطة موبايله.',
  salem:'سالم ما دشّ البيت أصلاً — الكاميرا تشوفه عند البوابة الخلفية يستلم صندوق مقفّل من الشباك. منو اللي مدّ له الصندوق من داخل؟ ومنو اختفى من المسبح ٣:٥٢؟',
  fahad:'فهد فتح التيجوري، صح. بس منو اللي كان بالسيارة عند البوابة الخلفية ٤:٠٥ وخشّ الصندوق بالمخزن؟ المرور قالوا منو صاحب السيارة.'};
-$('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='fahad'&&S.why==='salem';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
+$('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='fahad'&&S.why==='salem'&&S.how==='install';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120*Math.min(3,S.wrong+1);S.wrong++;save();let msg;
   if(S.who==='salem'&&S.why==='fahad')msg='قريب… بس بالعكس. منو اللي كان <b>داخل</b> الشاليه ومدّ الصندوق من الشباك؟ ومنو اللي كان <b>برّا</b> بالسيارة واستلمه؟';
   else if(S.who==='fahad')msg=WRONG.fahad;
   else if(WRONG[S.who])msg=WRONG[S.who];
   else msg='مو هذا. ارجعوا للفيديوهات والكاميرا الخلفية.';
+  if(S.who==='fahad'&&S.why==='salem')msg={break:'التيجوري ما فيه ولا خدش، والكود ما انكسر — انفتح بالكود. منو كان موجود يوم ركّبوه؟ دوروا بواتساب بوعبدالرزاق مع ولده اللي بلندن.',key:'ما فيه مفتاح — التيجوري بالكود. والجدّة تقول ما أحد يعرفه. منو كان يمّها يوم التركيب؟',joyce:'جويس دشّت الغرفة ١:٣٠ والتيجوري مقفول، وما شافت الكود. ومنو ساعد أبوه يوم ركّبوه؟',watch:'الجدّة قفّلته بنفسها ١:٠٠ والكل برّا على الغدا. الكود انعرف قبل الجمعة بوايد — بالصيف.'}[S.how]||msg;
   fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +${['دقيقتين','٤ دقايق','٦ دقايق'][Math.min(2,S.wrong-1)]}.</b>`
-    +accMark(S.who==='fahad','منو فتح التيجوري')+accMark(S.why==='salem','ومنو استلم الصندوق')
+    +accMark(S.who==='fahad','منو فتح التيجوري')+accMark(S.why==='salem','ومنو استلم الصندوق')+accMark(S.how==='install','وشلون انفتح')
     +`<div style="margin-top:6px">${msg}</div><div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
 
 /* ---- reveal ---- */
@@ -1685,7 +1709,7 @@ function rvFollow(){const w=$('#reveal .wrap');if(!w)return;
  requestAnimationFrame(()=>{try{w.scrollTo({top:w.scrollHeight,behavior:'smooth'})}catch(e){w.scrollTop=w.scrollHeight}})}
 function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}catch(e){}show('reveal');rvTop();const L=$('#lines');L.innerHTML='';const add=(t,who)=>{const p=document.createElement('p');p.innerHTML=(who?`<span class="who">${who}</span> `:'')+t;L.appendChild(p);rvFollow();requestAnimationFrame(()=>p.classList.add('in'))};
   $('#rvImg').hidden=false;add('الدورية فتحت الصندوق المعدني على الرف B3. العلبة… والذهب كامل، ناقص إسوارة نورة.');
-  setTimeout(()=>{add('فهد دشّ ٣:٣٨ «ياخذ شاحن». فتح التيجوري ٣:٤٢ بالكود اللي شافه يوم ركّبه مع أبوه، عفّس الغرفة ٣:٥٠ عشان تبين سرقة من برّه، وقفّل الصندوق ٣:٥٤ على آخر أربع أرقام من أول فاتورة حق معرضه: ٤٧٢٩.');},2500);setTimeout(()=>add('سالم استلم الصندوق من شباك الديوانية ٤:٠٥ وخشّه بالمخزن ٤:١٢ — وما عرف الكود. رضا رجع ٤:٢٥ وشاف سيارته.'),4600);
+  setTimeout(()=>{add('فهد دشّ ٣:٣٨ «ياخذ شاحن». فتح التيجوري ٣:٤٢ بالكود اللي شافه يوم ساعد أبوه يركّبه بالصيف، عفّس الغرفة ٣:٥٠ عشان تبين سرقة من برّه، وقفّل الصندوق ٣:٥٤ على آخر أربع أرقام من أول فاتورة حق معرضه: ٤٧٢٩.');},2500);setTimeout(()=>add('سالم استلم الصندوق من شباك الديوانية ٤:٠٥ وخشّه بالمخزن ٤:١٢ — وما عرف الكود. رضا رجع ٤:٢٥ وشاف سيارته.'),4600);
   setTimeout(()=>{$('#rzWrap').hidden=false;const r=$('#rzVideo');const a=()=>{if(a.d)return;a.d=1;$('#cfWrap').hidden=false;const v=$('#cfVideo');const g=()=>{if(g.d)return;g.d=1;grandma()};v.onended=g;v.onerror=()=>setTimeout(g,6000);v.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>v.play().catch(()=>{}),600)};r.onended=a;r.onerror=()=>setTimeout(a,6000);r.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>r.play().catch(()=>{}),600)},5400)}
 function grandma(){$('#gmWrap').hidden=false;const tx='«فهد؟ إنت اللي سوّيت جذي؟ لو يايني وقايل لي إنك محتاج، چان شفنا لك حل. مو الذهب اللي وجّعني… اللي وجّعني إنك إنت اللي خذيته. الثقة إذا انكسرت… صعب ترجع مثل أول.»';const a=$('#au-gm');$('#gmTx').textContent='';const w=tx.split(' ');let i=0;const step=a.duration&&isFinite(a.duration)?(a.duration*1000-400)/w.length:420;a.currentTime=0;a.play().catch(()=>{});const iv=setInterval(()=>{$('#gmTx').textContent=w.slice(0,++i).join(' ');if(i>=w.length)clearInterval(iv)},step);a.onended=()=>setTimeout(endCard,800);setTimeout(()=>{if(!a.duration||!isFinite(a.duration))endCard()},w.length*420+2000)}
 let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='الذهب رجع لتيجوري الجدّة. نورة رجّعت الإسوارة بنفسها. وفهد… قال لأهله كل شي.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
@@ -1873,7 +1897,7 @@ const HINTS={
  chase:['سالم طلع يركض من الباب الخلفي. اضغطوا «لحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يركب سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
  corridor:['المخزن القديم بالشاطئ والكهرباء مقطوعة. من تبويب الميدان شغّلوا الكشّاف ودوروا على الرف B3… وعلى أي ورقة.','الصندوق فوق على الرف يمين. وفيه ورقة ممزّقة على الأرض جدّام الرف.','الجواب: الصندوق المعدني بقفل ٤ أرقام، وورقة بخط يد: «أرقام الأقفال: آخر أربع من أول فاتورة». منو بالعايلة عنده شغل وفواتير؟'],
  door:['«آخر أربع من أول فاتورة» — منو عنده شغل وفواتير؟ فهد طرّش أول فاتورة حق معرضه لأبوه يوم طلب فلوس: واتساب ← فهد ← ١٢ سبتمبر.','رقم الفاتورة <span dir="ltr">Q-4729</span>. آخر أربع أرقام.','الجواب: الكود ٤٧٢٩.'],
- solve:['سؤالين، وكل واحد منهم شخص. الأول: منو فتح التيجوري وأخذ الذهب؟ الثاني: منو استلم الصندوق عند البوابة الخلفية وخشّه؟','اللي اختفى من المسبح ٣:٥٢، واللي كان يساعد أبوه يوم تركيب التيجوري، واللي مديون — واللي فاتورته فتحت القفل. واللي سيارته ٤١٨٧٢.','فهد أخذه. سالم ساعده.']};
+ solve:['ثلاث أسئلة: منو فتح التيجوري وأخذ الذهب؟ منو استلم الصندوق عند البوابة الخلفية وخشّه؟ وشلون انفتح التيجوري بدون كسر — منو كان يعرف الكود؟','اللي اختفى من المسبح ٣:٥٢، واللي كان يساعد أبوه يوم تركيب التيجوري، واللي مديون — واللي فاتورته فتحت القفل. واللي سيارته ٤١٨٧٢.','فهد أخذه. سالم ساعده. وفهد عرف الكود يوم ساعد أبوه يركّب التيجوري بالصيف — بواتساب بوعبدالرزاق مع عبدالرزاق، ١٤ يوليو.']};
 const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','+دقيقتين','+٣ دقايق'];
 /* teams kept getting stuck not on the puzzle but on finding it. this says
    where the next step lives — the place, never the answer — and costs nothing */
@@ -2080,7 +2104,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
-const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,clips:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,corridor:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run','station'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
