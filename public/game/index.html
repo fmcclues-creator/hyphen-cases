@@ -1754,7 +1754,7 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
  ['','لا الرقم السري ولا الساعة ٨:٣٤ كذبوا. أنتم المحققون. 🕵️']];
   const box=$('#lines');box.innerHTML=L.map(l=>`<p>${l[0]?`<span class="who">${l[0]}</span><br>`:''}${l[1]}</p>`).join('');
   [...box.children].forEach((p,i)=>setTimeout(()=>p.classList.add('in'),600+i*1700));
-  setTimeout(()=>{const h=S.hints.lock+S.hints.phone+S.hints.solve;$('#res').innerHTML=S.gaveUp?`<div><b>—</b><small>القضية ما انحلّت</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div>`:`<div><b>${fmt(S.done)}</b><small>الوقت النهائي</small></div><div><b>${h}</b><small>تلميحات (+${Math.round(S.pen/60)} دقيقة)</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div><div><b>${fmt(Math.max(0,S.done-S.pen))}</b><small>وقت صافي</small></div>`;$('#res').hidden=false;$('#again').hidden=false},600+L.length*1700)}
+  setTimeout(()=>{const h=S.hints.lock+S.hints.phone+S.hints.solve;$('#res').innerHTML=S.gaveUp?`<div><b>—</b><small>القضية ما انحلّت</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div>`:`<div><b>${fmt(S.done)}</b><small>الوقت النهائي</small></div><div><b>${h}</b><small>تلميحات (+${Math.round(S.pen/60)} دقيقة)</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div><div><b>${fmt(Math.max(0,S.done-S.pen))}</b><small>وقت صافي</small></div>`;$('#res').hidden=false;$('#again').hidden=false;lbOffer()},600+L.length*1700)}
 
 
 
@@ -1810,6 +1810,23 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 /* ================= ACCESS GATE ================= */
 const STORE='https://cases.hyphen-eventskw.com'; // change after deploy if different
+/* ---- the board: a name for the time, offered once the case is solved ---- */
+function lbOffer(){try{if(S.gaveUp)return;const GAME=(typeof window.GAME==='string'&&window.GAME)||(location.pathname.includes('/shaleh')?'shaleh':location.pathname.includes('/villa')?'villa':'khalid');const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+ const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
+ const host=$('#res');if(!host||$('#lbBox'))return;
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">شوفوا اللوحة</a>`};
+ if(saved){show(saved);return}
+ box.innerHTML=`<button class="btn" id="lbGo">🏆 حطّوا اسمكم على لوحة المتصدرين</button>`;
+ $('#lbGo').onclick=()=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">أضيفونا</button><button class="btn lite" data-close>لا، شكراً</button></div>`);
+  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
+  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='اكتبوا اسم الفريق';return}$('#lbSend').disabled=true;
+   try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
+    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'وقتكم ما وصل السيرفر بعد — جرّبوا بعد ثواني':'ما قدرنا نضيفكم، جرّبوا مرة ثانية';$('#lbSend').disabled=false;return}
+    try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='تأكدوا من الإنترنت';$('#lbSend').disabled=false}};
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
+
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
 /* A code was burning six phone slots for four phones. Four of the ids were

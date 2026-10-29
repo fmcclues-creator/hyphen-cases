@@ -1571,7 +1571,7 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
   setTimeout(()=>{$('#willWrap').hidden=false;$('#willWrap').scrollIntoView({behavior:'smooth',block:'center'});playWill()},5600)}
 function playWill(){const tx='«بسم الله الرحمن الرحيم. وصيتي… الفيلا لمن يسكن فيها… على أن تبقى بيتاً مفتوحاً لإخوتها.» … أبوي كان أذكى منّا كلنا.';const a=$('#au-end');$('#willTx').textContent='';const w=tx.split(' ');let i=0;const step=a.duration&&isFinite(a.duration)?(a.duration*1000-400)/w.length:420;a.currentTime=0;a.play().catch(()=>{});const iv=setInterval(()=>{$('#willTx').textContent=w.slice(0,++i).join(' ');if(i>=w.length)clearInterval(_callIv)},step);a.onended=()=>setTimeout(endCard,900);setTimeout(()=>{if(!a.duration)endCard()},20000)}
 let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='الكل سكت. نورة بكت. والفيلا بقت مثل ما بناها: بيت مفتوح لأهله.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
-  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()}}
+  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()};lbOffer()}
 
 
 /* ---- call Saleh (Egyptian): 3 rounds, one right question each; accusations or money talk make him hang up ---- */
@@ -1737,6 +1737,23 @@ function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hint
 function syncStart(){if(!syncCode())return;syncPull();setInterval(syncPull,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncPull()})}
 
 window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code&&S.start)fetch(STORE+'/api/state',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,device:deviceId(),state:syncPick()})})}catch(e){}});
+
+/* ---- the board: a name for the time, offered once the case is solved ---- */
+function lbOffer(){try{if(S.gaveUp)return;const GAME=(typeof window.GAME==='string'&&window.GAME)||(location.pathname.includes('/shaleh')?'shaleh':location.pathname.includes('/villa')?'villa':'khalid');const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+ const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
+ const host=$('#res');if(!host||$('#lbBox'))return;
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">شوفوا اللوحة</a>`};
+ if(saved){show(saved);return}
+ box.innerHTML=`<button class="btn" id="lbGo">🏆 حطّوا اسمكم على لوحة المتصدرين</button>`;
+ $('#lbGo').onclick=()=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">أضيفونا</button><button class="btn lite" data-close>لا، شكراً</button></div>`);
+  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
+  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='اكتبوا اسم الفريق';return}$('#lbSend').disabled=true;
+   try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
+    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'وقتكم ما وصل السيرفر بعد — جرّبوا بعد ثواني':'ما قدرنا نضيفكم، جرّبوا مرة ثانية';$('#lbSend').disabled=false;return}
+    try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='تأكدوا من الإنترنت';$('#lbSend').disabled=false}};
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
 
 /* ---- gate ---- */
 const GATE_ON=true;
