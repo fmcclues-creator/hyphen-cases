@@ -1067,7 +1067,6 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="stage"><div class="device sam">
-    </div>
     <div class="status"><span>الجمعة ٨:٣٠ م</span><span>📶 🔋 ٢٧٪</span></div>
     <div class="apps">
     <div class="app on" id="a-home"><div class="home" id="home"></div></div>
@@ -1332,7 +1331,7 @@ const EV=[
  {id:'safe',n:'التيجوري · ٥:٤٠ م',cap:'مفتوح وفاضي. لا كسر ولا خدوش — انفتح بالكود. وباب الغرفة سليم.'},
  {id:'room_ransacked',n:'غرفة الجدّة · ٥:٣٥ م',cap:'الأدراج مقلوبة والفرش على الأرض. بس الباب والشبابيك سليمة، وباقي الشاليه ما انلمس. حرامي من برّه يعفّس غرفة وحدة بس ويفتح التيجوري بالكود؟'},
  {id:'gold',n:'الذهب على الطاولة · ١٢:٣٠ م',cap:'الطقم كامل جدّام العايلة: عقد، تراچي، ثلاث أساور، خواتم. آخر مرة ينشاف كامل.'},
- {id:'plaque',n:'اللوحة النحاسية · باب غرفة الجدّة',cap:'«شاليه أم عبدالعزيز · ١٩٩٨». كتبها بوعبدالرزاق بخطه يوم اشترى الشاليه باسم أمه.'},
+ {id:'plaque_dirty',n:'اللوحة النحاسية · باب غرفة الجدّة',scratch:1,cap:'«شاليه أم عبدالعزيز». كتبها بوعبدالرزاق بخطه يوم اشترى الشاليه باسم أمه. السطر الثاني مغبّر — <b>امسحوه بإصبعكم</b>.'},
  {id:'smudge',n:'شاشة موبايل بوعبدالرزاق',cap:'أثر الأصابع على الشاشة — مسار النقشة واضح لو ميّلتوا الصورة.'},
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
@@ -1340,7 +1339,7 @@ const EV=[
 $('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><figcaption><b>${e.n}</b></figcaption></figure>`).join('');
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);
   if(ev.torch){torchStart(ev.torch);return}
-  sheet(`<h3>${ev.n}</h3><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`)};
+  sheet(`<h3>${ev.n}</h3><div id="evPic"><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"></div><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`);if(ev.scratch)scratch($('#evPic'))};
 
 /* ---- the plan's pins: each one says only what the evidence says ---- */
 const MPINS=[
@@ -1520,17 +1519,27 @@ const CHATS=[
   ['them','شكراً لزيارتكم 🌴 فرعنا مفتوح لين ١٢ بالليل','٣:٢٣ م']]}];
 
 const SMS=[
- {id:'bank',n:'البنك',last:'الجمعة',u:0,msgs:[['day','١٢ سبتمبر'],['them','تحويل صادر ٥٠٠.٠٠٠ د.ك إلى فهد عبدالعزيز. الرصيد المتاح ****','٩:٠٢ م'],['day','الجمعة'],['them','عملية شراء ١٨.٥٠٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ٧٧٠٢','١١:٤٠ ص'],['them','عملية شراء ٤.٢٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ٤٤٧١ (رضا)','٣:٢٢ م']]},
- {id:'scam',n:'Secure Cam',last:'سبتمبر',u:0,msgs:[['day','٢٨ سبتمبر'],['them','Secure Cam: تم تفعيل نظام كاميرات شاليه ٤٢ (كاميرتين). كود الدخول للتطبيق: سنة التأسيس المكتوبة على لوحة الشاليه. يمكنك تغييره من الإعدادات.','١١:٢٠ ص']]},
- {id:'zain',n:'Zain',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','فاتورتك لشهر سبتمبر: ٣٢.٠٠٠ د.ك. آخر موعد للدفع ٢٥ أكتوبر.','٩:٠٠ ص']]},
- {id:'otp',n:'K-NET',last:'الجمعة',u:0,msgs:[['day','الجمعة'],['them','كود التحقق: ٤٤٠١٩٢. لا تشاركه مع أحد.','١١:٣٩ ص']]},
- {id:'spam',n:'+965 6xx xxxxx',last:'الثلاثاء',u:0,msgs:[['day','الثلاثاء'],['them','عرض خاص على عزل الأسطح! اتصل الآن','١١:٠٠ ص']]}];
+ {id:'bank',n:'البنك',last:'الجمعة',u:0,msgs:[['day','١٢ سبتمبر'],['them','تحويل صادر ٥٠٠.٠٠٠ د.ك إلى فهد عبدالعزيز. الرصيد المتاح ****','٩:٠٢ م'],['day','١ أكتوبر'],['them','تم إيداع الراتب. الرصيد المتاح ****','٨:٠٠ ص'],['day','١٠ أكتوبر'],['them','عملية شراء ٣٨.٥٠٠ د.ك — محطة الوقود الخيران. البطاقة المنتهية بـ٧٧٠٢','٦:١٢ م'],['day','الجمعة'],['them','عملية شراء ١٨.٥٠٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ٧٧٠٢','١١:٤٠ ص'],['them','عملية شراء ٤.٢٥٠ د.ك — جمعية الخيران. البطاقة المنتهية بـ٤٤٧١ (رضا)','٣:٢٢ م']]},
+ {id:'moi',n:'MOI-Kuwait',last:'الجمعة',u:0,msgs:[['day','الجمعة'],['them','وزارة الداخلية: تم تسجيل بلاغكم رقم ٢٠٢٦/١٠/٤٤١٨ — مخفر الخيران. سيتم التواصل معكم.','٦:٠٢ م']]},
+ {id:'talabat',n:'Talabat',last:'الخميس',u:0,msgs:[['day','الخميس'],['them','طلبك من مطعم فريج صويلح في الطريق 🛵 الوصول خلال ١٥ دقيقة.','٨:٣٠ م'],['them','تم التوصيل. قيّم تجربتك ⭐','٨:٤٨ م']]},
+ {id:'hosp',n:'مستشفى دار الشفاء',last:'الأربعاء',u:0,msgs:[['day','الأربعاء'],['them','تذكير: موعد الوالدة لطيفة — عيادة الباطنية، الاثنين ١٩ أكتوبر الساعة ١٠:٣٠ ص. للتأكيد اضغط ١.','٩:٠٠ ص']]},
+ {id:'knet',n:'K-NET',last:'الجمعة',u:0,msgs:[['day','الخميس'],['them','كود التحقق: ٧٧١٠٢٥. لا تشاركه مع أحد.','٨:٢٩ م'],['day','الجمعة'],['them','كود التحقق: ٤٤٠١٩٢. لا تشاركه مع أحد.','١١:٣٩ ص']]},
+ {id:'zain',n:'Zain',last:'الأربعاء',u:0,msgs:[['day','٢٥ سبتمبر'],['them','تم تجديد باقة البيانات ٥٠GB. صالحة حتى ٢٥ أكتوبر.','١٢:٠١ ص'],['day','الأربعاء'],['them','فاتورتك لشهر سبتمبر: ٣٢.٠٠٠ د.ك. آخر موعد للدفع ٢٥ أكتوبر.','٩:٠٠ ص']]},
+ {id:'scam',n:'Secure Cam',last:'سبتمبر',u:0,msgs:[['day','٢٨ سبتمبر'],['them','Secure Cam: تم تفعيل نظام كاميرات شاليه ٤٢ (كاميرتين). كود الدخول للتطبيق: سنة التأسيس المكتوبة على لوحة الشاليه. يمكنك تغييره من الإعدادات.','١١:٢٠ ص'],['day','١٢ أكتوبر'],['them','Secure Cam: تنبيه — الكاميرا ٢ (الخلفية) الإضاءة الليلية لا تعمل. يُرجى طلب صيانة.','٧:٤٥ م']]},
+ {id:'paci',n:'PACI',last:'٥ أكتوبر',u:0,msgs:[['day','٥ أكتوبر'],['them','الهيئة العامة للمعلومات المدنية: بطاقتكم المدنية جاهزة للاستلام من فرع جنوب السرة.','١٠:١٥ ص']]},
+ {id:'carwash',n:'Al-Khiran Car Wash',last:'٩ أكتوبر',u:0,msgs:[['day','٩ أكتوبر'],['them','سيارتك جاهزة 🚗 شكراً لك.','٤:٤٠ م']]},
+ {id:'school',n:'مدرسة الأمل',last:'٨ أكتوبر',u:0,msgs:[['day','٨ أكتوبر'],['them','تذكير لأولياء الأمور: اجتماع المجلس الأحد ١١ أكتوبر.','١:٠٠ م']]},
+ {id:'gov',n:'Sahel',last:'٣ أكتوبر',u:0,msgs:[['day','٣ أكتوبر'],['them','سهل: تم تجديد رخصة القيادة بنجاح. صالحة حتى ٢٠٣٦.','٢:٢٠ م']]},
+ {id:'ooredoo',n:'Ooredoo',last:'٢ أكتوبر',u:0,msgs:[['day','٢ أكتوبر'],['them','عرض خاص: خط ثاني مجاناً عند الاشتراك بالباقة الذهبية. الرد بـ STOP لإلغاء العروض.','٥:٠٠ م']]},
+ {id:'spam',n:'+965 6xx xxxxx',last:'الثلاثاء',u:0,msgs:[['day','الثلاثاء'],['them','عرض خاص على عزل الأسطح! اتصل الآن','١١:٠٠ ص']]},
+ {id:'spam2',n:'+965 5xx xxxxx',last:'٢٠ سبتمبر',u:0,msgs:[['day','٢٠ سبتمبر'],['them','مبروك! ربحت قسيمة بقيمة ١٠٠ د.ك. اضغط الرابط لاستلامها','٣:٣٣ م']]}];
+
 const CALLS=[{n:'الشرطة — مخفر الخيران',t:'٦:٠٥ م',k:'صادرة · ٣ دقايق'},{n:'عبدالرزاق 🎓',t:'٧:٤٢ م',k:'فايتة (٣) · لندن',bad:1},{n:'منيرة',t:'٥:٣٣ م',k:'واردة · ١ دقيقة'},{n:'فهد',t:'٣:٤١ م',k:'واردة · أقل من دقيقة'},{n:'رضا (السايق)',t:'٣:٠٨ م',k:'صادرة · ١ دقيقة'},{n:'أم عبدالعزيز ❤️',t:'الخميس',k:'صادرة · ٤ دقايق'},{n:'المكتب',t:'الخميس',k:'واردة · ١٢ دقيقة'}];
 const PHOTOS=[
  {id:'gold',n:'ذهب أمي',info:'الجمعة ١٢:٣٠ م · الطاولة',cap:'الطقم كامل. أمي ورّته للكل.'},
  {id:'pool_1420',vid:1,n:'فيديو المسبح ١',info:'الجمعة ٢:٢٠ م · عبدالله يصوّر حمد',cap:'حمد ينط والكاميرا تهتز. شوفوا الخلفية.'},
  {id:'pool_1552',vid:1,n:'فيديو المسبح ٢',info:'الجمعة ٣:٥٢ م · نفس الزاوية',cap:'نفس الزاوية، بعد ساعة ونص. شوفوا الخلفية… منو موجود، ومنو مو موجود؟'},
- {id:'plaque',n:'اللوحة',info:'الجمعة ١١:٤٠ ص',cap:'لوحة باب غرفة أمي. أصوّرها كل سنة.'},
+ {id:'plaque_dirty',scratch:1,n:'اللوحة',info:'الجمعة ١١:٤٠ ص',cap:'لوحة باب غرفة أمي. أصوّرها كل سنة… لازم أنظّفها 😅'},
  {id:'room_ransacked',n:'غرفة أمي',info:'الجمعة ٥:٣٥ م',cap:'كل شي مقلوب.'},
  {id:'safe',n:'التيجوري',info:'الجمعة ٥:٤٠ م',cap:'مفتوح. فاضي.'}];
 const NOTES=[
@@ -1574,9 +1583,23 @@ function openPhoto(id,from){const p=PHOTOS.find(x=>x.id===id)||PH_EXTRA[id]||{n:
   $('#photoImg').innerHTML=p.vid
     ?`<video playsinline controls preload="metadata" poster="img/${id}.jpg" src="video/${id}.mp4" style="width:100%;max-height:100%;background:#000" onerror="this.outerHTML='<img src=&quot;img/${id}.jpg&quot; alt=&quot;&quot;>'"></video>`
     :`<img src="img/${id}.jpg" alt="">`;
+  if(p.scratch)scratch($('#photoImg'));
   $('#photoInfo').innerHTML=`<b>${p.info}</b>${p.cap}`;$('#a-photo [data-back]').dataset.back=from||'photos';openApp('photo');
 }
 renderPhotos();
+/* ---- a dusty plaque: the year sits under grime the finger rubs away ---- */
+function scratch(host){if(!host)return;
+  host.innerHTML='<div style="height:100%;width:100%;display:flex;align-items:center;justify-content:center"><div style="position:relative;line-height:0;max-height:100%;max-width:100%"><img src="img/plaque.jpg" alt="" style="max-width:100%;max-height:100%;width:auto;height:auto;display:block;border-radius:10px"><canvas style="position:absolute;inset:0;width:100%;height:100%;border-radius:10px;touch-action:none;cursor:grab"></canvas></div></div>';
+  const img=host.querySelector('img'),cv=host.querySelector('canvas'),ov=new Image();ov.src='img/plaque_grime.png';
+  if(S.scratched){cv.remove();return}
+  Promise.all([img.decode().catch(()=>{}),ov.decode().catch(()=>{})]).then(()=>{
+    cv.width=ov.naturalWidth||688;cv.height=ov.naturalHeight||1024;const c=cv.getContext('2d');c.drawImage(ov,0,0,cv.width,cv.height);
+    c.globalCompositeOperation='destination-out';let n=0,done=false;
+    const pt=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)/r.width*cv.width,(e.clientY-r.top)/r.height*cv.height]};
+    const check=()=>{const x0=cv.width*0.3,y0=cv.height*0.42,W=cv.width*0.4,H=cv.height*0.12;const d=c.getImageData(x0,y0,W,H).data;let clear=0;for(let i=3;i<d.length;i+=16)if(d[i]<40)clear++;
+      if(clear/(d.length/16)>0.7&&!done){done=true;S.scratched=true;save();SFX.found();cv.style.transition='opacity .7s';cv.style.opacity=0;setTimeout(()=>cv.remove(),800)}};
+    const rub=e=>{const[x,y]=pt(e);c.beginPath();c.arc(x,y,cv.width*0.045,0,7);c.fill();if(++n%6===0)check()};
+    cv.onpointerdown=e=>{e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(x){}rub(e)};cv.onpointermove=e=>{if(e.buttons||e.pointerType==='touch')rub(e)}})}
 /* the cameras app: the owner's code first, then the two cameras */
 const CAMCODE='1998';
 function renderCams(){const el=$('#camsBody');if(!el)return;
