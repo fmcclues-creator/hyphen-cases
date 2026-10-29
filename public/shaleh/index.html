@@ -928,7 +928,7 @@ html.tv body{zoom:1.18}
       <p class="note-tech">الكل كان بالشاليه الجمعة، والكل باقي فيه الحين.</p>
       <div class="sus"><div class="av"><img src="img/p_bu.jpg" alt="" onerror="this.style.display='none'"></div><div><b>بوعبدالرزاق (عبدالعزيز)</b><small>الابن الأكبر · ٥٥ سنة · صاحب الموبايل · اشترى التيجوري لأمه</small><q>«كنت برّا مع العايلة. ما انتبهت لشي غريب… هذا تلفوني، خذه.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_fahad.jpg" alt="" onerror="this.style.display='none'"></div><div><b>فهد</b><small>ولد بوعبدالرزاق الصغير · ٢٩ سنة · شريك بمعرض سيارات</small><q>«كنت مع العيال برّا. إي، دشّيت آخذ شاحني ورديت على طول. شفيها؟»</q></div></div>
-      <div class="sus"><div class="av"><span style="font-size:30px">🎓</span></div><div><b>عبدالرزاق</b><small>ولد بوعبدالرزاق الكبير · ٣١ سنة · يدرس الماجستير بلندن · مو بالشاليه</small><q>اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد.</q></div></div>
+      <div class="sus"><div class="av"><img src="img/p_razzag.jpg" alt="" onerror="this.style.display='none'"></div><div><b>عبدالرزاق</b><small>ولد بوعبدالرزاق الكبير · ٣١ سنة · يدرس الماجستير بلندن · مو بالشاليه</small><q>اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد.</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_noura.jpg" alt="" onerror="this.style.display='none'"></div><div><b>نورة</b><small>الحفيدة · ٢٦ سنة · ربّتها الجدّة بعد وفاة أبوها · الذهب موعود لها</small><q>«طلبت منها أجرّب إسوارة وهي وافقت. باقي الذهب ما لمسته.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_muneera.jpg" alt="" onerror="this.style.display='none'"></div><div><b>منيرة</b><small>بنت الجدّة · ٤٩ سنة · أم عبدالله</small><q>«تضايقت إن الذهب كله بيروح لنورة، صح. بس أمي ما أبوقها. كنت برّا أجهّز الأكل وجويس معاي.»</q></div></div>
       <div class="sus"><div class="av"><img src="img/p_buabdullah.jpg" alt="" onerror="this.style.display='none'"></div><div><b>بوعبدالله</b><small>زوج منيرة · ٥٢ سنة · هو اللي بلّغ</small><q>«كنت عند المسبح أغلب الوقت. رحت الكراج أدوّر عدّة البحر ورديت.»</q></div></div>
@@ -1063,7 +1063,7 @@ html.tv body{zoom:1.18}
 <section class="screen" id="phone">
   <div class="bar"><button class="chip mbtn" data-menu aria-label="القائمة">☰ القائمة</button><span class="timer">00:00</span><span class="sp"></span><button class="chip ghost" id="toFile2">📁 الملف</button><button class="chip solvenow" id="toSolveBar" hidden>🔎 حلّوا القضية الحين</button></div>
   <div class="stage"><div class="device sam">
-    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av" style="font-size:40px;display:grid;place-items:center;background:#2a3344">🎓</div><div class="nm">عبدالرزاق (ولدي · لندن)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-as">📱 إنتوا تردّون من موبايل <b>بوعبدالرزاق</b> — عبدالرزاق يحسب أبوه هو اللي يكلّمه</div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
+    <div class="callov rc" id="rcall"><div class="rc-top"><div class="av"><img src="img/p_razzag.jpg" alt=""></div><div class="nm">عبدالرزاق (ولدي · لندن)</div><div class="st" id="rcSt">يرنّ…</div></div><div class="rc-as">📱 إنتوا تردّون من موبايل <b>بوعبدالرزاق</b> — عبدالرزاق يحسب أبوه هو اللي يكلّمه</div><div class="rc-log" id="rcLog"></div><div class="rc-q" id="rcQ"></div><div class="btns"><button class="end" id="rcEnd">📵</button></div></div>
     <div class="status"><span>الجمعة ٨:٣٠ م</span><span>📶 🔋 ٢٧٪</span></div>
     <div class="apps">
     <div class="app on" id="a-home"><div class="home" id="home"></div></div>
@@ -1402,7 +1402,7 @@ $('#goCorridor').onclick=()=>torchStart('storeroom');$('#goChase').onclick=()=>r
 const AV=id=>`<img src="img/p_${id}.jpg" alt="" onerror="this.replaceWith(document.createTextNode('👤'))">`;const avh=a=>a&&a.startsWith('p:')?AV(a.slice(2)):(a||'👤');
 const IMG=id=>`<img src="img/${id}.jpg" alt="" loading="lazy" onerror="(this.closest('[data-p]')||this).remove()">`;
 const CHATS=[
- {id:'razzag',n:'عبدالرزاق 🎓',av:'🎓',last:'٧:٤٠ م',u:2,msgs:[['day','الأربعاء'],
+ {id:'razzag',n:'عبدالرزاق 🎓',av:'p:razzag',last:'٧:٤٠ م',u:2,msgs:[['day','الأربعاء'],
   ['them','يبه شلونك؟ شلون يدّتي؟ منيرة تقول بتييب الذهب الشاليه 😅 قولوا لها لا','٩:١٠ م'],
   ['me','أمك عنيدة. الكل بيكون الجمعة إن شاء الله.','٩:٣٠ م'],
   ['them','وفهد؟ حسيته مو على بعضه آخر مرة كلمته','٩:٣٢ م'],
@@ -1428,6 +1428,7 @@ const CHATS=[
   ['them','يمّه ليش تييبين الذهب للشاليه؟ مو أحسن يظل بالبيت؟','١١:٤٠ ص','','منيرة'],
   ['them','يدّه، يبتي الإسوارة اللي كلّمتيني عنها؟ 🥹','١١:٤٢ ص','','نورة'],
   ['them','ذهب يدّتي 😍😍','١٢:٣٢ م','gold','نورة'],
+  ['them','يدّتي تورّيني العقد 🥹❤️','١٢:٣٤ م','gold_show','نورة'],
   ['them','شكثر تسوى هالقطع الحين؟ 😂','١٢:٣٥ م','','فهد'],
   ['them','فهد 😒','١٢:٣٦ م','','منيرة'],
   ['them','الغدا جاهز، الكل برّا','١:٣٠ م','','منيرة'],
@@ -1529,7 +1530,7 @@ function renderCalls(){
 renderCalls();
 
 /* photos */
-const PH_EXTRA={receipt:{n:'فاتورة الجمعية',info:'الجمعة ٣:٢٢ م · جمعية الخيران',cap:'ثلج، فحم، عصير. الدفع ببطاقة رضا، ٤.٢٥٠ د.ك.'},
+const PH_EXTRA={gold_show:{n:'يدّتي والعقد',info:'الجمعة ١٢:٣٤ م · الطاولة',cap:'نورة طرّشتها بقروب العايلة.'},receipt:{n:'فاتورة الجمعية',info:'الجمعة ٣:٢٢ م · جمعية الخيران',cap:'ثلج، فحم، عصير. الدفع ببطاقة رضا، ٤.٢٥٠ د.ك.'},
  invoice_q4729:{n:'فاتورة المعرض',info:'١٢ سبتمبر · معرض فهد وسالم للسيارات',cap:'أول فاتورة حق المعرض — رقمها <b dir="ltr">Q-4729</b>. فهد طرّشها لأبوه «عشان تشوف إن الشغل حقيقي» يوم طلب فلوس.'}};
 function renderPhotos(){$('#photoGrid').innerHTML=PHOTOS.map(p=>`<button data-p="${p.id}" style="position:relative">${IMG(p.id)}${p.vid?'<span style="position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#fff;text-shadow:0 2px 8px #000;pointer-events:none">▶</span>':''}</button>`).join('')}
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'photos')};
@@ -1565,12 +1566,15 @@ function tvCtrl(on){const pad=$('#tpad');pad.hidden=!on;$('#tdark').style.visibi
 
 /* ---- torch scenes ---- */
 const SCENES={
- rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:60,y:47,r:17,l:'سيارة سودا — جي إم سي. مو من سيارات العايلة'},{x:43,y:61,r:13,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:33,y:55,r:14,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'call',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'},
- storeroom:{dark:'storeroom_dark',lit:'storeroom_lit',intro:'مخزن الشاطئ القديم — الكهرباء مقطوعة. دوروا على الرف B3… وعلى أي ورقة.',spots:[{x:71,y:12,r:13,l:'الرف B3 — صندوق معدني بقفل أربع أرقام'},{x:47,y:80,r:13,l:'ورقة ممزّقة بخط فهد: «أرقام الأقفال: آخر أربع من أول فاتورة»'}],done:'لقينا الصندوق على الرف B3 — قفل أربع أرقام. وورقة ممزّقة بخط فهد: «أرقام الأقفال: آخر أربع من أول فاتورة». أول فاتورة حق معرضه… وين شفتوها؟ ✅',flag:'corridor',next:'door',tvTitle:'مخزن الشاطئ القديم · الكهرباء مقطوعة'}};
+ rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:62,y:42,r:16,l:'سيارة سودا — جي إم سي يوكن. مو من سيارات العايلة'},{x:27,y:30,r:11,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:55,y:62,r:8,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'call',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'},
+ storeroom:{dark:'storeroom_dark',lit:'storeroom_lit',intro:'مخزن الشاطئ القديم — الكهرباء مقطوعة. دوروا على الرف B3… وعلى أي ورقة.',spots:[{x:72,y:15,r:12,l:'الرف B3 — صندوق معدني بقفل أربع أرقام'},{x:58,y:88,r:10,l:'ورقة ممزّقة بخط فهد: «أرقام الأقفال: آخر ٤ من أول فاتورة»'}],done:'لقينا الصندوق على الرف B3 — قفل أربع أرقام. وورقة ممزّقة بخط فهد: «أرقام الأقفال: آخر أربع من أول فاتورة». أول فاتورة حق معرضه… وين شفتوها؟ ✅',flag:'corridor',next:'door',tvTitle:'مخزن الشاطئ القديم · الكهرباء مقطوعة'}};
 let T=null;
 function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
   if(S[sc.flag]){$('#tintro').hidden=true;$('#tlit').style.opacity=1;$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';sc.spots.forEach(s=>mark(s));$('#tmsg').innerHTML=`<div class="h">${sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvScene()}}
-function mark(s){$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${s.x}%;top:${s.y}%"><i></i><span>${s.l}</span></div>`)}
+function spotAt(s){const st=$('#tstage');if(!st||!T)return {x:s.x,y:s.y};const W=st.clientWidth,H=st.clientHeight,ar=T.ar||16/9;if(!W||!H)return {x:s.x,y:s.y};
+  if(W/H>ar){const dh=W/ar,oy=(H-dh)/2;return {x:s.x,y:(oy+s.y/100*dh)/H*100}}
+  const dw=H*ar,ox=(W-dw)/2;return {x:(ox+s.x/100*dw)/W*100,y:s.y}}
+function mark(s){const p=spotAt(s);$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`)}
 function torchExit(){tvSend('bye',{});torchStop();if(T&&T.sc.flag==='corridor'){show('file');$('.tabs button[data-tab=t6]').click()}else{show('file');$('.tabs button[data-tab=t3]').click();if(S.torch1&&!S.call)setTimeout(()=>sheet('<h3>📞 منو صاحب السيارة؟</h3><div class="h">فهد ما يقول. بس أخوه <b>عبدالرزاق</b> اتصل على موبايل أبوه ٧:٤٢ م وما رد أحد — «أبي أقولك شي عن فهد». من تطبيق <b>الهاتف</b> ردّوا عليه إنتوا. هو يحسبكم أبوه.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
@@ -1579,7 +1583,7 @@ $('#torchOn').onclick=async()=>{$('#tintro').hidden=true;T.on=true;T.tx=50;T.ty=
   try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function'){const p=await DeviceOrientationEvent.requestPermission();if(p==='granted')window.addEventListener('deviceorientation',onOri)}else window.addEventListener('deviceorientation',onOri)}catch(e){}
   const st=$('#tstage');const pt=ev=>{const pb=$('.tpad-box');const r=(!$('#tpad').hidden&&pb)?pb.getBoundingClientRect():st.getBoundingClientRect();T.tx=(ev.clientX-r.left)/r.width*100;T.ty=(ev.clientY-r.top)/r.height*100};st.onpointerdown=ev=>{if(ev.target.closest('button,.tmsg,.tintro'))return;st.setPointerCapture(ev.pointerId);pt(ev)};st.onpointermove=ev=>{if(ev.buttons||ev.pointerType==='touch')pt(ev)};
   $('#tlit').style.opacity=1;let last=performance.now();const loop=now=>{if(!T||!T.on)return;const dt=(now-last)/1000;last=now;T.x+=(T.tx-T.x)*0.15;T.y+=(T.ty-T.y)*0.15;if(TV.live){if(now-TV.lastBeam>50){TV.lastBeam=now;tvSend('beam',{x:+T.x.toFixed(1),y:+T.y.toFixed(1),on:true})}const d=$('#tpadDot');if(d){d.style.left=T.x+'%';d.style.top=T.y+'%'}}const m=`radial-gradient(circle at ${T.x}% ${T.y}%, #000 0 ${window.innerWidth<600?60:90}px, transparent ${window.innerWidth<600?110:160}px)`;$('#tlit').style.webkitMaskImage=m;$('#tlit').style.maskImage=m;
-    T.sc.spots.forEach((s,i)=>{if(T.found[i])return;const d=Math.hypot((T.x-s.x)*1.4,T.y-s.y);if(d<s.r){T.dwell[i]=(T.dwell[i]||0)+dt;if(T.dwell[i]>0.7){T.found[i]=true;SFX.found();mark(s);tvSend('found',{i,x:s.x,y:s.y,l:s.l});if(!$('#tpad').hidden)$('#tpadCnt').textContent=`${Object.keys(T.found).length} / ${T.sc.spots.length}`;if(Object.keys(T.found).length===T.sc.spots.length){T.on=false;S[T.sc.flag]=true;save();stageAt(T.sc.next);$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';$('#tmsg').innerHTML=`<div class="h">${T.sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvSend('done',{text:T.sc.done});return}}}else T.dwell[i]=Math.max(0,(T.dwell[i]||0)-dt)});
+    T.sc.spots.forEach((s,i)=>{if(T.found[i])return;const sp=spotAt(s);const d=Math.hypot((T.x-sp.x)*1.4,T.y-sp.y);if(d<s.r){T.dwell[i]=(T.dwell[i]||0)+dt;if(T.dwell[i]>0.7){T.found[i]=true;SFX.found();mark(s);tvSend('found',{i,x:s.x,y:s.y,l:s.l});if(!$('#tpad').hidden)$('#tpadCnt').textContent=`${Object.keys(T.found).length} / ${T.sc.spots.length}`;if(Object.keys(T.found).length===T.sc.spots.length){T.on=false;S[T.sc.flag]=true;save();stageAt(T.sc.next);$('#tlit').style.webkitMaskImage='none';$('#tlit').style.maskImage='none';$('#tmsg').innerHTML=`<div class="h">${T.sc.done}</div><button class="btn" id="tdone">متابعة ›</button>`;$('#tdone').onclick=torchExit;T.doneSent=true;tvSend('done',{text:T.sc.done});return}}}else T.dwell[i]=Math.max(0,(T.dwell[i]||0)-dt)});
     T.raf=requestAnimationFrame(loop)};T.raf=requestAnimationFrame(loop)};
 
 /* ---- door keypad ---- */
