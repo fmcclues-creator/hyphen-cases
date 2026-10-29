@@ -1995,7 +1995,7 @@ function syncStart(){if(!syncCode())return;syncPull();setInterval(syncPull,4000)
 window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code&&S.start)fetch(STORE+'/api/state',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,device:deviceId(),state:syncPick()})})}catch(e){}});
 
 /* ---- the board: a name for the time, offered once the case is solved ---- */
-function lbOffer(){try{if(S.gaveUp)return;const GAME=(typeof window.GAME==='string'&&window.GAME)||(location.pathname.includes('/shaleh')?'shaleh':location.pathname.includes('/villa')?'villa':'khalid');const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
  const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
  let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
  const host=$('#res');if(!host||$('#lbBox'))return;

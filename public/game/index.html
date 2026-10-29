@@ -1810,8 +1810,12 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 /* ================= ACCESS GATE ================= */
 const STORE='https://cases.hyphen-eventskw.com'; // change after deploy if different
+/* the other games name their storage keys off this; here the keys were spelled
+   out one by one and GAME was never declared, so castMode() always threw and
+   the TV cast choice was forgotten between sessions */
+const GAME='khalid';
 /* ---- the board: a name for the time, offered once the case is solved ---- */
-function lbOffer(){try{if(S.gaveUp)return;const GAME=(typeof window.GAME==='string'&&window.GAME)||(location.pathname.includes('/shaleh')?'shaleh':location.pathname.includes('/villa')?'villa':'khalid');const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
  const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
  let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
  const host=$('#res');if(!host||$('#lbBox'))return;
