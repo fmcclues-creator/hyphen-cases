@@ -1403,16 +1403,18 @@ $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$
 
 /* ---- the map: a real street map of الفنطاس (OpenStreetMap), real place search (Nominatim), our pin and OSRM routes ---- */
 const MAPH={pick:null,routes:null,msg:''};
-const MAP_STATION=[29.1690,48.1085];
-const PARK_RE=/حديقة الفنطاس|fintas park|al[- ]?fintas park|الفنطاس.*(حديقة|park)|park.*fintas/i;
+const MAP_STATION=[29.1668,48.1128];
+const PARK_LL=[29.1652,48.1222];/* حديقة الفنطاس — pinned by Dee */
+const PARK_RE=/حديقة الفنطاس|fintas park/i;
+const distM=(a,b)=>{const R=6371000,dLat=(b[0]-a[0])*Math.PI/180,dLon=(b[1]-a[1])*Math.PI/180,la1=a[0]*Math.PI/180,la2=b[0]*Math.PI/180;const h=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
 /* when the geocoder is unreachable, a short local list keeps the step playable */
-const MAP_LOCAL=[{t:'حديقة الفنطاس · Fintas Park',ll:[29.1738,48.1188]},{t:'جمعية الفنطاس التعاونية · Fintas Co-op',ll:[29.1712,48.1120]},{t:'محطة أولى الفنطاس · Oula Gas Station',ll:[29.1730,48.1200]},{t:'ماكدونالدز الفنطاس · McDonald\'s Fintas',ll:[29.1690,48.1175]}];
+const MAP_LOCAL=[{t:'حديقة الفنطاس · Fintas Park',ll:PARK_LL},{t:'جمعية الفنطاس التعاونية · Fintas Co-op',ll:[29.1712,48.1120]},{t:'محطة أولى الفنطاس · Oula Gas Station',ll:[29.1730,48.1200]},{t:'ماكدونالدز الفنطاس · McDonald\'s Fintas',ll:[29.1690,48.1175]}];
 const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
 let LMAP=null,LLAYERS=[],GEO_T=null,GEO_N=0;
 function loadLeaflet(){return new Promise((res,rej)=>{if(window.L)return res();const css=document.createElement('link');css.rel='stylesheet';css.href='vendor/leaflet/leaflet.css';document.head.appendChild(css);const sc=document.createElement('script');sc.src='vendor/leaflet/leaflet.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
 async function geocode(q){const my=++GEO_N;let out=[];
  try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=kw&accept-language=ar&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'}});const j=await r.json();
-   out=j.map(x=>({t:x.display_name.split(',').slice(0,3).join('،'),full:x.display_name,ll:[+x.lat,+x.lon]}))}catch(e){}
+   out=j.map(x=>{const parts=x.display_name.split(',').map(p=>p.trim());const t=(x.name?x.name+' — ':'')+parts.slice(x.name?1:0,x.name?3:3).join('، ');return{t,full:x.display_name,ll:[+x.lat,+x.lon]}})}catch(e){}
  if(!out.length){const v=AR2EN(q);out=MAP_LOCAL.filter(a=>v.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}))}
  return my===GEO_N?out:null}
 function renderMap(){const box=$('#mapBox');if(!box)return;
@@ -1425,13 +1427,13 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
     GEO_T=setTimeout(async()=>{const hits=await geocode(v);busy.style.display='none';if(!hits)return;sug.style.display=hits.length?'block':'none';
       sug.innerHTML=hits.length?hits.map((a,i)=>`<div data-i="${i}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}</div>`).join(''):'';
       sug.querySelectorAll('[data-i]').forEach(d=>d.onclick=()=>{const a=hits[+d.dataset.i];q.value=a.t;sug.style.display='none';mapPick(a)})},550)};
-  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.174,48.115],14);L.control.zoom({position:'bottomleft'}).addTo(LMAP);
+  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.167,48.118],15);L.control.zoom({position:'bottomleft'}).addTo(LMAP);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 مخفر الفنطاس',{permanent:true,direction:'bottom',className:'mapTip'});
     if(/edit=1/.test(location.hash)){const out=document.createElement('div');out.style.cssText='padding:6px 10px;font:12px monospace;direction:ltr;background:#fff;color:#222;word-break:break-all';out.textContent='edit mode — tap the map';box.appendChild(out);let n=0;LMAP.on('click',e=>{n++;out.textContent+=`  #${n}: [${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}]`})}
     mapDraw()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
  else mapDraw()}
-function mapPick(a){const ok=PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 حديقة الفنطاس — قريبة من بيته، والدورية ما تبين غريبة هناك.':'هذا مو قريب من بيته. المرور قال: قطعة ٥، يم حديقة الفنطاس.';if(!ok)SFX.tap();mapDraw()}
+function mapPick(a){const ok=distM(a.ll,PARK_LL)<=350||PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 حديقة الفنطاس — قريبة من بيته، والدورية ما تبين غريبة هناك.':'هذا مو قريب من بيته. المرور قال: قطعة ٥، يم حديقة الفنطاس.';if(!ok)SFX.tap();mapDraw()}
 function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
  const a=MAPH.pick;
  if(a){const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${a.ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,a.ok?16:15,{animate:true})}
