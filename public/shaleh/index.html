@@ -726,7 +726,7 @@ html.tv body{zoom:1.18}
 #prog.open .tlchev{order:2;transform:rotate(180deg)}
 #prog.open .tlln{order:3;flex:0 0 100%;--nd:30px;margin-top:12px;
   padding-inline:26px;padding-bottom:46px}
-#prog.open .tllbl{display:block}
+#prog.open .tllbl{display:block}#prog.open .tlstep[data-go]:not([data-go=""]){cursor:pointer}#prog.open .tlstep[data-go]:not([data-go=""]) .tllbl{text-decoration:underline dotted;text-underline-offset:3px}
 /* more steps than fit a phone: the line scrolls and keeps up with you */
 #prog.open .tlln.many{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;
   padding-inline:16px;scrollbar-width:none}
@@ -1211,7 +1211,7 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261029';
-const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='4729';
+const PATTERNS=[[0,3,6,7,8]]; const DOORCODE='4729';
 const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
@@ -1233,9 +1233,9 @@ function updProg(){const el=$('#prog');if(!el)return;
  const ln=$('#progLn');ln.classList.toggle('many',STEPS.length>6);
  ln.innerHTML=STEPS.map((st,i)=>
   (i?`<i class="tlseg${dn[i-1]?' on':''}"></i>`:'')+
-  `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}">`+
+  `<span class="tlstep ${dn[i]?'done':i===now?'now':'lock'}" data-go="${dn[i]||i===now?st[0]:''}" ${dn[i]||i===now?'role="button" tabindex="0"':''}>`+
   `<i class="tlnd">${dn[i]?'✓':i===now?'':'🔒'}</i>`+
-  `<em class="tllbl">${st[1]}</em></span>`).join('')
+  `<em class="tllbl">${dn[i]||i===now?st[1]:'···'}</em></span>`).join('')
   /* teams were finishing the evidence and then waiting, because nothing said
      the case was still open. locked until the clues are in — it is there so
      they can see where this ends, not so they can jump to it. */
@@ -1244,9 +1244,14 @@ function updProg(){const el=$('#prog');if(!el)return;
   +`${now<0?'':' disabled'}><i class="tlnd">${now<0?'🔎':'🔒'}</i>`
   +`<em class="tllbl">حلّوا القضية</em></button>`;
  const ts=$('#tlSolve');if(ts)ts.onclick=e=>{e.stopPropagation();trySolve()};
+ $$('#progLn [data-go]').forEach(b=>{if(!b.dataset.go)return;const go=e=>{e.stopPropagation();progOpen(false);stepGo(b.dataset.go)};b.onclick=go;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(e)}}});
  $('#progCap').innerHTML=AR(n)+'/'+AR(STEPS.length)+' · '+(now<0?'حلّوا القضية'
    :STEPS[now][1]+(WHERE[STEPS[now][0]]?'<span class="tlwh"> — '+WHERE[STEPS[now][0]]+'</span>':''));
  const bar=$('#toSolveBar');if(bar)bar.hidden=!(S.door&&!S.done);}
+/* where each step lives */
+function stepGo(k){try{if(k==='unlocked'){if(S.unlocked){show('phone');openApp('home')}else show('lock');return}
+ if(k==='cams'||k==='torch1'){if(!S.unlocked){show('lock');return}show('phone');openApp('cams');renderCams();return}
+ show('file');const b=$('.tabs button[data-tab=t6]');if(b&&!b.hidden)b.click()}catch(e){}}
 (function(){const t=$('#progTl');if(!t)return;
  t.onclick=()=>progOpen();
  t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();progOpen()}};})();
@@ -1861,7 +1866,7 @@ function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTa
 
 /* ---- hints ---- */
 const HINTS={
- lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وإهو يفكّر بالإنجليزي: أول حرف من Latifa إهو L — صورتها خلفية شاشته، وتوقيعه بمحضر الاستلام نفس الحرف. ارسموه على الشاشة.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
+ lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وإهو يفكّر بالإنجليزي: أول حرف من Latifa إهو L — صورتها خلفية شاشته، وتوقيعه بمحضر الاستلام نفس الحرف. ارسموه على الشاشة.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L، من فوق يسار لتحت ثم يمين).'],
  cams:['بموبايل بوعبدالرزاق تطبيق <b>الكاميرات</b> — مقفول بكود ٤ أرقام. شركة الكاميرات طرّشت له الكود الافتراضي برسالة نصية يوم التركيب — جرّبوه.','الكود الافتراضي تغيّر، بس بوعبدالرزاق خلّى لنفسه تلميح: «السنة اللي بنيت الشاليه حق أمي». السنة مكتوبة على لوحة باب غرفتها — بمعرض الصور بموبايله — تحت الغبار.','الجواب: ١٩٩٨.'],
  torch1:['رضا قال شاف سيارة غريبة عند البوابة الخلفية. بتطبيق الكاميرات، كاميرا <b>بوابة الخدمة الخلفية</b> فريمها أسود — اضغطوه وشغّلوا الكشّاف. (تقدرون تطلّعونه على التلفزيون من cases.hyphen-eventskw.com/tv)','ثبّتوا الضوء ثانية على كل شي يبين: السيارة، والشباك اللي يمّها، واللوحة.','الجواب: جي إم سي سودا غريبة ٤:٠٥ عند البوابة الخلفية، وصندوق معدني ينعطى لها من شباك الديوانية. اللوحة ٤١٨٧٢. وبعدها: 🕒 خط اليوم.'],
  scall:['المرور عطونا رقم سالم — بتبويب 🚓 الميدان. من <b>هاتف المخفر</b> اطلبوا الرقم بنفسكم: الرقم الغلط ما يرن. أول مرة بيسكّر بوجهكم — اتصلوا مرة ثانية.','اسألوه بهدوء: وين كان، شنو أخذ، ومنو قفّل الصندوق. لو اتهمتوه بيسكّر ويركض — بتوصلون للمطاردة بس بدون معلوماته، وبدقيقة زيادة.','الجواب: الرقم <span dir="ltr">66047291</span>. وإهو يعترف إنه استلم صندوق مقفول من «واحد» ما يبي يسمّيه، وإن هاللي عطاه قفّله جدّامه وما عطاه الكود.'],
