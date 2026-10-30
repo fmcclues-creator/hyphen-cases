@@ -40,16 +40,24 @@ export function Podium({ rows }) {
 }
 
 
-// the homepage block: podium for one case + a link to the full board
-export async function HomeBoard({ game = "khalid", name = "قضية خالد" }) {
-  const rows = await topRows(game, 3);
+// the homepage block: one podium per case, side by side, and a link to the full board
+export async function HomeBoard() {
+  const cases = [{ game: "khalid", name: "قضية خالد" }, { game: "shaleh", name: "قضية الشاليه" }];
+  const boards = await Promise.all(cases.map(async (c) => ({ ...c, rows: await topRows(c.game, 3) })));
   return (
     <section className="cases" id="board">
-      <h2>🏆 المتصدرين</h2>
-      <p className="muted" style={{ margin: "0 0 4px" }}>أسرع الفرق اللي حلّت {name}. الوقت يشمل الإضافات.</p>
-      {rows.length === 0
-        ? <p className="muted">اللوحة فاضية بعد — أول فريق يحلّ القضية يحطّ اسمه هنا.</p>
-        : <Podium rows={rows} />}
+      <h2>🏆 لوحة المتصدرين</h2>
+      <p className="muted" style={{ margin: "0 0 4px" }}>أسرع الفرق اللي حلّت كل قضية. الوقت يشمل الإضافات.</p>
+      <div className="boards">
+        {boards.map((b) => (
+          <div key={b.game} className="board">
+            <h3>{b.name}</h3>
+            {b.rows.length === 0
+              ? <p className="muted">اللوحة فاضية بعد — أول فريق يحلّها يحطّ اسمه هنا.</p>
+              : <Podium rows={b.rows} />}
+          </div>
+        ))}
+      </div>
       <p style={{ marginTop: 18 }}><Link className="cta lite" href="/leaderboard" style={{ fontSize: 16, padding: "10px 18px" }}>اللوحة كاملة ←</Link></p>
     </section>
   );
