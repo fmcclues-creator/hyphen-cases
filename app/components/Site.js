@@ -52,7 +52,7 @@ export function Footer() {
     <footer className="ftr">
       <div>
         <b>HYPHEN Events</b> · الكويت<br />
-        <span className="muted">ألعاب تحقيق جماعية باللهجة الكويتية، تنلعب على التلفزيون.</span>
+        <span className="muted">ألعاب تحقيق جماعية، تنلعب على التلفزيون.</span>
       </div>
       <div className="links">
         <a href="https://instagram.com/hyphen.cases" target="_blank" rel="noreferrer">@hyphen.cases</a>

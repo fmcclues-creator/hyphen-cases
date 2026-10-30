@@ -1,7 +1,7 @@
 const SITE = "https://cases.hyphen-eventskw.com";
 const PRICE = Number(process.env.PRICE_KWD || 4.75).toFixed(3);
 const DESC =
-  "اشتروا كود الفريق لقضية خالد — لعبة تحقيق باللهجة الكويتية، ساعة وحدة، على ٦ موبايلات بنفس الكود، تنلعب على التلفزيون.";
+  "اشتروا كود الفريق لقضية خالد — لعبة تحقيق، ساعة وحدة، على ٦ موبايلات بنفس الكود، تنلعب على التلفزيون.";
 
 export const metadata = {
   title: "اشترِ كود الفريق",
