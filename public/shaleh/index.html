@@ -1012,11 +1012,11 @@ html.tv body{zoom:1.18}
         <div class="h" id="fieldLocked">🔒 ما عندنا اسم لين الحين. رضا شاف سيارة غريبة عند البوابة الخلفية — منو صاحبها؟ شوفوا تسجيل <b>الكاميرا الخلفية</b> من تطبيق الكاميرات.</div>
         <div id="fieldPlate" hidden><p>اللوحة اللي طلعت بالفريم الخلفي: <b dir="ltr">41872</b> — جي إم سي سودا. المرور يقدر يقول لنا منو صاحبها.</p><button class="btn" id="goPlate">📡 اطلبوا بيانات اللوحة من المرور</button></div>
         <div id="fieldOpen" hidden>
-          <p><b>المرور:</b> جي إم سي يوكن سودا · <span dir="ltr">41872</span> · مسجّلة باسم <b>سالم</b> (٣١ سنة) · العنوان: <b>الفنطاس · قطعة ٥ · شارع ٣ · منزل ١٢</b> · الهاتف المسجّل: <b dir="ltr">6604 7291</b>. مو من العايلة، وما أحد منهم ذكر اسمه.</p>
-          <div id="fieldMap" hidden><p>الدورية جاهزة بمخفر الفنطاس. حدّدوا بيته على الخريطة، وبعدين اختاروا لها الطريق.</p><div id="mapBox"></div></div>
-          <div id="fieldCall" hidden><p>الدورية واقفة جدّام بيته. قبل ما يدقّون الباب — اتصلوا عليه من <b>هاتف المخفر</b>. اطلبوا الرقم بنفسكم.</p><button class="btn" id="goSalem">☎️ هاتف المخفر</button></div>
+          <p><b>المرور:</b> جي إم سي يوكن سودا · <span dir="ltr">41872</span> · مسجّلة باسم <b>سالم</b> (٣١ سنة) · العنوان: <b>الفنطاس، قطعة ٥ — يم حديقة الفنطاس</b> · الهاتف المسجّل: <b dir="ltr">6604 7291</b>. مو من العايلة، وما أحد منهم ذكر اسمه.</p>
+          <div id="fieldMap" hidden><p>الدورية جاهزة بمخفر الفنطاس. ما نوقّفها جدّام بيته — يشوفها ويطير. وقّفوها بمكان قريب عادي: دوروا <b>حديقة الفنطاس</b> على الخريطة، وبعدين اختاروا لها الطريق.</p><div id="mapBox"></div></div>
+          <div id="fieldCall" hidden><p>قبل ما تطلع الدورية — اتصلوا عليه من <b>هاتف المخفر</b>. اطلبوا الرقم بنفسكم.</p><button class="btn" id="goSalem">☎️ هاتف المخفر</button></div>
           <div id="fieldSc" hidden></div>
-          <div id="fieldChase" hidden><p>سالم سكّر الخط… والدورية اللي واقفة عند بيته شافته يطلع يركض من الباب الخلفي صوب سيارته!</p><button class="btn" id="goChase">🏃 لحقوه!</button></div>
+          <div id="fieldChase" hidden><p>الدورية واقفة عند حديقة الفنطاس… وشافته طالع من بيته يركض صوب سيارته!</p><button class="btn" id="goChase">🏃 لحقوه!</button></div>
           <div id="fieldDoor" hidden><p>✅ مسكناه قبل ما يركب. بجيبه ورقة: <b>«مخزن الشاطئ القديم · B3»</b>. وباقي يحلف: «صندوق مقفول، إهو قفّله جدّامي، وما أعرف كوده» — وما يقول منو.</p><p>الدورية راحت المخزن: الصندوق المعدني على الرف <b>B3</b>، قفل ٤ أرقام. وجنبه ورقة ممزّقة بخط يد:</p><figure class="ev" style="max-width:260px;margin:6px auto"><img src="img/note_b3.jpg" alt="" onerror="this.closest('figure').remove()"><figcaption><b>«أرقام الأقفال: آخر ٤ من أول فاتورة»</b></figcaption></figure><p>منو كتبها؟ وأي فاتورة؟</p><button class="btn" id="goDoor">🔐 فتحوا القفل</button></div>
           <div id="fieldFound" hidden><p>✅ الصندوق انفتح. العلبة… والذهب كامل.</p><button class="btn" id="goSolveF">🔍 حل القضية</button></div>
         </div>
@@ -1219,7 +1219,7 @@ const PATTERNS=[[0,3,6,7,8]]; const DOORCODE='4729';
 const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,plate:false,route:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
-const STEPS=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['route','الطريق لبيته'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];
+const STEPS=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['route','الدورية للحديقة'],['chase','المطاردة'],['door','القفل']];
 const PROG_LIVE=["file", "lock", "phone", "torch", "run", "door", "solve", "station"];
 function progOpen(v){const el=$('#prog');if(!el)return;
  const open=v===undefined?!el.classList.contains('open'):!!v;
@@ -1392,73 +1392,66 @@ function mpDraw(){
 /* ---- field tab ---- */
 function refreshField(){try{mpDraw()}catch(e){}$$('.tabs button[data-tab=t6]').forEach(b=>b.hidden=!S.torch1);
  $('#fieldLocked').hidden=!!S.torch1;$('#fieldPlate').hidden=!(S.torch1&&!S.plate);$('#fieldOpen').hidden=!S.plate;const ss=$('#susSalem');if(ss)ss.hidden=!S.plate;
- $('#fieldMap').hidden=!(S.plate&&!S.route);if(S.plate&&!S.route)try{renderMap()}catch(e){}$('#fieldCall').hidden=!(S.route&&!S.scall);$('#fieldChase').hidden=!(S.scall&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
+ $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldMap').hidden=!(S.scall&&!S.route);if(S.scall&&!S.route)try{renderMap()}catch(e){}$('#fieldChase').hidden=!(S.route&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
  if(S.torch1&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
-$('#goPlate').onclick=()=>{if(S.plate)return;S.plate=true;save();stageAt('route');SFX.ok();refreshField();
- setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا عنوانه ورقمه. دزّوا له الدورية — حدّدوا بيته على الخريطة.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
+$('#goPlate').onclick=()=>{if(S.plate)return;S.plate=true;save();stageAt('scall');SFX.ok();refreshField();
+ setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا رقمه وعنوانه: قطعة ٥، يم حديقة الفنطاس. أول شي اتصلوا عليه من هاتف المخفر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
 $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$('#stBack').onclick=()=>{show('file');$('.tabs button[data-tab=t6]').click()};$('#goDoor').onclick=()=>show('door');
 
 
 
-/* ---- the map: a real street map of الفنطاس (OpenStreetMap) with our own search, pin and routes ---- */
-const MAPH={target:'5-3-12',pick:null,routes:null,msg:''};
-const MAP_ADDR=[
- {id:'5-3-12',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٢',en:'Fintas, Block 5, Street 3, House 12',ll:[29.1772,48.1166]},
- {id:'5-3-10',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٠',en:'Fintas, Block 5, Street 3, House 10',ll:[29.1774,48.1159]},
- {id:'5-2-12',t:'الفنطاس، قطعة ٥، شارع ٢، منزل ١٢',en:'Fintas, Block 5, Street 2, House 12',ll:[29.1783,48.1163]},
- {id:'5-13-12',t:'الفنطاس، قطعة ٥، شارع ١٣، منزل ١٢',en:'Fintas, Block 5, Street 13, House 12',ll:[29.1752,48.1172]},
- {id:'4-3-12',t:'الفنطاس، قطعة ٤، شارع ٣، منزل ١٢',en:'Fintas, Block 4, Street 3, House 12',ll:[29.1760,48.1108]},
- {id:'6-3-12',t:'الفنطاس، قطعة ٦، شارع ٣، منزل ١٢',en:'Fintas, Block 6, Street 3, House 12',ll:[29.1798,48.1178]},
- {id:'f5-3-12',t:'الفحيحيل، قطعة ٥، شارع ٣، منزل ١٢',en:'Fahaheel, Block 5, Street 3, House 12',ll:[29.0862,48.1180]},
- {id:'m5-3-12',t:'المنقف، قطعة ٥، شارع ٣، منزل ١٢',en:'Mangaf, Block 5, Street 3, House 12',ll:[29.1150,48.1160]},
- {id:'a5-3-12',t:'أبو حليفة، قطعة ٥، شارع ٣، منزل ١٢',en:'Abu Halifa, Block 5, Street 3, House 12',ll:[29.1403,48.1160]}];
+/* ---- the map: a real street map of الفنطاس (OpenStreetMap), real place search (Nominatim), our pin and OSRM routes ---- */
+const MAPH={pick:null,routes:null,msg:''};
 const MAP_STATION=[29.1690,48.1085];
-const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\bblk\b|\bblock\b|\bb\b/gi,'block').replace(/\bst\b|\bstreet\b/gi,'street').replace(/\bh\b|\bhouse\b|\bhse\b/gi,'house').replace(/al[- ]?fintas|fentas|fintass/gi,'fintas').replace(/\s+/g,' ').trim().toLowerCase();
-const addrHit=(a,v)=>{const ws=v.split(' ').filter(Boolean);const ar=AR2EN(a.t),en=AR2EN(a.en||'');return ws.every(w=>ar.includes(w)||en.includes(w))};
-let LMAP=null,LLAYERS=[];
+const PARK_RE=/حديقة الفنطاس|fintas park|al[- ]?fintas park|الفنطاس.*(حديقة|park)|park.*fintas/i;
+/* when the geocoder is unreachable, a short local list keeps the step playable */
+const MAP_LOCAL=[{t:'حديقة الفنطاس · Fintas Park',ll:[29.1738,48.1188]},{t:'جمعية الفنطاس التعاونية · Fintas Co-op',ll:[29.1712,48.1120]},{t:'محطة أولى الفنطاس · Oula Gas Station',ll:[29.1730,48.1200]},{t:'ماكدونالدز الفنطاس · McDonald\'s Fintas',ll:[29.1690,48.1175]}];
+const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+let LMAP=null,LLAYERS=[],GEO_T=null,GEO_N=0;
 function loadLeaflet(){return new Promise((res,rej)=>{if(window.L)return res();const css=document.createElement('link');css.rel='stylesheet';css.href='vendor/leaflet/leaflet.css';document.head.appendChild(css);const sc=document.createElement('script');sc.src='vendor/leaflet/leaflet.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
+async function geocode(q){const my=++GEO_N;let out=[];
+ try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=kw&accept-language=ar&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'}});const j=await r.json();
+   out=j.map(x=>({t:x.display_name.split(',').slice(0,3).join('،'),full:x.display_name,ll:[+x.lat,+x.lon]}))}catch(e){}
+ if(!out.length){const v=AR2EN(q);out=MAP_LOCAL.filter(a=>v.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}))}
+ return my===GEO_N?out:null}
 function renderMap(){const box=$('#mapBox');if(!box)return;
  if(!box.querySelector('#lmap')){box.innerHTML=`<div class="gmap" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid #cfc8b8;background:#e9e5dc">
-  <div style="position:absolute;top:8px;left:8px;right:8px;z-index:1000"><div style="display:flex;gap:6px;align-items:center;background:#fff;border-radius:22px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.22)"><span>🔍</span><input id="mapQ" placeholder="ابحثوا عن عنوان…" autocomplete="off" style="flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;color:#222;min-width:0"></div><div id="mapSug" style="background:#fff;border-radius:12px;margin-top:4px;box-shadow:0 4px 14px rgba(0,0,0,.2);overflow:hidden;display:none"></div></div>
-  <div id="lmap" style="height:300px;width:100%;direction:ltr"></div>
+  <div style="position:absolute;top:8px;left:8px;right:8px;z-index:1000"><div style="display:flex;gap:6px;align-items:center;background:#fff;border-radius:22px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.22)"><span>🔍</span><input id="mapQ" placeholder="ابحثوا عن مكان…" autocomplete="off" style="flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;color:#222;min-width:0"><span id="mapBusy" style="display:none;font-size:12px;color:#888">…</span></div><div id="mapSug" style="background:#fff;border-radius:12px;margin-top:4px;box-shadow:0 4px 14px rgba(0,0,0,.2);overflow:hidden;display:none"></div></div>
+  <div id="lmap" style="height:320px;width:100%;direction:ltr"></div>
   <div id="mapUi" style="padding:8px"></div></div>`;
-  const q=box.querySelector('#mapQ'),sug=box.querySelector('#mapSug');
-  q.oninput=()=>{if(MAPH.routes)return;const v=AR2EN(q.value);const hits=v.length<2?[]:MAP_ADDR.filter(a=>addrHit(a,v)).slice(0,5);
-    sug.style.display=hits.length?'block':'none';sug.innerHTML=hits.map(a=>`<div data-a="${a.id}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}<div style="font-size:11px;color:#777;direction:ltr;text-align:right">${a.en||''}</div></div>`).join('');
-    sug.querySelectorAll('[data-a]').forEach(d=>d.onclick=()=>{const a=MAP_ADDR.find(x=>x.id===d.dataset.a);q.value=a.t;sug.style.display='none';MAPH.pick=a.id;MAPH.msg=a.id===MAPH.target?'📍 '+a.t+' — هذا بيته.':'هذا مو عنوان المرور. راجعوه زين.';if(a.id!==MAPH.target)SFX.tap();mapDraw()})};
-  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.174,48.112],14);L.control.zoom({position:'bottomleft'}).addTo(LMAP);LMAP.on('zoomend',()=>mapHouses());
+  const q=box.querySelector('#mapQ'),sug=box.querySelector('#mapSug'),busy=box.querySelector('#mapBusy');
+  q.oninput=()=>{if(MAPH.routes)return;clearTimeout(GEO_T);const v=q.value.trim();if(v.length<3){sug.style.display='none';return}busy.style.display='';
+    GEO_T=setTimeout(async()=>{const hits=await geocode(v);busy.style.display='none';if(!hits)return;sug.style.display=hits.length?'block':'none';
+      sug.innerHTML=hits.length?hits.map((a,i)=>`<div data-i="${i}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}</div>`).join(''):'';
+      sug.querySelectorAll('[data-i]').forEach(d=>d.onclick=()=>{const a=hits[+d.dataset.i];q.value=a.t;sug.style.display='none';mapPick(a)})},550)};
+  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.174,48.115],14);L.control.zoom({position:'bottomleft'}).addTo(LMAP);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 مخفر الفنطاس',{permanent:true,direction:'bottom',className:'mapTip'});
-    if(/edit=1/.test(location.hash)){const out=document.createElement('div');out.style.cssText='padding:6px 10px;font:12px monospace;direction:ltr;background:#fff;color:#222;word-break:break-all';out.textContent='edit mode — tap the map';$('#mapBox').appendChild(out);let n=0;LMAP.on('click',e=>{n++;const t=`#${n}: [${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}]`;out.textContent+='  '+t;L.marker(e.latlng,{icon:L.divIcon({className:'',html:`<div style="transform:translate(-50%,-100%);font-size:22px">📌<small style="font-size:11px;background:#fff;padding:1px 4px;border-radius:4px">${n}</small></div>`,iconSize:[0,0]})}).addTo(LMAP)})}
-    mapDraw();mapHouses()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
+    if(/edit=1/.test(location.hash)){const out=document.createElement('div');out.style.cssText='padding:6px 10px;font:12px monospace;direction:ltr;background:#fff;color:#222;word-break:break-all';out.textContent='edit mode — tap the map';box.appendChild(out);let n=0;LMAP.on('click',e=>{n++;out.textContent+=`  #${n}: [${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}]`})}
+    mapDraw()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
  else mapDraw()}
-let LHOUSES=[];
-/* zoomed in, every address becomes a small tappable label — they can find the house by looking, not only by searching */
-function mapHouses(){if(!LMAP)return;LHOUSES.forEach(h=>{try{LMAP.removeLayer(h)}catch(e){}});LHOUSES=[];if(LMAP.getZoom()<16||MAPH.routes)return;
- MAP_ADDR.filter(a=>a.id!=='f5-3-12'&&a.id!=='m5-3-12'&&a.id!=='a5-3-12').forEach(a=>{const parts=a.t.split('، ');const lbl=parts[3]+' · '+parts[2].replace('شارع','ش')+' · '+parts[1].replace('قطعة','ق');
-  const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="transform:translate(-50%,-50%);background:#fff;border:1px solid #bbb;border-radius:6px;padding:2px 6px;font-size:11px;white-space:nowrap;direction:rtl;box-shadow:0 1px 3px rgba(0,0,0,.3);cursor:pointer">🏠 ${lbl}</div>`,iconSize:[0,0]})}).addTo(LMAP);
-  m.on('click',()=>{if(MAPH.routes)return;const q=$('#mapQ');if(q)q.value=a.t;MAPH.pick=a.id;MAPH.msg=a.id===MAPH.target?'📍 '+a.t+' — هذا بيته.':'هذا مو عنوان المرور. راجعوه زين.';if(a.id!==MAPH.target)SFX.tap();mapDraw()});LHOUSES.push(m)})}
+function mapPick(a){const ok=PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 حديقة الفنطاس — قريبة من بيته، والدورية ما تبين غريبة هناك.':'هذا مو قريب من بيته. المرور قال: قطعة ٥، يم حديقة الفنطاس.';if(!ok)SFX.tap();mapDraw()}
 function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
- const a=MAP_ADDR.find(x=>x.id===MAPH.pick);
- if(a){const ok=a.id===MAPH.target;const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,ok?16:15,{animate:true})}
+ const a=MAPH.pick;
+ if(a){const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${a.ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,a.ok?16:15,{animate:true})}
  if(MAPH.routes){MAPH.routes.forEach(r=>{const pl=L.polyline(r.pts,{color:r.color,weight:5,opacity:.85,dashArray:r.dash||null}).addTo(LMAP);LLAYERS.push(pl);if(r.warn){const w=L.marker(r.warn,{icon:L.divIcon({className:'',html:'<div style="font-size:22px;transform:translate(-50%,-50%)">⚠️</div>',iconSize:[0,0]})}).addTo(LMAP).bindTooltip('حفريات — الشارع مسكّر',{permanent:true,direction:'top',className:'mapTip'});LLAYERS.push(w)}});
    try{LMAP.fitBounds(L.latLngBounds([MAP_STATION,a.ll]).pad(.25))}catch(e){}}
  const ui=box.querySelector('#mapUi');
  if(MAPH.routes){ui.innerHTML=`<div style="display:grid;gap:6px">${MAPH.routes.map(r=>`<button class="btn" data-r="${r.id}" style="justify-content:space-between;gap:12px;font-size:14px;background:#2a2419;color:#fff;box-shadow:none"><span>${r.sw} ${r.name}</span><b>${r.min}</b></button>`).join('')}</div>`;
-   ui.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{const r=b.dataset.r;S.route=true;const late=r!=='b';if(late){S.pen+=180;SFX.bad()}else SFX.ok();save();stageAt('scall');refreshField();
-     sheet((late?(r==='c'?'<h3>⚠️ الشارع مسكّر</h3><div class="h">الدورية لفّت ورجعت من الحفريات. وصلت بيته متأخرة ٣ دقايق (+٣).</div>':'<h3>🚓 وصلت… متأخرة</h3><div class="h">الطريق الدائري أطول. الدورية وصلت بيته متأخرة ٣ دقايق (+٣).</div>')
-       :'<h3>🚓 الدورية وصلت</h3><div class="h">واقفين جدّام منزل ١٢. سيارته جدّام البيت. الحين اتصلوا عليه من هاتف المخفر.</div>')+'<div class="acts"><button class="btn" data-close>تمام</button></div>')})}
- else{ui.innerHTML=`<button class="btn" id="mapGo" style="width:100%" ${a&&a.id===MAPH.target?'':'disabled'}>🚗 اتجاهات الدورية</button><div class="h" style="margin-top:6px;font-size:12.5px">${MAPH.msg||'اكتبوا عنوان المرور بالبحث فوق.'}</div>`;
+   ui.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{const r=b.dataset.r;S.route=true;const late=r!=='b';if(late){S.pen+=180;SFX.bad()}else SFX.ok();save();stageAt('chase');refreshField();
+     sheet((late?(r==='c'?'<h3>⚠️ الشارع مسكّر</h3><div class="h">الدورية لفّت ورجعت من الحفريات. وصلت الحديقة متأخرة ٣ دقايق (+٣)… وأول ما وقفت شافته طالع من بيته يركض صوب سيارته!</div>':'<h3>🚓 وصلت… متأخرة</h3><div class="h">الطريق الدائري أطول. الدورية وصلت الحديقة متأخرة ٣ دقايق (+٣)… وأول ما وقفت شافته طالع من بيته يركض صوب سيارته!</div>')
+       :'<h3>🚓 الدورية وصلت الحديقة</h3><div class="h">وقفت عند الحديقة بهدوء… وبعد دقيقة شافته طالع من بيته يركض صوب سيارته!</div>')+'<div class="acts"><button class="btn" data-close onclick="runStart()">🏃 لحقوه!</button></div>')})}
+ else{ui.innerHTML=`<button class="btn" id="mapGo" style="width:100%" ${a&&a.ok?'':'disabled'}>🚗 اتجاهات الدورية</button><div class="h" style="margin-top:6px;font-size:12.5px">${MAPH.msg||'اكتبوا اسم المكان بالبحث فوق — بالعربي أو بالإنجليزي.'}</div>`;
    const go=ui.querySelector('#mapGo');if(go)go.onclick=()=>{go.disabled=true;go.textContent='… نحسب الطرق';mapRoutes(a.ll).then(rs=>{MAPH.routes=rs;SFX.ok();mapDraw()})}}}
-/* three ways from the station: direct (right), the ring road (long), and the inner street with road works (looks shortest) */
+/* three ways from the station: direct (right), the ring road (long), and an inner street with road works (looks shortest) */
 async function mapRoutes(dest){const S0=MAP_STATION;
  const osrm=async pts=>{const u='https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson';const r=await fetch(u);const j=await r.json();const rt=j.routes[0];return{pts:rt.geometry.coordinates.map(c=>[c[1],c[0]]),sec:rt.duration}};
- const viaRing=[29.1650,48.1040],viaInner=[29.1742,48.1150];
- let A,B,C;try{[A,B,C]=await Promise.all([osrm([S0,dest]),osrm([S0,viaRing,dest]),osrm([S0,viaInner,dest])])}catch(e){
-   const st=(a,b)=>[a,b];A={pts:st(S0,dest),sec:540};B={pts:[S0,viaRing,dest],sec:840};C={pts:[S0,viaInner,dest],sec:420}}
+ const mid=[(S0[0]+dest[0])/2,(S0[1]+dest[1])/2],dx=dest[1]-S0[1],dy=dest[0]-S0[0];
+ const viaInner=[mid[0]+dx*0.35,mid[1]-dy*0.35],viaRing=[mid[0]-dx*0.9,mid[1]+dy*0.9];
+ let A,B,C;try{[A,B,C]=await Promise.all([osrm([S0,dest]),osrm([S0,viaRing,dest]),osrm([S0,viaInner,dest])])}catch(e){A={pts:[S0,dest],sec:540};B={pts:[S0,viaRing,dest],sec:840};C={pts:[S0,viaInner,dest],sec:420}}
  const base=Math.max(6,Math.round(A.sec/60)+3);
  return[{id:'b',name:'الطريق المباشر',sw:'🟦',color:'#1a73e8',pts:A.pts,min:AR(base)+' دقايق'},
-        {id:'c',name:'الشارع الداخلي',sw:'🟩',color:'#2fcc5f',pts:C.pts,min:AR(base-2)+' دقايق',warn:viaInner},
+        {id:'c',name:'الشارع الداخلي',sw:'🟩',color:'#2fcc5f',pts:C.pts,min:AR(base-2)+' دقايق',warn:C.pts[Math.floor(C.pts.length/2)]},
         {id:'g',name:'الطريق الدائري',sw:'⬜',color:'#8e8e93',dash:'8 7',pts:B.pts,min:AR(base+5)+' دقيقة'}]}
 /* ---- pattern lock ---- */
 (function(){const svg=$('#pat'),line=$('#patLine');const P=[];for(let r=0;r<3;r++)for(let c=0;c<3;c++)P.push([50+c*100,50+r*100]);
@@ -1868,10 +1861,10 @@ function scAsk(){const round=SC[SCS.r];if(!round){scEnd(true);return}
   $$('#scQ button').forEach(b=>b.onclick=()=>{if(SCS.busy)return;SCS.busy=true;const q=round.ask[+b.dataset.i];SCS.used[SCS.r+':'+b.dataset.i]=1;$('#scQ').innerHTML='';scLine(q[0],'me');
     scSay(q[1],q[3],()=>{SCS.busy=false;if(q[2]===0){scEnd(false);return}if(q[2]===1)SCS.r++;scAsk()})})}
 function scEnd(calm){clearInterval(SCS.iv);$('#scQ').innerHTML='';
-  const fin=()=>{S.scall=true;if(!calm){S.pen+=60;SFX.bad()}else SFX.ok();save();stageAt('chase');
+  const fin=()=>{S.scall=true;if(!calm){S.pen+=60;SFX.bad()}else SFX.ok();save();stageAt('route');
     scLine(calm?'📵 سكّر الخط.':'📵 سكّر الخط. انضافت دقيقة على وقتكم','sys');
     setTimeout(()=>{$('#scall').classList.remove('on');show('file');$('.tabs button[data-tab=t6]').click();refreshField();
-      sheet('<h3>🏃 طلع يركض!</h3><div class="h">'+(calm?'سكّر بعد ما قال اللي عنده: صندوق مقفول من «واحد بالشاليه» ما يبي يسمّيه، قفّله جدّامه، وسالم ما يعرف الكود.':'سكّر بوجهكم قبل ما يقول شي — انضافت دقيقة.')+'<br><br>والدورية اللي واقفة عند بيته شافته يطلع يركض من الباب الخلفي صوب سيارته. تبويب <b>🚓 الميدان</b>: لحقوه!</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1200)};
+      sheet('<h3>📵 سكّر الخط</h3><div class="h">'+(calm?'سكّر بعد ما قال اللي عنده: صندوق مقفول من «واحد بالشاليه» ما يبي يسمّيه، قفّله جدّامه، وسالم ما يعرف الكود.':'سكّر بوجهكم قبل ما يقول شي — انضافت دقيقة.')+'<br><br>لازم الدورية توصل له قبل ما يهرب — بس مو جدّام بيته. تبويب <b>🚓 الميدان</b>: دوروا حديقة الفنطاس على الخريطة ودزّوها.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')},1200)};
   if(calm&&SCS.r>=3)scSay('…خلاص. لا تتصلون مرة ثانية.',11,fin);else fin()}
 $('#scEnd').onclick=()=>{clearInterval(SCS.iv);$('#au-ring').pause();$('#scall').classList.remove('on')};
 function renderScLog(){const el=$('#fieldSc');if(!el)return;const L=S.scLog||[];el.hidden=!(S.scall&&L.length);if(el.hidden)return;
@@ -1961,7 +1954,7 @@ const HINTS={
  torch1:['رضا قال شاف سيارة غريبة عند البوابة الخلفية. بتطبيق الكاميرات، كاميرا <b>بوابة الخدمة الخلفية</b> فريمها أسود — اضغطوه وشغّلوا الكشّاف. (تقدرون تطلّعونه على التلفزيون من cases.hyphen-eventskw.com/tv)','ثبّتوا الضوء ثانية على كل شي يبين: السيارة، والشباك اللي يمّها، واللوحة.','الجواب: جي إم سي سودا غريبة ٤:٠٥ عند البوابة الخلفية، وصندوق معدني ينعطى لها من شباك الديوانية. اللوحة ٤١٨٧٢. وبعدها: 🚓 الميدان بالملف.'],
  scall:['المرور عطونا رقم سالم — بتبويب 🚓 الميدان. من <b>هاتف المخفر</b> اطلبوا الرقم بنفسكم: الرقم الغلط ما يرن. أول مرة بيسكّر بوجهكم — اتصلوا مرة ثانية.','اسألوه بهدوء: وين كان، شنو أخذ، ومنو قفّل الصندوق. لو اتهمتوه بيسكّر ويركض — بتوصلون للمطاردة بس بدون معلوماته، وبدقيقة زيادة.','الجواب: الرقم <span dir="ltr">66047291</span>. وإهو يعترف إنه استلم صندوق مقفول من «واحد» ما يبي يسمّيه، وإن هاللي عطاه قفّله جدّامه وما عطاه الكود.'],
  plate:['اللوحة اللي لقيتوها بالكشّاف — المرور يقدر يقول منو صاحبها. تبويب <b>🚓 الميدان</b> بالملف.','اضغطوا «اطلبوا بيانات اللوحة».','الجواب: سالم، ٣١ سنة، الفنطاس — مو من العايلة.'],
- route:['المرور عطونا عنوانه: قطعة ٥، شارع ٣، منزل ١٢. على الخريطة بتبويب 🚓 الميدان: القطع من فوق، والشوارع صفوف، وكل بيت عليه رقمه.','اضغطوا منزل ١٢ بشارع ٣ بقطعة ٥، بعدين «توجيه». الطريق الأقصر فيه حفريات — شوفوا ⚠️.','الجواب: البيت ١٢ بالصف الثالث من القطعة الوسطى، والطريق الأزرق (٩ دقايق).'],
+ route:['لا توقّفون الدورية جدّام بيته. المرور قال بيته يم <b>حديقة الفنطاس</b> — دوروها بالخريطة بتبويب 🚓 الميدان، بالعربي أو بالإنجليزي.','اكتبوا «حديقة الفنطاس» أو «Fintas Park» واختاروها، بعدين «اتجاهات». الطريق الأقصر فيه حفريات — شوفوا ⚠️.','الجواب: حديقة الفنطاس، والطريق الأزرق المباشر.'],
  chase:['سالم طلع يركض من الباب الخلفي. اضغطوا «لحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يركب سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
  door:['الورقة اللي لقتها الدورية جنب الصندوق — بتبويب الميدان: «آخر أربع من أول فاتورة». منو عنده شغل وفواتير؟ فهد طرّش أول فاتورة حق معرضه لأبوه يوم فتحه: واتساب ← فهد ← ١٢ سبتمبر.','رقم الفاتورة <span dir="ltr">Q-4729</span>. آخر أربع أرقام.','الجواب: الكود ٤٧٢٩.'],
  solve:['ثلاث أسئلة: منو فتح التيجوري وأخذ الذهب؟ منو استلم الصندوق عند البوابة الخلفية وخشّه؟ وشلون انفتح التيجوري بدون كسر — منو كان يعرف الكود؟','اللي اختفى من المسبح ٣:٥٢، واللي كان يساعد أبوه يوم تركيب التيجوري، واللي «سوقه طايح» — واللي فاتورته فتحت القفل. واللي سيارته ٤١٨٧٢.','فهد أخذه. سالم ساعده. وفهد عرف الكود يوم ساعد أبوه يركّب التيجوري بالصيف — بواتساب بوعبدالرزاق مع عبدالرزاق، ١٤ يوليو.']};
@@ -1972,12 +1965,12 @@ const WHERE={unlocked:'الملف: محضر البلاغ و«عن بوعبدال
  cams:'الموبايل ← تطبيق الكاميرات — الكود ٤ أرقام',
  torch1:'الموبايل ← الكاميرات ← بوابة الخدمة الخلفية',
  plate:'الملف ← 🚓 الميدان ← بيانات اللوحة',
- route:'الملف ← 🚓 الميدان ← الخريطة',
+ route:'الملف ← 🚓 الميدان ← الخريطة (حديقة الفنطاس)',
  scall:'الملف ← 🚓 الميدان ← هاتف المخفر',
  chase:'الملف ← 🚓 الميدان',
  door:'القفل بالملف ← 🚓 الميدان · الورقة هناك، والفاتورة بواتساب ← فهد'};
-const HNAME={lock:'فتح الموبايل',cams:'تطبيق الكاميرات',torch1:'الكاميرا الخلفية',plate:'صاحب السيارة',route:'الطريق لبيته',scall:'مكالمة سالم',chase:'المطاردة',door:'القفل',solve:'الاتهام'};
-function stage(){if(!S.unlocked)return 'lock';if(!S.cams)return 'cams';if(!S.torch1)return 'torch1';if(!S.plate)return 'plate';if(!S.route)return 'route';if(!S.scall)return 'scall';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
+const HNAME={lock:'فتح الموبايل',cams:'تطبيق الكاميرات',torch1:'الكاميرا الخلفية',plate:'صاحب السيارة',scall:'مكالمة سالم',route:'الدورية للحديقة',chase:'المطاردة',door:'القفل',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.cams)return 'cams';if(!S.torch1)return 'torch1';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.route)return 'route';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 /* The countdown was printed once and never touched again, so it held the same
@@ -2068,7 +2061,7 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['route','الطريق لبيته'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];let open=true;el.innerHTML=items.map(([k,t])=>{const ok=!!S[k],cur=!ok&&open;if(!ok)open=false;return `<div class="${ok?'ok':cur?'cur':'off'}"><i>${ok?'✓':cur?'›':'🔒'}</i>${ok||cur?t:'···'}</div>`}).join('')}
+function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['route','الدورية للحديقة'],['chase','المطاردة'],['door','القفل']];let open=true;el.innerHTML=items.map(([k,t])=>{const ok=!!S[k],cur=!ok&&open;if(!ok)open=false;return `<div class="${ok?'ok':cur?'cur':'off'}"><i>${ok?'✓':cur?'›':'🔒'}</i>${ok||cur?t:'···'}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
@@ -2170,7 +2163,7 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 /* #try=chase opens the chase on its own — no code, nothing saved */
-if(/try=(chase|map)/.test(location.hash)){window.save=function(){try{updProg()}catch(e){}};const map=/try=map/.test(location.hash);Object.assign(S,{start:Date.now(),unlocked:true,cams:true,torch1:true,plate:true,route:!map,scall:!map,code:'DEMO'});
+if(/try=(chase|map)/.test(location.hash)){window.save=function(){try{updProg()}catch(e){}};const map=/try=map/.test(location.hash);Object.assign(S,{start:Date.now(),unlocked:true,cams:true,torch1:true,plate:true,scall:true,route:!map,code:'DEMO'});
  if(map){show('file');$('.tabs button[data-tab=t6]').click();refreshField();setTimeout(()=>$('#fieldMap')?.scrollIntoView(),300)}else runStart();}
 else (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
 const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,plate:false,route:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
