@@ -1012,7 +1012,7 @@ html.tv body{zoom:1.18}
         <div class="h" id="fieldLocked">🔒 ما عندنا اسم لين الحين. رضا شاف سيارة غريبة عند البوابة الخلفية — منو صاحبها؟ شوفوا تسجيل <b>الكاميرا الخلفية</b> من تطبيق الكاميرات.</div>
         <div id="fieldPlate" hidden><p>اللوحة اللي طلعت بالفريم الخلفي: <b dir="ltr">41872</b> — جي إم سي سودا. المرور يقدر يقول لنا منو صاحبها.</p><button class="btn" id="goPlate">📡 اطلبوا بيانات اللوحة من المرور</button></div>
         <div id="fieldOpen" hidden>
-          <p><b>المرور:</b> جي إم سي يوكن سودا · <span dir="ltr">41872</span> · مسجّلة باسم <b>سالم</b> (٣١ سنة) · العنوان: <b>الفنطاس، قطعة ٥ — يم حديقة الفنطاس</b> · الهاتف المسجّل: <b dir="ltr">6604 7291</b>. مو من العايلة، وما أحد منهم ذكر اسمه.</p>
+          <p><b>المرور:</b> جي إم سي يوكن سودا · <span dir="ltr">41872</span> · مسجّلة باسم <b>سالم</b> (٣١ سنة) · العنوان: <b>الفنطاس — يم حديقة الفنطاس</b> · الهاتف المسجّل: <b dir="ltr">6604 7291</b>. مو من العايلة، وما أحد منهم ذكر اسمه.</p>
           <div id="fieldMap" hidden><p>الدورية جاهزة بمخفر الفنطاس. ما نوقّفها جدّام بيته — يشوفها ويطير. وقّفوها بمكان قريب عادي: دوروا <b>حديقة الفنطاس</b> على الخريطة، وبعدين اختاروا لها الطريق.</p><div id="mapBox"></div></div>
           <div id="fieldCall" hidden><p>قبل ما تطلع الدورية — اتصلوا عليه من <b>هاتف المخفر</b>. اطلبوا الرقم بنفسكم.</p><button class="btn" id="goSalem">☎️ هاتف المخفر</button></div>
           <div id="fieldSc" hidden></div>
@@ -1326,7 +1326,7 @@ const EV=[
 
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
- {id:'moi_plate',need:'plate',n:'استعلام المرور · اللوحة ٤١٨٧٢',cap:'رد المرور على طلبكم: سالم، ٣١ سنة، الفنطاس قطعة ٥ — يم حديقة الفنطاس. الهاتف المسجّل <span dir="ltr">6604 7291</span>.'},
+ {id:'moi_plate',need:'plate',n:'استعلام المرور · اللوحة ٤١٨٧٢',cap:'رد المرور على طلبكم: سالم، ٣١ سنة، الفنطاس — يم حديقة الفنطاس. الهاتف المسجّل <span dir="ltr">6604 7291</span>.'},
  {id:'receipt_phone',n:'محضر استلام الجهاز · ٧:٠٠ م',cap:'بوعبدالرزاق سلّم موبايله للدورية بنفسه ووقّع. نقشة الفتح ما انسجّلت.'},
  {id:'cam_gate_1625',n:'كاميرا البوابة · ٤:٢٥ م',cap:'كامري رضا ترجع. رضا كان برّا ساعة وربع — من ٣:١٠ إلى ٤:٢٥.'}];
 function renderEv(){$('#evGrid').innerHTML=EV.filter(e=>!e.need||S[e.need]).map(e=>`<figure class="ev" data-ev="${e.id}" style="position:relative"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()">${e.vid?'<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 7px;font-size:12px">▶ فيديو</span>':''}<figcaption><b>${e.n}</b></figcaption></figure>`).join('')}renderEv();
@@ -1396,7 +1396,7 @@ function refreshField(){try{mpDraw()}catch(e){}try{renderEv()}catch(e){}$$('.tab
  $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldMap').hidden=!(S.scall&&!S.route);if(S.scall&&!S.route)try{renderMap()}catch(e){}$('#fieldChase').hidden=!(S.route&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
  if(S.torch1&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
 $('#goPlate').onclick=()=>{if(S.plate)return;S.plate=true;save();stageAt('scall');SFX.ok();refreshField();
- setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا رقمه وعنوانه: قطعة ٥، يم حديقة الفنطاس. أول شي اتصلوا عليه من هاتف المخفر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
+ setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا رقمه وعنوانه: الفنطاس، يم حديقة الفنطاس. أول شي اتصلوا عليه من هاتف المخفر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
 $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$('#stBack').onclick=()=>{show('file');$('.tabs button[data-tab=t6]').click()};$('#goDoor').onclick=()=>show('door');
 
 
@@ -1433,7 +1433,7 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
     if(/edit=1/.test(location.hash)){const out=document.createElement('div');out.style.cssText='padding:6px 10px;font:12px monospace;direction:ltr;background:#fff;color:#222;word-break:break-all';out.textContent='edit mode — tap the map';box.appendChild(out);let n=0;LMAP.on('click',e=>{n++;out.textContent+=`  #${n}: [${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}]`})}
     mapDraw()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
  else mapDraw()}
-function mapPick(a){const ok=distM(a.ll,PARK_LL)<=350||PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 حديقة الفنطاس — قريبة من بيته، والدورية ما تبين غريبة هناك.':'هذا مو قريب من بيته. المرور قال: قطعة ٥، يم حديقة الفنطاس.';if(!ok)SFX.tap();mapDraw()}
+function mapPick(a){const ok=distM(a.ll,PARK_LL)<=350||PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 حديقة الفنطاس — قريبة من بيته، والدورية ما تبين غريبة هناك.':'هذا مو قريب من بيته. المرور قال: الفنطاس، يم حديقة الفنطاس.';if(!ok)SFX.tap();mapDraw()}
 function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
  const a=MAPH.pick;
  if(a){const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${a.ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,a.ok?16:15,{animate:true})}
