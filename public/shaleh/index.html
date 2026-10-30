@@ -633,7 +633,7 @@ html.tv body{zoom:1.18}
   .device{max-width:none;flex:1 1 62%;border-radius:18px;border-width:4px}
   #side{display:flex;flex-direction:column;gap:10px;flex:0 0 31%;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px}
   .sd-top{display:flex;align-items:baseline;gap:10px}.sd-top .timer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}.sd-lbl{font-size:12px;color:var(--muted);letter-spacing:.06em}
-  .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
+  .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev div.cur{color:var(--fg)}.sd-ev div.cur i{border-color:var(--red2);color:var(--red2)}.sd-ev div.off{opacity:.45}.sd-ev div.off i{border-style:dashed;font-size:9px}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
   .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
   .home,.ez-home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px}.home .icon .g svg{width:27px;height:27px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin-top:0;grid-template-columns:repeat(4,1fr);max-width:480px;margin-inline:auto;padding:6px 8px;border-radius:18px}
   /* paired apps: list beside the open item */
@@ -882,7 +882,7 @@ html.tv body{zoom:1.18}
     <button class="on" data-tab="t1">محضر البلاغ</button>
     <button data-tab="t2">أقوال الجدّة</button>
     <button data-tab="t3">الأدلة</button>
-    <button data-tab="t8">🕒 خط اليوم</button><button data-tab="t4">الأشخاص</button>
+    <button data-tab="t4">الأشخاص</button>
     <button data-tab="t5">المقابلات</button>
     <button data-tab="t7">🗺️ مخطط الشاليه</button><button data-tab="t6">🚓 الميدان</button>
   </div>
@@ -891,8 +891,8 @@ html.tv body{zoom:1.18}
       <h2>محضر بلاغ سرقة</h2>
       <div class="mug"><img src="img/p_latifa.jpg" alt="" onerror="this.style.display='none'"><div><b>أم عبدالعزيز (لطيفة)</b><small>صاحبة الذهب · ٧٤ سنة</small><small>شاليه أم عبدالعزيز · الخيران · قطعة ٤ · شاليه ٤٢</small></div></div>
       <dl>
-        <dt>البلاغ</dt><dd>الجمعة ١٦ أكتوبر الساعة ٥:٣٥ مساءً — اتصل <b>بوعبدالله</b> (زوج بنت الجدّة). الدورية وصلت الشاليه ٦:١٥، وأخذت الأقوال والصور وتسجيلات الكاميرات، ورجعت المخفر ٨:٠٠. العايلة كلها باقية بالشاليه.</dd>
-        <dt>المسروق</dt><dd>طقم ذهب موروث (عقد، تراچي، ثلاث أساور، خواتم) قيمته التقديرية ١٥,٠٠٠ د.ك. كان في تيجوري غرفة الجدّة. الجدّة واعدت حفيدتها <b>نورة</b> — اللي ربّتها — إنه لها يوم عرسها.</dd>
+        <dt>البلاغ</dt><dd>الجمعة ١٦ أكتوبر الساعة ٥:٣٥ مساءً — اتصل <b>بوعبدالله</b> (زوج بنت لطيفة). الدورية وصلت الشاليه ٦:١٥، وأخذت الأقوال والصور وتسجيلات الكاميرات، ورجعت المخفر ٨:٠٠. العايلة كلها باقية بالشاليه.</dd>
+        <dt>المسروق</dt><dd>طقم ذهب موروث (عقد، تراچي، ثلاث أساور، خواتم) قيمته التقديرية ٢٥,٠٠٠ د.ك. كان في تيجوري غرفة الجدّة. الجدّة واعدت حفيدتها <b>نورة</b> — اللي ربّتها — إنه لها يوم عرسها.</dd>
         <dt>آخر مشاهدة</dt><dd>١٢:٣٠ ظهراً — على الطاولة جدّام العايلة كلها. ١:٠٠ ظهراً — الجدّة رجّعته التيجوري وقفّلته <b>بنفسها</b>. ٥:٣٠ مساءً — الغرفة مقلوبة، والتيجوري مفتوح وفاضي. <b>لا يوجد كسر</b> لا بالتيجوري ولا بالباب ولا بالشبابيك؛ التيجوري انفتح بالكود.</dd>
         <dt>الكود</dt><dd>أربع أرقام. الجدّة تقول ما أحد يعرفه غيرها. التيجوري اشتراه ابنها الأكبر <b>بوعبدالرزاق</b> وركّبه لها قبل كم سنة.</dd>
         <dt>عن بوعبدالرزاق</dt><dd>درس الهندسة في بريطانيا ٧ سنين ورجع يدير شركة العايلة. كل أوراقه وتواقيعه بالإنجليزي. الشاليه سجّله باسم أمه يوم اشتراه، واللوحة اللي على باب غرفتها كتبها بخطه.</dd>
@@ -919,11 +919,6 @@ html.tv body{zoom:1.18}
       <h2>الأدلة المحجوزة والصور</h2>
       <p class="note-tech">اضغطوا أي صورة لتكبيرها. الأوقات من كاميرا البوابة ومن موبايلات العايلة.</p>
       <div class="papers" id="evGrid"></div>
-    </div>
-    <div id="t8" hidden>
-      <h2>خط زمن اليوم</h2>
-      <p class="note-tech">مسوّدة المحقّق. سبعة أحداث، وكل حدث وقته مكتوب بدليل من الملف أو من موبايل بوعبدالرزاق — رتّبوها من الأول للآخر.</p>
-      <div id="tlPane"></div>
     </div>
     <div id="t4" hidden>
       <h2>أفراد الأسرة والعاملون</h2>
@@ -1025,7 +1020,7 @@ html.tv body{zoom:1.18}
       <h2>🚓 الميدان</h2>
       <p class="note-tech">أول ما تعرفون منو صاحب السيارة اللي وقفت عند البوابة الخلفية، الدورية تتحرّك — وكل اللي يصير هناك ينزل هنا.</p>
       <div class="field" id="fieldBox">
-        <div class="h" id="fieldLocked">🔒 ما عندنا اسم لين الحين. رضا شاف سيارة غريبة عند البوابة الخلفية — منو صاحبها؟ رتّبوا اليوم أول: تبويب <b>🕒 خط اليوم</b>.</div>
+        <div class="h" id="fieldLocked">🔒 ما عندنا اسم لين الحين. رضا شاف سيارة غريبة عند البوابة الخلفية — منو صاحبها؟ شوفوا تسجيل <b>الكاميرا الخلفية</b> من تطبيق الكاميرات.</div>
         <div id="fieldPlate" hidden><p>اللوحة اللي طلعت بالفريم الخلفي: <b dir="ltr">41872</b> — جي إم سي سودا. المرور يقدر يقول لنا منو صاحبها.</p><button class="btn" id="goPlate">📡 اطلبوا بيانات اللوحة من المرور</button></div>
         <div id="fieldOpen" hidden>
           <p><b>المرور:</b> جي إم سي يوكن سودا · <span dir="ltr">41872</span> · مسجّلة باسم <b>سالم</b> (٣١ سنة) · الفنطاس، قطعة ٥ · الهاتف المسجّل: <b dir="ltr">6604 7291</b>. مو من العايلة، وما أحد منهم ذكر اسمه. الدورية طلعت له.</p>
@@ -1230,10 +1225,10 @@ let _primed=false;function primeAudio(){if(_primed)return;_primed=true;$$('audio
 const STORE=location.origin.includes('hyphen')?location.origin:'https://cases.hyphen-eventskw.com';
 const GAME='shaleh', BUILD='261029';
 const PATTERNS=[[0,3,6,7,8],[2,5,8,7,6]]; const DOORCODE='4729';
-const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
+const S={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:'',room:''};
 
 /* ---- the timeline along the bottom ---- */
-const STEPS=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];
+const STEPS=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];
 const PROG_LIVE=["file", "lock", "phone", "torch", "run", "door", "solve", "station"];
 function progOpen(v){const el=$('#prog');if(!el)return;
  const open=v===undefined?!el.classList.contains('open'):!!v;
@@ -1298,7 +1293,7 @@ $$('[data-home]').forEach(b=>b.onclick=recover);
 const NARR_T=['يانا بلاغ سرقة من شاليه أم عبدالعزيز. العيلة كلها كانت بالشاليه…','الجدّة رجعت غرفتها ولقت كل شي مقلوب، والتيجوري مفتوح، والذهب مختفي.','ما في أي أثر كسر — لا بالباب ولا بالتيجوري.','مهمتكم تعرفون منو خذ الذهب، شلون فتح التيجوري، ووين اختفى الذهب. عندكم ساعة وحدة.'];
 function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(iv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*1900+1800;const step=Math.max(1500,(total-1200)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else{clearInterval(iv)}},step);if(a){a.onended=()=>setTimeout(end,1200)}setTimeout(end,total+2500);$('#narrSkip').onclick=end}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
-$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();if(b.dataset.tab==='t8'){try{if(!tlTry())renderTimeline()}catch(e){}}['t1','t2','t3','t4','t5','t6','t7','t8'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();['t1','t2','t3','t4','t5','t6','t7'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
 $('#toLock').onclick=()=>show(S.unlocked?'phone':'lock');
 $('#toFile1').onclick=$('#toFile2').onclick=$('#doorBack').onclick=()=>show('file');
 $('#backToPhone').onclick=()=>show('phone');
@@ -1397,9 +1392,9 @@ function mpDraw(){
 
 /* ---- field tab ---- */
 function refreshField(){try{mpDraw()}catch(e){}
- $('#fieldLocked').hidden=!!S.timeline;$('#fieldPlate').hidden=!(S.timeline&&!S.plate);$('#fieldOpen').hidden=!S.plate;
+ $('#fieldLocked').hidden=!!S.torch1;$('#fieldPlate').hidden=!(S.torch1&&!S.plate);$('#fieldOpen').hidden=!S.plate;
  $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldChase').hidden=!(S.scall&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
- if(S.timeline&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
+ if(S.torch1&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
 $('#goPlate').onclick=()=>{if(S.plate)return;S.plate=true;save();stageAt('scall');SFX.ok();refreshField();
  setTimeout(()=>sheet('<h3>📡 المرور ردّوا</h3><div class="h">جي إم سي سودا <span dir="ltr">41872</span> — باسم <b>سالم</b>، ٣١ سنة، الفنطاس. مو من العايلة. المرور عطونا رقمه بعد. الدورية طلعت له — اتصلوا عليه من هاتف المخفر قبل ما توصل.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),300)};
 $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$('#stBack').onclick=()=>{show('file');$('.tabs button[data-tab=t6]').click()};$('#goDoor').onclick=()=>show('door');
@@ -1638,7 +1633,7 @@ function tvCtrl(on){const pad=$('#tpad');pad.hidden=!on;$('#tdark').style.visibi
 
 /* ---- torch scenes ---- */
 const SCENES={
- rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:62,y:42,r:16,l:'سيارة سودا — جي إم سي يوكن. مو من سيارات العايلة'},{x:27,y:30,r:11,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:55,y:62,r:8,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'timeline',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'}
+ rear:{dark:'cam_rear_1605',lit:'cam_rear_1605_lit',intro:'الكاميرا الخلفية · ٤:٠٥ م — إضاءتها خربانة والفريم طالع أسود. المختبر رفع الإضاءة قدر ما يقدر: شغّلوا الكشّاف ودوروا.',spots:[{x:62,y:42,r:16,l:'سيارة سودا — جي إم سي يوكن. مو من سيارات العايلة'},{x:27,y:30,r:11,l:'إيد من شباك الديوانية تمدّ صندوق معدني للسيارة'},{x:55,y:62,r:8,l:'اللوحة: ٤١٨٧٢'}],done:'٤:٠٥ م: جي إم سي سودا غريبة عند البوابة الخلفية، وصندوق معدني ينعطى لها من داخل الشاليه. اللوحة ٤١٨٧٢. ✅',flag:'torch1',next:'plate',tvTitle:'الكاميرا الخلفية · الجمعة ٤:٠٥ م · بوابة الخدمة'}
 };
 let T=null;
 function torchStart(id){const sc=SCENES[id];T={id,sc,found:{},x:50,y:50,dwell:{},on:false,raf:0,ar:16/9,doneSent:false};TV.seq++;const im=new Image();im.onload=()=>{T&&(T.ar=im.naturalWidth/im.naturalHeight)};im.src=`img/${sc.lit}.jpg`;$('#tpad').hidden=true;$('#tdark').style.visibility='';$('#tlit').style.visibility='';$('#tfound').style.visibility='';tvCfg().then(c=>{const b=$('#tvbox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#tvCode').textContent=tvRoom();tvStatus();tvConnect()}});$('#tdark').style.backgroundImage=`url(img/${sc.dark}.jpg)`;$('#tlit').style.backgroundImage=`url(img/${sc.lit}.jpg)`;$('#tfound').innerHTML='';$('#tmsg').innerHTML='';$('#tintro').hidden=false;$('#tintroTx').textContent=sc.intro;$('#tlit').style.opacity=0;show('torch');
@@ -1647,7 +1642,7 @@ function spotAt(s){const st=$('#tstage');if(!st||!T)return {x:s.x,y:s.y};const W
   if(W/H>ar){const dh=W/ar,oy=(H-dh)/2;return {x:s.x,y:(oy+s.y/100*dh)/H*100}}
   const dw=H*ar,ox=(W-dw)/2;return {x:(ox+s.x/100*dw)/W*100,y:s.y}}
 function mark(s){const p=spotAt(s);$('#tfound').insertAdjacentHTML('beforeend',`<div class="tmark" style="left:${p.x}%;top:${p.y}%"><i></i><span>${s.l}</span></div>`)}
-function torchExit(){tvSend('bye',{});torchStop();{show('phone');openApp('cams');renderCams();if(S.torch1&&!S.timeline)setTimeout(()=>sheet('<h3>🕒 صار عندكم كل الأوقات</h3><div class="h">السيارة الغريبة ٤:٠٥، ورضا برّا، وفيديوهات المسبح بالمعرض. افتحوا تبويب <b>🕒 خط اليوم</b> ورتّبوا اليوم من الأول للآخر.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
+function torchExit(){tvSend('bye',{});torchStop();{show('phone');openApp('cams');renderCams();if(S.torch1&&!S.plate)setTimeout(()=>sheet('<h3>🚗 سيارة غريبة عند البوابة الخلفية</h3><div class="h">اللوحة طلعت بالفريم: <b dir="ltr">41872</b>. افتحوا تبويب <b>📡 الميدان</b> بالملف واطلبوا بيانات اللوحة من المرور.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),400)}T=null}
 $('#torchBack').onclick=torchExit;
 function torchStop(){if(!T)return;T.on=false;cancelAnimationFrame(T.raf);window.removeEventListener('deviceorientation',onOri)}
 let base=null;function onOri(e){if(!T||!T.on)return;if(e.gamma===null)return;if(!base)base={g:e.gamma,b:e.beta};const dx=(e.gamma-base.g)*1.6,dy=(e.beta-base.b)*1.6;T.tx=Math.max(5,Math.min(95,50+dx));T.ty=Math.max(5,Math.min(95,50+dy))}
@@ -1800,52 +1795,6 @@ function scEnd(calm){clearInterval(SCS.iv);$('#scQ').innerHTML='';
 $('#scEnd').onclick=()=>{clearInterval(SCS.iv);$('#au-ring').pause();$('#scall').classList.remove('on')};
 function renderScLog(){const el=$('#fieldSc');if(!el)return;const L=S.scLog||[];el.hidden=!(S.scall&&L.length);if(el.hidden)return;
   el.innerHTML='<p><b>📞 نص مكالمة سالم:</b></p>'+L.map(t=>`<p style="margin:2px 0">«${t}»</p>`).join('')}
-/* ---- timeline: put the day in order (no times shown — they are in the evidence) ---- */
-const TL=[
- ['الجدّة تورّي الذهب للعايلة على الطاولة','١٢:٣٠ م',null,'واتساب العايلة'],
- ['نورة تاخذ إسوارة وحدة بإذن الجدّة','١٢:٤٥ م',null,'واتساب نورة'],
- ['الجدّة تقفل التيجوري بنفسها','١:٠٠ م',null,'المحضر'],
- ['فيديو المسبح الأول','٢:٢٠ م',null,'المعرض'],
- ['كامري رضا تطلع للجمعية','٣:١٠ م',null,'كاميرا البوابة'],
- ['فيديو المسبح الثاني','٣:٥٢ م',null,'المعرض'],
- ['سيارة سودا غريبة عند البوابة الخلفية','٤:٠٥ م','torch1','الكاميرا الخلفية']];
-const TLSRC={torch1:'الكاميرا الخلفية (الأدلة)'};
-/* the order lives in the save file — a player who closes the tab, or the game,
-   comes back to the order they left */
-function tlOrd(){if(!Array.isArray(S.tlOrder)||S.tlOrder.length!==7)S.tlOrder=[4,1,6,0,3,2,5];return S.tlOrder}
-function tlMissing(){return ['torch1'].filter(k=>!S[k])}
-function renderTimeline(){
- const el=$('#tlPane');if(!el)return;
- const ok=!!S.timeline, ord=ok?[0,1,2,3,4,5,6]:tlOrd(), miss=tlMissing();
- el.innerHTML=`<div class="tl${ok?' ok':''}" id="tl">`+ord.map((k,i)=>{
-   return `<div class="it" data-k="${k}"><span><span class="n">${AR(i+1)}</span>`
-    +`${TL[k][0]}<em style="display:block;color:#8a8372;font-size:12px;font-style:normal;margin-top:2px">`
-    +`${ok?'<b style="color:#1a1f2a;font-variant-numeric:tabular-nums">'+TL[k][1]+'</b> · ':'الوقت بـ'}${TL[k][3]}</em></span>`
-    +(ok?'':`<span class="mv"><button data-up="${i}">▲</button><button data-dn="${i}">▼</button></span>`)
-    +`</div>`}).join('')+`</div>`
-  +(ok
-    ? `<p class="note-tech" style="margin-top:12px">✓ الترتيب صح. السيارة الغريبة وقفت عند البوابة الخلفية <b>٤:٠٥</b> — ورضا برّا من ٣:١٠ إلى ٤:٢٥. منو كان داخل الشاليه وقتها؟ ومنو صاحب السيارة؟ تبويب <b>🚓 الميدان</b>: اطلبوا بيانات اللوحة.</p>`
-    : (miss.length
-      ? `<p class="note-tech" style="margin-top:12px">ما نقدر نتحقّق بعد — باقي علينا: <b>${miss.map(k=>TLSRC[k]).join(' · ')}</b>. افتحوها وبعدين رجعوا لنا.</p>`
-      : `<div class="acts" style="margin-top:12px"><button class="btn" id="tlCheck">تحقّقوا من الترتيب</button></div>`)
-      +`<div class="msg" id="tlMsg" style="color:var(--paper-muted);font-size:13px;margin-top:8px"></div>`);
- $$('#tl [data-up]').forEach(b=>b.onclick=()=>{const i=+b.dataset.up;const o=tlOrd();
-   if(i>0){[o[i-1],o[i]]=[o[i],o[i-1]];save();SFX.tap();if(!tlTry())renderTimeline()}});
- $$('#tl [data-dn]').forEach(b=>b.onclick=()=>{const i=+b.dataset.dn;const o=tlOrd();
-   if(i<6){[o[i+1],o[i]]=[o[i],o[i+1]];save();SFX.tap();if(!tlTry())renderTimeline()}});
- const c=$('#tlCheck');if(c)c.onclick=()=>{const right=tlOrd().filter((k,i)=>k===i).length;
-   if(tlTry())return;
-   SFX.bad();S.pen+=30;save();
-   $('#tlMsg').textContent=`${AR(right)} من ٧ بمكانها الصح. انضافت نص دقيقة على وقتكم — حاولوا مرة ثانية.`};
- const tb=$('.tabs button[data-tab=t8]');if(tb)tb.classList.toggle('pulse',!ok&&!miss.length)}
-/* the moment the last time lands in place the day is solved — nobody should
-   get the order right and sit there wondering what to press */
-function tlTry(){
- if(S.timeline||tlMissing().length||tlOrd().some((k,i)=>k!==i))return false;
- S.timeline=true;save();stageAt('plate');SFX.ok();renderTimeline();refreshField();
- setTimeout(()=>sheet('<h3>✅ اليوم صار واضح</h3><div class="h">سيارة غريبة عند البوابة الخلفية ٤:٠٥ تستلم صندوق من الشباك — ورضا برّا من ٣:١٠ إلى ٤:٢٥. الصندوق انمدّ من <b>داخل</b> الشاليه… منو كان داخل؟ فيديوهات المسبح تقول منو كان برّا.<br><br>وصاحب السيارة؟ اللوحة عندكم — تبويب <b>🚓 الميدان</b>، اطلبوا بياناتها من المرور.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),520);
- return true}
-
 /* ---- CHASE: run in place ---- */
 const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,rising:false};
 function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();tvCfg().then(c=>{const b=$('#runTvBox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#runTvCode').textContent=tvRoom();$('#runTvSt').textContent=TV.live?'✅ التلفزيون متصل':'بانتظار التلفزيون…';tvConnect()}});runTv('idle');if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ مسكتوه. سالم — «الصندوق مقفّل وما أعرف كوده».</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit}}
@@ -1929,7 +1878,6 @@ const HINTS={
  lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وهو يفكّر بالإنجليزي: أول حرف من Latifa هو L. وصورة شاشته بالأدلة فيها أثر الإصبع لو تبون تتأكدون.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
  cams:['بموبايل بوعبدالرزاق تطبيق <b>الكاميرات</b> — مقفول بكود ٤ أرقام. شركة الكاميرات طرّشت له الكود الافتراضي برسالة نصية يوم التركيب — جرّبوه.','الكود الافتراضي تغيّر، بس بوعبدالرزاق خلّى لنفسه تلميح: «السنة اللي بنيت الشاليه حق أمي». السنة مكتوبة على لوحة باب غرفتها — بالأدلة وبالمعرض — تحت الغبار.','الجواب: ١٩٩٨.'],
  torch1:['رضا قال شاف سيارة غريبة عند البوابة الخلفية. بتطبيق الكاميرات، كاميرا <b>بوابة الخدمة الخلفية</b> فريمها أسود — اضغطوه وشغّلوا الكشّاف. (تقدرون تطلّعونه على التلفزيون من cases.hyphen-eventskw.com/tv)','ثبّتوا الضوء ثانية على كل شي يبين: السيارة، والشباك اللي يمّها، واللوحة.','الجواب: جي إم سي سودا غريبة ٤:٠٥ عند البوابة الخلفية، وصندوق معدني ينعطى لها من شباك الديوانية. اللوحة ٤١٨٧٢. وبعدها: 🕒 خط اليوم.'],
- timeline:['بالملف تبويب «🕒 خط اليوم» — مسوّدة المحقّق. كل حدث وقته بدليل: المعرض، الكاميرا الخلفية، واتساب العايلة ونورة، والمحضر.','من الأول للآخر: الذهب على الطاولة ← إسوارة نورة ← الجدّة تقفل ← فيديو المسبح الأول ← رضا يطلع ← فيديو المسبح الثاني ← السيارة الغريبة.','الجواب: ١٢:٣٠ الذهب · ١٢:٤٥ الإسوارة · ١:٠٠ القفل · ٢:٢٠ الفيديو الأول · ٣:١٠ رضا يطلع · ٣:٥٢ الفيديو الثاني · ٤:٠٥ السيارة.'],
  scall:['المرور عطونا رقم سالم — بتبويب 🚓 الميدان. من <b>هاتف المخفر</b> اطلبوا الرقم بنفسكم: الرقم الغلط ما يرن. أول مرة بيسكّر بوجهكم — اتصلوا مرة ثانية.','اسألوه بهدوء: وين كان، شنو أخذ، ومنو قفّل الصندوق. لو اتهمتوه بيسكّر ويركض — بتوصلون للمطاردة بس بدون معلوماته، وبدقيقة زيادة.','الجواب: الرقم <span dir="ltr">66047291</span>. وهو يعترف إنه استلم صندوق مقفول من «واحد» ما يبي يسمّيه، وإن هاللي عطاه قفّله جدّامه وما عطاه الكود.'],
  plate:['اللوحة اللي لقيتوها بالكشّاف — المرور يقدر يقول منو صاحبها. تبويب <b>🚓 الميدان</b> بالملف.','اضغطوا «اطلبوا بيانات اللوحة».','الجواب: سالم، ٣١ سنة، الفنطاس — مو من العايلة. الدورية راحت له.'],
  chase:['سالم طلع يركض من الباب الخلفي. اضغطوا «لحقوه» بتبويب الميدان، واركضوا بمكانكم والموبايل بإيدكم — كل خطوة تقرّبكم منه.','كل خطوة تنحسب من هزّة الموبايل. اركضوا بقوة ٦٠ ثانية. على اللابتوب اضغطوا الزر بسرعة.','الجواب: ٧٠ خطوة قبل ما يركب سيارته. لو هرب، +دقيقتين وجرّبوا مرة ثانية.'],
@@ -1941,13 +1889,12 @@ const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+٦٠ ثانية','
 const WHERE={unlocked:'الملف: محضر البلاغ و«عن بوعبدالرزاق»',
  cams:'الموبايل ← تطبيق الكاميرات — الكود ٤ أرقام',
  torch1:'الموبايل ← الكاميرات ← بوابة الخدمة الخلفية',
- timeline:'الملف ← 🕒 خط اليوم',
  plate:'الملف ← 🚓 الميدان ← بيانات اللوحة',
  scall:'الملف ← 🚓 الميدان ← هاتف المخفر',
  chase:'الملف ← 🚓 الميدان',
  door:'القفل بالملف ← 🚓 الميدان · الورقة هناك، والفاتورة بواتساب ← فهد'};
-const HNAME={lock:'فتح الموبايل',cams:'تطبيق الكاميرات',torch1:'الكاميرا الخلفية',timeline:'ترتيب اليوم',plate:'صاحب السيارة',scall:'مكالمة سالم',chase:'المطاردة',door:'القفل',solve:'الاتهام'};
-function stage(){if(!S.unlocked)return 'lock';if(!S.cams)return 'cams';if(!S.torch1)return 'torch1';if(!S.timeline)return 'timeline';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
+const HNAME={lock:'فتح الموبايل',cams:'تطبيق الكاميرات',torch1:'الكاميرا الخلفية',plate:'صاحب السيارة',scall:'مكالمة سالم',chase:'المطاردة',door:'القفل',solve:'الاتهام'};
+function stage(){if(!S.unlocked)return 'lock';if(!S.cams)return 'cams';if(!S.torch1)return 'torch1';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
 function onStage(st){return Math.floor((Date.now()-stageAt(st))/1000)}
 /* The countdown was printed once and never touched again, so it held the same
@@ -2038,12 +1985,12 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['timeline','ترتيب اليوم'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];el.innerHTML=items.map(([k,t])=>{const ok=!!S[k];return `<div class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</div>`}).join('')}
+function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','فتح الموبايل'],['cams','تطبيق الكاميرات'],['torch1','الكاميرا الخلفية'],['plate','صاحب السيارة'],['scall','مكالمة سالم'],['chase','المطاردة'],['door','القفل']];let open=true;el.innerHTML=items.map(([k,t])=>{const ok=!!S[k],cur=!ok&&open;if(!ok)open=false;return `<div class="${ok?'ok':cur?'cur':'off'}"><i>${ok?'✓':cur?'›':'🔒'}</i>${ok||cur?t:'···'}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
 /* ================= TEAM SYNC (several phones, one code) ================= */
-const SYNC_B=['unlocked','cams','torch1','timeline','plate','scall','chase','door'],SYNC_M=['pen','wrong','done','total'];
+const SYNC_B=['unlocked','cams','torch1','plate','scall','chase','door'],SYNC_M=['pen','wrong','done','total'];
 function syncPick(){const o={start:S.start||0,hints:{...(S.hints||{})},stageAt:{...(S.stageAt||{})}};SYNC_B.forEach(k=>o[k]=!!S[k]);SYNC_M.forEach(k=>o[k]=Number(S[k])||0);return o}
 let _syncLast='',_syncT=null,_syncBusy=false;
 function syncCode(){const p=savedPass();return GATE_ON&&p?p.code:''}
@@ -2140,13 +2087,13 @@ function splash(){return new Promise(res=>{const el=$('#splash');show('splash');
   const bar=$('#l-bar');if(bar){if(reduce)bar.style.opacity=1;else bar.animate([{transform:'scaleX(0)',opacity:0},{transform:'scaleX(1)',opacity:1}],{duration:450,delay:1150,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'})}
   setTimeout(()=>el.classList.add('s2'),1500);setTimeout(end,3600)})}
 (async()=>{const resuming=!!S.start;if(!resuming)await splash();await gate();
-const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,timeline:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
+const pc=(savedPass()||{}).code||'';if(GATE_ON&&pc&&S.code&&S.code!==pc){try{localStorage.removeItem(GAME)}catch(e){}const fresh={start:0,pen:0,hints:{},stageAt:{},unlocked:false,cams:false,torch1:false,plate:false,scall:false,chase:false,door:false,screen:'intro',done:0,who:null,why:null,how:null,wrong:0,code:pc};Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,fresh);save()}else if(pc&&!S.code){S.code=pc;save()}
 if(typeof showShare==='function')showShare();
 if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run','station'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes', 'cams': 'cams'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
 syncStart();
 })();
-function restoreUI(){try{renderCams()}catch(e){}try{renderTimeline()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
+function restoreUI(){try{renderCams()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
 
 
 /* ---- slide-in menu ---- */
