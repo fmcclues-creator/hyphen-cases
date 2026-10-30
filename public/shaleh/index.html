@@ -1301,14 +1301,17 @@ const IVS=[
  {id:'noura',n:'نورة',sub:'الحفيدة · ٢٦ سنة',tx:'يدّتي مو بس يدّتي… إهي اللي ربّتني عقب ما أبوي توفّى. هالذهب كانت دايم تقول بتخلّيه لي حق عرسي. إي… طلبت منها أجرّب إسوارة، وإهي وافقت. خذيتها أصوّرها، وخلّيتها بجنطتي. ما قلت من البداية، خفت تظنّون إني أنا اللي خذيت الذهب. بس باجي الذهب ما لمسته.'},
  {id:'muneera',n:'منيرة',sub:'بنت الجدّة · ٤٩ سنة',tx:'أنا قلت حق أمي من أول: يمّه، ليش تييبين الذهب الشاليه؟ إي، تضايقت لما سمعت إن الذهب كله بيروح لنورة. بس نورة بنت أخوي وغالية عليّ. يوم الحادثة كنت برّا أجهّز الأكل، وجويس معاي. اختلفنا على الموضوع، صح… بس أمي ما أبوقها.'},
  {id:'buabdullah',n:'بوعبدالله',sub:'زوج منيرة · ٥٢ سنة',tx:'أنا كنت عند المسبح أغلب الوقت. رحت صوب الكراج أدوّر عدّة البحر، ورديت. الحين كل واحد دشّ أو طلع يصير مشبوه؟ خلّونا نراجع الكاميرات، أحسن من إنا نتّهم بعض.'},
- {id:'abdullah11',n:'عبدالله',sub:'ولد منيرة · ١١ سنة',tx:'أنا وحمد كنا نصوّر فيديو عند المسبح! إهو يبي ينط بالماي، وأنا أصوّره، بس كل شوي يخرّب الفيديو! جويس كانت تركض ورانا وتقول لا تدشّون داخل وإنتوا مبلّلين. فهد؟ إي شفته صوب الباب… بس ما دريت وين راح. الفيديو عندي! تبون أورّيكم؟'},
+ {id:'abdullah11',after:{vid:'iv_abdullah11_phone',frame:'pool_1552',n:'الفريم اللي ورّاه للضابط · ٣:٥٢ م'},n:'عبدالله',sub:'ولد منيرة · ١١ سنة',tx:'أنا وحمد كنا نصوّر فيديو عند المسبح! إهو يبي ينط بالماي، وأنا أصوّره، بس كل شوي يخرّب الفيديو! جويس كانت تركض ورانا وتقول لا تدشّون داخل وإنتوا مبلّلين. فهد؟ إي شفته صوب الباب… بس ما دريت وين راح. الفيديو عندي! تبون أورّيكم؟'},
  {id:'hamad',novid:1,n:'حمد (أقوال أهله)',sub:'رفيج عبدالله وجارهم · ١٠ سنين · أهله رفضوا نستجوبه',tx:'أبوه: «ما نبي ولدنا يصير عنده trauma، خذوا أقوالنا إحنا». أمه: «كان بالمسبح مع عبدالله طول العصر، يصوّرون فيديوهات. جويس كانت وراهم ما تخلّيهم يدشّون. ما شاف شي وما دشّ البيت.»'},
  {id:'joyce',n:'جويس',sub:'العاملة · ٣٩ سنة',tx:'Sir, please, I was outside, po. Whole afternoon, I help with barbecue. I bring food, juice, plates… everybody see me. I was running after the kids also! Yes, I went inside Madam Latifa room earlier, only to take laundry. I did not touch safe. I don\'t know any code. Please check the pictures. You can see me outside with Mneera and the children.'},
  {id:'reza',n:'رضا',sub:'السايق · ٤٣ سنة',tx:'Sir, I go outside for errands. Mister Abdulaziz tell me, "Bring ice, charcoal and drinks." I leave around three ten. First cooperative shop, then small grocery. I have receipts, sir. You check CCTV, my car coming back four twenty-five. I never go Madam bedroom. But one thing… I see strange car near back service gate. Not our car. I do not know that driver.'}];
 (function(){const g=$('#ivg');if(!g)return;
  g.innerHTML=IVS.map(v=>`<div class="iv" data-iv="${v.id}"><div class="ivh"><img src="img/p_${v.id}.jpg" alt="" onerror="this.style.visibility='hidden'"><div><b>${v.n}</b><small>${v.sub}</small></div></div>`
   +(v.novid?'':`<video playsinline controls preload="none" poster="video/iv_${v.id}.jpg" src="video/iv_${v.id}.mp4" onerror="this.remove()"></video>`)
-  +`<div class="tx" style="font-size:13.5px;line-height:1.8;margin-top:6px;color:#2a2419">«${v.tx}»</div></div>`).join('');
+  +`<div class="tx" style="font-size:13.5px;line-height:1.8;margin-top:6px;color:#2a2419">«${v.tx}»</div>`
+  +(v.after?`<div class="ivAfter" style="margin-top:10px"><video playsinline controls preload="none" poster="video/${v.after.vid}.jpg" src="video/${v.after.vid}.mp4" onerror="this.remove()"></video><button class="btn" data-frame="${v.after.frame}" style="width:100%;margin-top:6px;font-size:14px;background:#2a2419;color:#fff;box-shadow:none">📱 ${v.after.n}</button></div>`:'')
+  +`</div>`).join('');
+ $$('#ivg [data-frame]').forEach(b=>b.onclick=()=>{const ev=EV.find(x=>x.id===b.dataset.frame);if(ev)$('#evGrid [data-ev="'+ev.id+'"]')?.click()});
  $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})))})();
 
 /* ---- evidence grid (file) ---- */
@@ -1318,8 +1321,8 @@ const EV=[
  {id:'gold',n:'الذهب على الطاولة · ١٢:٣٠ م',cap:'الطقم كامل جدّام العايلة: عقد، تراچي، ثلاث أساور، خواتم. آخر مرة ينشاف كامل.'},
 
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
- {id:'pool_1420',vid:1,n:'فيديو عبدالله ١ · ٢:٢٠ م',cap:'من موبايل عبدالله (١١). حمد ينط والكاميرا تهتز. شوفوا الخلفية.'},
- {id:'pool_1552',vid:1,n:'فيديو عبدالله ٢ · ٣:٥٢ م',cap:'نفس الزاوية، بعد ساعة ونص. شوفوا الخلفية… منو موجود، ومنو مو موجود؟'},
+ {id:'pool_1420',vid:1,n:'فيديو عبدالله ١ · ٢:٢٠ م',cap:'من موبايل عبدالله (١١).'},
+ {id:'pool_1552',vid:1,n:'فيديو عبدالله ٢ · ٣:٥٢ م',cap:'من موبايل عبدالله (١١).'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
  {id:'receipt_phone',n:'محضر استلام الجهاز · ٧:٠٠ م',cap:'بوعبدالرزاق سلّم موبايله للدورية بنفسه ووقّع. نقشة الفتح ما انسجّلت.'},
  {id:'cam_gate_1625',n:'كاميرا البوابة · ٤:٢٥ م',cap:'كامري رضا ترجع. رضا كان برّا ساعة وربع — من ٣:١٠ إلى ٤:٢٥.'}];
@@ -1697,7 +1700,7 @@ const accMark=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;p
 const WRONG={
  noura:'نورة أخذت إسوارة وحدة ١٢:٤٥ بإذن يدّتها وجدّام الكل، وقالتها بنفسها. الباقي كان بالتيجوري لين ١:٠٠ لما قفّلته الجدّة. والإسوارة بجنطتها — مو بصندوق مقفّل بمخزن.',
  muneera:'منيرة كانت برّا تجهّز الأكل طول العصر وجويس معاها — عبدالله وحمد صوّروها عند الشوّاية ٣:٥٢. ما دشّت البيت بين ٣:٣٠ و٤:٠٥.',
- buabdullah:'بوعبدالله راح الكراج يدوّر عدّة البحر ورجع — الكراج برّا البيت، وإهو يبين يم المسبح بفيديو ٣:٥٢. منو اللي ما يبين بهالفيديو؟',
+ buabdullah:'بوعبدالله عند الشوّاية بفيديو عبدالله ٣:٥٢، والكراج اللي راح له برّا البيت. والأهم: إهو ما يعرف كود التيجوري، ولا رقمه بالفاتورة اللي فتحت القفل. منو اللي ما يبين بهالفيديو… ويعرف الكود؟',
  joyce:'جويس دشّت غرفة الجدّة ١:٣٠ تاخذ الغسيل والتيجوري كان مقفول. بعدها برّا طول العصر تلاحق العيال — الفيديوهات تثبت. ما عندها الكود، ولا سيارة عند البوابة الخلفية.',
  reza:'رضا طلع ٣:١٠ ورجع ٤:٢٥ — كاميرا البوابة وفاتورة الجمعية. الذهب طلع من الشباك ٤:٠٥ وإهو مو بالشاليه أصلاً. وإهو اللي قال لكم عن السيارة الغريبة.',
  bu:'بوعبدالرزاق كان برّا مع العايلة، وإهو اللي سلّم موبايله للشرطة بنفسه. اللي يسرق ما يعطي الشرطة موبايله.',
