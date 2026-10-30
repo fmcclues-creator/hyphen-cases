@@ -1,8 +1,9 @@
 import { applyPromo } from "../../../lib/promo";
+import { listPriceFor } from "../../../lib/pricing";
 // POST { promo } -> { ok, price, discount, listPrice }
 export async function POST(req) {
   const b = await req.json().catch(() => ({}));
-  const listPrice = Number(process.env.PRICE_KWD || 4.75);
+  const listPrice = listPriceFor(b.game);
   const r = await applyPromo(b.promo, listPrice);
   if (!r.ok) return Response.json({ ok: false, reason: r.reason }, { status: 400 });
   return Response.json({ ok: true, price: r.price, discount: r.discount, listPrice });

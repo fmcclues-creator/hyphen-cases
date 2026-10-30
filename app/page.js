@@ -53,18 +53,19 @@ export const revalidate = 60;
 
 export default async function Home() {
   const price = Number(process.env.PRICE_KWD || 4.75).toFixed(3);
+  const bundle = Number(process.env.BUNDLE_KWD || 7.5).toFixed(3);
   return (
     <main className="wrap">
       <Header />
 
       <section className="hero">
         <div>
-          <div className="kicker">القضية الأولى</div>
-          <h1>قضية <span>خالد</span></h1>
-          <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. عندكم ساعة وحدة، و٥ مشتبهين، وواحد منهم يچذب.</p>
+          <div className="kicker">قضيتين · كل قضية ساعة</div>
+          <h1>موبايل مقفول… <span>ومنو الجاني؟</span></h1>
+          <p>ألعاب تحقيق باللهجة الكويتية تنلعب على الموبايل والتلفزيون. قضيتين جاهزة: اختفاء خالد قبل أكبر صفقة بحياته، وذهب يدّة اختفى من تيجوري الشاليه والعايلة كلها موجودة.</p>
           <div className="cta-row">
-            <Link className="cta" href="/buy">ابدأ التحقيق <span className="price">{price} د.ك</span></Link>
-            <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
+            <Link className="cta" href="/#cases">اختاروا قضية <span className="price">{price} د.ك</span></Link>
+            <Link className="cta lite" href="/buy?game=bundle">القضيتين مع بعض <span className="price">{bundle} د.ك</span></Link>
           </div>
           <div className="facts">
             <span>⏱ ساعة وحدة</span><span>👥 يفتح على ٦ موبايلات</span>
@@ -106,7 +107,7 @@ export default async function Home() {
       <section className="steps" id="how">
         <div className="step"><div className="n">١</div><b>اشتروا كود الفريق</b><span>كود واحد لكل فريق، يوصلكم على الإيميل فوراً.</span></div>
         <div className="step"><div className="n">٢</div><b>شغّلوه على التلفزيون</b><span>فتحوا اللعبة من الموبايل وعرضوا الشاشة.</span></div>
-        <div className="step"><div className="n">٣</div><b>فتحوا موبايل خالد</b><span>طلّعوا الرقم السري من ملف القضية.</span></div>
+        <div className="step"><div className="n">٣</div><b>فتحوا الموبايل المقفول</b><span>طلّعوا الكود من ملف القضية.</span></div>
         <div className="step"><div className="n">٤</div><b>سمّوا الجاني</b><span>محادثات، صور، مقابلات… ومكالمة تجيكم.</span></div>
       </section>
 
@@ -145,22 +146,55 @@ export default async function Home() {
 
       <section className="cases" id="cases">
         <h2>القضايا</h2>
-        <div className="grid">
-          <Link href="/buy" className="case on">
-            <div className="tag">متوفّرة</div>
-            <b>قضية خالد</b>
-            <span>اختفاء · ٥ مشتبهين</span>
-            <em>{price} د.ك</em>
-          </Link>
-          <div className="case soon">
-            <div className="tag">قريباً</div>
-            <b>قضية الشاليه</b>
-            <span>سرقة · ٦ مشتبهين · كشّاف على التلفزيون</span>
+        <div className="casebig">
+          <div className="phone">
+            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-poster.jpg" aria-label="مقطع من قضية خالد">
+              <source src="/media/play.webm" type="video/webm" /><source src="/media/play.mp4" type="video/mp4" />
+            </video>
+            <span className="phone-note">من داخل اللعبة</span>
           </div>
+          <div>
+            <div className="kicker">القضية الأولى · اختفاء</div>
+            <h3>قضية خالد</h3>
+            <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. ٥ مشتبهين، وواحد منهم يچذب.</p>
+            <div className="facts"><span>⏱ ساعة وحدة</span><span>👥 ٦ موبايلات</span><span>📺 على التلفزيون</span></div>
+            <div className="cta-row">
+              <Link className="cta" href="/buy?game=khalid">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+              <Link className="cta lite" href="/buy?game=khalid&gift=1">🎁 هدية</Link>
+            </div>
+          </div>
+        </div>
+        <div className="casebig">
+          <div className="phone">
+            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-shaleh-poster.jpg" aria-label="مقطع من قضية الشاليه">
+              <source src="/media/play-shaleh.webm" type="video/webm" /><source src="/media/play-shaleh.mp4" type="video/mp4" />
+            </video>
+            <span className="phone-note">من داخل اللعبة</span>
+          </div>
+          <div>
+            <div className="kicker">القضية الثانية · سرقة</div>
+            <h3>قضية الشاليه</h3>
+            <p>يدّة يابت ذهبها الشاليه تورّيه للعايلة، وقفّلته بالتيجوري بنفسها. بعد ٤ ساعات: الغرفة مقلوبة والتيجوري فاضي — وما أحد طلع من الشاليه. موبايل ولدها بين إيديكم، وكشّاف على التلفزيون، ومطاردة.</p>
+            <div className="facts"><span>⏱ ساعة وحدة</span><span>👥 ٦ موبايلات</span><span>🔦 كشّاف على التلفزيون</span></div>
+            <div className="cta-row">
+              <Link className="cta" href="/buy?game=shaleh">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
+              <Link className="cta lite" href="/buy?game=shaleh&gift=1">🎁 هدية</Link>
+            </div>
+          </div>
+        </div>
+        <div className="bundle">
+          <div>
+            <div className="tag">الأوفر</div>
+            <b>القضيتين مع بعض</b>
+            <span>كودين — خالد والشاليه. بدال {(Number(price) * 2).toFixed(3)} د.ك</span>
+          </div>
+          <Link className="cta" href="/buy?game=bundle">اشتروا القضيتين <span className="price">{bundle} د.ك</span></Link>
+        </div>
+        <div className="grid" style={{ marginTop: 14 }}>
           <div className="case soon">
             <div className="tag">قريباً</div>
             <b>قضية الوصية الضايعة</b>
-            <span>ميراث · ٦ مشتبهين · فيها مطاردة</span>
+            <span>ميراث · ٦ مشتبهين</span>
           </div>
         </div>
       </section>
@@ -179,10 +213,10 @@ export default async function Home() {
 
       <section className="last">
         <h2>جاهزين؟</h2>
-        <p>كود واحد، فريق واحد، ساعة وحدة — على ٦ موبايلات، وصالح ٧ أيام.</p>
+        <p>كود واحد لكل قضية، فريق واحد، ساعة وحدة — على ٦ موبايلات، وصالح ٧ أيام. وأسرع الفرق تدخل <Link href="/leaderboard">لوحة المتصدرين</Link>.</p>
         <div className="cta-row">
-          <Link className="cta" href="/buy">ابداوا التحقيق <span className="price">{price} د.ك</span></Link>
-          <Link className="cta lite" href="/buy?gift=1">🎁 اشتروها هدية</Link>
+          <Link className="cta" href="/#cases">اختاروا قضية <span className="price">{price} د.ك</span></Link>
+          <Link className="cta lite" href="/buy?game=bundle">القضيتين <span className="price">{bundle} د.ك</span></Link>
         </div>
       </section>
 

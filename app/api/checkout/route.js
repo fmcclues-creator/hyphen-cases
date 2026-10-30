@@ -1,7 +1,8 @@
-import { db, issueCodes } from "../../../lib/db";
+import { db, issueFor } from "../../../lib/db";
 import { applyPromo, consumePromo } from "../../../lib/promo";
 import { createCheckout } from "../../../lib/hesabe";
 import { sendOrderMails } from "../../../lib/mail";
+import { normGame, listPriceFor } from "../../../lib/pricing";
 
 // POST { phone, email, promo } -> creates an order and either:
 //  - total 0 (promo) or PAYMENT_MODE=test: marks paid, issues a code, returns { ok, code }
@@ -29,15 +30,12 @@ export async function POST(req) {
     return Response.json({ ok: false, reason: "gift_email" }, { status: 400 });
   }
 
-  const listPrice = Number(process.env.PRICE_KWD || 4.75);
+  const game = normGame(body.game);
+  const listPrice = listPriceFor(game);
   const pr = await applyPromo(body.promo, listPrice);
   if (!pr.ok) return Response.json({ ok: false, reason: pr.reason }, { status: 400 });
   const price = pr.price;
   const mode = process.env.PAYMENT_MODE || "test";
-  // Which case is being bought. Recorded on the order so the code issued — and
-  // the email that carries it — belong to the right game.
-  const game = ["khalid", "shaleh", "villa"].includes(body.game) ? body.game : "khalid";
-
   const client = db();
   const { data: order, error } = await client.from("orders")
     .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game, ...gift })
@@ -47,13 +45,14 @@ export async function POST(req) {
   if (price === 0 || mode === "test") {
     await client.from("orders").update({ status: "paid", gateway_ref: price === 0 ? "PROMO" : "TEST" }).eq("id", order.id);
     await consumePromo(pr.promo);
-    const [code] = await issueCodes({ orderId: order.id, game });
+    const codes = await issueFor({ orderId: order.id, game });
+    const code = codes.join(" · ");
     const isTest = mode === "test" && price > 0;
 
     // This branch never touches the webhook, so it has to send its own mail —
     // a 100%-off promo is still a real customer who needs their code by email.
     try {
-      const { data: row } = await client.from("codes").select("expires_at").eq("code", code).maybeSingle();
+      const { data: row } = await client.from("codes").select("expires_at").eq("code", codes[0]).maybeSingle();
       const res = await sendOrderMails({
         order: { ...order, email, phone }, code, game, expiresAt: row?.expires_at, test: isTest,
       });
@@ -64,7 +63,7 @@ export async function POST(req) {
       console.error("checkout mail threw", order.id, e);
     }
 
-    return Response.json({ ok: true, code, test: isTest, gift: !!gift.gift_to_email });
+    return Response.json({ ok: true, code: codes[0], code2: codes[1] || null, game, test: isTest, gift: !!gift.gift_to_email });
   }
 
   const site = process.env.SITE_URL || "";
@@ -96,3 +95,4 @@ export async function POST(req) {
   await client.from("orders").update({ gateway_ref: String(j.Data.InvoiceId) }).eq("id", order.id);
   return Response.json({ ok: true, paymentUrl: j.Data.InvoiceURL });
 }
+

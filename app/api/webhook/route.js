@@ -1,4 +1,4 @@
-import { db, issueCodes } from "../../../lib/db";
+import { db, issueFor } from "../../../lib/db";
 import { consumePromo } from "../../../lib/promo";
 import { parseCallback } from "../../../lib/hesabe";
 import { sendOrderMails } from "../../../lib/mail";
@@ -16,8 +16,8 @@ export async function GET(req) {
   if (!order) return Response.redirect(`${site}/buy?err=1`, 302);
 
   // Already handled (user refreshed)? Reuse the existing code.
-  const { data: existing } = await client.from("codes").select("code").eq("order_id", orderId).limit(1);
-  if (existing?.length) return Response.redirect(`${site}/buy/done?code=${existing[0].code}`, 302);
+  const { data: existing } = await client.from("codes").select("code,game").eq("order_id", orderId).order("created_at");
+  if (existing?.length) return Response.redirect(`${site}/buy/done?code=${existing[0].code}${existing[1] ? "&code2=" + existing[1].code : ""}&game=${order.game || "khalid"}`, 302);
 
   let paid = false, ref = null;
 
@@ -47,13 +47,14 @@ export async function GET(req) {
   await client.from("orders").update({ status: "paid", gateway_ref: ref || order.gateway_ref }).eq("id", orderId);
   await consumePromo(order.promo);
   const game = order.game || "khalid";
-  const [code] = await issueCodes({ orderId, game });
+  const codes = await issueFor({ orderId, game });
+  const code = codes.join(" · ");
 
   // The buyer's only record of their code, and Dee's only notice of the sale.
   // Deliberately awaited so a cold start can't cut the request off mid-send,
   // and deliberately unable to fail the purchase: they get their code either way.
   try {
-    const { data: row } = await client.from("codes").select("expires_at").eq("code", code).maybeSingle();
+    const { data: row } = await client.from("codes").select("expires_at").eq("code", codes[0]).maybeSingle();
     const res = await sendOrderMails({ order, code, game, expiresAt: row?.expires_at });
     Object.entries(res || {}).forEach(([who, r]) => {
       if (!r?.ok) console.error("order mail not sent", who, orderId, r);
@@ -62,7 +63,7 @@ export async function GET(req) {
     console.error("order mail threw", orderId, e);
   }
 
-  return Response.redirect(`${site}/buy/done?code=${code}${order.gift_to_email ? "&gift=1" : ""}`, 302);
+  return Response.redirect(`${site}/buy/done?code=${codes[0]}${codes[1] ? "&code2=" + codes[1] : ""}&game=${game}${order.gift_to_email ? "&gift=1" : ""}`, 302);
 }
 
 // Hesabe may POST the result instead of GET on some setups.

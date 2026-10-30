@@ -5,9 +5,15 @@ import { Header, Footer } from "../components/Site";
 import { pixelTrack } from "../components/pixelTrack";
 
 const fmt = (n) => Number(n).toFixed(3);
+const PRODUCTS = [
+  { id: "khalid", name: "قضية خالد", sub: "اختفاء · ٥ مشتبهين" },
+  { id: "shaleh", name: "قضية الشاليه", sub: "سرقة · ٨ مشتبهين · كشّاف على التلفزيون" },
+  { id: "bundle", name: "القضيتين", sub: "خالد + الشاليه — كودين، وفّروا ٢ د.ك", best: true },
+];
 
 export default function Buy() {
   const [gift, setGift] = useState(false);
+  const [game, setGame] = useState("khalid");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [giftName, setGiftName] = useState("");
@@ -20,17 +26,21 @@ export default function Buy() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
-  useEffect(() => {
-    // Funnel step 1: they tapped «ابدأوا التحقيق» and reached the checkout form.
-    quoteFor("").then((j) => {
-      pixelTrack("InitiateCheckout", { value: Number(j?.price) || 0, currency: "KWD", content_name: "قضية خالد" });
-    });
-  }, []);
-  // /buy?gift=1 — the landing page's gift button lands here with the tab already on.
+  // /buy?game=shaleh picks the case; /buy?gift=1 lands with the gift tab on.
   // Read off the URL rather than useSearchParams, which would need a Suspense boundary.
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("gift")) setGift(true);
+    const sp = new URLSearchParams(window.location.search);
+    if (sp.get("gift")) setGift(true);
+    const g = sp.get("game");
+    if (PRODUCTS.some((p) => p.id === g)) setGame(g);
   }, []);
+  useEffect(() => {
+    // Funnel step 1: they reached the checkout form (re-quoted whenever the product changes).
+    setQuote(null); setPromoMsg("");
+    quoteFor(promo && quote?.discount ? promo : "").then((j) => {
+      pixelTrack("InitiateCheckout", { value: Number(j?.price) || 0, currency: "KWD", content_name: PRODUCTS.find((p) => p.id === game)?.name });
+    });
+  }, [game]);
 
   // The WhatsApp number is kept as soon as it is typed — a buyer who leaves
   // the page can still be messaged. Later keystrokes only refresh the record.
@@ -44,8 +54,8 @@ export default function Buy() {
   }, [phone, gift, promo, email]);
 
   async function quoteFor(code) {
-    const r = await fetch("/api/promo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ promo: code }) });
-    return r.json().catch(() => ({})).then((j) => { if (j.ok && !code) setQuote(j); return j; });
+    const r = await fetch("/api/promo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ promo: code, game }) });
+    return r.json().catch(() => ({})).then((j) => { if (j.ok) setQuote(j); return j; });
   }
 
   async function checkPromo() {
@@ -67,7 +77,7 @@ export default function Buy() {
     }
     const r = await fetch("/api/checkout", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ phone, email, promo: usePromo, gift, giftName, giftEmail, giftFrom, giftMsg }),
+      body: JSON.stringify({ phone, email, promo: usePromo, gift, giftName, giftEmail, giftFrom, giftMsg, game }),
     });
     const j = await r.json().catch(() => ({}));
     setBusy(false);
@@ -81,13 +91,13 @@ export default function Buy() {
       // Funnel step 2: details accepted, heading to KNET/card payment. Give the
       // pixel a moment to send before the browser leaves the page.
       await Promise.race([
-        pixelTrack("AddPaymentInfo", { value: Number(total) || 0, currency: "KWD", content_name: "قضية خالد" })
+        pixelTrack("AddPaymentInfo", { value: Number(total) || 0, currency: "KWD", content_name: PRODUCTS.find((p) => p.id === game)?.name })
           .then(() => new Promise((res) => setTimeout(res, 400))),
         new Promise((res) => setTimeout(res, 1500)),
       ]);
       window.location.href = j.paymentUrl;
     }
-    else window.location.href = `/buy/done?code=${j.code}${j.test ? "&test=1" : ""}${j.gift ? "&gift=1" : ""}`;
+    else window.location.href = `/buy/done?code=${j.code}${j.code2 ? "&code2=" + j.code2 : ""}&game=${j.game || game}${j.test ? "&test=1" : ""}${j.gift ? "&gift=1" : ""}`;
   }
 
   const total = quote ? quote.price : null;
@@ -96,7 +106,16 @@ export default function Buy() {
     <main className="wrap">
       <Header />
       <form className="card" onSubmit={go}>
-        <h2>قضية خالد · كود فريق</h2>
+        <h2>{PRODUCTS.find((p) => p.id === game)?.name} · كود فريق</h2>
+
+        <div className="prods" role="radiogroup" aria-label="القضية">
+          {PRODUCTS.map((p) => (
+            <button type="button" key={p.id} role="radio" aria-checked={game === p.id} className={"prod" + (game === p.id ? " on" : "")} onClick={() => setGame(p.id)}>
+              {p.best && <i>الأوفر</i>}
+              <b>{p.name}</b><span>{p.sub}</span>
+            </button>
+          ))}
+        </div>
 
         <label>رقم الواتساب</label>
         <input inputMode="tel" autoComplete="tel" placeholder="9xxx xxxx" value={phone} onChange={(e) => setPhone(e.target.value)} required />
@@ -110,6 +129,8 @@ export default function Buy() {
         <p>
           {gift
             ? "بنرسل الكود على إيميل اللي تهدونه، باسمكم ومع رسالتكم. ويوصلكم إيصال بنفس الكود — إذا تبون تعطونه بنفسكم."
+            : game === "bundle"
+            ? "كودين — واحد لكل قضية. كل كود يفتح على ٦ موبايلات، وصالح ٧ أيام. الدفع بـ KNET أو بطاقة."
             : "كود واحد يفتح اللعبة لفريقكم — على ٦ موبايلات، وصالح ٧ أيام. الدفع بـ KNET أو بطاقة."}
         </p>
 
