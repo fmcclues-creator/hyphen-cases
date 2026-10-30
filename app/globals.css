@@ -232,3 +232,16 @@ a.fit:hover{border-color:var(--red2);box-shadow:0 0 0 6px rgba(196,56,45,.14)}
 @media (max-width:760px){.boards{grid-template-columns:1fr}}
 
 .menu a{white-space:nowrap}
+
+/* two case files in the hero */
+.folders{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center;padding:10px 6px}
+.folders .folder{max-width:240px;text-decoration:none;color:inherit;transition:transform .2s}
+.folders .f1{transform:rotate(-4deg)}.folders .f2{transform:rotate(3deg) translateY(14px)}
+.folders .folder:hover{transform:rotate(0) translateY(-6px)}
+.folders .sheet .name{font-size:42px}.folders .sheet .dept{font-size:10px}.folders .sheet small{font-size:11px}.folders .sheet .stamp{font-size:12px;padding:2px 9px}
+.casebig{scroll-margin-top:80px}
+@media (max-width:760px){.folders{gap:12px;margin:8px 0 26px;order:1}.folders .folder{max-width:170px;padding:8px 9px 9px 16px}.folders .sheet .name{font-size:30px}.folders .sheet .dept{font-size:8px}.folders .sheet small{font-size:9px}.folders .sheet .stamp{font-size:10px}}
+
+/* the header never pushes the page sideways: on phones the menu scrolls inside itself */
+html,body{overflow-x:hidden}
+@media (max-width:560px){.hdr{gap:10px}.menu{overflow-x:auto;scrollbar-width:none;max-width:60vw;padding-block:4px}.menu::-webkit-scrollbar{display:none}.menu a:nth-child(2){display:inline}.menu a:nth-child(4){display:none}.brand img{height:17px}.brand span{font-size:11px;letter-spacing:3px}}

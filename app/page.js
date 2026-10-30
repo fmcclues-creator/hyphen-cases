@@ -73,18 +73,22 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* twenty seconds of the real thing — more convincing than any sentence */}
-        <div className="phone">
-          <video
-            className="phone-screen"
-            autoPlay muted loop playsInline preload="metadata"
-            poster="/media/play-poster.jpg"
-            aria-label="مقطع من اللعبة"
-          >
-            <source src="/media/play.webm" type="video/webm" />
-            <source src="/media/play.mp4" type="video/mp4" />
-          </video>
-          <span className="phone-note">من داخل اللعبة</span>
+        {/* the two case files — tap one to go to its case */}
+        <div className="folders">
+          <Link href="/#case-khalid" className="folder f1" aria-label="قضية خالد"><div className="sheet">
+            <div className="dept">إدارة البحث والتحرّي الجنائي</div>
+            <small>رقم الملف K-0810</small>
+            <div className="name">خالد</div>
+            <small>بلاغ اختفاء</small>
+            <div className="stamp">سرّي · عاجل</div>
+          </div></Link>
+          <Link href="/#case-shaleh" className="folder f2" aria-label="قضية الشاليه"><div className="sheet">
+            <div className="dept">مخفر الخيران · قسم التحرّيات</div>
+            <small>رقم الملف KH-0412</small>
+            <div className="name">الشاليه</div>
+            <small>بلاغ سرقة</small>
+            <div className="stamp">سرّي · عاجل</div>
+          </div></Link>
         </div>
       </section>
 
@@ -146,7 +150,7 @@ export default async function Home() {
 
       <section className="cases" id="cases">
         <h2>القضايا</h2>
-        <div className="casebig">
+        <div className="casebig" id="case-khalid">
           <div className="phone">
             <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-poster.jpg" aria-label="مقطع من قضية خالد">
               <source src="/media/play.webm" type="video/webm" /><source src="/media/play.mp4" type="video/mp4" />
@@ -164,7 +168,7 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="casebig">
+        <div className="casebig" id="case-shaleh">
           <div className="phone">
             <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-shaleh-poster.jpg" aria-label="مقطع من قضية الشاليه">
               <source src="/media/play-shaleh.webm" type="video/webm" /><source src="/media/play-shaleh.mp4" type="video/mp4" />
