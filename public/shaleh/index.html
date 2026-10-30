@@ -501,11 +501,11 @@ button.row.callable:active{background:rgba(47,204,95,.18)}
 /* Samsung device */
 .device.sam{border-radius:18px;border-color:#0e1118;box-shadow:0 0 0 1px #3a4250,0 30px 60px rgba(0,0,0,.6)}
 .device.sam .status{font-size:12px}
-.sam-lock{flex:1;display:flex;flex-direction:column;align-items:center;padding:18px 14px 10px;gap:8px;background:linear-gradient(180deg,rgba(5,7,12,.55),rgba(5,7,12,.25) 45%,rgba(5,7,12,.7)),url(img/wall_lock.jpg) center/cover no-repeat #05070c;overflow:auto}
+.sam-lock{flex:1;display:flex;flex-direction:column;align-items:center;padding:18px 14px 10px;gap:8px;background:linear-gradient(180deg,rgba(5,7,12,.5),rgba(5,7,12,.15) 40%,rgba(5,7,12,.65)),url(img/wall_lock.jpg) center/cover no-repeat #05070c;overflow:auto}
 .sam-lock .sam-clock,.sam-lock .sam-date{text-shadow:0 2px 10px rgba(0,0,0,.8)}
 .sam-clock{font-size:54px;font-weight:300;letter-spacing:2px;line-height:1}
 .sam-date{color:#aab2c2;font-size:14px;margin-bottom:6px}
-.sam-lock .notif{width:100%}.sam-lock{padding-top:186px}.sam-lock .sam-clock{font-size:46px}
+.sam-lock .notif{width:100%}.sam-lock{padding-top:14px}.sam-lock .sam-clock{font-size:40px}.sam-lock .sam-date{margin-bottom:4px}.sam-lock .notif{position:static;transform:none;margin:2px 0;animation:none}.sam-lock .pat{flex:0 0 auto;aspect-ratio:1/1;width:min(240px,70vw,calc(100vh - 500px));margin-top:auto}@media (max-height:720px){.sam-lock .notif{padding:6px 10px;font-size:12px}.sam-lock .sam-clock{font-size:32px}.sam-lock{padding-top:8px}}.sam-lock .pat-hint{font-size:12.5px;line-height:1.5}
 .pat-hint{font-size:12px;color:#aab2c2;text-align:center;line-height:1.6;max-width:36ch;margin-top:6px}
 .pat{width:min(240px,70vw);height:auto;touch-action:none;margin-top:4px}
 .pat .pn{fill:#5ac8fa;opacity:.6;transition:all .15s}
@@ -1861,7 +1861,7 @@ function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTa
 
 /* ---- hints ---- */
 const HINTS={
- lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وإهو يفكّر بالإنجليزي: أول حرف من Latifa إهو L. شوفوا خلفية شاشته… وتوقيعه بمحضر الاستلام. ارسموه على الشاشة.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
+ lock:['ما عطى أحد النقشة. بس الملف يقول عنه كل شي: درس ببريطانيا ٧ سنين وكل أوراقه إنجليزي، والشاليه سجّله باسم أمه، واللوحة اللي على باب غرفتها كتبها بخطه. شنو أغلى شي عنده؟ وشلون يكتبه؟','أمه أم عبدالعزيز، واسمها لطيفة — بأول سطر بالمحضر. وإهو يفكّر بالإنجليزي: أول حرف من Latifa إهو L — صورتها خلفية شاشته، وتوقيعه بمحضر الاستلام نفس الحرف. ارسموه على الشاشة.','الجواب: النقاط ١ ← ٤ ← ٧ ← ٨ ← ٩ (شكل L). وينفع بالعكس من اليمين.'],
  cams:['بموبايل بوعبدالرزاق تطبيق <b>الكاميرات</b> — مقفول بكود ٤ أرقام. شركة الكاميرات طرّشت له الكود الافتراضي برسالة نصية يوم التركيب — جرّبوه.','الكود الافتراضي تغيّر، بس بوعبدالرزاق خلّى لنفسه تلميح: «السنة اللي بنيت الشاليه حق أمي». السنة مكتوبة على لوحة باب غرفتها — بمعرض الصور بموبايله — تحت الغبار.','الجواب: ١٩٩٨.'],
  torch1:['رضا قال شاف سيارة غريبة عند البوابة الخلفية. بتطبيق الكاميرات، كاميرا <b>بوابة الخدمة الخلفية</b> فريمها أسود — اضغطوه وشغّلوا الكشّاف. (تقدرون تطلّعونه على التلفزيون من cases.hyphen-eventskw.com/tv)','ثبّتوا الضوء ثانية على كل شي يبين: السيارة، والشباك اللي يمّها، واللوحة.','الجواب: جي إم سي سودا غريبة ٤:٠٥ عند البوابة الخلفية، وصندوق معدني ينعطى لها من شباك الديوانية. اللوحة ٤١٨٧٢. وبعدها: 🕒 خط اليوم.'],
  scall:['المرور عطونا رقم سالم — بتبويب 🚓 الميدان. من <b>هاتف المخفر</b> اطلبوا الرقم بنفسكم: الرقم الغلط ما يرن. أول مرة بيسكّر بوجهكم — اتصلوا مرة ثانية.','اسألوه بهدوء: وين كان، شنو أخذ، ومنو قفّل الصندوق. لو اتهمتوه بيسكّر ويركض — بتوصلون للمطاردة بس بدون معلوماته، وبدقيقة زيادة.','الجواب: الرقم <span dir="ltr">66047291</span>. وإهو يعترف إنه استلم صندوق مقفول من «واحد» ما يبي يسمّيه، وإن هاللي عطاه قفّله جدّامه وما عطاه الكود.'],
