@@ -1326,9 +1326,10 @@ const EV=[
 
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
+ {id:'moi_plate',need:'plate',n:'استعلام المرور · اللوحة ٤١٨٧٢',cap:'رد المرور على طلبكم: سالم، ٣١ سنة، الفنطاس قطعة ٥ — يم حديقة الفنطاس. الهاتف المسجّل <span dir="ltr">6604 7291</span>.'},
  {id:'receipt_phone',n:'محضر استلام الجهاز · ٧:٠٠ م',cap:'بوعبدالرزاق سلّم موبايله للدورية بنفسه ووقّع. نقشة الفتح ما انسجّلت.'},
  {id:'cam_gate_1625',n:'كاميرا البوابة · ٤:٢٥ م',cap:'كامري رضا ترجع. رضا كان برّا ساعة وربع — من ٣:١٠ إلى ٤:٢٥.'}];
-$('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}" style="position:relative"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()">${e.vid?'<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 7px;font-size:12px">▶ فيديو</span>':''}<figcaption><b>${e.n}</b></figcaption></figure>`).join('');
+function renderEv(){$('#evGrid').innerHTML=EV.filter(e=>!e.need||S[e.need]).map(e=>`<figure class="ev" data-ev="${e.id}" style="position:relative"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()">${e.vid?'<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 7px;font-size:12px">▶ فيديو</span>':''}<figcaption><b>${e.n}</b></figcaption></figure>`).join('')}renderEv();
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);
   if(ev.torch){torchStart(ev.torch);return}
   const pic=ev.vid?`<video playsinline controls preload="metadata" poster="img/${ev.id}.jpg" src="video/${ev.id}.mp4" style="width:100%;border-radius:10px;background:#000" onerror="this.outerHTML='<img src=&quot;img/${ev.id}.jpg&quot; alt=&quot;&quot; style=&quot;width:100%;border-radius:10px&quot;>'"></video>`:`<img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px">`;
@@ -1390,7 +1391,7 @@ function mpDraw(){
 }
 
 /* ---- field tab ---- */
-function refreshField(){try{mpDraw()}catch(e){}$$('.tabs button[data-tab=t6]').forEach(b=>b.hidden=!S.torch1);
+function refreshField(){try{mpDraw()}catch(e){}try{renderEv()}catch(e){}$$('.tabs button[data-tab=t6]').forEach(b=>b.hidden=!S.torch1);
  $('#fieldLocked').hidden=!!S.torch1;$('#fieldPlate').hidden=!(S.torch1&&!S.plate);$('#fieldOpen').hidden=!S.plate;const ss=$('#susSalem');if(ss)ss.hidden=!S.plate;
  $('#fieldCall').hidden=!(S.plate&&!S.scall);$('#fieldMap').hidden=!(S.scall&&!S.route);if(S.scall&&!S.route)try{renderMap()}catch(e){}$('#fieldChase').hidden=!(S.route&&!S.chase);try{renderScLog()}catch(e){}$('#fieldDoor').hidden=!(S.chase&&!S.door);$('#fieldFound').hidden=!S.door;
  if(S.torch1&&!S.door)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
