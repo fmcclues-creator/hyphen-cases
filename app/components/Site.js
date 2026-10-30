@@ -21,6 +21,7 @@ export function Header() {
       </Link>
       <nav className="menu">
         <Link href="/#cases">القضايا</Link>
+        <Link href="/leaderboard">المتصدرين</Link>
         <Link href="/about">عن HYPHEN</Link>
         <Link href="/play">عندي كود</Link>
         <a href="https://instagram.com/hyphen.cases" target="_blank" rel="noreferrer">Instagram</a>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Header, Footer, WA_HREF } from "./components/Site";
+import { HomeBoard } from "./components/Board";
 import { reactions } from "./reactions";
 
 const SHOTS = [
@@ -48,7 +49,9 @@ const FAQ = [
   },
 ];
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
   const price = Number(process.env.PRICE_KWD || 4.75).toFixed(3);
   return (
     <main className="wrap">
@@ -161,6 +164,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <HomeBoard />
 
       <section className="faq" id="faq">
         <h2>أسئلة قبل ما تشترون</h2>
