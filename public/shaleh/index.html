@@ -1309,9 +1309,9 @@ const IVS=[
  g.innerHTML=IVS.map(v=>`<div class="iv" data-iv="${v.id}"><div class="ivh"><img src="img/p_${v.id}.jpg" alt="" onerror="this.style.visibility='hidden'"><div><b>${v.n}</b><small>${v.sub}</small></div></div>`
   +(v.novid?'':`<video playsinline controls preload="none" poster="video/iv_${v.id}.jpg" src="video/iv_${v.id}.mp4" onerror="this.remove()"></video>`)
   +`<div class="tx" style="font-size:13.5px;line-height:1.8;margin-top:6px;color:#2a2419">«${v.tx}»</div>`
-  +(v.frames?`<div class="ivAfter" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">${v.frames.map(f=>{const e={n:f==='pool_1420'?'فيديو عبدالله ١ · ٢:٢٠ م':'فيديو عبدالله ٢ · ٣:٥٢ م'};return `<figure data-frame="${f}" style="margin:0;cursor:pointer"><img src="img/${f}.jpg" alt="" style="width:100%;border-radius:6px;display:block"><figcaption style="font-size:12px;color:#5a5243;margin-top:3px">${e.n}</figcaption></figure>`}).join('')}</div>`:'')
+  +(v.frames?`<div class="ivAfter" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">${v.frames.map(f=>`<figure style="margin:0"><video playsinline controls preload="none" poster="img/${f}.jpg" src="video/${f}.mp4" style="width:100%;aspect-ratio:3/2;border-radius:6px;display:block;background:#000"></video><figcaption style="font-size:12px;color:#5a5243;margin-top:3px">${f==='pool_1420'?'فيديو من موبايله · ٢:٢٠ م':'فيديو من موبايله · ٣:٥٢ م'}</figcaption></figure>`).join('')}</div>`:'')
   +`</div>`).join('');
- $$('#ivg [data-frame]').forEach(b=>b.onclick=()=>{const ev=EV.find(x=>x.id===b.dataset.frame);if(ev)$('#evGrid [data-ev="'+ev.id+'"]')?.click()});
+
  $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})))})();
 
 /* ---- evidence grid (file) ---- */
@@ -1321,8 +1321,6 @@ const EV=[
  {id:'gold',n:'الذهب على الطاولة · ١٢:٣٠ م',cap:'الطقم كامل جدّام العايلة: عقد، تراچي، ثلاث أساور، خواتم. آخر مرة ينشاف كامل.'},
 
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
- {id:'pool_1420',vid:1,n:'فيديو عبدالله ١ · ٢:٢٠ م',cap:'من موبايل عبدالله (١١).'},
- {id:'pool_1552',vid:1,n:'فيديو عبدالله ٢ · ٣:٥٢ م',cap:'من موبايل عبدالله (١١).'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
  {id:'receipt_phone',n:'محضر استلام الجهاز · ٧:٠٠ م',cap:'بوعبدالرزاق سلّم موبايله للدورية بنفسه ووقّع. نقشة الفتح ما انسجّلت.'},
  {id:'cam_gate_1625',n:'كاميرا البوابة · ٤:٢٥ م',cap:'كامري رضا ترجع. رضا كان برّا ساعة وربع — من ٣:١٠ إلى ٤:٢٥.'}];
@@ -1348,9 +1346,9 @@ const MPINS=[
         ['٥:٣٠ م','الغرفة مقلوبة والتيجوري مفتوح وفاضي. لا كسر.']],
   note:'الكود أربع أرقام، وما أحد يعرفه غير الجدّة… على قولتها.'},
  {n:4,x:180,y:470,t:'المسبح · الشوّاية',need:null,
-  rows:[['٢:٢٠ م','فيديو عبدالله وحمد الأول — بالأدلة.'],
-        ['٣:٥٢ م','الفيديو الثاني، نفس الزاوية — بالأدلة. منو بالخلفية؟']],
-  note:'كل واحد يقول وين كان. الفيديو يقول منو كان برّا فعلاً.'},
+  rows:[['٢:٢٠ م','فيديو عبدالله وحمد الأول.'],
+        ['٣:٥٢ م','الفيديو الثاني، نفس الزاوية.']],
+  note:'عبدالله وحمد كانوا يصوّرون هنا طول العصر.'},
  {n:5,x:304,y:124,t:'الكراج',need:null,
   rows:[['العصر','بوعبدالله راح يدوّر عدّة البحر ورجع. الكراج برّا البيت.']]},
  {n:6,x:358,y:522,t:'بوابة الخدمة الخلفية · كاميرا',need:'torch1',
