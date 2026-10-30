@@ -1403,16 +1403,16 @@ $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$
 /* ---- the map: a real street map of الفنطاس (OpenStreetMap) with our own search, pin and routes ---- */
 const MAPH={target:'5-3-12',pick:null,routes:null,msg:''};
 const MAP_ADDR=[
- {id:'5-3-12',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٢',en:'Fintas, Block 5, Street 3, House 12',ll:[29.1781,48.1135]},
- {id:'5-3-10',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٠',en:'Fintas, Block 5, Street 3, House 10',ll:[29.1784,48.1124]},
- {id:'5-2-12',t:'الفنطاس، قطعة ٥، شارع ٢، منزل ١٢',en:'Fintas, Block 5, Street 2, House 12',ll:[29.1766,48.1128]},
- {id:'5-13-12',t:'الفنطاس، قطعة ٥، شارع ١٣، منزل ١٢',en:'Fintas, Block 5, Street 13, House 12',ll:[29.1748,48.1150]},
- {id:'4-3-12',t:'الفنطاس، قطعة ٤، شارع ٣، منزل ١٢',en:'Fintas, Block 4, Street 3, House 12',ll:[29.1746,48.1078]},
- {id:'6-3-12',t:'الفنطاس، قطعة ٦، شارع ٣، منزل ١٢',en:'Fintas, Block 6, Street 3, House 12',ll:[29.1815,48.1162]},
+ {id:'5-3-12',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٢',en:'Fintas, Block 5, Street 3, House 12',ll:[29.1772,48.1166]},
+ {id:'5-3-10',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٠',en:'Fintas, Block 5, Street 3, House 10',ll:[29.1774,48.1159]},
+ {id:'5-2-12',t:'الفنطاس، قطعة ٥، شارع ٢، منزل ١٢',en:'Fintas, Block 5, Street 2, House 12',ll:[29.1783,48.1163]},
+ {id:'5-13-12',t:'الفنطاس، قطعة ٥، شارع ١٣، منزل ١٢',en:'Fintas, Block 5, Street 13, House 12',ll:[29.1752,48.1172]},
+ {id:'4-3-12',t:'الفنطاس، قطعة ٤، شارع ٣، منزل ١٢',en:'Fintas, Block 4, Street 3, House 12',ll:[29.1760,48.1108]},
+ {id:'6-3-12',t:'الفنطاس، قطعة ٦، شارع ٣، منزل ١٢',en:'Fintas, Block 6, Street 3, House 12',ll:[29.1798,48.1178]},
  {id:'f5-3-12',t:'الفحيحيل، قطعة ٥، شارع ٣، منزل ١٢',en:'Fahaheel, Block 5, Street 3, House 12',ll:[29.0862,48.1180]},
  {id:'m5-3-12',t:'المنقف، قطعة ٥، شارع ٣، منزل ١٢',en:'Mangaf, Block 5, Street 3, House 12',ll:[29.1150,48.1160]},
  {id:'a5-3-12',t:'أبو حليفة، قطعة ٥، شارع ٣، منزل ١٢',en:'Abu Halifa, Block 5, Street 3, House 12',ll:[29.1403,48.1160]}];
-const MAP_STATION=[29.1676,48.1048];
+const MAP_STATION=[29.1690,48.1085];
 const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\bblk\b|\bblock\b|\bb\b/gi,'block').replace(/\bst\b|\bstreet\b/gi,'street').replace(/\bh\b|\bhouse\b|\bhse\b/gi,'house').replace(/al[- ]?fintas|fentas|fintass/gi,'fintas').replace(/\s+/g,' ').trim().toLowerCase();
 const addrHit=(a,v)=>{const ws=v.split(' ').filter(Boolean);const ar=AR2EN(a.t),en=AR2EN(a.en||'');return ws.every(w=>ar.includes(w)||en.includes(w))};
 let LMAP=null,LLAYERS=[];
@@ -1452,7 +1452,7 @@ function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(
 /* three ways from the station: direct (right), the ring road (long), and the inner street with road works (looks shortest) */
 async function mapRoutes(dest){const S0=MAP_STATION;
  const osrm=async pts=>{const u='https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson';const r=await fetch(u);const j=await r.json();const rt=j.routes[0];return{pts:rt.geometry.coordinates.map(c=>[c[1],c[0]]),sec:rt.duration}};
- const viaRing=[29.1640,48.0990],viaInner=[29.1725,48.1095];
+ const viaRing=[29.1650,48.1040],viaInner=[29.1742,48.1150];
  let A,B,C;try{[A,B,C]=await Promise.all([osrm([S0,dest]),osrm([S0,viaRing,dest]),osrm([S0,viaInner,dest])])}catch(e){
    const st=(a,b)=>[a,b];A={pts:st(S0,dest),sec:540};B={pts:[S0,viaRing,dest],sec:840};C={pts:[S0,viaInner,dest],sec:420}}
  const base=Math.max(6,Math.round(A.sec/60)+3);
