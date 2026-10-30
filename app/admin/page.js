@@ -17,6 +17,7 @@ export default function Admin() {
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState(null);
   const [regs, setRegs] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [pf, setPf] = useState({ code: "", percent: 20, amount: 0, maxUses: 100, days: 30, note: "" });
   const H = { authorization: `Bearer ${pw}`, "content-type": "application/json" };
 
@@ -29,6 +30,7 @@ export default function Admin() {
     if (p.ok) setPromos(p.promos);
     const o = await fetch("/api/admin/orders", { headers: H }).then((x) => x.json());
     if (o.ok) { setOrders(o.orders); setStats(o.stats); }
+    try { const l = await fetch("/api/admin/leads", { headers: H }).then((x) => x.json()); if (l.ok) setLeads(l.leads); } catch {}
   }
   async function gen() {
     const r = await fetch("/api/admin/codes", { method: "POST", headers: H, body: JSON.stringify({ count, days, maxUses, note, game }) });
@@ -90,6 +92,22 @@ export default function Admin() {
               <td>{Number(o.amount_kwd).toFixed(3)}</td><td className="mono">{o.promo ? `${o.promo} (−${Number(o.discount_kwd).toFixed(3)})` : "—"}</td>
               <td>{o.gateway}</td><td>{o.status === "paid" ? "✅ مدفوع" : o.status === "failed" ? "❌ فشل" : "⏳ معلّق"}</td>
               <td className="mono">{o.code ? o.code.code : "—"}</td><td>{o.code ? `${o.code.uses}/${o.code.max_uses}` : "—"}</td>
+            </tr>)}</tbody>
+          </table>
+        )}
+      </div>
+      <div className="card" style={{ maxWidth: 1100 }}>
+        <h2>أرقام الواتساب من صفحة الشراء</h2>
+        <p className="muted">كل رقم انكتب بصفحة الشراء آخر ٣٠ يوم — حتى لو ما كمّلوا. «ما كمّل» = ما وصل للدفع.</p>
+        {leads.length === 0 ? <p className="muted">ما فيه أرقام بعد.</p> : (
+          <table><thead><tr><th>بدأ</th><th>آخر تعديل</th><th>الواتساب</th><th>الإيميل</th><th>كود خصم</th><th>هدية</th><th>الحالة</th><th></th></tr></thead>
+            <tbody>{leads.map((l) => <tr key={l.id}>
+              <td style={{ whiteSpace: "nowrap" }}>{new Date(l.started_at).toLocaleString("ar-KW", { dateStyle: "short", timeStyle: "short" })}</td>
+              <td style={{ whiteSpace: "nowrap" }}>{new Date(l.updated_at).toLocaleString("ar-KW", { dateStyle: "short", timeStyle: "short" })}</td>
+              <td className="mono">{l.phone}</td><td className="mono" style={{ fontSize: 12 }}>{l.email || "—"}</td>
+              <td className="mono">{l.promo || "—"}</td><td>{l.gift ? "🎁" : "—"}</td>
+              <td>{l.state === "paid" ? "✅ اشترى" : l.state === "pending" ? "⏳ وصل للدفع" : "✋ ما كمّل"}</td>
+              <td><a className="btn-sm" href={`https://wa.me/965${l.phone}?text=${encodeURIComponent("هلا 👋 شفنا إنكم بدأتوا طلب قضية من HYPHEN Cases — تحتاجون مساعدة؟")}`} target="_blank" rel="noreferrer">واتساب</a></td>
             </tr>)}</tbody>
           </table>
         )}

@@ -36,6 +36,11 @@
    leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
+@font-face{font-family:kwj;src:url('/fonts/kwj-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:kwj;src:url('/fonts/kwj-700.woff2') format('woff2');font-weight:700;font-display:swap}
+/* چ and گ live in a subset font, so a word carrying one was shaped across two
+   fonts and the join broke. the whole word renders in one Arabic font instead. */
+.kw{font-family:kwj,var(--ui)}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-500.woff2') format('woff2');font-weight:500;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-700.woff2') format('woff2');font-weight:700;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -796,7 +801,7 @@ html.tv body{zoom:1.18}
     <h1>قضية <span>الفيلا</span></h1>
     <p>بوفيصل بنى فيلته بيده سنة ١٤٠٧. يوم العيد قال جدّام الكل: «كتبت وصيتي، والفيلا لمن يسكن فيها»، وحطّها بالدرج. الثلاثاء الصبح توفّى بهدوء… وبعد العزا بيومين، الدرج فاضي. موبايله القديم بين إيديكم، وعندكم ساعة.</p>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثير بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span><span>🏃 فيها حركة!</span></div>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟  — يكبّر الخط والصور ويضبط عرض الشاشة، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
 </section>
@@ -1143,7 +1148,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
   function paint(){[...dots.children].forEach((d,i)=>d.classList.toggle('f',i<v.length))}}
 
 /* ---- intro / file ---- */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، فتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثير بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 دفتر التحقيق</h3><div class="h" style="opacity:.7">اكتبوا هنا اللي لاحظتوه. ينحفظ على هالجهاز.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="مثال: الكاميرا ٦:١٤ — منو رايح الملحق؟"></textarea><div class="acts"><button class="btn" data-close>حفظ وإغلاق</button></div>`);
@@ -1182,7 +1187,7 @@ $('#docGrid').onclick=openEv;$('#evGrid').onclick=openEv;
 /* ---- field tab ---- */
 function fieldReady(){return S.memo&&S.corner&&S.cam&&S.call}
 function refreshField(){const r=fieldReady();$('#fieldLocked').hidden=r;$('#fieldOpen').hidden=!r;$('#goRun').hidden=S.run;$('#fieldDoor').hidden=!S.run;$('#goBlow').hidden=S.blow;$('#fieldRoom').hidden=!S.blow;$('#goRoom').hidden=S.album;$('#fieldFound').hidden=!S.album;if(r)$$('.tabs button[data-tab=t6]').forEach(b=>b.classList.add('pulse'))}
-function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. افتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
+function checkField(){if(fieldReady()&&!S.fieldShown){S.fieldShown=true;save();stageAt('run');setTimeout(()=>sheet('<h3>📍 عرفنا وين ندوّر</h3><div class="h">التسجيل يقول «سطر ثاني»، الملاحظة تقول «ألبوم الصور بغرفتي القديمة بالملحق»، والكاميرا تشوف أحد رايح الملحق الفجر. نروح. فتحوا تبويب <b>🏃 الميدان</b> بالملف.</div><div class="acts"><button class="btn" data-close>تمام</button></div>'),500)}}
 $('#goRun').onclick=()=>runStart();$('#goBlow').onclick=()=>blowStart();$('#goRoom').onclick=()=>roomStart();
 
 /* ---- PIN lock ---- */
@@ -1195,7 +1200,7 @@ const CHATS=[
  {id:'fam',n:'عيال بوفيصل',av:'👨‍👩‍👧‍👦',last:'الخميس',u:3,grp:1,msgs:[['day','الثلاثاء'],['them','العزا بديوانية أبوي من المغرب. الله يرحمه','٩:٢٠ ص','','فيصل'],['them','وصلت الكويت الحين. الله يرحمه','١٠:٠٠ ص','','عبير'],['day','الخميس'],['them','منو فتح الدرج؟؟','٨:١٠ م','','فيصل'],['them','فيصل مو وقته','٨:١١ م','','عبير'],['them','الورقة ما لها قيمة قانونية أصلاً يا جماعة، بدون شهود','٨:١٥ م','','بومشعل'],['them','آنا وصلت الاثنين بالليل وما أعرف وين المكتب حتى','٨:١٧ م','','طلال'],['them','نورة كانت بروحها بالبيت. مو اتهام، هذا اللي صار','٨:٢٠ م','','عبير'],['them','حرام عليكم… أبوي ما برد بعد','٨:٣١ م','','نورة'],['them','باجر أبلّغ الشرطة. خلاص','٨:٤٠ م','','فيصل']]},
  {id:'noura',n:'نورة ❤️',av:'p:noura',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يبه الدوا ✅ والغدا جاهز','١:٣٠ م'],['me','الله يسلمج يا بنتي','١:٤٥ م'],['them','طلال بيوصل الليلة إن شاء الله، فرشت له الصالة','٧:٠٠ م'],['them','يبه بومشعل عندك؟ لا تتعب نفسك بالكلام عن البيع، إنت تعبان','٩:٤٠ م'],['me','لا تخافين','٩:٤٥ م'],['them','تصبح على خير يبه ❤️','١١:٠٥ م']]},
  {id:'yaser',n:'ياسر (المحامي)',av:'p:yaser',last:'الأحد',u:0,msgs:[['day','قبل شهر'],['them','أبو فيصل، الوصية اللي كتبتها بخطك صحيحة، بس الأفضل شاهدين','١٠:٠٠ ص'],['me','شاهدي الله يا بوعلي','١٠:٣٠ ص'],['day','الأحد'],['them','صوّر لي الورقة يبه عشان أحفظ نسخة','٥:٠٠ م'],['me','<span class="ph" data-photo="will_corner">'+IMG('will_corner')+'</span>','٥:٢٠ م'],['them','هذي بس زاوية! صوّرها كاملة','٥:٢٥ م'],['me','باجر إن شاء الله','٥:٣٠ م']]},
- {id:'bumishal',n:'بومشعل',av:'p:bumishal',last:'الاثنين',u:0,msgs:[['day','قبل أسبوعين'],['them','يبه عرض المستثمر ٣ ملايين على الأرض. فكّر بس','٨:٠٠ م'],['me','البيت مو للبيع','٨:٣٠ م'],['day','الاثنين'],['them','يبه آنا ياي لك بعد العشا نسولف شوي','٨:٥٠ م'],['me','تعال','٨:٥٥ م'],['them','<span class="miss">📵 مكالمة فايتة</span>','١١:٣٠ م']]},
+ {id:'bumishal',n:'بومشعل',av:'p:bumishal',last:'الاثنين',u:0,msgs:[['day','قبل أسبوعين'],['them','يبه عرض المستثمر ٣ ملايين على الأرض. فكّر بس','٨:٠٠ م'],['me','البيت مو للبيع','٨:٣٠ م'],['day','الاثنين'],['them','يبه آنا ياي لك بعد اللعشا نسولف شوي','٨:٥٠ م'],['me','تعال','٨:٥٥ م'],['them','<span class="miss">📵 مكالمة فايتة</span>','١١:٣٠ م']]},
  {id:'talal',n:'طلال',av:'p:talal',last:'الاثنين',u:1,msgs:[['day','الاثنين'],['them','يبه وصلت الكويت، ياي لك الحين من المطار','٨:٤٥ م'],['me','بانتظارك يا ولدي','٨:٥٠ م'],['them','يبه نمت؟ آنا بالمكتب… شفت الورقة بالدرج. ما فهمت السطر الثاني 🤔 نتكلم الصبح','١١:٤٠ م'],['them','لا تقول لفيصل إني قريتها','١١:٤١ م']]},
  {id:'faisal',n:'فيصل',av:'p:faisal',last:'الأحد',u:0,msgs:[['day','الأحد'],['them','يبه، البنك بيحجز على المحل. ممكن نتكلم عن الفيلا؟','٤:٠٠ م'],['me','بعد العيد نتكلم. والفيلا مكتوبة.','٤:٣٠ م'],['them','مكتوبة لمنو يبه؟','٤:٣١ م'],['me','لمن يسكن فيها. وإنت تعرف السطر الثاني لو قريت','٤:٤٠ م'],['them','؟؟','٤:٤١ م']]},
  {id:'hamad',n:'حمد (حفيدي) 🧒',av:'🧒',last:'الاثنين',u:0,msgs:[['day','الاثنين'],['them','يدو شلونك؟ باجر أمرّ عليك بعد المدرسة 🚗','٤:١٠ م'],['me','تعال يا حمد، آخذك الملحق أوريك راديو أول','٤:٢٠ م'],['them','😍😍','٤:٢١ م']]},
@@ -1526,12 +1531,19 @@ $('#pickWho').innerHTML=SUS.map(s=>`<button data-who="${s[0]}"><span class="av">
 $('#pickWhy').innerHTML=WHY.map(s=>`<button data-why="${s[0]}"><b>${s[1]}</b><small>${s[2]}</small></button>`).join('');
 $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(!b)return;S.who=b.dataset.who;save();selPick()};$('#pickWhy').onclick=e=>{const b=e.target.closest('[data-why]');if(!b)return;S.why=b.dataset.why;save();selPick()};
 function selPick(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who===S.who));$$('[data-why]').forEach(b=>b.classList.toggle('on',b.dataset.why===S.why));$('#submit').disabled=!(S.who&&S.why)}
+/* A wrong accusation used to be one word — «no» — on two answers at once,
+   so a team that had half of it right could not tell which half. Each answer
+   is marked on its own now; the written clue stays as it was. */
+const accMark=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;`
+  +`color:${ok?'#5bc47a':'#e06a5a'}"><b style="font-size:16px">${ok?'✓':'✗'}</b><span>${label}</span></div>`;
 const WRONG={faisal:'فيصل وصل ٧:٠٢ مع الكل (كاميرا المدخل)، والدرج كان فاضي من ٦:١٤. منو كان داخل البيت الفجر؟',talal:'طلال كذب فعلاً — كان بالمكتب ١١:٤٠ وقرأ الورقة (رسالته لأبوه). بس اللي أخذها الفجر بعباة، وطلال كان نايم بالصالة لما نورة اتصلت بالإسعاف. ليش كذب؟ عشان ما يقولون إنه كان يدوّر شنو كتب أبوه.',abeer:'عبير وصلت ٧:٠٢ مع زوجها. الوصية راحت قبلها بساعة.',bumishal:'أقوى دافع، صح… بس كان ببيته (مكالمة فايتة ١١:٣٠ من رقمه + وصل ٧:٠٢). منو كان بالبيت؟',saleh:'صالح كان بالمستشفى مع أخوه طول الليل (الكشف بالوثائق). وكاميرا ٦:١٤ تشوف عباة.'};
 $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='noura'&&S.why==='protect';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120;S.wrong++;save();let msg;
   if(S.who==='noura')msg='نورة، صح. بس ليش؟ هي اللي تسكن بالبيت — الوصية تعطيها كل شي. لو نورة تبي الفلوس، شلون بتستفيد من إنها تخفي الوصية؟. ارجعوا لرسالتها بالقروب: «حرام عليكم».';
   else msg=WRONG[S.who]||'مو هذا. ارجعوا للكاميرا ٦:١٤ وتذكير الدوا.';
-  fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +دقيقتين.</b><br>${msg}<div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
+  fb.hidden=false;fb.innerHTML=`<b>❌ مو صح. +دقيقتين.</b>`
+    +accMark(S.who==='noura','منو أخذ الوصية')+accMark(S.why==='protect','وليش')
+    +`<div style="margin-top:6px">${msg}</div><div class="fbacts"><button class="btn lite" id="fbCont">نرجع نحقق</button></div>`;$('#fbCont').onclick=()=>{fb.hidden=true;show('phone')}};
 
 /* ---- reveal ---- */
 
@@ -1559,7 +1571,7 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
   setTimeout(()=>{$('#willWrap').hidden=false;$('#willWrap').scrollIntoView({behavior:'smooth',block:'center'});playWill()},5600)}
 function playWill(){const tx='«بسم الله الرحمن الرحيم. وصيتي… الفيلا لمن يسكن فيها… على أن تبقى بيتاً مفتوحاً لإخوتها.» … أبوي كان أذكى منّا كلنا.';const a=$('#au-end');$('#willTx').textContent='';const w=tx.split(' ');let i=0;const step=a.duration&&isFinite(a.duration)?(a.duration*1000-400)/w.length:420;a.currentTime=0;a.play().catch(()=>{});const iv=setInterval(()=>{$('#willTx').textContent=w.slice(0,++i).join(' ');if(i>=w.length)clearInterval(_callIv)},step);a.onended=()=>setTimeout(endCard,900);setTimeout(()=>{if(!a.duration)endCard()},20000)}
 let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='الكل سكت. نورة بكت. والفيلا بقت مثل ما بناها: بيت مفتوح لأهله.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
-  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()}}
+  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>الوقت الكلي (مع الإضافات)</small></div><div><b>${AR(S.wrong)}</b><small>اتهام غلط</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>تلميحات</small></div><div><b>${t<2400?'🏆 محققين':t<3600?'👏 ممتاز':'✅ حلّيتوها'}</b><small>التقييم</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()};lbOffer()}
 
 
 /* ---- call Saleh (Egyptian): 3 rounds, one right question each; accusations or money talk make him hang up ---- */
@@ -1596,7 +1608,7 @@ function addSalehNote(){addNote('saleh_call','📞 مكالمة صالح — ن�
 /* ---- hints ---- */
 const HINTS={
  lock:['فيصل قال بالمحضر: أبوي ما يحفظ إلا تواريخ هجرية، وأهم تاريخ هو يوم بنينا البيت. دوروا بالوثائق.','شهادة ملكية الأرض فيها تاريخ الإفراز بالهجري. السنة بس — ٤ أرقام.','الجواب: ١٤٠٧.'],
- memo:['افتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
+ memo:['فتحوا تطبيق «المسجّل». فيه تسجيل غير مرسل للمحامي، بس تالف. شغّلوه وحرّكوا المؤشرين.','مؤشر التصفية لازم يوصل فوق النص بشوي، ومؤشر السرعة لازم يرجع للنص. لما يصير «صافي» خلّوه ثانيتين.','الجواب: التصفية حوالي ٦٠٪ والسرعة حوالي ٥٠٪. التسجيل يقول: فيها سطر ثاني ما أحد قراه.'],
  corner:['بالصور فيه صورة زاوية الوصية اللي أرسلها المرحوم لياسر. افتحوها واضغطوا «افحصوا بالعدسة».','الورق يحتفظ بأثر القلم. مرّروا العدسة على الفراغ اللي تحت السطر الأول وثبّتوها.','الجواب: السطر الثاني «على أن تبقى بيتاً مفتوحاً لإخوتها».'],
  cam:['بالصور فيه لقطة من كاميرا المدخل الساعة ٦:١٤ الفجر. افتحوها واضغطوا «كبّروا».','منو كان داخل البيت الفجر؟ الكل وصل ٧:٠٢ إلا… ارجعوا للمحضر: الموجودون ليلة الوفاة.','الجواب: اللي بالعباة طالعة من البيت للملحق، حاملة ورقة — ٤٨ دقيقة قبل ما يوصل أحد.'],
  call:['اتصلوا بصالح بنفسكم من تطبيق <b>الهاتف</b> (زر «اتصل بصالح»). أسئلة هادية — لو اتهمتوه أو جبتوا سيرة الفلوس يسكّر.','ابدأوا: وين كان ← منو معاه مفتاح الملحق غيره ← ومنو كلّمه الثلاثاء قبل ٧ الصبح.','الجواب: صالح يقول إن نورة اتصلت فيه ٥:٣٠ الفجر تسأل عن نسخة مفتاح الملحق اللي بدرج المطبخ. يعني رايحة الملحق.'],
@@ -1666,7 +1678,7 @@ const bar='<div class="a2h-bar"><i>\u2039</i><i>\u203A</i><i class="hi">'+SHARE_
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
 let body='';
 if(cast==='second'){
- body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
+ body='<div class="a2h"><div class="a2h-d">فتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
   +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
   +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل كود ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
 }else if(cast==='mirror'){
@@ -1676,8 +1688,8 @@ if(cast==='second'){
    :ios?st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
        +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
        +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
-   :'<div class="a2h-d">افتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
-  +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+   :'<div class="a2h-d">فتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
+  +'<div class="a2h-f">بعدها فتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
 }else{
  body='<div class="a2h"><div class="a2h-f">اختاروا وحدة من فوق وبنوريكم الخطوات.</div></div>';
 }
@@ -1689,8 +1701,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
-function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
- sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+function open(){const c=code();if(!c)return;const link=STORE+'/villa#code='+c;const msg='تعالوا نحل قضية الفيلا مع بعض 🔍\nفتحوا الرابط وادخلوا الكود '+c+'\n'+link;
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثير)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
@@ -1725,6 +1737,23 @@ function syncApply(r){if(!r)return;let ch=false;const was={...S,hints:{...S.hint
 function syncStart(){if(!syncCode())return;syncPull();setInterval(syncPull,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncPull()})}
 
 window.addEventListener('pagehide',()=>{save();try{const code=syncCode();if(code&&S.start)fetch(STORE+'/api/state',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,device:deviceId(),state:syncPick()})})}catch(e){}});
+
+/* ---- the board: a name for the time, offered once the case is solved ---- */
+function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+ const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
+ const host=$('#res');if(!host||$('#lbBox'))return;
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">شوفوا اللوحة</a>`};
+ if(saved){show(saved);return}
+ box.innerHTML=`<button class="btn" id="lbGo">🏆 حطّوا اسمكم على لوحة المتصدرين</button>`;
+ $('#lbGo').onclick=()=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">أضيفونا</button><button class="btn lite" data-close>لا، شكراً</button></div>`);
+  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
+  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='اكتبوا اسم الفريق';return}$('#lbSend').disabled=true;
+   try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
+    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'وقتكم ما وصل السيرفر بعد — جرّبوا بعد ثواني':'ما قدرنا نضيفكم، جرّبوا مرة ثانية';$('#lbSend').disabled=false;return}
+    try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='تأكدوا من الإنترنت';$('#lbSend').disabled=false}};
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
 
 /* ---- gate ---- */
 const GATE_ON=true;
@@ -1799,6 +1828,24 @@ function restoreUI(){if(S.call)addSalehNote();if(typeof renderCalls==='function'
  $('#menuPanel').addEventListener('click',e=>{if(e.target.closest('.mitem'))close()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 })();
+
+/* any word with چ or گ must be shaped by a single font, or the letters sit apart */
+(function(){const RX=/[\u0600-\u06FF\u0750-\u077F]*[\u0686\u06AF][\u0600-\u06FF\u0750-\u077F]*/;
+ const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1};
+ function walk(root){if(!root)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
+    const p=n.parentNode;if(!p||SKIP[p.nodeName]||p.classList&&p.classList.contains('kw'))return 2;
+    return RX.test(n.nodeValue)?1:2}});
+  const hits=[];while(w.nextNode())hits.push(w.currentNode);
+  hits.forEach(n=>{const f=document.createDocumentFragment();let s=n.nodeValue,m;
+    while((m=s.match(RX))){if(m.index)f.appendChild(document.createTextNode(s.slice(0,m.index)));
+      const e=document.createElement('span');e.className='kw';e.textContent=m[0];f.appendChild(e);
+      s=s.slice(m.index+m[0].length)}
+    if(s)f.appendChild(document.createTextNode(s));n.parentNode.replaceChild(f,n)})}
+ let q=false;const run=()=>{q=false;walk(document.body)};
+ const obs=new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(run)});
+ const go=()=>{walk(document.body);obs.observe(document.body,{childList:true,subtree:true,characterData:true})};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
 </script>
 </body>
 </html>

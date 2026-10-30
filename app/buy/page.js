@@ -32,6 +32,17 @@ export default function Buy() {
     if (new URLSearchParams(window.location.search).get("gift")) setGift(true);
   }, []);
 
+  // The WhatsApp number is kept as soon as it is typed — a buyer who leaves
+  // the page can still be messaged. Later keystrokes only refresh the record.
+  useEffect(() => {
+    const digits = phone.replace(/[^\d]/g, "");
+    if (digits.length < 8) return;
+    const t = setTimeout(() => {
+      fetch("/api/lead", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ phone, gift, promo, email }), keepalive: true }).catch(() => {});
+    }, 800);
+    return () => clearTimeout(t);
+  }, [phone, gift, promo, email]);
+
   async function quoteFor(code) {
     const r = await fetch("/api/promo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ promo: code }) });
     return r.json().catch(() => ({})).then((j) => { if (j.ok && !code) setQuote(j); return j; });
@@ -87,6 +98,10 @@ export default function Buy() {
       <form className="card" onSubmit={go}>
         <h2>قضية خالد · كود فريق</h2>
 
+        <label>رقم الواتساب</label>
+        <input inputMode="tel" autoComplete="tel" placeholder="9xxx xxxx" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+        <div className="muted" style={{ fontSize: 13, marginTop: -4, marginBottom: 14 }}>بنتواصل معاكم على الواتساب إذا احتجتوا مساعدة بالطلب.</div>
+
         <div className="tabs2" role="tablist">
           <button type="button" role="tab" aria-selected={!gift} className={gift ? "" : "on"} onClick={() => setGift(false)}>لي</button>
           <button type="button" role="tab" aria-selected={gift} className={gift ? "on" : ""} onClick={() => setGift(true)}>🎁 هدية</button>
@@ -112,8 +127,6 @@ export default function Buy() {
           </>
         )}
 
-        <label>رقم موبايلكم</label>
-        <input inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         <label>{gift ? "إيميلكم (للإيصال)" : "الإيميل"}</label>
         <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <div className="muted" style={{ fontSize: 13, marginTop: -4 }}>

@@ -26,6 +26,11 @@
    leaves the letter standing on its own — «باجر» came out as «با» then a loose
    چ. These four faces add just those two letters to the same family, so no
    fallback happens and the word joins up. ~1.8KB each. */
+@font-face{font-family:kwj;src:url('/fonts/kwj-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:kwj;src:url('/fonts/kwj-700.woff2') format('woff2');font-weight:700;font-display:swap}
+/* چ and گ live in a subset font, so a word carrying one was shaped across two
+   fonts and the join broke. the whole word renders in one Arabic font instead. */
+.kw{font-family:kwj,var(--ui)}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-400.woff2') format('woff2');font-weight:400;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-500.woff2') format('woff2');font-weight:500;unicode-range:U+0686,U+06AF;font-display:swap}
 @font-face{font-family:Tajawal;src:url('/fonts/kw-700.woff2') format('woff2');font-weight:700;unicode-range:U+0686,U+06AF;font-display:swap}
@@ -232,7 +237,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .status .bat{color:var(--tape-2)}
 .app{flex:1;min-height:0;display:none;flex-direction:column;background:#0b0e14}
 .app.on{display:flex}
-.home{flex:1;padding:18px 16px 12px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:max-content;gap:18px 10px;align-content:start;position:relative;background:
+.home{flex:1;padding:18px 16px 120px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:max-content;gap:18px 10px;align-content:start;position:relative;background:
  radial-gradient(70% 40% at 50% 0%,#24304a 0,transparent 70%),linear-gradient(180deg,#0f1420,#05070b)}
 .icon{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:#e3e7ef;position:relative}
 .icon .g{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;font-size:28px;box-shadow:inset 0 -6px 12px rgba(0,0,0,.25)}
@@ -304,7 +309,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .icon{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .icon .g{box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-size:0;position:relative;overflow:hidden}
 .icon .g svg{width:34px;height:34px;display:block}
-.dock{grid-column:1/-1;margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);position:relative;z-index:1}
+.dock{grid-column:1/-1;position:absolute;inset-inline:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);z-index:1}
 .dock .icon span:last-child{display:none}
 .lockbg{position:absolute;inset:0;background:url("img/couple.jpg") center 30%/cover;opacity:.45;filter:blur(3px)}
 /* instagram */
@@ -625,7 +630,7 @@ html.tv body{zoom:1.18}
       <div class="side"><small>رقم التصنيف</small><div>64219</div><small>رقم المجلد</small><div>63008</div></div>
     </div></div>
     <button class="btn" id="start">افتح الملف وابدأ التحقيق</button>
-    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثر بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span></div>
+    <div class="meta"><span>⏱ ساعة واحدة</span><span>👥 فريق ٦ موبايلات بالكثير بنفس الكود</span><span>🔒 الكود لمرة وحدة · الانضمام خلال ٣ ساعات من البداية</span></div>
     <button class="chip ghost" data-fs hidden style="padding:9px 16px;font-size:15px">⛶ Full screen · ملء الشاشة</button>
     <div class="tvtip" id="tvtip" hidden>📺 بتعرضون على التلفزيون؟ <button class="chip" data-tv style="margin:4px 0;font-size:15px">📺 العب على التلفزيون</button> — يكبّر الخط والصور ويضبط عرض الشاشة، ويعلّمكم كيف تخفون شريط سفاري.</div>
   </div></div>
@@ -963,9 +968,9 @@ const WRONG={
  time:'الجاني والمكان صح، بس الوقت غلط. الكاميرا تكتب الوقت على اللقطة… شوفوها زين.'};
 const HINTS={
  lock:['منيرة تقول إن الرقم هو شي «بدا فيه كل شي». أي ورقة من الأوراق تحكي عن بداية؟','الجريدة المعلّقة بمكتبه: افتتاح الفرع الأول. الشهر، وبعده اليوم.','الجواب: <b>٠٩٢١</b> — سبتمبر ٢١، يوم افتتاح أول فرع.'],
- note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفولة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','افتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. افتحوا الملاحظة الأولى.'],
- note2:['الملاحظة الثانية رقمها من الفويس نوت حق خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. افتحوا «حساب المخزن» واقروها زين — تقول وين الصور.'],
- hidden:['الملاحظة الثانية تقول إن لقطة الكاميرا بالألبوم المخفي بالصور، ورقمه «منيرة تعرفه». ارجعوا لواتساب منيرة واقروا كلامها من شهر… مكان بارد 🥶 ورقم غرفة، وعمر.','المكان البارد الوحيد بين ألبومات السفر: لندن. فيه صورة لباب غرفة الفندق عليها رقم. والعمر: عمر سارة — شوفوا كيكة عيد ميلادها بألبوم «سارة».','الجواب: <b>١٢٠٨</b> — غرفة ١٢ وعمر سارة ٨. افتحوا الألبوم المخفي من «الألبومات».'],
+ note1:['ابدأوا بالواتساب والصور: قارنوا وقت وصول كل مشتبه حسب كلامه مع الأوقات اللي بالموبايل. وفيه ملاحظة مقفولة بتطبيق الملاحظات — تلميح خالد: «وقت آخر صورة صورتها».','فتحوا الصور ورتّبوها بالتاريخ: آخر صورة صوّرها خالد هي صورة المواقف يوم الأربعاء. الوقت المكتوب على الصورة هو الرقم (٤ أرقام).','الجواب: <b>٠٨٣٤</b> — الساعة ٨:٣٤، وقت صورة المواقف. فتحوا الملاحظة الأولى.'],
+ note2:['الملاحظة الثانية رقمها من الفويس نوت حق خالد في قروب «مطبخ السالمية 🍳» بالواتساب. اسمعوها كاملة.','خالد يقول أربع كميات بالطلبية. اكتبوا الأرقام بنفس الترتيب اللي قالها.','الجواب: <b>٣٧٤٢</b>. فتحوا «حساب المخزن» واقروها زين — تقول وين الصور.'],
+ hidden:['الملاحظة الثانية تقول إن لقطة الكاميرا بالألبوم المخفي بالصور، ورقمه «منيرة تعرفه». ارجعوا لواتساب منيرة واقروا كلامها من شهر… مكان بارد 🥶 ورقم غرفة، وعمر.','المكان البارد الوحيد بين ألبومات السفر: لندن. فيه صورة لباب غرفة الفندق عليها رقم. والعمر: عمر سارة — شوفوا كيكة عيد ميلادها بألبوم «سارة».','الجواب: <b>١٢٠٨</b> — غرفة ١٢ وعمر سارة ٨. فتحوا الألبوم المخفي من «الألبومات».'],
  cctv:['الألبوم المخفي فيه لقطة كاميرا البوابة بس ظلماء. افتحوها واضغطوا «تعديل» فوق — مثل ما تعدّلون أي صورة بالموبايل — وعدّلوا الإضاءة والحدّة لين يبين اللي بالصورة.','ارفعوا الإضاءة لين تبين الصورة، والحدّة تخلّيها أوضح. ثبّتوها ثانية. بعدها: سيارة بيضا عليها لزاق دلّة واقفة عند مخزن «فاضي من شهور». اثنين من المشتبهين عندهم لاند كروزر بيضا. دوّروا بمكتبة الصور: منو حاط لزاق الدلّة على سيارته؟ ولا تنسون فيصل من البنك — بيتصل، وتقدرون تسمعون المكالمة مرة ثانية من محادثته بالواتساب.','الجواب: الصورة من كاميرا مخزن الشويخ القديم ٩:١٤ م الثلاثاء، والسيارة سيارة <b>ناصر</b>. العنوان بكشف الكهرباء: قطعة ٣ · قسيمة ١٢. روحوا «حل القضية».'],
  solve:['الجاني هو الشخص اللي تناقضت أقواله مع الموبايل: وقت وصوله، وموضوع الرسالة («الأوراق» ولا «الأرقام»؟). والفلوس: اثنين كان لهم صلاحية على الحساب — بس متى انسحب آخر تحويل، ومتى انقطعت صلاحية ماجد؟ والمكان مكتوب بكشف الكهرباء في الملاحظة الثانية. والوقت؟ الكاميرا ما تكذب.','صورة المواقف الساعة ٨:٣٤: سيارة منو واقفة يم سيارة خالد؟ ومتى قال إنه وصل؟ وفيصل قال التحويلات تروح لمنو؟ المكان: القطعة والقسيمة من عنوان المخزن.','الجواب: الجاني <b>ناصر</b>، والمكان الشويخ الصناعية <b>قطعة ٣ · قسيمة ١٢</b>، والوقت <b>٩:١٤ مساءً</b> (من لقطة الكاميرا).']};
 const HINT_WAIT=[0,5*60,10*60]; // seconds on this stage before each tier opens
@@ -974,7 +979,7 @@ const HINT_PEN=[60,120,180];const HINT_LAB=['+٦٠ ثانية','+دقيقتين'
 const CHATS=[
  {id:'munira',n:'منيرة ❤️',av:'p:munira',last:'١١:١٥ م',u:3,msgs:[
   ['day','٢ سبتمبر'],['me','منيرة، شنو رقم الألبوم المخفي؟ نسيته 😅','١٠:٣١ ص'],['them','واااااي خالد شفيك 😂😂','١٠:٣٣ ص'],['them','بس تنسى الأرقام زين، ما تنساني بعد','١٠:٣٣ ص'],['them','مراح أقولك. بس بقولك شيئين: غرفة بمكان آنا أحبّه واااايد 🥶 … وعمري أو عمر بنتك عاد كيفك','١٠:٣٥ ص'],['them','يلااا باي عندي meeting','١٠:٣٥ ص'],['me','😂 حسافة عليك','١٠:٣٦ ص'],
-  ['day','الاثنين'],['them','سارة عندها مسرحية بالمدرسة الخميس الياي، لا تنسى 🎭','٦:٠٠ م'],['me','ما أنسى، بس الخميس عندي التوقيع الصبح، بلحقكم','٦:٢٠ م'],['day','الثلاثاء'],['them','تذكّر دوا ماما يوم الجمعة','١٠:٠٠ ص'],['me','تم ❤️','١٠:٠٢ ص'],['them','سارة تبي تروح الشاليه ويا عمها الويكند','٤:٠٠ م'],['me','خلّها، وإذا خلصت آنا بلحقكم','٤:٠٥ م'],['day','الأربعاء'],['them','صباح الخير، لا تنسى الفطور معك','٧:١٠ ص'],['me','صباح النور ❤️ تم','٧:١٢ ص'],['them','شنو تبي للعشا؟','٤:٣٠ م'],['me','أي شَيْ من يدك ❤️','٤:٣٥ م'],['them','لا تتأخر الليلة، العشا جاهز.','٧:٣٠ م'],['me','إن شاء الله، بس أخلص شغل.','٧:٣٥ م'],
+  ['day','الاثنين'],['them','سارة عندها مسرحية بالمدرسة الخميس الياي، لا تنسى 🎭','٦:٠٠ م'],['me','ما أنسى، بس الخميس عندي التوقيع الصبح، بلحقكم','٦:٢٠ م'],['day','الثلاثاء'],['them','تذكّر دوا ماما يوم الجمعة','١٠:٠٠ ص'],['me','تم ❤️','١٠:٠٢ ص'],['them','سارة تبي تروح الشاليه ويا عمها الويكند','٤:٠٠ م'],['me','خلّها، وإذا خلصت آنا بلحقكم','٤:٠٥ م'],['day','الأربعاء'],['them','صباح الخير، لا تنسى الفطور معك','٧:١٠ ص'],['me','صباح النور ❤️ تم','٧:١٢ ص'],['them','شنو تبي للعشا؟','٤:٣٠ م'],['me','أي شَيْ من يدك ❤️','٤:٣٥ م'],['them','لا تتأخر الليلة، اللعشا جاهز.','٧:٣٠ م'],['me','إن شاء الله، بس أخلص شغل.','٧:٣٥ م'],
   ['them','خالد وينك؟ ردّ علي.','١٠:٣٠ م'],['them','كلمت ناصر، رايح يشوفك بالمكتب.','١٠:٤٥ م'],['them','٧ اتصالات فايتة. الله يستر عليك.','١١:١٥ م']]},
  {id:'nasser',n:'ناصر',av:'p:nasser',last:'٨:٥٠ م',u:1,msgs:[
   ['day','الاثنين'],['me','خلاص، فصلت ماجد الصبح وسكّرت صلاحيته على الحساب','٩:٤٠ ص'],['them','الله يعينك. كان لازم من زمان، الأرقام ما تكذب','٩:٤٥ ص'],['them','شفت تقرير الفرع الثالث؟ ممتاز 👌','١:٠٠ م'],['me','ما شاء الله، عقبال الباقي','١:١٠ م'],['them','المشتري يبي كل الحسابات من ٣ سنين للتدقيق الأحد. آنا أجهّزها','٥:٣٠ م'],['me','تمام. خلّ المحاسب يطرّش لي نسخة بعد','٥:٣٥ م'],['them','ليش؟ آنا أراجعها 😅','٥:٣٦ م'],['day','الأربعاء'],['them','خلاص يا بو عبدالله، أنا طالع. لا تطوّل انت بعد، منيرة بتزعل 😄','٦:١٥ م'],['me','هههه ماشي، عشر دقايق وأطلع','٦:١٦ م'],
@@ -1329,7 +1334,7 @@ function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60)
 setInterval(()=>{if(S.start&&!S.done)$$('.timer').forEach(t=>t.textContent=fmt(elapsed()))},500);
 
 /* ================= INTRO / FILE ================= */
-function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، افتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثر بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
+function rules(){sheet('<h3>كيف تلعبون</h3><div class="h">⏱ <b>عندكم ساعة.</b> اقرأوا الملف، فتحوا الموبايل، ودوّروا باللي فيه.</div><div class="h">👥 <b>ربعكم معاكم:</b> اضغطوا <b>📲 شارك الكود</b> — ٦ موبايلات بالكثير بنفس الكود، واللي يفتحه واحد يطلع عند الكل.</div><div class="h">📺 <b>على التلفزيون:</b> اضغطوا <b>📺 العب على التلفزيون</b>.</div><div class="h">💡 <b>وقفتوا؟</b> اضغطوا <b>💡 تلميح</b> — بس يضيف وقت.</div><div class="h">🔒 الكود لمرة وحدة، والانضمام خلال ٣ ساعات من البداية.</div><div class="acts"><button class="btn" data-close>فهمنا</button></div>')}
 $$('[data-rules]').forEach(b=>b.onclick=rules);
 /* team notebook (saved on this device) */
 function notebook(){let v='';try{v=localStorage.getItem('khalid_book')||''}catch(e){}
@@ -1466,7 +1471,7 @@ function addCallNote(){return;/* the call is replayable from Faisal's chat */if(
 function renderNotes(){$('#noteList').innerHTML=NOTES.map(n=>{const open=(n.lock===1&&S.notes)||(n.lock===2&&S.notes2);const pv=n.lock?(open?'مفتوحة':(n.lock===2&&!S.notes?'🔒 بعدها':'🔒 مقفولة')):n.body.split('\n')[0];return `<button class="row" data-note="${n.id}"><span class="av" style="background:#f0c94a;color:#2a2419">📝</span><span style="min-width:0"><span class="nm">${n.t}</span><span class="pv">${pv}</span></span><span class="tm">${n.d}</span></button>`}).join('')}
 function openNote(id){const n=NOTES.find(x=>x.id===id);const v=$('#noteView'),st=$('#noteStore');$('#noteTitle').textContent=n.t;
   [...v.children].forEach(c=>{if(c.id)st.appendChild(c)});v.innerHTML='';
-  if(n.lock===2&&!S.notes){sheet('<h3>🔒 وحدة وحدة</h3><div class="h">افتحوا «ملاحظاتي (سري)» الأول — منها بتعرفون شنو تدورون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}
+  if(n.lock===2&&!S.notes){sheet('<h3>🔒 وحدة وحدة</h3><div class="h">فتحوا «ملاحظاتي (سري)» الأول — منها بتعرفون شنو تدورون.</div><div class="acts"><button class="btn" data-close>تمام</button></div>');return}
   if(n.lock===1){v.appendChild($('#notesLock'));v.appendChild($('#notesBody'))}
   else if(n.lock===2){v.appendChild($('#notesLock2'));v.appendChild($('#notesBody2'))}
   else v.innerHTML=`<div class="plain"><h4>${n.t}</h4><small>${n.d}</small>${n.body}</div>`;
@@ -1684,13 +1689,41 @@ function sel(){$$('[data-who]').forEach(b=>b.classList.toggle('on',b.dataset.who
 $('#pickWho').onclick=e=>{const b=e.target.closest('[data-who]');if(b){S.who=b.dataset.who;sel()}};
 if(S.where&&S.where.includes('/')){const [q,s2]=S.where.split('/');$('#plotQ').value=q;$('#plotS').value=s2}
 if(S.when){const m=S.when.match(/^(am|pm)(\d+):(\d+)$/);if(m){$('#whAP').value=m[1];$('#whH').value=m[2];$('#whM').value=m[3]}}
+/* Three answers went in and one flat «no» came back, naming only the first
+   thing that was wrong. A team with the man and the place right, a minute out
+   on a timestamp they had to read off a dark frame, learned nothing from
+   submitting — one of them submitted thirty-two times, another gave up with
+   the whole case solved. Each answer is now marked on its own, the clue for a
+   wrong one sharpens the more they try, and the way out appears only once
+   they have really been stuck. */
+const WHEN_MIN=w=>{const m=/^(am|pm)(\d+):(\d+)$/.exec(w||'');
+  return m?(m[1]==='pm'?720:0)+((+m[2])%12)*60+(+m[3]):null};
+const WHEN_WANT=21*60+14;                       /* ٩:١٤ م */
+const okWhen=()=>{const v=WHEN_MIN(S.when);return v!==null&&Math.abs(v-WHEN_WANT)<=1};
+const TIME_MORE=['الجاني والمكان صح، بس الوقت غلط. الكاميرا تكتب الوقت على اللقطة… شوفوها زين.',
+ 'الوقت مكتوب على اللقطة نفسها، بالزاوية. إذا ما يبين، ارجعوا عدّلوا الإضاءة والحدّة أكثر.',
+ 'اللقطة مساءً، بين ٩ و١٠. باقي عليكم الدقيقة — وهي مكتوبة على الصورة.'];
+const LOC_MORE=['الجاني صح، بس رقم القطعة أو القسيمة غلط. الفاتورة اللي في ملاحظة «حساب المخزن» فيها العنوان بالضبط.',
+ 'الفاتورة مكتوب عليها العنوان كامل: الشويخ الصناعية، قطعة ورقم قسيمة. اقروه حرف حرف.'];
 $('#submit').onclick=()=>{const fb=$('#fb');
-  if(S.who!=='nasser'||S.where!=='3/12'||S.when!=='pm9:14'){S.wrong++;save();fb.hidden=false;
-    fb.innerHTML='<div>'+(S.who!=='nasser'?WRONG[S.who]:S.where!=='3/12'?WRONG.loc:WRONG.time)+'</div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button><button class="btn lite" id="fbGive">اكشفوا الحقيقة</button></div>';
-    $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
-    $('#fbGive').onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
-    fb.scrollIntoView({behavior:'smooth'});return}
-  S.done=elapsed();save();reveal()};
+  const a=S.who==='nasser', b=S.where==='3/12', c=okWhen();
+  if(a&&b&&c){S.done=elapsed();save();reveal();return}
+  S.wrong++;save();
+  const row=(ok,label)=>`<div style="display:flex;gap:8px;align-items:center;padding:6px 0;`
+    +`color:${ok?'var(--ok,#5bc47a)':'var(--tape-2,#e06a5a)'}">`
+    +`<b style="font-size:16px">${ok?'✓':'✗'}</b><span>${label}</span></div>`;
+  const tier=i=>Math.min(i.length-1,Math.max(0,S.wrong-1));
+  const msg=!a?(WRONG[S.who]||'مو هو. ارجعوا لأقوالهم وقارنوها بالموبايل.')
+           :!b?LOC_MORE[tier(LOC_MORE)]
+              :TIME_MORE[tier(TIME_MORE)];
+  fb.hidden=false;
+  fb.innerHTML=`<div style="margin-bottom:8px">${row(a,'منو وراء اختفاء خالد')}${row(b,'وين خالد الحين')}${row(c,'وقت الكاميرا')}</div>`
+    +`<div>${msg}</div><div class="fbacts"><button class="btn" id="fbCont">🔎 نكمّل التحقيق</button>`
+    +(S.wrong>=3?'<button class="btn lite" id="fbGive">اكشفوا الحقيقة</button>':'')+`</div>`;
+  $('#fbCont').onclick=()=>{fb.hidden=true;show('phone')};
+  const g=$('#fbGive');
+  if(g)g.onclick=()=>{if(!confirm('أكيد؟ بتشوفون الحل بدون ما تحلّونها.'))return;S.gaveUp=true;S.done=elapsed();save();reveal()};
+  fb.scrollIntoView({behavior:'smooth'})};
 
 /* ================= REVEAL ================= */
 
@@ -1721,7 +1754,7 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
  ['','لا الرقم السري ولا الساعة ٨:٣٤ كذبوا. أنتم المحققون. 🕵️']];
   const box=$('#lines');box.innerHTML=L.map(l=>`<p>${l[0]?`<span class="who">${l[0]}</span><br>`:''}${l[1]}</p>`).join('');
   [...box.children].forEach((p,i)=>setTimeout(()=>p.classList.add('in'),600+i*1700));
-  setTimeout(()=>{const h=S.hints.lock+S.hints.phone+S.hints.solve;$('#res').innerHTML=S.gaveUp?`<div><b>—</b><small>القضية ما انحلّت</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div>`:`<div><b>${fmt(S.done)}</b><small>الوقت النهائي</small></div><div><b>${h}</b><small>تلميحات (+${Math.round(S.pen/60)} دقيقة)</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div><div><b>${fmt(Math.max(0,S.done-S.pen))}</b><small>وقت صافي</small></div>`;$('#res').hidden=false;$('#again').hidden=false},600+L.length*1700)}
+  setTimeout(()=>{const h=S.hints.lock+S.hints.phone+S.hints.solve;$('#res').innerHTML=S.gaveUp?`<div><b>—</b><small>القضية ما انحلّت</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div>`:`<div><b>${fmt(S.done)}</b><small>الوقت النهائي</small></div><div><b>${h}</b><small>تلميحات (+${Math.round(S.pen/60)} دقيقة)</small></div><div><b>${S.wrong}</b><small>اتهامات غلط</small></div><div><b>${fmt(Math.max(0,S.done-S.pen))}</b><small>وقت صافي</small></div>`;$('#res').hidden=false;$('#again').hidden=false;lbOffer()},600+L.length*1700)}
 
 
 
@@ -1747,7 +1780,7 @@ const bar='<div class="a2h-bar"><i>\u2039</i><i>\u203A</i><i class="hi">'+SHARE_
 const st=(n,d,v)=>'<div class="a2h-s"><span class="a2h-n">'+n+'</span><div>'+(d?'<div class="a2h-d">'+d+'</div>':'')+(v||'')+'</div></div>';
 let body='';
 if(cast==='second'){
- body='<div class="a2h"><div class="a2h-d">افتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
+ body='<div class="a2h"><div class="a2h-d">فتحوا على التلفزيون (أو اللابتوب) هالرابط وخلّوه مفتوح:</div>'
   +'<div class="a2h-row" dir="ltr" style="justify-content:center">cases.hyphen-eventskw.com/tv</div>'
   +'<div class="a2h-f">بمهمة الكشّاف بيطلع لكم بالموبايل كود ٤ أرقام — اكتبوه هناك. الصورة بتبين كبيرة على التلفزيون، والموبايل يصير الكشّاف بإيدكم.</div></div>';
 }else if(cast==='mirror'){
@@ -1757,8 +1790,8 @@ if(cast==='second'){
    :ios?st('١','خلّوا الموبايل <b>عمودي</b>، واضغطوا زر المشاركة تحت:',bar)
        +st('٢','اضغطوا <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
        +st('٣','اختاروا <b>Add to Home Screen</b>، وبعدها <b>Add</b> فوق:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
-   :'<div class="a2h-d">افتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
-  +'<div class="a2h-f">بعدها افتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
+   :'<div class="a2h-d">فتحوا قائمة المتصفح واختاروا <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</div>')
+  +'<div class="a2h-f">بعدها فتحوا اللعبة من الأيقونة — بدون أي شريط، وتقدّمكم محفوظ.</div></div>';
 }else{
  body='<div class="a2h"><div class="a2h-f">اختاروا وحدة من فوق وبنوريكم الخطوات.</div></div>';
 }
@@ -1769,14 +1802,35 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if
 
 /* ---- share the team code (so friends can join from their own phones) ---- */
 (function(){function code(){const p=savedPass();return p?p.code:''}
-function open(){const c=code();if(!c)return;const link=STORE+'/game#code='+c;const msg='تعالوا نحل قضية خالد مع بعض 🔍\nافتحوا الرابط وادخلوا الكود '+c+'\n'+link;
- sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثر)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
+function open(){const c=code();if(!c)return;const link=STORE+'/game#code='+c;const msg='تعالوا نحل قضية خالد مع بعض 🔍\nفتحوا الرابط وادخلوا الكود '+c+'\n'+link;
+ sheet(`<h3>📲 شارك الكود</h3><div class="h">ربعكم يدخلون نفس الكود على موبايلاتهم (٦ موبايلات بالكثير)، وكل شي تسوونه يطلع عندهم بنفس الوقت — كل واحد يفتح تطبيق.</div><div class="shcode">${c}</div><div class="acts" style="flex-wrap:wrap"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">واتساب</a><button class="btn lite" id="shCopy">نسخ الرابط</button><button class="btn lite" data-close>إغلاق</button></div>`);
  const b=$('#shCopy');if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(link);b.textContent='✓ انحفظ'}catch(e){b.textContent=link}}}
 $$('[data-share]').forEach(b=>{b.onclick=open});
 window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 /* ================= ACCESS GATE ================= */
 const STORE='https://cases.hyphen-eventskw.com'; // change after deploy if different
+/* the other games name their storage keys off this; here the keys were spelled
+   out one by one and GAME was never declared, so castMode() always threw and
+   the TV cast choice was forgotten between sessions */
+const GAME='khalid';
+/* ---- the board: a name for the time, offered once the case is solved ---- */
+function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'&&savedPass())||null;const code=p?p.code:'';if(!code)return;
+ const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
+ const host=$('#res');if(!host||$('#lbBox'))return;
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">شوفوا اللوحة</a>`};
+ if(saved){show(saved);return}
+ box.innerHTML=`<button class="btn" id="lbGo">🏆 حطّوا اسمكم على لوحة المتصدرين</button>`;
+ $('#lbGo').onclick=()=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">أضيفونا</button><button class="btn lite" data-close>لا، شكراً</button></div>`);
+  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
+  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='اكتبوا اسم الفريق';return}$('#lbSend').disabled=true;
+   try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
+    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'وقتكم ما وصل السيرفر بعد — جرّبوا بعد ثواني':'ما قدرنا نضيفكم، جرّبوا مرة ثانية';$('#lbSend').disabled=false;return}
+    try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='تأكدوا من الإنترنت';$('#lbSend').disabled=false}};
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
+
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
 /* A code was burning six phone slots for four phones. Four of the ids were
@@ -1907,4 +1961,22 @@ bs.forEach(b=>{b.hidden=false;b.onclick=()=>{if(can&&!ios){const full=document.f
 sheet('<h3>⛶ ملء الشاشة على الآيفون</h3><div class="h">سفاري على الآيفون ما يسمح للمواقع تملأ الشاشة بنفسها، بس تقدرون تخفون شريطه بخطوتين:</div><div class="h">١. اضغطوا الأيقونة الصغيرة <b>يسار شريط العنوان</b> (تكون <b>aA</b> أو <b>⋯</b> حسب نسخة الآيفون). شريط العنوان يكون تحت لما الموبايل عمودي، وفوق لما يكون أفقي.</div><div class="h">٢. اختاروا <b>إخفاء شريط الأدوات · Hide Toolbar</b>.</div><div class="h">يرجع الشريط إذا ضغطتوا أعلى الشاشة — أعيدوا الخطوتين.</div><div class="acts"><button class="btn" data-close>تمام</button></div>')}});
 const upd=()=>{const full=document.fullscreenElement||document.webkitFullscreenElement;bs.forEach(b=>b.textContent=full?'⤡ Exit · خروج من ملء الشاشة':'⛶ Full screen · ملء الشاشة')};document.addEventListener('fullscreenchange',upd);document.addEventListener('webkitfullscreenchange',upd)})();
 (function(){const ios=/iPhone|iPad/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);const standalone=window.navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;$('#tvtip').hidden=standalone})();
+
+/* any word with چ or گ must be shaped by a single font, or the letters sit apart */
+(function(){const RX=/[\u0600-\u06FF\u0750-\u077F]*[\u0686\u06AF][\u0600-\u06FF\u0750-\u077F]*/;
+ const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1};
+ function walk(root){if(!root)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
+    const p=n.parentNode;if(!p||SKIP[p.nodeName]||p.classList&&p.classList.contains('kw'))return 2;
+    return RX.test(n.nodeValue)?1:2}});
+  const hits=[];while(w.nextNode())hits.push(w.currentNode);
+  hits.forEach(n=>{const f=document.createDocumentFragment();let s=n.nodeValue,m;
+    while((m=s.match(RX))){if(m.index)f.appendChild(document.createTextNode(s.slice(0,m.index)));
+      const e=document.createElement('span');e.className='kw';e.textContent=m[0];f.appendChild(e);
+      s=s.slice(m.index+m[0].length)}
+    if(s)f.appendChild(document.createTextNode(s));n.parentNode.replaceChild(f,n)})}
+ let q=false;const run=()=>{q=false;walk(document.body)};
+ const obs=new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(run)});
+ const go=()=>{walk(document.body);obs.observe(document.body,{childList:true,subtree:true,characterData:true})};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
 </script>
