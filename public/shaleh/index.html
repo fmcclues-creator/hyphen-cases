@@ -1403,17 +1403,18 @@ $('#goChase').onclick=()=>runStart();$('#goSalem').onclick=()=>show('station');$
 /* ---- the map: a real street map of الفنطاس (OpenStreetMap) with our own search, pin and routes ---- */
 const MAPH={target:'5-3-12',pick:null,routes:null,msg:''};
 const MAP_ADDR=[
- {id:'5-3-12',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٢',ll:[29.1781,48.1268]},
- {id:'5-3-10',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٠',ll:[29.1784,48.1256]},
- {id:'5-2-12',t:'الفنطاس، قطعة ٥، شارع ٢، منزل ١٢',ll:[29.1766,48.1258]},
- {id:'5-13-12',t:'الفنطاس، قطعة ٥، شارع ١٣، منزل ١٢',ll:[29.1748,48.1281]},
- {id:'4-3-12',t:'الفنطاس، قطعة ٤، شارع ٣، منزل ١٢',ll:[29.1746,48.1206]},
- {id:'6-3-12',t:'الفنطاس، قطعة ٦، شارع ٣، منزل ١٢',ll:[29.1815,48.1308]},
- {id:'f5-3-12',t:'الفحيحيل، قطعة ٥، شارع ٣، منزل ١٢',ll:[29.0862,48.1312]},
- {id:'m5-3-12',t:'المنقف، قطعة ٥، شارع ٣، منزل ١٢',ll:[29.1150,48.1290]},
- {id:'a5-3-12',t:'أبو حليفة، قطعة ٥، شارع ٣، منزل ١٢',ll:[29.1403,48.1290]}];
-const MAP_STATION=[29.1676,48.1178];
-const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+ {id:'5-3-12',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٢',en:'Fintas, Block 5, Street 3, House 12',ll:[29.1781,48.1135]},
+ {id:'5-3-10',t:'الفنطاس، قطعة ٥، شارع ٣، منزل ١٠',en:'Fintas, Block 5, Street 3, House 10',ll:[29.1784,48.1124]},
+ {id:'5-2-12',t:'الفنطاس، قطعة ٥، شارع ٢، منزل ١٢',en:'Fintas, Block 5, Street 2, House 12',ll:[29.1766,48.1128]},
+ {id:'5-13-12',t:'الفنطاس، قطعة ٥، شارع ١٣، منزل ١٢',en:'Fintas, Block 5, Street 13, House 12',ll:[29.1748,48.1150]},
+ {id:'4-3-12',t:'الفنطاس، قطعة ٤، شارع ٣، منزل ١٢',en:'Fintas, Block 4, Street 3, House 12',ll:[29.1746,48.1078]},
+ {id:'6-3-12',t:'الفنطاس، قطعة ٦، شارع ٣، منزل ١٢',en:'Fintas, Block 6, Street 3, House 12',ll:[29.1815,48.1162]},
+ {id:'f5-3-12',t:'الفحيحيل، قطعة ٥، شارع ٣، منزل ١٢',en:'Fahaheel, Block 5, Street 3, House 12',ll:[29.0862,48.1180]},
+ {id:'m5-3-12',t:'المنقف، قطعة ٥، شارع ٣، منزل ١٢',en:'Mangaf, Block 5, Street 3, House 12',ll:[29.1150,48.1160]},
+ {id:'a5-3-12',t:'أبو حليفة، قطعة ٥، شارع ٣، منزل ١٢',en:'Abu Halifa, Block 5, Street 3, House 12',ll:[29.1403,48.1160]}];
+const MAP_STATION=[29.1676,48.1048];
+const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,' ').replace(/\bblk\b|\bblock\b|\bb\b/gi,'block').replace(/\bst\b|\bstreet\b/gi,'street').replace(/\bh\b|\bhouse\b|\bhse\b/gi,'house').replace(/al[- ]?fintas|fentas|fintass/gi,'fintas').replace(/\s+/g,' ').trim().toLowerCase();
+const addrHit=(a,v)=>{const ws=v.split(' ').filter(Boolean);const ar=AR2EN(a.t),en=AR2EN(a.en||'');return ws.every(w=>ar.includes(w)||en.includes(w))};
 let LMAP=null,LLAYERS=[];
 function loadLeaflet(){return new Promise((res,rej)=>{if(window.L)return res();const css=document.createElement('link');css.rel='stylesheet';css.href='vendor/leaflet/leaflet.css';document.head.appendChild(css);const sc=document.createElement('script');sc.src='vendor/leaflet/leaflet.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
 function renderMap(){const box=$('#mapBox');if(!box)return;
@@ -1422,14 +1423,20 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
   <div id="lmap" style="height:300px;width:100%;direction:ltr"></div>
   <div id="mapUi" style="padding:8px"></div></div>`;
   const q=box.querySelector('#mapQ'),sug=box.querySelector('#mapSug');
-  q.oninput=()=>{if(MAPH.routes)return;const v=AR2EN(q.value);const hits=v.length<2?[]:MAP_ADDR.filter(a=>AR2EN(a.t).includes(v)||v.split(' ').every(w=>AR2EN(a.t).includes(w))).slice(0,5);
-    sug.style.display=hits.length?'block':'none';sug.innerHTML=hits.map(a=>`<div data-a="${a.id}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}</div>`).join('');
+  q.oninput=()=>{if(MAPH.routes)return;const v=AR2EN(q.value);const hits=v.length<2?[]:MAP_ADDR.filter(a=>addrHit(a,v)).slice(0,5);
+    sug.style.display=hits.length?'block':'none';sug.innerHTML=hits.map(a=>`<div data-a="${a.id}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}<div style="font-size:11px;color:#777;direction:ltr;text-align:right">${a.en||''}</div></div>`).join('');
     sug.querySelectorAll('[data-a]').forEach(d=>d.onclick=()=>{const a=MAP_ADDR.find(x=>x.id===d.dataset.a);q.value=a.t;sug.style.display='none';MAPH.pick=a.id;MAPH.msg=a.id===MAPH.target?'📍 '+a.t+' — هذا بيته.':'هذا مو عنوان المرور. راجعوه زين.';if(a.id!==MAPH.target)SFX.tap();mapDraw()})};
-  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.173,48.122],14);
+  loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.174,48.112],14);L.control.zoom({position:'bottomleft'}).addTo(LMAP);LMAP.on('zoomend',()=>mapHouses());
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 مخفر الفنطاس',{permanent:true,direction:'bottom',className:'mapTip'});
-    mapDraw()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
+    mapDraw();mapHouses()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
  else mapDraw()}
+let LHOUSES=[];
+/* zoomed in, every address becomes a small tappable label — they can find the house by looking, not only by searching */
+function mapHouses(){if(!LMAP)return;LHOUSES.forEach(h=>{try{LMAP.removeLayer(h)}catch(e){}});LHOUSES=[];if(LMAP.getZoom()<16||MAPH.routes)return;
+ MAP_ADDR.filter(a=>a.id!=='f5-3-12'&&a.id!=='m5-3-12'&&a.id!=='a5-3-12').forEach(a=>{const parts=a.t.split('، ');const lbl=parts[3]+' · '+parts[2].replace('شارع','ش')+' · '+parts[1].replace('قطعة','ق');
+  const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="transform:translate(-50%,-50%);background:#fff;border:1px solid #bbb;border-radius:6px;padding:2px 6px;font-size:11px;white-space:nowrap;direction:rtl;box-shadow:0 1px 3px rgba(0,0,0,.3);cursor:pointer">🏠 ${lbl}</div>`,iconSize:[0,0]})}).addTo(LMAP);
+  m.on('click',()=>{if(MAPH.routes)return;const q=$('#mapQ');if(q)q.value=a.t;MAPH.pick=a.id;MAPH.msg=a.id===MAPH.target?'📍 '+a.t+' — هذا بيته.':'هذا مو عنوان المرور. راجعوه زين.';if(a.id!==MAPH.target)SFX.tap();mapDraw()});LHOUSES.push(m)})}
 function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
  const a=MAP_ADDR.find(x=>x.id===MAPH.pick);
  if(a){const ok=a.id===MAPH.target;const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,ok?16:15,{animate:true})}
@@ -1445,7 +1452,7 @@ function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(
 /* three ways from the station: direct (right), the ring road (long), and the inner street with road works (looks shortest) */
 async function mapRoutes(dest){const S0=MAP_STATION;
  const osrm=async pts=>{const u='https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson';const r=await fetch(u);const j=await r.json();const rt=j.routes[0];return{pts:rt.geometry.coordinates.map(c=>[c[1],c[0]]),sec:rt.duration}};
- const viaRing=[29.1640,48.1330],viaInner=[29.1725,48.1225];
+ const viaRing=[29.1640,48.0990],viaInner=[29.1725,48.1095];
  let A,B,C;try{[A,B,C]=await Promise.all([osrm([S0,dest]),osrm([S0,viaRing,dest]),osrm([S0,viaInner,dest])])}catch(e){
    const st=(a,b)=>[a,b];A={pts:st(S0,dest),sec:540};B={pts:[S0,viaRing,dest],sec:840};C={pts:[S0,viaInner,dest],sec:420}}
  const base=Math.max(6,Math.round(A.sec/60)+3);
