@@ -1061,7 +1061,7 @@ html.tv body{zoom:1.18}
 
     <div class="app" id="a-calls"><div class="ah"><button data-back>‹</button><div>الهاتف</div></div><div class="list" id="callsBody"></div></div>
 
-    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>المعرض <span class="sub">٨ عناصر</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
+    <div class="app" id="a-photos"><div class="ah"><button data-back>‹</button><div>المعرض <span class="sub">٦ عناصر</span></div></div><div class="list"><div class="grid" id="photoGrid"></div></div></div>
     <div class="app" id="a-photo"><div class="ah"><button data-back="photos">‹</button><div id="photoTitle"></div></div><div class="big"><div class="img" id="photoImg"></div><div class="info" id="photoInfo"></div></div></div>
 
     <div class="app" id="a-cams"><div class="ah"><button data-back>‹</button><div>الكاميرات <span class="sub">شاليه ٤٢ · Secure Cam</span></div></div>
@@ -1318,13 +1318,16 @@ const EV=[
  {id:'gold',n:'الذهب على الطاولة · ١٢:٣٠ م',cap:'الطقم كامل جدّام العايلة: عقد، تراچي، ثلاث أساور، خواتم. آخر مرة ينشاف كامل.'},
 
  {id:'cam_gate_1510',n:'كاميرا البوابة · ٣:١٠ م',cap:'كامري رضا تطلع — رايح الجمعية.'},
+ {id:'pool_1420',vid:1,n:'فيديو عبدالله ١ · ٢:٢٠ م',cap:'من موبايل عبدالله (١١). حمد ينط والكاميرا تهتز. شوفوا الخلفية.'},
+ {id:'pool_1552',vid:1,n:'فيديو عبدالله ٢ · ٣:٥٢ م',cap:'نفس الزاوية، بعد ساعة ونص. شوفوا الخلفية… منو موجود، ومنو مو موجود؟'},
  {id:'receipt',n:'فاتورة جمعية الخيران · ٣:٢٢ م',cap:'ثلج، فحم، عصير. ٤.٢٥٠ د.ك، بطاقة رضا.'},
  {id:'receipt_phone',n:'محضر استلام الجهاز · ٧:٠٠ م',cap:'بوعبدالرزاق سلّم موبايله للدورية بنفسه ووقّع. نقشة الفتح ما انسجّلت.'},
  {id:'cam_gate_1625',n:'كاميرا البوابة · ٤:٢٥ م',cap:'كامري رضا ترجع. رضا كان برّا ساعة وربع — من ٣:١٠ إلى ٤:٢٥.'}];
-$('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><figcaption><b>${e.n}</b></figcaption></figure>`).join('');
+$('#evGrid').innerHTML=EV.map(e=>`<figure class="ev" data-ev="${e.id}" style="position:relative"><img src="img/${e.id}.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()">${e.vid?'<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 7px;font-size:12px">▶ فيديو</span>':''}<figcaption><b>${e.n}</b></figcaption></figure>`).join('');
 $('#evGrid').onclick=e=>{const f=e.target.closest('[data-ev]');if(!f)return;const ev=EV.find(x=>x.id===f.dataset.ev);
   if(ev.torch){torchStart(ev.torch);return}
-  sheet(`<h3>${ev.n}</h3><div id="evPic"><img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px"></div><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`);if(ev.scratch)scratch($('#evPic'))};
+  const pic=ev.vid?`<video playsinline controls preload="metadata" poster="img/${ev.id}.jpg" src="video/${ev.id}.mp4" style="width:100%;border-radius:10px;background:#000" onerror="this.outerHTML='<img src=&quot;img/${ev.id}.jpg&quot; alt=&quot;&quot; style=&quot;width:100%;border-radius:10px&quot;>'"></video>`:`<img src="img/${ev.id}.jpg" alt="" style="width:100%;border-radius:10px">`;
+  sheet(`<h3>${ev.n}</h3><div id="evPic">${pic}</div><div class="h" style="margin-top:8px">${ev.cap}</div><div class="acts"><button class="btn lite" data-close>إغلاق</button></div>`);if(ev.scratch)scratch($('#evPic'))};
 
 /* ---- the plan's pins: each one says only what the evidence says ---- */
 const MPINS=[
@@ -1342,8 +1345,8 @@ const MPINS=[
         ['٥:٣٠ م','الغرفة مقلوبة والتيجوري مفتوح وفاضي. لا كسر.']],
   note:'الكود أربع أرقام، وما أحد يعرفه غير الجدّة… على قولتها.'},
  {n:4,x:180,y:470,t:'المسبح · الشوّاية',need:null,
-  rows:[['٢:٢٠ م','فيديو عبدالله وحمد الأول — بالمعرض.'],
-        ['٣:٥٢ م','الفيديو الثاني، نفس الزاوية — بالمعرض. منو بالخلفية؟']],
+  rows:[['٢:٢٠ م','فيديو عبدالله وحمد الأول — بالأدلة.'],
+        ['٣:٥٢ م','الفيديو الثاني، نفس الزاوية — بالأدلة. منو بالخلفية؟']],
   note:'كل واحد يقول وين كان. الفيديو يقول منو كان برّا فعلاً.'},
  {n:5,x:304,y:124,t:'الكراج',need:null,
   rows:[['العصر','بوعبدالله راح يدوّر عدّة البحر ورجع. الكراج برّا البيت.']]},
@@ -1526,8 +1529,6 @@ const SMS=[
 const CALLS=[{n:'الشرطة — مخفر الخيران',t:'٦:٠٥ م',k:'صادرة · ٣ دقايق'},{n:'عبدالرزاق 🎓',t:'٧:٤٢ م',k:'فايتة (٣) · لندن',bad:1},{n:'منيرة',t:'٥:٣٣ م',k:'واردة · ١ دقيقة'},{n:'فهد',t:'٣:٤١ م',k:'واردة · أقل من دقيقة'},{n:'رضا (السايق)',t:'٣:٠٨ م',k:'صادرة · ١ دقيقة'},{n:'أم عبدالعزيز ❤️',t:'الخميس',k:'صادرة · ٤ دقايق'},{n:'المكتب',t:'الخميس',k:'واردة · ١٢ دقيقة'}];
 const PHOTOS=[
  {id:'gold',n:'ذهب أمي',info:'الجمعة ١٢:٣٠ م · الطاولة',cap:'الطقم كامل. أمي ورّته للكل.'},
- {id:'pool_1420',vid:1,n:'فيديو المسبح ١',info:'الجمعة ٢:٢٠ م · عبدالله يصوّر حمد',cap:'حمد ينط والكاميرا تهتز. شوفوا الخلفية.'},
- {id:'pool_1552',vid:1,n:'فيديو المسبح ٢',info:'الجمعة ٣:٥٢ م · نفس الزاوية',cap:'نفس الزاوية، بعد ساعة ونص. شوفوا الخلفية… منو موجود، ومنو مو موجود؟'},
  {id:'plaque_dirty',scratch:1,n:'اللوحة',info:'الجمعة ١١:٤٠ ص',cap:'لوحة باب غرفة أمي. السطر الثاني مغبّر — لازم تنظّفونها بصبعكم.'},
  {id:'fam_chalet',n:'العايلة',info:'الجمعة ١٢:١٥ م · الشاليه',cap:'كلنا مع يدّة. ناقصنا عبدالرزاق.'},
  {id:'mom_sofa',n:'أمي',info:'الخميس ٥:٥٠ م · الشاليه',cap:'أول يوم بالشاليه.'},
