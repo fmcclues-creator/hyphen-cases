@@ -142,8 +142,8 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .fit-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .fit{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 14px;min-width:0;
   display:block;text-decoration:none;color:inherit}
-a.fit{border-color:var(--red);box-shadow:0 0 0 4px rgba(196,56,45,.08)}
-a.fit:hover{border-color:var(--red2);box-shadow:0 0 0 6px rgba(196,56,45,.14)}
+a.fit{text-decoration:none;color:inherit}
+a.fit:hover{border-color:var(--muted)}
 .fit-e{font-size:26px;line-height:1;margin-bottom:10px}
 .fit b{display:block;font-size:16px;margin-bottom:4px}
 .fit span{color:var(--muted);font-size:13px;line-height:1.6}
