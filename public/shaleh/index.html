@@ -1309,7 +1309,7 @@ const IVS=[
  g.innerHTML=IVS.map(v=>`<div class="iv" data-iv="${v.id}"><div class="ivh"><img src="img/p_${v.id}.jpg" alt="" onerror="this.style.visibility='hidden'"><div><b>${v.n}</b><small>${v.sub}</small></div></div>`
   +(v.novid?'':`<video playsinline controls preload="none" poster="video/iv_${v.id}.jpg" src="video/iv_${v.id}.mp4" onerror="this.remove()"></video>`)
   +`<div class="tx" style="font-size:13.5px;line-height:1.8;margin-top:6px;color:#2a2419">«${v.tx}»</div>`
-  +(v.frames?`<div class="ivAfter" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">${v.frames.map(f=>{const e=EV.find(x=>x.id===f)||{n:f};return `<figure data-frame="${f}" style="margin:0;cursor:pointer"><img src="img/${f}.jpg" alt="" style="width:100%;border-radius:6px;display:block"><figcaption style="font-size:12px;color:#5a5243;margin-top:3px">${e.n}</figcaption></figure>`}).join('')}</div>`:'')
+  +(v.frames?`<div class="ivAfter" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">${v.frames.map(f=>{const e={n:f==='pool_1420'?'فيديو عبدالله ١ · ٢:٢٠ م':'فيديو عبدالله ٢ · ٣:٥٢ م'};return `<figure data-frame="${f}" style="margin:0;cursor:pointer"><img src="img/${f}.jpg" alt="" style="width:100%;border-radius:6px;display:block"><figcaption style="font-size:12px;color:#5a5243;margin-top:3px">${e.n}</figcaption></figure>`}).join('')}</div>`:'')
   +`</div>`).join('');
  $$('#ivg [data-frame]').forEach(b=>b.onclick=()=>{const ev=EV.find(x=>x.id===b.dataset.frame);if(ev)$('#evGrid [data-ev="'+ev.id+'"]')?.click()});
  $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})))})();
