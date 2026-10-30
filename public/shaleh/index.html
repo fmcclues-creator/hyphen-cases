@@ -1309,7 +1309,7 @@ const IVS=[
  g.innerHTML=IVS.map(v=>`<div class="iv" data-iv="${v.id}"><div class="ivh"><img src="img/p_${v.id}.jpg" alt="" onerror="this.style.visibility='hidden'"><div><b>${v.n}</b><small>${v.sub}</small></div></div>`
   +(v.novid?'':`<video playsinline controls preload="none" poster="video/iv_${v.id}.jpg" src="video/iv_${v.id}.mp4" onerror="this.remove()"></video>`)
   +`<div class="tx" style="font-size:13.5px;line-height:1.8;margin-top:6px;color:#2a2419">«${v.tx}»</div>`
-  +(v.after?`<div class="ivAfter" style="margin-top:10px"><video playsinline controls preload="none" poster="video/${v.after.vid}.jpg" src="video/${v.after.vid}.mp4" onerror="this.remove()"></video><button class="btn lite" data-frame="${v.after.frame}" style="width:100%;margin-top:6px;font-size:14px">📱 ${v.after.n}</button></div>`:'')
+  +(v.after?`<div class="ivAfter" style="margin-top:10px"><video playsinline controls preload="none" poster="video/${v.after.vid}.jpg" src="video/${v.after.vid}.mp4" onerror="this.remove()"></video><button class="btn" data-frame="${v.after.frame}" style="width:100%;margin-top:6px;font-size:14px;background:#2a2419;color:#fff;box-shadow:none">📱 ${v.after.n}</button></div>`:'')
   +`</div>`).join('');
  $$('#ivg [data-frame]').forEach(b=>b.onclick=()=>{const ev=EV.find(x=>x.id===b.dataset.frame);if(ev)$('#evGrid [data-ev="'+ev.id+'"]')?.click()});
  $$('#t5 video').forEach(v=>v.addEventListener('play',()=>$$('#t5 video').forEach(o=>{if(o!==v)o.pause()})))})();
