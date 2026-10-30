@@ -1429,6 +1429,7 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
   loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.174,48.112],14);L.control.zoom({position:'bottomleft'}).addTo(LMAP);LMAP.on('zoomend',()=>mapHouses());
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 مخفر الفنطاس',{permanent:true,direction:'bottom',className:'mapTip'});
+    if(/edit=1/.test(location.hash)){const out=document.createElement('div');out.style.cssText='padding:6px 10px;font:12px monospace;direction:ltr;background:#fff;color:#222;word-break:break-all';out.textContent='edit mode — tap the map';$('#mapBox').appendChild(out);let n=0;LMAP.on('click',e=>{n++;const t=`#${n}: [${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}]`;out.textContent+='  '+t;L.marker(e.latlng,{icon:L.divIcon({className:'',html:`<div style="transform:translate(-50%,-100%);font-size:22px">📌<small style="font-size:11px;background:#fff;padding:1px 4px;border-radius:4px">${n}</small></div>`,iconSize:[0,0]})}).addTo(LMAP)})}
     mapDraw();mapHouses()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">الخريطة ما حمّلت — تأكدوا من الإنترنت.</div>'})}
  else mapDraw()}
 let LHOUSES=[];
