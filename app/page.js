@@ -179,8 +179,8 @@ export default async function Home() {
           <div>
             <div className="kicker">القضية الثانية · سرقة</div>
             <h3>قضية الشاليه</h3>
-            <p>يدّة يابت ذهبها الشاليه تورّيه للعايلة، وقفّلته بالتجوري بنفسها. بعد ٤ ساعات: الغرفة مقلوبة والتجوري فاضي — وما أحد طلع من الشاليه. موبايل ولدها بين إيديكم، وكشّاف على التلفزيون، ومطاردة.</p>
-            <div className="facts"><span>⏱ ساعة وحدة</span><span>👥 ٦ موبايلات</span><span>🔦 كشّاف على التلفزيون</span></div>
+            <p>الجدّة يابت ذهبها الشاليه، دخّلته بالتجوري بنفسها. بعد ٤ ساعات: الغرفة مقلوبة والتجوري فاضي — وما أحد طلع أو دخل الشاليه. موبايل ولدها بين إيديكم… والحل عندكم.</p>
+            <div className="facts"><span>⏱ ساعة وحدة</span><span>👥 ٦ موبايلات</span><span>🎮 ألعاب تفاعلية</span></div>
             <div className="cta-row">
               <Link className="cta" href="/buy?game=shaleh">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
               <Link className="cta lite" href="/buy?game=shaleh&gift=1">🎁 هدية</Link>
