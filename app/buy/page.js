@@ -7,7 +7,7 @@ import { pixelTrack } from "../components/pixelTrack";
 const fmt = (n) => Number(n).toFixed(3);
 const PRODUCTS = [
   { id: "khalid", name: "قضية خالد", sub: "اختفاء · ٥ مشتبهين" },
-  { id: "shaleh", name: "قضية الشاليه", sub: "سرقة · ٨ مشتبهين · كشّاف على التلفزيون" },
+  { id: "shaleh", name: "قضية الشاليه", sub: "سرقة · ٨ مشتبهين · ألعاب تفاعلية" },
   { id: "bundle", name: "القضيتين", sub: "خالد + الشاليه — كودين، وفّروا ٢ د.ك", best: true },
 ];
 
