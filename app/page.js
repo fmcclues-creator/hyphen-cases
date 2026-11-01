@@ -161,7 +161,7 @@ export default async function Home() {
           <div>
             <div className="kicker">القضية الأولى · اختفاء</div>
             <h3>قضية خالد</h3>
-            <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. ٥ مشتبهين، وواحد منهم يچذب.</p>
+            <p>اختفى صاحب مجموعة مطاعم قبل أكبر صفقة بحياته بساعات. موبايله بين إيديكم… مقفول. ٥ مشتبهين، وواحد منهم مو صادق.</p>
             <div className="facts"><span>⏱ ساعة وحدة</span><span>👥 ٦ موبايلات</span><span>📺 على التلفزيون</span></div>
             <div className="cta-row">
               <Link className="cta" href="/buy?game=khalid">ابدأوا التحقيق <span className="price">{price} د.ك</span></Link>
