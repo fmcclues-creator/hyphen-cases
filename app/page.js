@@ -62,7 +62,8 @@ export default async function Home() {
         <div>
           <div className="kicker">قضيتين · كل قضية ساعة</div>
           <h1>موبايل مقفول… <span>ومنو الجاني؟</span></h1>
-          <p>ألعاب تحقيق تنلعب على الموبايل والتلفزيون. قضيتين جاهزة: اختفاء خالد قبل أكبر صفقة بحياته، وذهب يدّة اختفى من تيجوري الشاليه والعايلة كلها موجودة.</p>
+          <p>ألعاب تفاعلية على الموبايل أو التلفزيون.<br />القضية الأولى: اختفاء خالد قبل أكبر صفقة بحياته.<br />القضية الثانية: اختفاء ذهب الجدّة من تيجوري الشاليه!</p>
+          <p className="hero-line">الأدلة في الموبايل… الموبايل مقفول، والحل عندكم.</p>
           <div className="cta-row">
             <Link className="cta" href="/#cases">اختاروا قضية <span className="price">{price} د.ك</span></Link>
             <Link className="cta lite" href="/buy?game=bundle">القضيتين مع بعض <span className="price">{bundle} د.ك</span></Link>
