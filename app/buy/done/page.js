@@ -44,7 +44,7 @@ export default function Done({ searchParams }) {
             <div className="code" style={{ fontSize: 28 }}>{it.code}</div>
           </div>
         ))}
-        <div className="muted" style={{ marginTop: 10, fontSize: 13 }}>كل كود لفريق واحد — يفتح على ٦ موبايلات، وصالح ٧ أيام.</div>
+        <div className="muted" style={{ marginTop: 10, fontSize: 13 }}>كل كود لفريق واحد — يفتح على ٦ موبايلات، وصالح ٣٠ يوم — ومن أول ما تبدأون عندكم ٣ أيام تكملون.</div>
         {test && <div className="muted">وضع التجربة: ما انخصم شي.</div>}
         <div style={{ marginTop: 14 }}>
           <a className="cta lite" href={wa}>{gift ? "أرسلوا الكود على واتساب" : items.length > 1 ? "أرسلوا الأكواد على واتساب" : "أرسل الكود على واتساب"}</a>
