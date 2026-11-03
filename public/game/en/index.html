@@ -1058,9 +1058,9 @@ const CALLS=[
  {n:'Salem',t:'Monday',k:'Outgoing · 4 min'},{n:'Sara’s School',t:'Monday',k:'Incoming · 1 min'},{n:'Jazeera Airways',t:'Monday',k:'Outgoing · 7 min'},{n:'Munira ❤️',t:'Monday',k:'Incoming · 11 min'},
  {n:'Bu Saud',t:'Sunday',k:'Incoming · 2 min'},{n:'Abdulaziz (my brother)',t:'Sunday',k:'Outgoing · 15 min'}];
 const VMS=[
- {n:'Munira ❤️',t:'Wednesday 10:48 PM',d:'0:18',au:'au-munira',tx:'Khalid… where are you? I’ve been calling since 10 and you’re not answering. Nasser said he couldn’t find you at the office and your car is still parked there. Send me anything, just one word. Sara fell asleep asking about you. God protect us… answer me Khalid, you’re scaring me.'},
+ {n:'Munira ❤️',t:'Wednesday 10:48 PM',d:'0:18',au:'au-munira',tx:'Khalid… where are you? I’ve been calling since ten and you’re not answering. Nasser said he couldn’t find you at the office, and your car is still there. Send me anything — one word, that’s all. Sara fell asleep asking about you. God protect us… Answer me, Khalid. You’re scaring me.'},
  {n:'Fahad (Supplier)',t:'Wednesday 4:10 PM',d:'0:22',au:'au-fahad',tx:'Khalid! What do you mean you won’t pay?! 20 bags of rice and 5 boxes of meat, and you say the quality isn’t good?! This is the same stuff I deliver to everyone! You’ve owed me for two months! If you don’t give me what’s mine today, wallah you’ll regret it!'},
- {n:'Mom ❤️',t:'Tuesday 8:00 PM',d:'0:16',au:'au-mom',tx:'Khalid, my son, it’s your mother. You don’t answer your mother? I told you, lunch at ours on Friday, you and Munira and the girl. And don’t forget your medicine, I know you forget. God bless the deal, my son, you’re always in my prayers. Yalla, bye.'}];
+ {n:'Mom ❤️',t:'Tuesday 8:00 PM',d:'0:16',au:'au-mom',tx:'Khalid, my son, it’s your mother. You don’t answer your mother anymore? I told you, Friday lunch is at ours — you, Munira and the little one. And don’t forget your medicine, I know you forget. God grant you success with the deal, my son. You’re in my prayers. Yalla, bye.'}];
 const CAL=[
  ['Wednesday',[['3:00 PM','Management Meeting','',''],['7:00 PM','A.R. — Meeting','',"Cancelled. Abdulrahman: “Can’t tonight, we’ll have tea after the signing.”"],['7:45 PM','Salem’s appointment (Dr. Huda)','','Nobody knows']]],
  ['Thursday',[['11:00 AM','Deal Signing ✍️','Lawyer’s Office','']]],
@@ -1364,7 +1364,7 @@ $('#toFile1').onclick=$('#toFile2').onclick=()=>show('file');
   a.addEventListener('loadedmetadata',set);set()})();
 
 /* ransom recording in the case file */
-$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='We have Khalid, and he’s fine. We know you’ve told the police. Doesn’t matter. If the deal goes through on Thursday, he’s not coming back. Don’t look for him. Wait for our instructions.';
+$('#plR').onclick=()=>{const a=$('#au-ransom'),w=$('#wR'),tx=$('#txR'),b=$('#plR');const T='Khalid is with us. He’s fine. We know you called the police. Doesn’t matter. If the deal goes through on Thursday… he doesn’t come back. Don’t look for him. Wait for our instructions.';
   if(w.classList.contains('play')){a.pause();a.currentTime=0;w.classList.remove('play');b.textContent='🔁 Replay';tx.textContent=T;return}
   w.classList.add('play');b.textContent='⏹ Stop';tx.textContent='';const words=T.split(' ');let n=0,step=500;const go=()=>{if(a.duration&&isFinite(a.duration))step=Math.max(150,(a.duration*1000-600)/words.length)};go();a.onloadedmetadata=go;
   a.currentTime=0;a.onended=()=>{clearInterval(iv);w.classList.remove('play');b.textContent='🔁 Replay';tx.textContent=T};a.play().catch(()=>{});
