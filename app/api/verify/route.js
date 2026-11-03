@@ -19,16 +19,14 @@ export async function POST(req) {
   const client = db();
   const { data: row } = await client.from("codes").select("*").eq("code", norm).maybeSingle();
   if (!row) return Response.json({ ok: false, reason: "not_found" }, { headers: cors });
-  if (new Date(row.expires_at) < new Date()) return Response.json({ ok: false, reason: "expired" }, { headers: cors });
   if (game && row.game && row.game !== game) return Response.json({ ok: false, reason: "wrong_game" }, { headers: cors });
 
-  // A code is good for 30 days unused; once a team opens it they have PLAY_DAYS to finish.
+  // An unused code never expires. Once a team opens it they have PLAY_DAYS to finish.
   // activated_at is stamped on the first phone; older codes fall back to their first play.
-  const PLAY_DAYS = 3;
+  const PLAY_DAYS = 4;
   const playUntil = (activatedAt) => {
     const a = activatedAt ? new Date(activatedAt).getTime() : 0;
-    const hard = new Date(row.expires_at).getTime();
-    return a ? Math.min(hard, a + PLAY_DAYS * 86400e3) : hard;
+    return a ? a + PLAY_DAYS * 86400e3 : new Date('2099-01-01').getTime();
   };
 
   // One code = one team. The team can open it on up to DEVICES phones (they share progress);
@@ -64,7 +62,7 @@ export async function POST(req) {
     await client.from("plays").insert({ code: norm, device });
   }
   if (activatedAt && !row.activated_at) await client.from("codes").update({ activated_at: activatedAt }).eq("code", norm);
-  return Response.json({ ok: true, expires_at: new Date(playUntil(activatedAt)).toISOString(), valid_until: row.expires_at, game: row.game, devices: Math.max(1, devices.length + (devices.includes(device) ? 0 : 1)), max_devices: DEVICES }, { headers: cors });
+  return Response.json({ ok: true, expires_at: new Date(playUntil(activatedAt)).toISOString(), game: row.game, devices: Math.max(1, devices.length + (devices.includes(device) ? 0 : 1)), max_devices: DEVICES }, { headers: cors });
 }
 
 export async function OPTIONS() {
