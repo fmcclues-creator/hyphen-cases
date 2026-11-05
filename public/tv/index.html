@@ -196,7 +196,7 @@ function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
  document.getElementById('runD').textContent=AR_(Math.round(80*(1-f)))+' م';
  const r=document.getElementById('runR');
  r.className='res'+(p.state==='win'?' win':p.state==='fail'?' fail':'');
- r.textContent=p.state==='win'?'🏁 مسكتوه قبل ما يركب… سالم!':p.state==='fail'?'❌ ركب سيارته وطلع.':'';
+ r.textContent=p.state==='win'?'🏁 مسكتوا سالم قبل ما ينحاش!':p.state==='fail'?'❌ ركب سيارته وطلع.':'';
  document.getElementById('st').textContent=p.state==='run'?'🏃 المطاردة شغّالة':'المطاردة جاهزة';
  if(p.state==='win')try{ding()}catch(e){}}
 function finish(p){$('#lit').classList.add('full');$('#lit').style.opacity=1;$('#doneTx').textContent=p.text||'';$('#done').classList.add('on');$('#st').textContent='اكتمل المشهد ✅'}
