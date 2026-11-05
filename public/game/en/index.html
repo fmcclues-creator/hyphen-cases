@@ -1835,7 +1835,7 @@ function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
 /* language toggle: the English edition lives in en/ next to this file; keep the #code hash */
-(function(){const en=/\/en\/?$/.test(location.pathname.replace(/index\.html$/,''));const to=(en?'../':'en/')+location.hash;const a=$('#gateLang');if(a)a.href=to;$$('[data-lang]').forEach(b=>b.onclick=()=>{location.href=to})})();
+(function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');if(a)a.href=to;$$('[data-lang]').forEach(b=>b.onclick=()=>{location.href=to})})();
 
 /* A code was burning six phone slots for four phones. Four of the ids were
    minted inside 2.5 seconds — one phone, opened repeatedly from a WhatsApp
