@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -12,9 +11,11 @@ function Inner() {
   const q = sp?.toString() ? "?" + sp.toString() : "";
   const to = (en ? bare : (bare === "/" ? "/en" : "/en" + bare)) + q;
   return (
-    <Link href={to} className="lang" lang={en ? "ar" : "en"} dir={en ? "rtl" : "ltr"} aria-label={en ? "النسخة العربية" : "English version"}>
+    // a plain link on purpose: /en is rewritten to the same route as /, so a client-side
+    // navigation would reuse the page already in memory and nothing would change
+    <a href={to} className="lang" lang={en ? "ar" : "en"} dir={en ? "rtl" : "ltr"} aria-label={en ? "النسخة العربية" : "English version"}>
       🌐 {en ? "العربية" : "English"}
-    </Link>
+    </a>
   );
 }
 export function LangToggle() {
