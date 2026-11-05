@@ -12,8 +12,8 @@ export function generateMetadata() {
 }
 
 const T = {
-  ar: { h: "🏆 لوحة المتصدرين", p: "أسرع ١٥ فريق حلّوا القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).", empty: "ما فيه أحد على اللوحة بعد — كونوا أول فريق.", start: "ابدأوا التحقيق", cols: ["#", "الفريق", "الوقت", "تلميحات", "اتهام غلط", "التاريخ"], foot: "اللوحة تعرض أسرع ١٥ فريق بس — الفرق الأبطأ ما تظهر هنا.", cta: "تبون اسمكم هنا؟ ابدأوا التحقيق", locale: "ar-KW" },
-  en: { h: "🏆 Leaderboard", p: "The 15 fastest teams to solve the case. Times include penalties (hints and wrong accusations).", empty: "Nobody on the board yet — be the first team.", start: "Start investigating", cols: ["#", "Team", "Time", "Hints", "Wrong", "Date"], foot: "The board shows only the 15 fastest teams — slower teams don’t appear here.", cta: "Want your name here? Start investigating", locale: "en-GB" },
+  ar: { h: "🏆 لوحة المتصدرين", p: "أسرع ١٥ فريق حلّوا القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).", empty: "ما فيه أحد على اللوحة بعد — كونوا أول فريق.", start: "ابدأوا التحقيق", cols: ["#", "الفريق", "الوقت", "اتهام غلط", "التاريخ"], foot: "اللوحة تعرض أسرع ١٥ فريق بس — الفرق الأبطأ ما تظهر هنا.", cta: "تبون اسمكم هنا؟ ابدأوا التحقيق", locale: "ar-KW" },
+  en: { h: "🏆 Leaderboard", p: "The 15 fastest teams to solve the case. Times include penalties (hints and wrong accusations).", empty: "Nobody on the board yet — be the first team.", start: "Start investigating", cols: ["#", "Team", "Time", "Wrong", "Date"], foot: "The board shows only the 15 fastest teams — slower teams don’t appear here.", cta: "Want your name here? Start investigating", locale: "en-GB" },
 };
 
 export default async function Leaderboard({ searchParams }) {
@@ -49,7 +49,6 @@ export default async function Leaderboard({ searchParams }) {
                       <td>{num(i + 4, lang)}</td>
                       <td>{r.team}</td>
                       <td className="mono">{fmt(r.total)}</td>
-                      <td>{num(r.hints, lang)}</td>
                       <td>{num(r.wrong, lang)}</td>
                       <td className="muted">{day(r.created_at)}</td>
                     </tr>

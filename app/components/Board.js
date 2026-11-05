@@ -22,7 +22,7 @@ const STEP = [
   { h: 88, bg: "linear-gradient(180deg,#d9a06a,#8c5a2b)", ink: "#2a1708", label: "٣" },
 ];
 export function Podium({ rows, lang = "ar" }) {
-  const hintsW = lang === "en" ? "hints" : "تلميحات", wrongW = lang === "en" ? "wrong" : "غلط";
+  const wrongW = lang === "en" ? "wrong accusations" : "اتهام غلط";
   const order = [1, 0, 2].filter((i) => rows[i]);
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10, margin: "26px 0 6px" }}>
@@ -33,7 +33,7 @@ export function Podium({ rows, lang = "ar" }) {
             <div style={{ fontSize: i === 0 ? 40 : 30, lineHeight: 1 }}>{MEDAL[i]}</div>
             <div style={{ fontWeight: 800, fontSize: i === 0 ? 20 : 17, textAlign: "center", wordBreak: "break-word" }}>{r.team}</div>
             <div className="mono" style={{ fontSize: 15, color: "var(--muted)" }}>{fmt(r.total)}</div>
-            <div style={{ fontSize: 12.5, color: "var(--muted)" }}>{hintsW} {num(r.hints, lang)} · {wrongW} {num(r.wrong, lang)}</div>
+            <div style={{ fontSize: 12.5, color: "var(--muted)" }}>{wrongW} {num(r.wrong, lang)}</div>
             <div style={{ width: "100%", height: st.h, background: st.bg, color: st.ink, borderRadius: "12px 12px 0 0", display: "grid", placeItems: "center", fontSize: 44, fontWeight: 900, boxShadow: "0 -6px 24px rgba(0,0,0,.35) inset" }}>{lang === "en" ? i + 1 : st.label}</div>
           </div>
         );
