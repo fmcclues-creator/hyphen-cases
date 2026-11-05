@@ -76,6 +76,20 @@
 #runScr .dist{margin-top:10px;font:700 clamp(16px,2vw,30px) ui-monospace,Menlo,monospace;color:var(--gold)}
 #runScr .res{font:900 clamp(22px,3.4vw,54px)/1.4 Tajawal,sans-serif}
 #runScr .res.win{color:#4ad07e}#runScr .res.fail{color:#e4584a}
+/* the chase is a shot you watch: سالم running, at the team's own pace */
+#runScr .runvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity .6s;filter:brightness(.85)}
+#runScr .runvid.on{opacity:1}
+#runScr.hasvid{background:#000;justify-content:space-between;padding:3vh 4vw 4vh}
+#runScr.hasvid::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 60%,rgba(0,0,0,.8))}
+#runScr.hasvid>*:not(video){position:relative;z-index:2}
+#runScr.hasvid .ttl,#runScr.hasvid .sub{text-shadow:0 2px 10px rgba(0,0,0,.95)}
+#runScr.hasvid .clock{font-size:clamp(56px,11vw,150px);text-shadow:0 3px 18px rgba(0,0,0,.95)}
+#runScr.hasvid .sub{margin-top:-1vh}
+#runScr.hasvid .res{order:2;flex:1;display:flex;align-items:center;text-shadow:0 2px 14px rgba(0,0,0,.95)}
+#runScr.hasvid .track{order:3;background:rgba(0,0,0,.45);border-radius:18px;padding:10px 22px 14px}
+#runScr.hasvid .bar{background:rgba(255,255,255,.14)}
+#runScr.hasvid .dist{text-shadow:0 1px 8px rgba(0,0,0,.9)}
+@media (prefers-reduced-motion:reduce){#runScr .runvid{display:none}}
 </style>
 </head>
 <body>
@@ -144,9 +158,37 @@ function mark(s){if(found[s.i])return;found[s.i]=true;const p=toStage(s.x,s.y);$
 
 /* ---- chase ---- */
 const AR_=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+/* the running clip: the phone only sends the step count, so the TV reads the
+   team's pace off how fast that count climbs and plays the shot at that speed */
+const RV={el:null,log:[],have:0.07,raf:0,last:0,steps:-1,state:''};
+function rvInit(){
+  if(RV.el)return;const sc=document.getElementById('runScr');
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const v=document.createElement('video');v.className='runvid';v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';
+  ['/shaleh/video/run.webm|video/webm','/shaleh/video/run.mp4|video/mp4'].forEach(s=>{const [src,type]=s.split('|');const el=document.createElement('source');el.src=src;el.type=type;v.appendChild(el)});
+  const drop=()=>{sc.classList.remove('hasvid');v.remove();RV.el=null};
+  v.addEventListener('error',drop);
+  const deadline=setTimeout(()=>{if(RV.el===v&&v.readyState<2)drop()},6000);
+  v.addEventListener('loadeddata',()=>{clearTimeout(deadline);sc.classList.add('hasvid')});
+  sc.insertBefore(v,sc.firstChild);RV.el=v;
+}
+function rvGo(){if(!RV.el)return;RV.log=[];RV.have=0.07;RV.last=performance.now();try{RV.el.currentTime=0}catch(e){}try{RV.el.playbackRate=0.07}catch(e){}try{const p=RV.el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}RV.el.classList.add('on');cancelAnimationFrame(RV.raf);RV.raf=requestAnimationFrame(rvTick)}
+function rvHold(){cancelAnimationFrame(RV.raf);RV.raf=0;if(RV.el)try{RV.el.pause()}catch(e){}}
+function rvSteps(n){const now=performance.now();if(RV.steps>=0&&n>RV.steps){const d=n-RV.steps;for(let i=0;i<d;i++)RV.log.push(now-(d-1-i)*120)}RV.steps=n;while(RV.log.length>6)RV.log.shift()}
+function rvTick(now){
+  if(!RV.el){RV.raf=0;return}
+  const dt=Math.min(0.1,(now-RV.last)/1000);RV.last=now;let cad=0;
+  if(RV.log.length>1){const span=(RV.log[RV.log.length-1]-RV.log[0])/1000;cad=span>0?(RV.log.length-1)/span:0;
+    const since=(now-RV.log[RV.log.length-1])/1000;if(since>1.1)cad=0;else if(since>0.55)cad*=0.45}
+  const want=Math.max(0.07,Math.min(2.2,cad/2.5));RV.have+=(want-RV.have)*Math.min(1,dt*5.5);
+  try{RV.el.playbackRate=RV.have}catch(e){}RV.raf=requestAnimationFrame(rvTick)}
 function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
- if(p.state==='bye'){sc.classList.remove('on');return}
+ if(p.state==='bye'){sc.classList.remove('on');rvHold();RV.state='';return}
  sc.classList.add('on');document.getElementById('wait').classList.remove('on');
+ rvInit();
+ if(p.state==='run'){if(RV.state!=='run'){RV.steps=-1;rvGo()}rvSteps(p.steps||0)}
+ else{rvHold();if(p.state==='idle'&&RV.el){try{RV.el.currentTime=0}catch(e){}RV.el.classList.add('on')}}
+ RV.state=p.state;
  const need=p.need||70,steps=Math.min(need,p.steps||0),f=steps/need;
  document.getElementById('runT').textContent=Math.max(0,p.t|0);
  document.getElementById('runB').style.width=(f*100)+'%';
@@ -154,7 +196,7 @@ function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
  document.getElementById('runD').textContent=AR_(Math.round(80*(1-f)))+' م';
  const r=document.getElementById('runR');
  r.className='res'+(p.state==='win'?' win':p.state==='fail'?' fail':'');
- r.textContent=p.state==='win'?'🏁 مسكتوه! عبدالله.':p.state==='fail'?'❌ ركب سيارته وطلع.':'';
+ r.textContent=p.state==='win'?'🏁 مسكتوا سالم قبل ما ينحاش!':p.state==='fail'?'❌ ركب سيارته وطلع.':'';
  document.getElementById('st').textContent=p.state==='run'?'🏃 المطاردة شغّالة':'المطاردة جاهزة';
  if(p.state==='win')try{ding()}catch(e){}}
 function finish(p){$('#lit').classList.add('full');$('#lit').style.opacity=1;$('#doneTx').textContent=p.text||'';$('#done').classList.add('on');$('#st').textContent='اكتمل المشهد ✅'}
