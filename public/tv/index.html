@@ -68,9 +68,11 @@
 #runScr .clock{font:900 clamp(70px,16vw,220px)/1 ui-monospace,Menlo,monospace;color:var(--gold);direction:ltr}
 #runScr .sub{font:700 clamp(14px,1.6vw,22px) Tajawal,sans-serif;color:#aab2c2}
 #runScr .track{width:min(88vw,1100px)}
-#runScr .path{position:relative;height:clamp(50px,8vh,96px)}
-#runScr .me{position:absolute;inset-inline-start:0;bottom:0;font-size:clamp(34px,6vw,76px);transform:scaleX(-1);transition:inset-inline-start .25s}
-#runScr .goal{position:absolute;inset-inline-end:0;bottom:6px;font-size:clamp(30px,5vw,64px)}
+#runScr .path{position:relative;height:clamp(64px,11vh,124px)}
+#runScr .me{position:absolute;inset-inline-start:0;bottom:0;transition:inset-inline-start .25s}
+#runScr .me img{height:clamp(60px,10vh,120px);width:auto;display:block;transform:scaleX(-1);filter:drop-shadow(0 6px 12px rgba(0,0,0,.7))}
+#runScr .goal{position:absolute;inset-inline-end:0;bottom:0}
+#runScr .goal img{height:clamp(46px,8vh,96px);width:auto;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.7))}
 #runScr .bar{height:clamp(14px,2.2vh,26px);border-radius:14px;background:#2c3139;overflow:hidden}
 #runScr .bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .25s}
 #runScr .dist{margin-top:10px;font:700 clamp(16px,2vw,30px) ui-monospace,Menlo,monospace;color:var(--gold)}
@@ -115,7 +117,7 @@
   <div class="ttl" id="runTtl">🏃 المطاردة — واحد يركض للمواقف</div>
   <div class="clock" id="runT">60</div>
   <div class="sub">ثانية قبل ما يوصل سيارته</div>
-  <div class="track"><div class="path"><i class="me" id="runMe">🏃</i><span class="goal">🚗</span></div>
+  <div class="track"><div class="path"><i class="me" id="runMe"><img src="/shaleh/img/run_man.png" alt=""></i><span class="goal"><img src="/shaleh/img/run_car.png" alt=""></span></div>
     <div class="bar"><b id="runB"></b></div><div class="dist" id="runD">٨٠ م</div></div>
   <div class="res" id="runR"></div>
 </div>
