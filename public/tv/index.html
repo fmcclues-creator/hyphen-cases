@@ -91,6 +91,7 @@
 #runScr.hasvid .track{order:3;background:rgba(0,0,0,.45);border-radius:18px;padding:10px 22px 14px}
 #runScr.hasvid .bar{background:rgba(255,255,255,.14)}
 #runScr.hasvid .dist{text-shadow:0 1px 8px rgba(0,0,0,.9)}
+#runScr.won .clock,#runScr.won .sub{display:none}
 @media (prefers-reduced-motion:reduce){#runScr .runvid{display:none}}
 </style>
 </head>
@@ -184,11 +185,17 @@ function rvTick(now){
     const since=(now-RV.log[RV.log.length-1])/1000;if(since>1.1)cad=0;else if(since>0.55)cad*=0.45}
   const want=Math.max(0.07,Math.min(2.2,cad/2.5));RV.have+=(want-RV.have)*Math.min(1,dt*5.5);
   try{RV.el.playbackRate=RV.have}catch(e){}RV.raf=requestAnimationFrame(rvTick)}
+function rvCaught(){const sc=document.getElementById('runScr');if(!sc.classList.contains('hasvid'))return;if(RV.caught){try{RV.caught.remove()}catch(e){}}
+  const v=document.createElement('video');v.className='runvid on';v.muted=true;v.playsInline=true;v.preload='auto';
+  [['/shaleh/video/caught.webm','video/webm'],['/shaleh/video/caught.mp4','video/mp4']].forEach(([s,t])=>{const e=document.createElement('source');e.src=s;e.type=t;v.appendChild(e)});
+  v.addEventListener('error',()=>{v.remove();if(RV.caught===v)RV.caught=null});
+  sc.insertBefore(v,RV.el?RV.el.nextSibling:sc.firstChild);RV.caught=v;try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
  if(p.state==='bye'){sc.classList.remove('on');rvHold();RV.state='';return}
- sc.classList.add('on');document.getElementById('wait').classList.remove('on');
+ sc.classList.add('on');document.getElementById('wait').classList.remove('on');sc.classList.toggle('won',p.state==='win');
  rvInit();
- if(p.state==='run'){if(RV.state!=='run'){RV.steps=-1;rvGo()}rvSteps(p.steps||0)}
+ if(p.state==='run'){if(RV.state!=='run'){RV.steps=-1;if(RV.caught){try{RV.caught.remove()}catch(e){}RV.caught=null}rvGo()}rvSteps(p.steps||0)}
+ else if(p.state==='win'&&RV.state!=='win'){rvHold();rvCaught()}
  else{rvHold();if(p.state==='idle'&&RV.el){try{RV.el.currentTime=0}catch(e){}RV.el.classList.add('on')}}
  RV.state=p.state;
  const need=p.need||70,steps=Math.min(need,p.steps||0),f=steps/need;

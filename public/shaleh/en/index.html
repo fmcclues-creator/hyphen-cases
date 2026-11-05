@@ -809,6 +809,7 @@ html.tv body{zoom:1.18}
 .runvid.on{opacity:1}
 /* the HUD has to stay readable over moving footage */
 .runstage.hasvid .runbg{display:none}
+.runstage.won .runhud{display:none}
 .runstage.hasvid{justify-content:flex-end;padding-bottom:110px;gap:14px}
 .runstage.hasvid .runclock{font-size:60px}
 .runstage.hasvid::after{content:'';position:absolute;inset:0;pointer-events:none;
@@ -2113,8 +2114,15 @@ function rvInit(){
   st.insertBefore(v,st.firstChild);
   RV.el=v;
 }
+/* the catch: when they get him the loop gives way to the police car cutting him off */
+function rvCaught(){const st=$('#runstage');if(!st||!st.classList.contains('hasvid'))return;if(RV.caught){try{RV.caught.remove()}catch(e){}}
+  const v=document.createElement('video');v.className='runvid on';v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.preload='auto';
+  [['video/caught.webm','video/webm'],['video/caught.mp4','video/mp4']].forEach(([s,t])=>{const e=document.createElement('source');e.src=s;e.type=t;v.appendChild(e)});
+  v.addEventListener('error',()=>{v.remove();if(RV.caught===v)RV.caught=null});
+  st.insertBefore(v,RV.el?RV.el.nextSibling:st.firstChild);RV.caught=v;try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function rvStart(){
-  rvInit(); if(!RV.el)return;
+  $('#runstage').classList.remove('won');rvInit(); if(!RV.el)return;
+  if(RV.caught){try{RV.caught.remove()}catch(e){}RV.caught=null}
   RV.beats=[];RV.want=0;RV.have=0.07;RV.last=performance.now();
   try{RV.el.currentTime=0}catch(e){}try{RV.el.playbackRate=0.07}catch(e){}try{const p=RV.el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
   cancelAnimationFrame(RV.raf);RV.raf=requestAnimationFrame(rvTick);
@@ -2155,7 +2163,7 @@ $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught him before he got in… <b>Salem!</b><br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runWin(){runTv('win');runStop();rvCaught();$('#runstage').classList.add('won');S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught <b>Salem</b> before he got away!<br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
 function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ He got in his car and drove off. +2 minutes. The second patrol blocked the street and brought him back — Again, run faster!</div><button class="btn" id="runAgain">🏃 Again</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */
