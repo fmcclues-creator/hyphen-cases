@@ -609,6 +609,7 @@ html.tv body{zoom:1.18}
     <div class="err" id="gateErr"></div>
     <button class="btn" id="gateGo">Enter</button>
     <a id="gateBuy" href="#" target="_blank" rel="noopener">No code? Get one</a>
+    <a id="gateLang" href="en/" style="display:block;margin-top:12px">🌐 العربية · Arabic</a>
   </div>
 </section>
 
@@ -939,7 +940,7 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-rules>📖 <span>Rules</span></button>
 <button class="mitem" data-share hidden>📲 <span>Share code</span></button>
 <button class="mitem" data-tv>📺 <span>Play on TV</span></button>
-<button class="mitem" data-home>🏠 <span>Home</span></button><button class="mitem" data-newcode>🔑 <span>Another code</span></button>
+<button class="mitem" data-lang>🌐 <span>العربية · Arabic</span></button><button class="mitem" data-home>🏠 <span>Home</span></button><button class="mitem" data-newcode>🔑 <span>Another code</span></button>
 <div class="mgap"></div>
 <button class="mitem red" id="toSolveFile">🔍 <span>Solve the Case</span></button>
 </nav></div>
@@ -1833,6 +1834,9 @@ function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'
 
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
+/* language toggle: the English edition lives in en/ next to this file; keep the #code hash */
+(function(){const en=/\/en\/?$/.test(location.pathname.replace(/index\.html$/,''));const to=(en?'../':'en/')+location.hash;const a=$('#gateLang');if(a)a.href=to;$$('[data-lang]').forEach(b=>b.onclick=()=>{location.href=to})})();
+
 /* A code was burning six phone slots for four phones. Four of the ids were
    minted inside 2.5 seconds — one phone, opened repeatedly from a WhatsApp
    link, each tap a fresh in-app webview with empty storage, each one minting
