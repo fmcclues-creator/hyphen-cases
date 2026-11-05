@@ -38,6 +38,7 @@ export default function Done({ searchParams }) {
             {!gift && (
               <a className="cta" href={`${it.path}#code=${it.code}`} style={{ display: "block", textAlign: "center", fontSize: 20, padding: "16px 24px" }}>ابدأوا {it.name} الحين</a>
             )}
+            {!gift && ["/game", "/shaleh"].includes(it.path) && <div className="muted" style={{ marginTop: 8, fontSize: 13 }}><a href={`${it.path}/en/#code=${it.code}`}>🌐 English version</a></div>}
             <div className="muted" style={{ margin: "12px 0 6px" }}>
               {gift ? "نفس الكود — إذا تبون تعطونه بنفسكم:" : "الكود — احفظوه إذا بتفتحون اللعبة من جهاز ثاني أو يوم ثاني:"}
             </div>
