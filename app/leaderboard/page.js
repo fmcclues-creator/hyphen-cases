@@ -12,17 +12,18 @@ export function generateMetadata() {
 }
 
 const T = {
-  ar: { h: "🏆 لوحة المتصدرين", p: "أسرع الفرق اللي حلّت القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).", empty: "ما فيه أحد على اللوحة بعد — كونوا أول فريق.", start: "ابدأوا التحقيق", cols: ["#", "الفريق", "الوقت", "تلميحات", "اتهام غلط", "التاريخ"], cta: "تبون اسمكم هنا؟ ابدأوا التحقيق", locale: "ar-KW" },
-  en: { h: "🏆 Leaderboard", p: "The fastest teams to solve the case. Times include penalties (hints and wrong accusations).", empty: "Nobody on the board yet — be the first team.", start: "Start investigating", cols: ["#", "Team", "Time", "Hints", "Wrong", "Date"], cta: "Want your name here? Start investigating", locale: "en-GB" },
+  ar: { h: "🏆 لوحة المتصدرين", p: "أسرع ١٥ فريق حلّوا القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).", empty: "ما فيه أحد على اللوحة بعد — كونوا أول فريق.", start: "ابدأوا التحقيق", cols: ["#", "الفريق", "الوقت", "تلميحات", "اتهام غلط", "التاريخ"], foot: "اللوحة تعرض أسرع ١٥ فريق بس — الفرق الأبطأ ما تظهر هنا.", cta: "تبون اسمكم هنا؟ ابدأوا التحقيق", locale: "ar-KW" },
+  en: { h: "🏆 Leaderboard", p: "The 15 fastest teams to solve the case. Times include penalties (hints and wrong accusations).", empty: "Nobody on the board yet — be the first team.", start: "Start investigating", cols: ["#", "Team", "Time", "Hints", "Wrong", "Date"], foot: "The board shows only the 15 fastest teams — slower teams don’t appear here.", cta: "Want your name here? Start investigating", locale: "en-GB" },
 };
 
 export default async function Leaderboard({ searchParams }) {
   const lang = getLang(), t = T[lang], l = L(lang);
-  const GAMES = ["khalid", "shaleh", "villa"].map((id) => ({ id, name: GAME_NAMES[lang][id] }));
+  const GAMES = ["khalid", "shaleh"].map((id) => ({ id, name: GAME_NAMES[lang][id] }));
   const day = (iso) => new Date(iso).toLocaleDateString(t.locale, { day: "numeric", month: "long", timeZone: "Asia/Kuwait" });
   const sp = await searchParams;
   const game = GAMES.find((g) => g.id === sp?.game)?.id || "shaleh";
-  const rows = await topRows(game);
+  const TOP = 15;
+  const rows = (await topRows(game, TOP)).slice(0, TOP);
   return (
     <main className="wrap">
       <Header lang={lang} />
@@ -58,6 +59,7 @@ export default async function Leaderboard({ searchParams }) {
             )}
           </>
         )}
+        {rows.length > 0 && <p className="muted" style={{ marginTop: 18, fontSize: 14 }}>{t.foot}</p>}
         <p style={{ marginTop: 26 }}><Link className="cta" href={l("/buy")}>{t.cta}</Link></p>
       </article>
       <Footer lang={lang} />

@@ -51,7 +51,7 @@ export async function HomeBoard({ lang = "ar" }) {
   return (
     <section className="cases" id="board">
       <h2>{en ? "🏆 Leaderboard" : "🏆 لوحة المتصدرين"}</h2>
-      <p className="muted" style={{ margin: "0 0 4px" }}>{en ? "The fastest teams on each case. Times include penalties." : "أسرع الفرق اللي حلّت كل قضية. الوقت يشمل الإضافات."}</p>
+      <p className="muted" style={{ margin: "0 0 4px" }}>{en ? "The three fastest teams on each case — the full board shows the top 15. Times include penalties." : "أسرع ٣ فرق بكل قضية — اللوحة الكاملة تعرض أسرع ١٥. الوقت يشمل الإضافات."}</p>
       <div className="boards">
         {boards.map((b) => (
           <div key={b.game} className="board">
