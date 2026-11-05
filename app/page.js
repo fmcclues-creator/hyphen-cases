@@ -54,11 +54,11 @@ const COPY = {
   },
   en: {
     shots: [
-      { src: "/shots/file.jpg", cap: "The case file — the missing-person report, the suspects’ statements and the papers his wife handed in. The phone’s passcode is hiding in there." },
-      { src: "/shots/lock.jpg", cap: "Khalid’s phone… locked. Four digits, and the answer is somewhere in the file." },
-      { src: "/shots/chat.jpg", cap: "All his chats in front of you — one of them wrote something that doesn’t match what he told the police." },
-      { src: "/shots/interviews.jpg", cap: "Recorded interviews with every suspect. Listen closely… and check them against the phone." },
-      { src: "/shots/accuse.jpg", cap: "The final moment: who, where and when. Name the culprit and see if you got it right." },
+      { src: "/shots/en/file.jpg", cap: "The case file — the missing-person report, the suspects’ statements and the papers his wife handed in. The phone’s passcode is hiding in there." },
+      { src: "/shots/en/lock.jpg", cap: "Khalid’s phone… locked. Four digits, and the answer is somewhere in the file." },
+      { src: "/shots/en/chat.jpg", cap: "All his chats in front of you — one of them wrote something that doesn’t match what he told the police." },
+      { src: "/shots/en/interviews.jpg", cap: "Recorded interviews with every suspect. Listen closely… and check them against the phone." },
+      { src: "/shots/en/accuse.jpg", cap: "The final moment: who, where and when. Name the culprit and see if you got it right." },
     ],
     fits: [
       { e: "🛋️", t: "Game night", s: "Everyone on their own phone, all on the same case" },
@@ -108,6 +108,7 @@ export default async function Home() {
   const price = Number(process.env.PRICE_KWD || 4.75).toFixed(3);
   const bundle = Number(process.env.BUNDLE_KWD || 7.5).toFixed(3);
   const money = (v) => (lang === "en" ? `KD ${v}` : `${v} د.ك`);
+  const media = lang === "en" ? "/media/en" : "/media"; // the preview clips are recorded from each edition
   return (
     <main className="wrap">
       <Header lang={lang} />
@@ -200,8 +201,8 @@ export default async function Home() {
         <h2>{t.casesH}</h2>
         <div className="casebig" id="case-khalid">
           <div className="phone">
-            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-poster.jpg" aria-label={t.k1aria}>
-              <source src="/media/play.webm" type="video/webm" /><source src="/media/play.mp4" type="video/mp4" />
+            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster={`${media}/play-poster.jpg`} aria-label={t.k1aria}>
+              <source src={`${media}/play.webm`} type="video/webm" /><source src={`${media}/play.mp4`} type="video/mp4" />
             </video>
             <span className="phone-note">{t.inGame}</span>
           </div>
@@ -218,8 +219,8 @@ export default async function Home() {
         </div>
         <div className="casebig" id="case-shaleh">
           <div className="phone">
-            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster="/media/play-shaleh-poster.jpg" aria-label={t.k2aria}>
-              <source src="/media/play-shaleh.webm" type="video/webm" /><source src="/media/play-shaleh.mp4" type="video/mp4" />
+            <video className="phone-screen" autoPlay muted loop playsInline preload="metadata" poster={`${media}/play-shaleh-poster.jpg`} aria-label={t.k2aria}>
+              <source src={`${media}/play-shaleh.webm`} type="video/webm" /><source src={`${media}/play-shaleh.mp4`} type="video/mp4" />
             </video>
             <span className="phone-note">{t.inGame}</span>
           </div>
