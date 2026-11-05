@@ -818,7 +818,7 @@ html.tv body{zoom:1.18}
 
 .mapTip{font-family:inherit;font-size:11px;direction:rtl;background:#fff;border:0;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)}.leaflet-container{font:inherit}
 </style>
-<style id="en-overrides">.doc dl{grid-template-columns:1fr;gap:2px 0}.doc dt{margin-top:8px}</style></head>
+<style id="langpick-css">#langPick{position:fixed;inset:0;z-index:200;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style><style id="en-overrides">.doc dl{grid-template-columns:1fr;gap:2px 0}.doc dt{margin-top:8px}</style></head>
 <body>
 <!-- ============ INTRO ============ -->
 <section class="screen" id="splash">
@@ -2328,11 +2328,19 @@ function savedPass(){try{const p=JSON.parse(localStorage.getItem(GAME+'_pass')||
 async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME})});return r.json()}
 $('#gateBuy').href=STORE+'/buy?game='+GAME;
 /* language toggle: the English edition lives in en/ next to this file; keep the #code hash */
-(function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');if(a)a.href=to;$$('[data-lang]').forEach(b=>b.onclick=()=>{location.href=to})})();
+(function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');const remember=()=>{try{localStorage.setItem('hyphen_lang',en?'ar':'en')}catch(e){}};if(a){a.href=to;a.onclick=remember}$$('[data-lang]').forEach(b=>b.onclick=()=>{remember();location.href=to})})();
 
 async function gate(){if(!GATE_ON)return true;const m=(location.hash||'').match(/code=([A-Za-z0-9-]+)/);const fromUrl=m?m[1].toUpperCase():'';const sp=savedPass();if(sp&&(!fromUrl||fromUrl===sp.code))return true;
   if(fromUrl){try{const j=await checkCode(fromUrl);if(j.ok){try{localStorage.setItem(GAME+'_pass',JSON.stringify({code:fromUrl,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);return true}}catch(e){}show('gate');$('#gateIn').value=fromUrl;tryCode();return new Promise(res=>{window.__gateOK=res})}
   show('gate');return new Promise(res=>{window.__gateOK=res})}
+/* first time in: pick the language of the game. The choice is remembered on this phone
+   (hyphen_lang) and the other edition of the same case opens with the same code. */
+function langPrompt(){return new Promise(res=>{let pref='';try{pref=localStorage.getItem('hyphen_lang')||''}catch(e){}if(pref)return res();
+ const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);
+ const o=document.createElement('div');o.id='langPick';o.innerHTML='<div class="lp"><div class="lp-t">اختاروا لغة اللعبة<span>Choose the game language</span></div><button type="button" data-l="ar">العربية</button><button type="button" data-l="en">English</button></div>';document.body.appendChild(o);
+ o.onclick=e=>{const b=e.target.closest('[data-l]');if(!b)return;const l=b.dataset.l;try{localStorage.setItem('hyphen_lang',l)}catch(e){}o.remove();
+  if((l==='en')!==en){location.href=(l==='en'?path+'en/':path.replace(/en\/$/,''))+location.hash;return}res()}})}
+const gate_=gate;gate=async function(){const ok=await gate_();if(ok)await langPrompt();return ok};
 async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';
   try{const j=await checkCode(code);if(j.ok){try{localStorage.setItem(GAME+'_pass',JSON.stringify({code,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);window.__gateOK&&window.__gateOK(true)}
     else err.textContent=j.why==='window'?'Play time is over — you had 4 days to finish from the moment you started':({not_found:'Invalid code',expired:'This code has expired',used:'This code is being used by another team',devices:'This code is open on 6 devices — that’s the maximum',finished:'This code is finished — The case has already been solved with it. To play again you’ll need a new code',late:'This team started more than 3 hours ago — You can’t join from a new device now. The devices that joined from the start can carry on as normal',format:'Enter the code like SHL-7342',wrong_game:'This code is for a different case'})[j.reason]||'Something went wrong, try again'}catch(e){err.textContent='We couldn’t verify it. Check your internet connection'}b.disabled=false}
