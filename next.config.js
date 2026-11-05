@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   async rewrites() {
-    return [{ source: "/game", destination: "/game/index.html" },{ source: "/shaleh", destination: "/shaleh/index.html" },{ source: "/tv", destination: "/tv/index.html" },{ source: "/villa", destination: "/villa/index.html" }];
+    return [{ source: "/game", destination: "/game/index.html" },{ source: "/game/en", destination: "/game/en/index.html" },{ source: "/shaleh/en", destination: "/shaleh/en/index.html" },{ source: "/shaleh", destination: "/shaleh/index.html" },{ source: "/tv", destination: "/tv/index.html" },{ source: "/villa", destination: "/villa/index.html" }];
   },
   async headers() {
     const noStore = [{ key: "Cache-Control", value: "no-store, no-cache, must-revalidate, max-age=0" }];
@@ -10,6 +10,10 @@ module.exports = {
       { source: "/game", headers: noStore },
       { source: "/game/index.html", headers: noStore },
       { source: "/game/manifest.json", headers: noStore },
+      { source: "/game/en", headers: noStore },
+      { source: "/game/en/index.html", headers: noStore },
+      { source: "/shaleh/en", headers: noStore },
+      { source: "/shaleh/en/index.html", headers: noStore },
       { source: "/shaleh", headers: noStore },
       { source: "/shaleh/index.html", headers: noStore },
       { source: "/shaleh/manifest.json", headers: noStore },

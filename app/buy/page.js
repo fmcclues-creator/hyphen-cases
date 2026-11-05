@@ -3,15 +3,58 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header, Footer } from "../components/Site";
 import { pixelTrack } from "../components/pixelTrack";
+import { useLang } from "../components/useLang";
+import { L } from "../../lib/i18n";
 
 const fmt = (n) => Number(n).toFixed(3);
-const PRODUCTS = [
-  { id: "khalid", name: "قضية خالد", sub: "اختفاء · ٥ مشتبهين" },
-  { id: "shaleh", name: "قضية الشاليه", sub: "سرقة · ٨ مشتبهين · ألعاب تفاعلية" },
-  { id: "bundle", name: "القضيتين", sub: "خالد + الشاليه — كودين، وفّروا ٢ د.ك", best: true },
-];
+const PRODUCTS = {
+  ar: [
+    { id: "khalid", name: "قضية خالد", sub: "اختفاء · ٥ مشتبهين" },
+    { id: "shaleh", name: "قضية الشاليه", sub: "سرقة · ٨ مشتبهين · ألعاب تفاعلية" },
+    { id: "bundle", name: "القضيتين", sub: "خالد + الشاليه — كودين، وفّروا ٢ د.ك", best: true },
+  ],
+  en: [
+    { id: "khalid", name: "The Khalid Case", sub: "Disappearance · 5 suspects" },
+    { id: "shaleh", name: "The Chalet Case", sub: "Theft · 8 suspects · Interactive" },
+    { id: "bundle", name: "Both cases", sub: "Khalid + Chalet — two codes, save KD 2", best: true },
+  ],
+};
+const T = {
+  ar: {
+    teamCode: "كود فريق", caseAria: "القضية", best: "الأوفر", phone: "رقم الواتساب", phoneHint: "بنتواصل معاكم على الواتساب إذا احتجتوا مساعدة بالطلب.",
+    forMe: "لي", gift: "🎁 هدية",
+    pGift: "بنرسل الكود على إيميل اللي تهدونه، باسمكم ومع رسالتكم. ويوصلكم إيصال بنفس الكود — إذا تبون تعطونه بنفسكم.",
+    pBundle: "كودين — واحد لكل قضية. كل كود يفتح على ٦ موبايلات، ومن أول ما تبدأون عندكم ٤ أيام تكملونها. الدفع بـ KNET أو بطاقة.",
+    pOne: "كود واحد يفتح اللعبة لفريقكم — على ٦ موبايلات، ومن أول ما تبدأون عندكم ٤ أيام تكملونها. الدفع بـ KNET أو بطاقة.",
+    giftName: "اسم اللي بتهدونه", giftNamePh: "مثلاً: نوف", giftEmail: "إيميله", giftFrom: "من منو؟", giftFromPh: "اسمكم", giftMsg: "رسالة قصيرة (اختياري)", giftMsgPh: "كل عام وانتي بخير 🎁",
+    emailGift: "إيميلكم (للإيصال)", email: "الإيميل", emailHintGift: "بنرسل لكم إيصال بنفس الكود — تأكدوا إنه صحيح.", emailHint: "بنرسل لكم الكود على هالإيميل — تأكدوا إنه صحيح.",
+    promo: "كود خصم (إذا عندكم)", apply: "تطبيق", total: "الإجمالي", kd: (v) => `${v} د.ك`,
+    wait: "ثواني…", getCode: "احصل على الكود", payGift: "ادفعوا وأرسلوا الهدية", pay: "ادفع وابدأ",
+    agree1: "بالشراء توافقون على ", terms: "الشروط والأحكام", agree2: " — منتج رقمي، لا استرجاع.",
+    promo_expired: "الكود منتهي", promo_used: "الكود خلصت استخداماته", promo_bad: "الكود غير صحيح", promo_fix: "كود الخصم غير صحيح — امسحوه أو صحّحوه", promo_dead: "كود الخصم ما عاد يشتغل",
+    discount: (v) => `خصم ${v} د.ك ✓`,
+    e_phone: "اكتبوا رقم موبايل صحيح", e_email: "اكتبوا إيميلكم صحيح — بنرسل لكم الإيصال عليه", e_gift: "اكتبوا إيميل صحيح للشخص اللي بتهدونه", e_gen: "صار خطأ، جرّبوا مرة ثانية",
+  },
+  en: {
+    teamCode: "team code", caseAria: "Case", best: "Best value", phone: "WhatsApp number", phoneHint: "We’ll reach you on WhatsApp if you need help with the order.",
+    forMe: "For me", gift: "🎁 Gift",
+    pGift: "We’ll email the code to the person you’re gifting, in your name and with your message. You get a receipt with the same code — in case you’d rather hand it over yourself.",
+    pBundle: "Two codes — one per case. Each code opens on 6 phones, with 4 days to finish from the moment you start. Pay by KNET or card.",
+    pOne: "One code opens the game for your team — on 6 phones, with 4 days to finish from the moment you start. Pay by KNET or card.",
+    giftName: "Who is it for?", giftNamePh: "e.g. Nouf", giftEmail: "Their email", giftFrom: "From whom?", giftFromPh: "Your name", giftMsg: "A short message (optional)", giftMsgPh: "Happy birthday 🎁",
+    emailGift: "Your email (for the receipt)", email: "Email", emailHintGift: "We’ll send you a receipt with the same code — make sure it’s correct.", emailHint: "We’ll send the code to this email — make sure it’s correct.",
+    promo: "Promo code (if you have one)", apply: "Apply", total: "Total", kd: (v) => `KD ${v}`,
+    wait: "One sec…", getCode: "Get the code", payGift: "Pay & send the gift", pay: "Pay & start",
+    agree1: "By purchasing you agree to the ", terms: "Terms & Conditions", agree2: " — digital product, no refunds.",
+    promo_expired: "This code has expired", promo_used: "This code has been used up", promo_bad: "Invalid code", promo_fix: "Invalid promo code — clear it or fix it", promo_dead: "This promo code no longer works",
+    discount: (v) => `KD ${v} off ✓`,
+    e_phone: "Enter a valid mobile number", e_email: "Enter a valid email — the receipt goes there", e_gift: "Enter a valid email for the person you’re gifting", e_gen: "Something went wrong, try again",
+  },
+};
 
 export default function Buy() {
+  const lang = useLang();
+  const t = T[lang], l = L(lang), products = PRODUCTS[lang];
   const [gift, setGift] = useState(false);
   const [game, setGame] = useState("khalid");
   const [phone, setPhone] = useState("");
@@ -25,6 +68,7 @@ export default function Buy() {
   const [promoMsg, setPromoMsg] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const promoErr = (reason) => (reason === "promo_expired" ? t.promo_expired : reason === "promo_used" ? t.promo_used : t.promo_bad);
 
   // /buy?game=shaleh picks the case; /buy?gift=1 lands with the gift tab on.
   // Read off the URL rather than useSearchParams, which would need a Suspense boundary.
@@ -32,13 +76,13 @@ export default function Buy() {
     const sp = new URLSearchParams(window.location.search);
     if (sp.get("gift")) setGift(true);
     const g = sp.get("game");
-    if (PRODUCTS.some((p) => p.id === g)) setGame(g);
+    if (products.some((p) => p.id === g)) setGame(g);
   }, []);
   useEffect(() => {
     // Funnel step 1: they reached the checkout form (re-quoted whenever the product changes).
     setQuote(null); setPromoMsg("");
     quoteFor(promo && quote?.discount ? promo : "").then((j) => {
-      pixelTrack("InitiateCheckout", { value: Number(j?.price) || 0, currency: "KWD", content_name: PRODUCTS.find((p) => p.id === game)?.name });
+      pixelTrack("InitiateCheckout", { value: Number(j?.price) || 0, currency: "KWD", content_name: products.find((p) => p.id === game)?.name });
     });
   }, [game]);
 
@@ -47,10 +91,10 @@ export default function Buy() {
   useEffect(() => {
     const digits = phone.replace(/[^\d]/g, "");
     if (digits.length < 8) return;
-    const t = setTimeout(() => {
+    const tm = setTimeout(() => {
       fetch("/api/lead", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ phone, gift, promo, email }), keepalive: true }).catch(() => {});
     }, 800);
-    return () => clearTimeout(t);
+    return () => clearTimeout(tm);
   }, [phone, gift, promo, email]);
 
   async function quoteFor(code) {
@@ -61,9 +105,9 @@ export default function Buy() {
   async function checkPromo() {
     setPromoMsg("");
     const j = await quoteFor(promo);
-    if (!j.ok) { quoteFor(""); return setPromoMsg(j.reason === "promo_expired" ? "الكود منتهي" : j.reason === "promo_used" ? "الكود خلصت استخداماته" : "الكود غير صحيح"); }
+    if (!j.ok) { quoteFor(""); return setPromoMsg(promoErr(j.reason)); }
     setQuote(j);
-    setPromoMsg(j.discount > 0 ? `خصم ${fmt(j.discount)} د.ك ✓` : "");
+    setPromoMsg(j.discount > 0 ? t.discount(fmt(j.discount)) : "");
   }
 
   async function go(e) {
@@ -72,104 +116,96 @@ export default function Buy() {
     let usePromo = quote?.discount ? promo : "";
     if (promo && !quote?.discount) {
       const j = await quoteFor(promo);
-      if (j.ok && j.discount > 0) { setQuote(j); setPromoMsg(`خصم ${fmt(j.discount)} د.ك ✓`); usePromo = promo; }
-      else { setBusy(false); return setErr(j.reason === "promo_expired" ? "الكود منتهي" : j.reason === "promo_used" ? "الكود خلصت استخداماته" : "كود الخصم غير صحيح — امسحوه أو صحّحوه"); }
+      if (j.ok && j.discount > 0) { setQuote(j); setPromoMsg(t.discount(fmt(j.discount))); usePromo = promo; }
+      else { setBusy(false); return setErr(j.reason === "promo_expired" ? t.promo_expired : j.reason === "promo_used" ? t.promo_used : t.promo_fix); }
     }
     const r = await fetch("/api/checkout", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ phone, email, promo: usePromo, gift, giftName, giftEmail, giftFrom, giftMsg, game }),
+      body: JSON.stringify({ phone, email, promo: usePromo, gift, giftName, giftEmail, giftFrom, giftMsg, game, lang }),
     });
     const j = await r.json().catch(() => ({}));
     setBusy(false);
     if (!j.ok) return setErr(
-      j.reason === "phone" ? "اكتبوا رقم موبايل صحيح"
-      : j.reason === "email" ? "اكتبوا إيميلكم صحيح — بنرسل لكم الإيصال عليه"
-      : j.reason === "gift_email" ? "اكتبوا إيميل صحيح للشخص اللي بتهدونه"
-      : j.reason?.startsWith("promo") ? "كود الخصم ما عاد يشتغل"
-      : "صار خطأ، جرّبوا مرة ثانية");
+      j.reason === "phone" ? t.e_phone
+      : j.reason === "email" ? t.e_email
+      : j.reason === "gift_email" ? t.e_gift
+      : j.reason?.startsWith("promo") ? t.promo_dead
+      : t.e_gen);
     if (j.paymentUrl) {
       // Funnel step 2: details accepted, heading to KNET/card payment. Give the
       // pixel a moment to send before the browser leaves the page.
       await Promise.race([
-        pixelTrack("AddPaymentInfo", { value: Number(total) || 0, currency: "KWD", content_name: PRODUCTS.find((p) => p.id === game)?.name })
+        pixelTrack("AddPaymentInfo", { value: Number(total) || 0, currency: "KWD", content_name: products.find((p) => p.id === game)?.name })
           .then(() => new Promise((res) => setTimeout(res, 400))),
         new Promise((res) => setTimeout(res, 1500)),
       ]);
       window.location.href = j.paymentUrl;
     }
-    else window.location.href = `/buy/done?code=${j.code}${j.code2 ? "&code2=" + j.code2 : ""}&game=${j.game || game}${j.test ? "&test=1" : ""}${j.gift ? "&gift=1" : ""}`;
+    else window.location.href = l(`/buy/done?code=${j.code}${j.code2 ? "&code2=" + j.code2 : ""}&game=${j.game || game}${j.test ? "&test=1" : ""}${j.gift ? "&gift=1" : ""}`);
   }
 
   const total = quote ? quote.price : null;
 
   return (
     <main className="wrap">
-      <Header />
+      <Header lang={lang} />
       <form className="card" onSubmit={go}>
-        <h2>{PRODUCTS.find((p) => p.id === game)?.name} · كود فريق</h2>
+        <h2>{products.find((p) => p.id === game)?.name} · {t.teamCode}</h2>
 
-        <div className="prods" role="radiogroup" aria-label="القضية">
-          {PRODUCTS.map((p) => (
+        <div className="prods" role="radiogroup" aria-label={t.caseAria}>
+          {products.map((p) => (
             <button type="button" key={p.id} role="radio" aria-checked={game === p.id} className={"prod" + (game === p.id ? " on" : "")} onClick={() => setGame(p.id)}>
-              {p.best && <i>الأوفر</i>}
+              {p.best && <i>{t.best}</i>}
               <b>{p.name}</b><span>{p.sub}</span>
             </button>
           ))}
         </div>
 
-        <label>رقم الواتساب</label>
+        <label>{t.phone}</label>
         <input inputMode="tel" autoComplete="tel" placeholder="9xxx xxxx" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-        <div className="muted" style={{ fontSize: 13, marginTop: -4, marginBottom: 14 }}>بنتواصل معاكم على الواتساب إذا احتجتوا مساعدة بالطلب.</div>
+        <div className="muted" style={{ fontSize: 13, marginTop: -4, marginBottom: 14 }}>{t.phoneHint}</div>
 
         <div className="tabs2" role="tablist">
-          <button type="button" role="tab" aria-selected={!gift} className={gift ? "" : "on"} onClick={() => setGift(false)}>لي</button>
-          <button type="button" role="tab" aria-selected={gift} className={gift ? "on" : ""} onClick={() => setGift(true)}>🎁 هدية</button>
+          <button type="button" role="tab" aria-selected={!gift} className={gift ? "" : "on"} onClick={() => setGift(false)}>{t.forMe}</button>
+          <button type="button" role="tab" aria-selected={gift} className={gift ? "on" : ""} onClick={() => setGift(true)}>{t.gift}</button>
         </div>
 
-        <p>
-          {gift
-            ? "بنرسل الكود على إيميل اللي تهدونه، باسمكم ومع رسالتكم. ويوصلكم إيصال بنفس الكود — إذا تبون تعطونه بنفسكم."
-            : game === "bundle"
-            ? "كودين — واحد لكل قضية. كل كود يفتح على ٦ موبايلات، ومن أول ما تبدأون عندكم ٤ أيام تكملونها. الدفع بـ KNET أو بطاقة."
-            : "كود واحد يفتح اللعبة لفريقكم — على ٦ موبايلات، ومن أول ما تبدأون عندكم ٤ أيام تكملونها. الدفع بـ KNET أو بطاقة."}
-        </p>
+        <p>{gift ? t.pGift : game === "bundle" ? t.pBundle : t.pOne}</p>
 
         {gift && (
           <>
-            <label>اسم اللي بتهدونه</label>
-            <input placeholder="مثلاً: نوف" value={giftName} onChange={(e) => setGiftName(e.target.value)} />
-            <label>إيميله</label>
+            <label>{t.giftName}</label>
+            <input placeholder={t.giftNamePh} value={giftName} onChange={(e) => setGiftName(e.target.value)} />
+            <label>{t.giftEmail}</label>
             <input type="email" placeholder="name@example.com" value={giftEmail} onChange={(e) => setGiftEmail(e.target.value)} required />
-            <label>من منو؟</label>
-            <input placeholder="اسمكم" value={giftFrom} onChange={(e) => setGiftFrom(e.target.value)} />
-            <label>رسالة قصيرة (اختياري)</label>
-            <input placeholder="كل عام وانتي بخير 🎁" maxLength={300} value={giftMsg} onChange={(e) => setGiftMsg(e.target.value)} />
+            <label>{t.giftFrom}</label>
+            <input placeholder={t.giftFromPh} value={giftFrom} onChange={(e) => setGiftFrom(e.target.value)} />
+            <label>{t.giftMsg}</label>
+            <input placeholder={t.giftMsgPh} maxLength={300} value={giftMsg} onChange={(e) => setGiftMsg(e.target.value)} />
             <div className="sep" />
           </>
         )}
 
-        <label>{gift ? "إيميلكم (للإيصال)" : "الإيميل"}</label>
+        <label>{gift ? t.emailGift : t.email}</label>
         <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <div className="muted" style={{ fontSize: 13, marginTop: -4 }}>
-          {gift ? "بنرسل لكم إيصال بنفس الكود — تأكدوا إنه صحيح." : "بنرسل لكم الكود على هالإيميل — تأكدوا إنه صحيح."}
-        </div>
+        <div className="muted" style={{ fontSize: 13, marginTop: -4 }}>{gift ? t.emailHintGift : t.emailHint}</div>
 
-        <label>كود خصم (إذا عندكم)</label>
+        <label>{t.promo}</label>
         <div className="promo">
           <input placeholder="PROMO" value={promo} onChange={(e) => { setPromo(e.target.value.toUpperCase()); setPromoMsg(""); if (quote?.discount) quoteFor(""); }} />
-          <button type="button" onClick={checkPromo} disabled={!promo}>تطبيق</button>
+          <button type="button" onClick={checkPromo} disabled={!promo}>{t.apply}</button>
         </div>
         {promoMsg && <div className={quote?.discount ? "ok" : "err"}>{promoMsg}</div>}
-        <div className="total"><span>الإجمالي</span><span>{quote && quote.discount > 0 && <s>{fmt(quote.listPrice)}</s>}<b>{total === null ? "—" : fmt(total)} د.ك</b></span></div>
+        <div className="total"><span>{t.total}</span><span>{quote && quote.discount > 0 && <s>{fmt(quote.listPrice)}</s>}<b>{t.kd(total === null ? "—" : fmt(total))}</b></span></div>
         {err && <div className="err">{err}</div>}
         <div style={{ marginTop: 20 }}>
           <button className="cta" disabled={busy}>
-            {busy ? "ثواني…" : total === 0 ? "احصل على الكود" : gift ? "ادفعوا وأرسلوا الهدية" : "ادفع وابدأ"}
+            {busy ? t.wait : total === 0 ? t.getCode : gift ? t.payGift : t.pay}
           </button>
         </div>
-        <div className="muted" style={{ marginTop: 12 }}>بالشراء توافقون على <Link href="/terms">الشروط والأحكام</Link> — منتج رقمي، لا استرجاع.</div>
+        <div className="muted" style={{ marginTop: 12 }}>{t.agree1}<Link href={l("/terms")}>{t.terms}</Link>{t.agree2}</div>
       </form>
-      <Footer />
+      <Footer lang={lang} />
     </main>
   );
 }

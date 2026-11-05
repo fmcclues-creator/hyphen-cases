@@ -14,5 +14,10 @@ export default function sitemap() {
     page("/about", 0.6, "monthly"),
     page("/play", 0.5, "monthly"),
     page("/terms", 0.3, "yearly"),
+    page("/en", 0.9, "weekly"),
+    page("/en/buy", 0.8, "weekly"),
+    page("/en/about", 0.5, "monthly"),
+    page("/en/play", 0.4, "monthly"),
+    page("/en/terms", 0.3, "yearly"),
   ];
 }

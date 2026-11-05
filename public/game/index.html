@@ -1835,7 +1835,7 @@ function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
 /* language toggle: the English edition lives in en/ next to this file; keep the #code hash */
-(function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');if(a)a.href=to;$$('[data-lang]').forEach(b=>b.onclick=()=>{location.href=to})})();
+(function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');const remember=()=>{try{localStorage.setItem('hyphen_lang',en?'ar':'en')}catch(e){}};if(a){a.href=to;a.onclick=remember}$$('[data-lang]').forEach(b=>b.onclick=()=>{remember();location.href=to})})();
 
 /* A code was burning six phone slots for four phones. Four of the ids were
    minted inside 2.5 seconds — one phone, opened repeatedly from a WhatsApp
@@ -1871,6 +1871,14 @@ async function gate(){
   show('gate');
   return new Promise(res=>{window.__gateOK=res});
 }
+/* first time in: pick the language of the game. The choice is remembered on this phone
+   (hyphen_lang) and the other edition of the same case opens with the same code. */
+function langPrompt(){return new Promise(res=>{let pref='';try{pref=localStorage.getItem('hyphen_lang')||''}catch(e){}if(pref)return res();
+ const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);
+ const o=document.createElement('div');o.id='langPick';o.innerHTML='<div class="lp"><div class="lp-t">اختاروا لغة اللعبة<span>Choose the game language</span></div><button type="button" data-l="ar">العربية</button><button type="button" data-l="en">English</button></div>';document.body.appendChild(o);
+ o.onclick=e=>{const b=e.target.closest('[data-l]');if(!b)return;const l=b.dataset.l;try{localStorage.setItem('hyphen_lang',l)}catch(e){}o.remove();
+  if((l==='en')!==en){location.href=(l==='en'?path+'en/':path.replace(/en\/$/,''))+location.hash;return}res()}})}
+const gate_=gate;gate=async function(){const ok=await gate_();if(ok)await langPrompt();return ok};
 async function tryCode(){const code=$('#gateIn').value.trim().toUpperCase();const err=$('#gateErr');const b=$('#gateGo');if(!code)return;b.disabled=true;err.textContent='';
   try{const j=await checkCode(code);
     if(j.ok){try{localStorage.setItem('khalid_pass',JSON.stringify({code,expires_at:j.expires_at}))}catch(e){}history.replaceState(null,'',location.pathname);window.__gateOK&&window.__gateOK(true)}

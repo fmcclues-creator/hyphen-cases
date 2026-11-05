@@ -31,6 +31,7 @@ export async function POST(req) {
   }
 
   const game = normGame(body.game);
+  const lang = body.lang === "en" ? "en" : "ar";
   const listPrice = listPriceFor(game);
   const pr = await applyPromo(body.promo, listPrice);
   if (!pr.ok) return Response.json({ ok: false, reason: pr.reason }, { status: 400 });
@@ -38,7 +39,7 @@ export async function POST(req) {
   const mode = process.env.PAYMENT_MODE || "test";
   const client = db();
   const { data: order, error } = await client.from("orders")
-    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game, ...gift })
+    .insert({ phone, email, amount_kwd: price, gateway: price === 0 ? "promo" : mode, promo: pr.promo, discount_kwd: pr.discount, game, lang, ...gift })
     .select().single();
   if (error) return Response.json({ ok: false, reason: "db" }, { status: 500 });
 
@@ -54,7 +55,7 @@ export async function POST(req) {
     try {
       const { data: row } = await client.from("codes").select("expires_at").eq("code", codes[0]).maybeSingle();
       const res = await sendOrderMails({
-        order: { ...order, email, phone }, code, game, expiresAt: row?.expires_at, test: isTest,
+        order: { ...order, email, phone, lang }, code, game, expiresAt: row?.expires_at, test: isTest,
       });
       Object.entries(res || {}).forEach(([who, r]) => {
         if (!r?.ok) console.error("checkout mail not sent", who, order.id, r);
@@ -87,7 +88,7 @@ export async function POST(req) {
       CustomerName: "HYPHEN Cases", NotificationOption: "LNK", InvoiceValue: price, CurrencyIso: "KWD",
       CustomerMobile: phone, CustomerEmail: email || undefined,
       CallBackUrl: `${site}/api/webhook?order=${order.id}&ok=1`, ErrorUrl: `${site}/api/webhook?order=${order.id}&ok=0`,
-      Language: "ar", UserDefinedField: order.id,
+      Language: lang, UserDefinedField: order.id,
     }),
   });
   const j = await r.json().catch(() => null);
