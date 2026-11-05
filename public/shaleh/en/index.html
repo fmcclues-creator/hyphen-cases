@@ -1017,7 +1017,7 @@ html.tv body{zoom:1.18}
           <div id="fieldCall" hidden><p>Before the patrol heads out — call him from <b>the station phone</b>. Dial the number yourselves.</p><button class="btn" id="goSalem">☎️ the station phone</button></div>
           <div id="fieldSc" hidden></div>
           <div id="fieldChase" hidden><p>The patrol is parked at Fintas Park… and they spotted him coming out of his house, running towards his car!</p><button class="btn" id="goChase">🏃 Chase him!</button></div>
-          <div id="fieldDoor" hidden><p>✅ We caught him before he got in. In his pocket, a note: <b>“the old beach storeroom · B3”</b>. and he keeps swearing: “A locked box, he locked it in front of me, and I don’t know the code” — and he won’t say who.</p><p>The patrol went to the storeroom: the metal box is on the shelf <b>B3</b>, a 4-digit padlock. Next to it, a torn handwritten note:</p><figure class="ev" style="max-width:260px;margin:6px auto"><img src="img/note_b3.jpg" alt="" onerror="this.closest('figure').remove()"><figcaption><b>“Lock numbers: last 4 of the first invoice”</b></figcaption></figure><p>Who wrote it? And which invoice?</p><button class="btn" id="goDoor">🔐 Open the padlock</button></div>
+          <div id="fieldDoor" hidden><p>✅ We caught him before he got in. In his pocket, a note: <b>“the old beach storeroom · B3”</b>. He keeps swearing: “A locked box, he locked it in front of me, and I don’t know the code” — and he won’t say who.</p><p>The patrol went to the storeroom: the metal box is on the shelf <b>B3</b>, a 4-digit padlock. Next to it, a torn handwritten note:</p><figure class="ev" style="max-width:260px;margin:6px auto"><img src="img/note_b3.jpg" alt="" onerror="this.closest('figure').remove()"><figcaption><b>“Lock numbers: last 4 of the first invoice”</b></figcaption></figure><p>Who wrote it? And which invoice?</p><button class="btn" id="goDoor">🔐 Open the padlock</button></div>
           <div id="fieldFound" hidden><p>✅ The box is open. The jewellery case… and all the gold.</p><button class="btn" id="goSolveF">🔍 Solve the case</button></div>
         </div>
       </div>
@@ -1173,7 +1173,7 @@ html.tv body{zoom:1.18}
     <img id="rvImg" class="rv" src="img/ending_case.jpg" alt="" hidden onerror="this.hidden=true">
     <div id="rzWrap" hidden><div class="who" style="margin:14px 0 6px">🎙️ Salem — After the chase</div><video id="rzVideo" class="rv" playsinline controls preload="none" poster="video/confession_salem.jpg" src="video/confession_salem.mp4"></video><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:6px;line-height:1.7">“Khalas… khalas, I’ll tell you. I knew Fahad was going to take the gold. We agreed I’d carry the box and hide it in the old storeroom. But he never told me the padlock code — Fahad is the one who set the code and locked the box. I took it to the storeroom and left… I never opened it, not once. I know I was wrong…”</div></div>
     <div id="lfWrap" hidden><div class="who" style="margin:14px 0 6px">🎙️ Latifa — At the chalet door</div><video id="lfVideo" class="rv" playsinline controls preload="none" poster="video/end_latifa.jpg" src="en/video/end_latifa.mp4"></video><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:6px;line-height:1.7">“Fahad? … You did this? You opened my safe… ransacked my room… and let us accuse Joyce and Reza? If you had come to me and told me you needed money… we would have found a way. It’s not the gold that hurt me… what hurt me is that it was you who took it.”</div></div>
-    <div id="cfWrap" hidden><div class="who" style="margin:14px 0 6px">🎙️ Fahad</div><video id="cfVideo" class="rv" playsinline controls preload="none" poster="video/end_fahad.jpg" src="en/video/end_fahad.mp4"></video><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:6px;line-height:1.7">“Yadda… it’s not what you think. I was drowning in debt. I couldn’t tell my father how much I’d lost… or you. I set the code, and I ransacked the room so it would look like a thief broke in from outside. Forgive me, Grandma… I betrayed your trust.”</div></div>
+    <div id="cfWrap" hidden><div class="who" style="margin:14px 0 6px">🎙️ Fahad</div><video id="cfVideo" class="rv" playsinline controls preload="none" poster="video/end_fahad.jpg" src="en/video/end_fahad.mp4"></video><div class="note-tech" style="color:#aab2c2;font-size:13px;margin-top:6px;line-height:1.7">“Grandma… it’s not what you think. I was drowning in debt. I couldn’t tell my father how much I’d lost… or you. I set the code, and I ransacked the room so it would look like a thief broke in from outside. Forgive me, Grandma… I betrayed your trust.”</div></div>
     <div class="lines" id="lines"></div>
     <div class="res" id="res" hidden></div>
     <div id="again" hidden style="color:var(--muted);font-size:14px;line-height:1.7">🔒 Code expired — Case solved. Fancy another case? <a href="https://cases.hyphen-eventskw.com" style="color:#fff">cases.hyphen-eventskw.com</a></div>
@@ -1655,14 +1655,14 @@ const CHATS=[
   ['day','Thursday'],
   ['me','<span></span>','5:30 PM','g_chalet'],
   ['me','We’re here. The weather is lovely','5:31 PM'],
-  ['them','😍 See if Yadda is sleeping or staying up','5:40 PM','','Noura'],
+  ['them','😍 See if Grandma is asleep or still up','5:40 PM','','Noura'],
   ['them','Staying up and asking where you all are 😂','6:10 PM','','Munira'],
   ['day','Friday'],
   ['me','<span></span>','8:15 AM','g_breakfast'],
   ['me','Breakfast is ready. Balaleet made by your grandma’s own hands','8:16 AM'],
   ['them','Can’t you wait for us?? 😭','8:20 AM','','Noura'],
   ['them','Leaving now','8:45 AM','','Bu Abdullah'],
-  ['them','I’m on my way, is Grandma with me? No, she’s with you. Okay, coming','9:05 AM','','Fahad'],
+  ['them','On my way. Is Grandma coming with me? …No, she’s with you. Okay, coming','9:05 AM','','Fahad'],
   ['them','Good morning, my children ❤️ Today I brought my mother’s gold with me, I want to show it to you all','11:35 AM','','Um Abdulaziz'],
   ['them','Mum, why are you bringing the gold to the chalet? Isn’t it better left at home?','11:40 AM','','Munira'],
   ['them','Grandma, did you bring the bracelet you told me about? 🥹','11:42 AM','','Noura'],
@@ -1775,7 +1775,7 @@ const SMS=[
  {id:'talabat',n:'Talabat',last:'Thursday',u:0,msgs:[['day','Thursday'],['them','Your order from Freej Swaileh restaurant is on the way 🛵 Arriving in 15 minutes.','8:30 PM'],['them','Delivered. Rate your experience ⭐','8:48 PM']]},
  {id:'hosp',n:'Dar Al Shifa Hospital',last:'Wednesday',u:0,msgs:[['day','Wednesday'],['them','Reminder: appointment for your mother Latifa — Internal Medicine Clinic, Monday 19 October at 10:30 AM. Press 1 to confirm.','9:00 AM']]},
  {id:'knet',n:'K-NET',last:'Friday',u:0,msgs:[['day','Thursday'],['them','Verification code: 771025. Do not share it with anyone.','8:29 PM'],['day','Friday'],['them','Verification code: 440192. Do not share it with anyone.','11:39 AM']]},
- {id:'zain',n:'Zain',last:'Wednesday',u:0,msgs:[['day','25 September'],['them','Your 50 GB data bundle has been renewedGB. Valid until 25 October.','12:01 AM'],['day','Wednesday'],['them','Your September bill: KD 32.000. Payment due by 25 October.','9:00 AM']]},
+ {id:'zain',n:'Zain',last:'Wednesday',u:0,msgs:[['day','25 September'],['them','Your 50 GB data bundle has been renewed. Valid until 25 October.','12:01 AM'],['day','Wednesday'],['them','Your September bill: KD 32.000. Payment due by 25 October.','9:00 AM']]},
  {id:'scam',n:'Secure Cam',last:'September',u:0,msgs:[['day','28 September'],['them','Secure Cam: Camera system for Chalet 42 (2 cameras) is now active. Default app login code: <b>0000</b>. We recommend changing it in Settings and writing a hint to remind you of it.','11:20 AM'],['day','12 October'],['them','Secure Cam: Alert — Camera 2 (rear): night lighting not working. Please request maintenance.','7:45 PM']]},
  {id:'paci',n:'PACI',last:'5 October',u:0,msgs:[['day','5 October'],['them','PACI: Your Civil ID is ready for collection from the South Surra branch.','10:15 AM']]},
  {id:'carwash',n:'Al-Khiran Car Wash',last:'9 October',u:0,msgs:[['day','9 October'],['them','Your car is ready 🚗 Thank you.','4:40 PM']]},
@@ -1799,7 +1799,7 @@ const PHOTOS=[
  {id:'boat',n:'Sea trip',info:'2 October · The boat',cap:'Hamour 🎣'},
  {id:'g_showroom',n:'Showroom opening',info:'12 September · Al Rai',cap:'God bless you, my son.'},
  {id:'g_diwaniya',n:'Diwaniya',info:'4 March · Diwaniya',cap:'El Clasico night.'},
- {id:'g_camp',n:'The camp',info:'18 January · Liver',cap:'Morning coffee.'},
+ {id:'g_camp',n:'The camp',info:'18 January · Kabd',cap:'Morning coffee.'},
  {id:'airport',n:'The airport',info:'11 September 2025 · The airport',cap:'Abdulrazzaq flying to London. Fahad drove us.'}];
 
 const NOTES=[
@@ -1840,7 +1840,7 @@ function renderCalls(){
 renderCalls();
 
 /* photos */
-const PH_EXTRA={g_camp:{n:'The camp',info:'18 January · Liver',cap:''},g_diwaniya:{n:'Diwaniya',info:'4 March',cap:''},g_showroom:{n:'Showroom opening',info:'12 September · Al Rai',cap:''},boat:{n:'Sea trip',info:'2 October',cap:''},g_pier:{n:'Fishing',info:'10 October',cap:''},mom_sofa:{n:'Mum',info:'Thursday · The Chalet',cap:''},fam_chalet:{n:'The family',info:'Friday 12:15 PM',cap:''},g_chalet:{n:'The Chalet',info:'Thursday',cap:''},g_breakfast:{n:'Breakfast',info:'Friday 8:10 AM',cap:''},g_kids:{n:'The kids',info:'Friday 11:50 AM',cap:''},safe_new:{n:'The new safe',info:'14 July · Mum’s room',cap:'Installation day.'},london_street:{n:'London',info:'12 September 2025',cap:'Abdulrazzaq’s first day in London.'},london_class:{n:'The lecture',info:'3 October 2025',cap:'Abdulrazzaq in his lecture — His reply to “where are you?”.'},london_snow:{n:'Ice',info:'20 November 2025',cap:'London.'},gold_show:{n:'My Yadda and the necklace',info:'Friday 12:34 PM · Table',cap:'Noura sent it to the family group.'},receipt:{n:'Co-op receipt',info:'Friday 3:22 PM · Khiran Co-op',cap:'Ice, charcoal, juice. Paid with Reza’s card, KD 4.250.'},
+const PH_EXTRA={g_camp:{n:'The camp',info:'18 January · Kabd',cap:''},g_diwaniya:{n:'Diwaniya',info:'4 March',cap:''},g_showroom:{n:'Showroom opening',info:'12 September · Al Rai',cap:''},boat:{n:'Sea trip',info:'2 October',cap:''},g_pier:{n:'Fishing',info:'10 October',cap:''},mom_sofa:{n:'Mum',info:'Thursday · The Chalet',cap:''},fam_chalet:{n:'The family',info:'Friday 12:15 PM',cap:''},g_chalet:{n:'The Chalet',info:'Thursday',cap:''},g_breakfast:{n:'Breakfast',info:'Friday 8:10 AM',cap:''},g_kids:{n:'The kids',info:'Friday 11:50 AM',cap:''},safe_new:{n:'The new safe',info:'14 July · Mum’s room',cap:'Installation day.'},london_street:{n:'London',info:'12 September 2025',cap:'Abdulrazzaq’s first day in London.'},london_class:{n:'The lecture',info:'3 October 2025',cap:'Abdulrazzaq in his lecture — His reply to “where are you?”.'},london_snow:{n:'Ice',info:'20 November 2025',cap:'London.'},gold_show:{n:'My grandma and the necklace',info:'Friday 12:34 PM · Table',cap:'Noura sent it to the family group.'},receipt:{n:'Co-op receipt',info:'Friday 3:22 PM · Khiran Co-op',cap:'Ice, charcoal, juice. Paid with Reza’s card, KD 4.250.'},
  invoice_q4729:{n:'Showroom invoice',info:'12 September · Fahad Car Showroom',cap:'The first invoice from Fahad’s showroom — Its number <b dir="ltr">Q-4729</b>. He sent it to his father the day the showroom opened.'}};
 function renderPhotos(){$('#photoGrid').innerHTML=PHOTOS.map(p=>`<button data-p="${p.id}" style="position:relative">${IMG(p.id)}${p.vid?'<span style="position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#fff;text-shadow:0 2px 8px #000;pointer-events:none">▶</span>':''}</button>`).join('')}
 $('#photoGrid').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openPhoto(b.dataset.p,'photos')};
@@ -2020,7 +2020,7 @@ function reveal(){$('#modal').classList.remove('on');try{syncPush(false,true)}ca
   const play=(wrap,vid,then)=>{$(wrap).hidden=false;const v=$(vid);const go=()=>{if(go.d)return;go.d=1;then()};v.onended=go;v.onerror=()=>setTimeout(go,4000);v.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>v.play().catch(()=>{}),600)};
   setTimeout(()=>play('#rzWrap','#rzVideo',()=>play('#lfWrap','#lfVideo',()=>play('#cfWrap','#cfVideo',()=>setTimeout(endCard,800)))),5400)}
 let _ended=false;function endCard(){if(_ended)return;_ended=true;const L=$('#lines');const p=document.createElement('p');p.innerHTML='The gold is back in Grandma’s safe. Noura returned the bracelet herself. And Fahad… told his family everything.';L.appendChild(p);requestAnimationFrame(()=>p.classList.add('in'));
-  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>Total time (with penalties)</small></div><div><b>${AR(S.wrong)}</b><small>Wrong accusation</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>Hints</small></div><div><b>${t<2400?'🏆 Detectives':t<3600?'👏 Excellent':'✅ You solved it'}</b><small>Rating</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()};lbOffer()}
+  const t=S.total||elapsed();$('#res').hidden=false;$('#res').innerHTML=`<div><b>${fmt(t)}</b><small>Total time (with penalties)</small></div><div><b>${AR(S.wrong)}</b><small>Wrong accusations</small></div><div><b>${AR(Object.values(S.hints).reduce((a,b)=>a+b,0))}</b><small>Hints</small></div><div><b>${t<2400?'🏆 Detectives':t<3600?'👏 Excellent':'✅ You solved it'}</b><small>Rating</small></div>`;$('#again').hidden=false;$('#again').onclick=()=>{try{localStorage.removeItem(GAME)}catch(e){}location.reload()};lbOffer()}
 
 
 /* ---- call Abdulrazzaq: 3 rounds, one right question each; accusing his brother makes him hang up ---- */
@@ -2144,31 +2144,31 @@ $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught him before he got in… <b>Salem!</b><br>In his pocket, a note: “The old beach storeroom · B3”. and he swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught him before he got in… <b>Salem!</b><br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
 function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ He got in his car and drove off. +2 minutes. The second patrol blocked the street and brought him back — Again, run faster!</div><button class="btn" id="runAgain">🏃 Again</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */
 const HINTS={
- lock:['He never gave anyone the pattern. But the file says this about him: he studied in Britain for 7 years, and registered the chalet in his mother’s name. And his wallpaper tells you who matters most to him.','His mother is Um Abdulaziz, and her name is Latifa — in the first line of the police report. And he studied in English: the first letter of Latifa is L. Draw it on the screen.','Answer: dots 1 ← 4 ← 7 ← 8 ← 9 (an Lshape, from top left down, then right).'],
+ lock:['He never gave anyone the pattern. But the file says this about him: he studied in Britain for 7 years, and registered the chalet in his mother’s name. And his wallpaper tells you who matters most to him.','His mother is Um Abdulaziz, and her name is Latifa — in the first line of the police report. And he studied in English: the first letter of Latifa is L. Draw it on the screen.','Answer: dots 1 → 4 → 7 → 8 → 9 (an L shape, from top left down, then right).'],
  cams:['On Bu Abdulrazzaq’s phone there is an app called <b>Cameras</b> — locked with a 4-digit code. The camera company texted him the default code on installation day — Try it.','The default code was changed, but Bu Abdulrazzaq left himself a hint: “The year I built the chalet for my mother”. The year is written on the plaque on her bedroom door — in the photo gallery on his phone — under the dust.','Answer: 1998.'],
  torch1:['Reza said he saw an unfamiliar car at the rear gate. In the camera app, the <b>Rear service gate</b> camera’s frame is black — Tap it and turn on the torch. (You can put it up on the TV from cases.hyphen-eventskw.com/tv)','Hold the light again on everything that shows: the car, the window next to it, and the plate.','Answer: an unfamiliar black GMC at 4:05 at the rear gate, and a metal box passed out to it through the diwaniya window. Plate 41872. Then: 🚓 Field in the file.'],
  scall:['The Traffic Department gave us Salem’s number — in the 🚓 Field tab. From <b>the station phone</b> dial the number yourselves: a wrong number won’t ring. The first time he’ll hang up on you — call again.','Ask him calmly: where he was, what he took, and who locked the box. If you accuse him he’ll hang up and run — you’ll still get to the chase, but without his information, and with an extra minute.','Answer: the number <span dir="ltr">66047291</span>. and he admits he took a locked box from “someone” he won’t name, that whoever gave it to him locked it in front of him and never gave him the code.'],
  plate:['The plate you found with the torch — the Traffic Department can tell you who owns it. The <b>🚓 Field</b> tab in the file.','Tap “Request plate details”.','Answer: Salem, 31, Fintas — Not family.'],
  route:['Don’t stop the patrol in front of his house. The Traffic Department said his house is next to <b>Fintas Park</b> — Find it on the map in the 🚓 Field tab, in Arabic or English.','Type “Fintas Park” and select it, then “Directions”. The shortest route has roadworks — look at ⚠️.','Answer: Fintas Park, and the direct blue route.'],
  chase:['Salem ran out the back door. Tap “Chase him” in the Field tab, and run on the spot with the phone in your hand — every step brings you closer to him.','Every step is counted from the phone’s shake. Run hard for 60 seconds. On a laptop, tap the button fast.','Answer: 70 steps before he gets in his car. If he escapes, +2 minutes and try again.'],
- door:['The note the patrol found next to the box — in the Field tab: “Last four of the first invoice”. Who has a business and invoices? Fahad sent his showroom’s first invoice to his father the day he opened it: WhatsApp ← Fahad ← 12 September.','The invoice number <span dir="ltr">Q-4729</span>. the last four digits.','Answer: the code is 4729.'],
+ door:['The note the patrol found next to the box — in the Field tab: “Last four of the first invoice”. Who has a business and invoices? Fahad sent his showroom’s first invoice to his father the day he opened it: WhatsApp → Fahad → 12 September.','The invoice number <span dir="ltr">Q-4729</span>. the last four digits.','Answer: the code is 4729.'],
  solve:['Three questions: who opened the safe and took the gold? Who took the box at the rear gate and hid it? And how was the safe opened without being forced — who knew the code?','The one who disappeared from the pool at 3:52, who was helping his father the day the safe was installed, whose “business is struggling” — and whose invoice opened the padlock. And the one whose car is 41872.','Fahad took it. Salem helped him. And Fahad learned the code the day he helped his father install the safe in the summer — in Bu Abdulrazzaq’s WhatsApp with Abdulrazzaq, 14 July.']};
 const HINT_WAIT=[0,300,600],HINT_PEN=[60,120,180],HINT_LAB=['+60 seconds','+2 min','+3 min'];
 /* teams kept getting stuck not on the puzzle but on finding it. this says
    where the next step lives — the place, never the answer — and costs nothing */
 const WHERE={unlocked:'The file: the police report and “About Bu Abdulrazzaq”',
- cams:'The phone ← the camera app — The 4-digit code',
- torch1:'The phone ← Cameras ← Rear service gate',
- plate:'File ← 🚓 Field ← Plate details',
- route:'File ← 🚓 Field ← The map (Fintas Park)',
- scall:'File ← 🚓 Field ← the station phone',
- chase:'File ← 🚓 Field',
- door:'The padlock in the file ← 🚓 Field · The note is there, and the invoice is on WhatsApp ← Fahad'};
+ cams:'The phone → the camera app — The 4-digit code',
+ torch1:'The phone → Cameras → Rear service gate',
+ plate:'File → 🚓 Field → Plate details',
+ route:'File → 🚓 Field → The map (Fintas Park)',
+ scall:'File → 🚓 Field → the station phone',
+ chase:'File → 🚓 Field',
+ door:'The padlock in the file → 🚓 Field · The note is there, and the invoice is on WhatsApp → Fahad'};
 const HNAME={lock:'Unlock phone',cams:'the camera app',torch1:'Rear camera',plate:'Car owner',scall:'Salem’s call',route:'Patrol to the park',chase:'The chase',door:'The padlock',solve:'The accusation'};
 function stage(){if(!S.unlocked)return 'lock';if(!S.cams)return 'cams';if(!S.torch1)return 'torch1';if(!S.plate)return 'plate';if(!S.scall)return 'scall';if(!S.route)return 'route';if(!S.chase)return 'chase';if(!S.door)return 'door';return 'solve'}
 function stageAt(st){S.stageAt=S.stageAt||{};if(!S.stageAt[st]){S.stageAt[st]=Date.now();save()}return S.stageAt[st]}
@@ -2237,7 +2237,7 @@ if(cast==='second'){
  body='<div class="a2h"><div class="a2h-d">Turn on <b>screen sharing</b> (Screen Mirroring) from the phone to the TV, and turn the phone <b>sideways</b>.</div>'
   +'<div class="a2h-t">Want the browser bar to disappear?</div>'
   +(_installEv?'<div class="acts"><button class="btn" id="a2hsGo">\u{1F4F2} Add to Home Screen</button></div>'
-   :ios?st('1','Hold the phone <b>upright</b>and tap the Share button at the bottom:',bar)
+   :ios?st('1','Hold the phone <b>upright</b> and tap the Share button at the bottom:',bar)
        +st('2','Tap <b>View More</b>:','<img class="a2h-img" src="/img/a2hs_more.jpg" alt="">')
        +st('3','Choose <b>Add to Home Screen</b>, then <b>Add</b> at the top:','<img class="a2h-img" src="/img/a2hs_add.jpg" alt="">')
    :'<div class="a2h-d">Open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</div>')
