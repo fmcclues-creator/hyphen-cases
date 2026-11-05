@@ -299,7 +299,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .nview{background:#fff8dd;color:#2a2419}.nview .locked{background:#0b0e14;color:#fff;min-height:100%}.nview .notes{min-height:100%}.nview .plain{padding:16px;line-height:1.9;font-size:16px;white-space:pre-line}.nview .plain h4{margin:0 0 6px}.nview .plain small{color:#8a7f66;font-size:12px;display:block;margin-bottom:10px}
 .notes h4{margin:0 0 8px;font-size:18px}
 .notes mark{background:#ffe08a}
-.locked{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center}
+.locked{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:safe center;gap:12px;padding:16px;text-align:center;overflow-y:auto;min-height:0}
+@media (max-height:720px){.locked .pad button{height:54px;font-size:23px}.locked .pad{gap:8px}.locked .hint{font-size:13px}}
 .locked .hint{color:var(--muted);font-size:14px;max-width:28ch}
 
 /* ---------- realistic phone ---------- */
