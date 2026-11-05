@@ -29,7 +29,7 @@
 <meta name="twitter:description" content="ليلة الخميس تجمّعت العايلة بالشاليه. الجمعة الصبح، تجوري الجدّة فاضي. الكل يقول الشغّالة — وعندكم ساعة.">
 <meta name="twitter:image" content="https://cases.hyphen-eventskw.com/og/og-shaleh.png">
 <!-- seo:end -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Readex+Pro:wght@400;500;700&family=Grand+Hotel&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Readex+Pro:wght@400;500;700&family=Grand+Hotel&display=swap" media="print" onload="this.media=\'all\'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Readex+Pro:wght@400;500;700&family=Grand+Hotel&display=swap"></noscript><script>setTimeout(function(){document.querySelectorAll('link[media="print"]').forEach(function(l){l.media="all"})},2500)</script>
 <style>
 /* Tajawal has no چ and no گ. Without them the browser falls back mid-word to
    whatever font the phone happens to have, which breaks the Arabic joining and
@@ -1419,9 +1419,10 @@ const AR2EN=t=>String(t||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexO
 let LMAP=null,LLAYERS=[],GEO_T=null,GEO_N=0;
 function loadLeaflet(){return new Promise((res,rej)=>{if(window.L)return res();const css=document.createElement('link');css.rel='stylesheet';css.href='vendor/leaflet/leaflet.css';document.head.appendChild(css);const sc=document.createElement('script');sc.src='vendor/leaflet/leaflet.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
 async function geocode(q){const my=++GEO_N;let out=[];
- try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=kw&accept-language=ar&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'}});const j=await r.json();
+ const v=AR2EN(q),loc=MAP_LOCAL.filter(a=>v.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}));
+ try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=kw&accept-language=ar&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'},signal:(window.AbortSignal&&AbortSignal.timeout?AbortSignal.timeout(5000):undefined)});const j=await r.json();
    out=j.map(x=>{const parts=x.display_name.split(',').map(p=>p.trim());const t=(x.name?x.name+' — ':'')+parts.slice(x.name?1:0,x.name?3:3).join('، ');return{t,full:x.display_name,ll:[+x.lat,+x.lon]}})}catch(e){}
- if(!out.length){const v=AR2EN(q);out=MAP_LOCAL.filter(a=>v.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}))}
+ out=loc.concat(out.filter(o=>!loc.some(l=>distM(l.ll,o.ll)<150)));
  return my===GEO_N?out:null}
 function renderMap(){const box=$('#mapBox');if(!box)return;
  if(!box.querySelector('#lmap')){box.innerHTML=`<div class="gmap" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid #cfc8b8;background:#e9e5dc">
@@ -1430,9 +1431,12 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
   <div id="mapUi" style="padding:8px"></div></div>`;
   const q=box.querySelector('#mapQ'),sug=box.querySelector('#mapSug'),busy=box.querySelector('#mapBusy');
   q.oninput=()=>{if(MAPH.routes)return;clearTimeout(GEO_T);const v=q.value.trim();if(v.length<3){sug.style.display='none';return}busy.style.display='';
-    GEO_T=setTimeout(async()=>{const hits=await geocode(v);busy.style.display='none';if(!hits)return;sug.style.display=hits.length?'block':'none';
+    const showHits=hits=>{sug.style.display=hits.length?'block':'none';
       sug.innerHTML=hits.length?hits.map((a,i)=>`<div data-i="${i}" style="padding:9px 12px;font-size:13.5px;color:#222;border-bottom:1px solid #eee;cursor:pointer">📍 ${a.t}</div>`).join(''):'';
-      sug.querySelectorAll('[data-i]').forEach(d=>d.onclick=()=>{const a=hits[+d.dataset.i];q.value=a.t;sug.style.display='none';mapPick(a)})},550)};
+      sug.querySelectorAll('[data-i]').forEach(d=>d.onclick=()=>{const a=hits[+d.dataset.i];q.value=a.t;sug.style.display='none';mapPick(a)})};
+    /* places we know appear at once; the online search fills in the rest when it answers */
+    const vv=AR2EN(v),loc=MAP_LOCAL.filter(a=>vv.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}));if(loc.length)showHits(loc);
+    GEO_T=setTimeout(async()=>{const hits=await geocode(v);busy.style.display='none';if(!hits)return;showHits(hits)},550)};
   loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.167,48.118],15);L.control.zoom({position:'bottomleft'}).addTo(LMAP);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 مخفر الفنطاس',{permanent:true,direction:'bottom',className:'mapTip'});
@@ -1454,7 +1458,7 @@ function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(
    const go=ui.querySelector('#mapGo');if(go)go.onclick=()=>{go.disabled=true;go.textContent='… نحسب الطرق';mapRoutes(a.ll).then(rs=>{MAPH.routes=rs;SFX.ok();mapDraw()})}}}
 /* three ways from the station: direct (right), the ring road (long), and an inner street with road works (looks shortest) */
 async function mapRoutes(dest){const S0=MAP_STATION;
- const osrm=async pts=>{const u='https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson';const r=await fetch(u);const j=await r.json();const rt=j.routes[0];return{pts:rt.geometry.coordinates.map(c=>[c[1],c[0]]),sec:rt.duration}};
+ const osrm=async pts=>{const u='https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson';const r=await fetch(u,{signal:(window.AbortSignal&&AbortSignal.timeout?AbortSignal.timeout(6000):undefined)});const j=await r.json();const rt=j.routes[0];return{pts:rt.geometry.coordinates.map(c=>[c[1],c[0]]),sec:rt.duration}};
  const mid=[(S0[0]+dest[0])/2,(S0[1]+dest[1])/2],dx=dest[1]-S0[1],dy=dest[0]-S0[0];
  const viaInner=[mid[0]+dx*0.35,mid[1]-dy*0.35],viaRing=[mid[0]-dx*0.9,mid[1]+dy*0.9];
  let A,B,C;try{[A,B,C]=await Promise.all([osrm([S0,dest]),osrm([S0,viaRing,dest]),osrm([S0,viaInner,dest])])}catch(e){A={pts:[S0,dest],sec:540};B={pts:[S0,viaRing,dest],sec:840};C={pts:[S0,viaInner,dest],sec:420}}
@@ -2331,7 +2335,7 @@ function deviceSig(){try{const n=navigator,s=screen;
   return 'sig-'+hex(h1)+hex(h2)+hex(h1^h2)}catch(e){return null}}
 function deviceId(){try{let d=localStorage.getItem('hyphen_dev')||localStorage.getItem(GAME+'_dev')||localStorage.getItem('khalid_dev');if(!d)d=deviceSig()||crypto.randomUUID();try{localStorage.setItem('hyphen_dev',d)}catch(e){}return d}catch(e){return deviceSig()||'nodevice'}}
 function savedPass(){try{const p=JSON.parse(localStorage.getItem(GAME+'_pass')||'null');if(p&&new Date(p.expires_at)>new Date())return p}catch(e){}return null}
-async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME})});return r.json()}
+async function checkCode(code){const r=await fetch(STORE+'/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,device:deviceId(),game:GAME}),signal:(window.AbortSignal&&AbortSignal.timeout?AbortSignal.timeout(15000):undefined)});return r.json()}
 $('#gateBuy').href=STORE+'/buy?game='+GAME;
 /* language toggle: the English edition lives in en/ next to this file; keep the #code hash */
 (function(){const path=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');const en=/\/en\/$/.test(path);const to=(en?path.replace(/en\/$/,''):path+'en/')+location.hash;const a=$('#gateLang');const remember=()=>{try{localStorage.setItem('hyphen_lang',en?'ar':'en')}catch(e){}};if(a){a.href=to;a.onclick=remember}$$('[data-lang]').forEach(b=>b.onclick=()=>{remember();location.href=to})})();
