@@ -2269,7 +2269,7 @@ if(cast==='second'){
  body='<div class="a2h"><div class="a2h-f">Pick one above and we’ll show you the steps.</div></div>';
 }
 sheet(head+body+'<div class="acts"><button class="btn" data-close>OK</button></div>');
-$$('[data-cast]').forEach(b=>b.onclick=()=>{try{localStorage.setItem(GAME+'_cast',b.dataset.cast)}catch(e){}a2hs()});
+$$('[data-cast]').forEach(b=>b.onclick=()=>{try{localStorage.setItem(GAME+'_cast',b.dataset.cast)}catch(e){}a2hs(view)});
 const g=$('#a2hsGo');if(g)g.onclick=async()=>{try{_installEv.prompt();const r=await _installEv.userChoice;_installEv=null;if(r&&r.outcome==='accepted')$('#modal').classList.remove('on')}catch(e){}}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a2hs]');if(t){e.preventDefault();a2hs()}});
 
