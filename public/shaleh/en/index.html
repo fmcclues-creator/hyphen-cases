@@ -345,11 +345,12 @@ button.row.callable:active{background:rgba(47,204,95,.18)}
 /* ---------- realistic phone ---------- */
 .home{background:url("img/wall.jpg") center/cover no-repeat;overflow-y:auto;scrollbar-width:none}
 .home::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0 38%,rgba(0,0,0,.4));pointer-events:none}
-#a-home{position:relative}
+#a-home{position:relative}#home{padding-bottom:120px!important}
+.stepsSheet div{display:flex;align-items:center;gap:10px;color:var(--muted);padding:4px 0}.stepsSheet div.ok,.stepsSheet div.cur{color:var(--fg)}.stepsSheet i{font-style:normal;width:22px;text-align:center}
 .icon{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .icon .g{box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-size:0;position:relative;overflow:hidden}
 .icon .g svg{width:34px;height:34px;display:block}
-.dock{grid-column:1/-1;position:absolute;inset-inline:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);z-index:1}
+.dock{position:absolute;inset-inline:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 8px;border-radius:24px;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);z-index:1}
 .dock .icon span:last-child{display:none}
 .lockbg{position:absolute;inset:0;background:url("img/wall.jpg") center/cover;opacity:.45;filter:blur(3px)}
 /* instagram */
@@ -624,6 +625,7 @@ html.tv body{zoom:1.18}
 /* ---------- landscape / TV layout: phone sideways or any wide screen ---------- */
 .apps{flex:1;min-height:0;display:flex;flex-direction:column}
 #side{display:none}
+@media (orientation:landscape) and (max-height:520px){#side{display:none!important}.device{flex:1 1 100%!important;max-width:none!important;border-radius:0!important;border-width:0!important}.bar{padding:2px 6px!important;gap:4px!important;min-height:0}.bar .chip{padding:2px 8px!important;font-size:11px!important}.bar .timer{font-size:13px!important;min-width:46px!important}.stage{padding:0!important;gap:0!important}}
 @media (orientation:landscape) and (min-width:640px){
   .bar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;padding:4px 8px}.bar::-webkit-scrollbar{display:none}.bar .chip{padding:5px 9px;font-size:12px}.bar .timer{font-size:16px;min-width:52px}
   .sd-solve{padding:12px;font-size:16px;font-weight:700;text-align:center;border-radius:14px}
@@ -640,7 +642,7 @@ html.tv body{zoom:1.18}
   .sd-top{display:flex;align-items:baseline;gap:10px}.sd-top .timer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}.sd-lbl{font-size:12px;color:var(--muted);letter-spacing:.06em}
   .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev div.cur{color:var(--fg)}.sd-ev div.cur i{border-color:var(--red2);color:var(--red2)}.sd-ev div.off{opacity:.45}.sd-ev div.off i{border-style:dashed;font-size:9px}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
   .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}#side .sd-solve{margin-top:auto}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
-  .home,.ez-home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px}.home .icon .g svg{width:27px;height:27px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin-top:0;grid-template-columns:repeat(4,1fr);max-width:480px;margin-inline:auto;padding:6px 8px;border-radius:18px}
+  .home,.ez-home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px}.home .icon .g svg{width:27px;height:27px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock,#a-home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin:0 auto;grid-template-columns:repeat(4,1fr);max-width:480px;padding:6px 8px;border-radius:18px}
   /* paired apps: list beside the open item */
   .apps{flex-direction:row}
   .device:has(#a-chat.on) #a-chats,.device:has(#a-smsc.on) #a-sms,.device:has(#a-note.on) #a-notes{display:flex;flex:0 0 36%;border-inline-end:1px solid var(--line)}
@@ -1063,7 +1065,7 @@ html.tv body{zoom:1.18}
   <div class="stage"><div class="device sam">
     <div class="status"><span>Friday 8:30 PM</span><span>📶 🔋 27%</span></div>
     <div class="apps">
-    <div class="app on" id="a-home"><div class="home" id="home"></div></div>
+    <div class="app on" id="a-home"><div class="home" id="home"></div><div class="dock" id="dockEl"></div></div>
 
     <div class="app" id="a-chats"><div class="ah wa-h"><button data-back>‹</button><div>WhatsApp <span class="sub">Chats</span></div></div><div class="list wa-list" id="chatList"></div></div>
     <div class="app" id="a-chat"><div class="ah wa-h"><button data-back="chats">‹</button><span id="chatAv"></span><div id="chatTitle"></div></div><div class="msgs wa" id="chatBody"></div></div>
@@ -1202,7 +1204,7 @@ html.tv body{zoom:1.18}
 <button class="mitem" data-book>📝 <span>Our notebook</span></button>
 <button class="mitem" data-rules>📖 <span>Rules</span></button>
 <button class="mitem" data-share hidden>📲 <span>Share the code</span></button>
-<button class="mitem" data-tv>📺 <span>Play on TV</span></button>
+<button class="mitem" data-howtv>📺 <span>How to show it on the TV</span></button><button class="mitem" data-steps>📋 <span>Steps</span></button><button class="mitem" data-tv>📺 <span>Play on TV</span></button>
 <button class="mitem" data-lang>🌐 <span>العربية · Arabic</span></button><button class="mitem" data-home>🏠 <span>Home</span></button><button class="mitem" data-newcode>🔑 <span>Another code</span></button>
 </nav>
 </div>
@@ -1286,7 +1288,7 @@ function keypad(el,dots,onFull){let v='';const keys=['1','2','3','4','5','6','7'
 
 /* ---- intro / file ---- */
 function rules(){sheet('<h3>How to play</h3><div class="h">⏱ <b>You have one hour.</b> Read the file, unlock the phone, and dig through what’s on it.</div><div class="h">👥 <b>Your friends are with you:</b> Tap <b>📲 Share the code</b> — Up to 6 phones on the same code, and whatever one of you unlocks shows up for everyone.</div><div class="h">📺 <b>On the TV:</b> Tap <b>📺 Play on TV</b>.</div><div class="h">🔊 <b>Sound:</b> There are calls and recordings — Turn the volume up and take it off mute. Everything said is also written out.</div><div class="h">💡 <b>Stuck?</b> Tap <b>💡 Hint</b> — But it adds time.</div><div class="h">🔒 The code is one-time, and you can join within 3 hours of starting.</div><div class="acts"><button class="btn" data-close>Got it</button></div>')}
-$$('[data-rules]').forEach(b=>b.onclick=rules);
+$$('[data-rules]').forEach(b=>b.onclick=rules);$$('[data-howtv]').forEach(b=>b.onclick=()=>a2hs(true));$$('[data-steps]').forEach(b=>b.onclick=stepsSheet);
 function notebook(){let v='';try{v=localStorage.getItem(GAME+'_book')||''}catch(e){}
   sheet(`<h3>📝 Investigation Notebook</h3><div class="h" style="opacity:.7">Write down what you’ve noticed here. It’s saved on this device.</div><textarea id="bookTx" style="width:100%;min-height:200px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:16px;line-height:1.7" placeholder="Example: Reza came back at 1:50 but the camera shows him in the hallway at 2:35…"></textarea><div class="acts"><button class="btn" data-close>Save and close</button></div>`);
   const t=$('#bookTx');t.value=v;t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}}}
@@ -1828,7 +1830,7 @@ const APPS=[['chats','WhatsApp','#25d366',CHATS.reduce((a,c)=>a+c.u,0)],['sms','
 const ICO={cams:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#9fb3d9" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#9fb3d9"/><path d="M10 12h8M30 12h8" stroke="#9fb3d9" stroke-width="3" stroke-linecap="round"/></svg>',chats:'<svg viewBox="0 0 48 48"><path d="M24 7C14.6 7 7 14.6 7 24c0 3 .8 5.8 2.2 8.2L7 41l9-2.3A17 17 0 1 0 24 7z" fill="#fff"/><path d="M18.6 15.6c-.4-.9-.8-.9-1.2-.9h-1c-.4 0-1 .1-1.5.7-.5.6-2 1.9-2 4.6s2 5.3 2.3 5.7c.3.4 3.9 6.2 9.6 8.4 4.7 1.9 5.7 1.5 6.7 1.4 1-.1 3.3-1.3 3.8-2.6.5-1.3.5-2.4.3-2.6-.1-.2-.5-.4-1.1-.7l-3.8-1.8c-.5-.2-.9-.3-1.3.3-.4.6-1.4 1.8-1.7 2.1-.3.4-.6.4-1.2.2-.5-.3-2.3-.9-4.4-2.7-1.6-1.5-2.7-3.2-3.1-3.8-.3-.6 0-.9.3-1.1l.8-1c.3-.3.4-.6.6-1 .2-.4.1-.7 0-1l-2.1-4.2z" fill="#25d366"/></svg>',sms:'<svg viewBox="0 0 48 48"><path d="M24 9c-8.8 0-16 5.7-16 12.8 0 4 2.3 7.6 5.9 10L12 40l9.3-4.4c.9.1 1.8.2 2.7.2 8.8 0 16-5.7 16-12.8S32.8 9 24 9z" fill="#fff"/><circle cx="17.5" cy="22" r="2.1" fill="#1a73e8"/><circle cx="24" cy="22" r="2.1" fill="#1a73e8"/><circle cx="30.5" cy="22" r="2.1" fill="#1a73e8"/></svg>',photos:'<svg viewBox="0 0 48 48"><circle cx="24" cy="14" r="8.4" fill="#f5a623"/><circle cx="34" cy="24" r="8.4" fill="#e8574a"/><circle cx="24" cy="34" r="8.4" fill="#4a90d9"/><circle cx="14" cy="24" r="8.4" fill="#5bbf7a"/><circle cx="24" cy="24" r="6.2" fill="#fff"/></svg>',notes:'<svg viewBox="0 0 48 48"><rect x="11" y="8" width="26" height="32" rx="4" fill="#fff"/><rect x="15.5" y="15" width="14" height="2.4" rx="1.2" fill="#c99a2e"/><rect x="15.5" y="21" width="17" height="2.4" rx="1.2" fill="#c99a2e"/><rect x="15.5" y="27" width="11" height="2.4" rx="1.2" fill="#c99a2e"/><path d="M33 24.5l4.2 4.2-8.4 8.4-5 .8.8-5z" fill="#6b4f16"/></svg>',calls:'<svg viewBox="0 0 48 48"><path d="M34.8 29.6l-5.2-2.2c-.9-.4-2 0-2.6.8l-2 2.9c-4.6-2.4-8.3-6.1-10.7-10.7l2.9-2c.8-.6 1.2-1.7.8-2.6l-2.2-5.2c-.5-1.1-1.7-1.7-2.8-1.4l-4.5 1.2c-1.1.3-1.9 1.3-1.8 2.5C7.9 25.4 18 35.5 30.5 36.8c1.2.1 2.2-.7 2.5-1.8l1.2-4.5c.3-1.1-.3-2.3-1.4-2.9z" fill="#fff"/></svg>',x1:'<svg viewBox="0 0 48 48"><path d="M24 15.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zm0 12.6a4.1 4.1 0 1 1 0-8.2 4.1 4.1 0 0 1 0 8.2z" fill="#fff"/><path d="M40 26.6v-5.2l-4.3-.9a12 12 0 0 0-1.3-3.2l2.4-3.7-3.7-3.7-3.7 2.4a12 12 0 0 0-3.2-1.3L25.3 7h-5.2l-.9 4.3c-1.1.3-2.2.7-3.2 1.3l-3.7-2.4-3.7 3.7 2.4 3.7c-.6 1-1 2.1-1.3 3.2L7 21.4v5.2l4.3.9c.3 1.1.7 2.2 1.3 3.2l-2.4 3.7 3.7 3.7 3.7-2.4c1 .6 2.1 1 3.2 1.3l.9 4.3h5.2l.9-4.3c1.1-.3 2.2-.7 3.2-1.3l3.7 2.4 3.7-3.7-2.4-3.7c.6-1 1-2.1 1.3-3.2l4.3-.9z" fill="#fff" opacity=".55"/></svg>',x2:'<svg viewBox="0 0 48 48"><rect x="7" y="13" width="34" height="22" rx="7" fill="#fff"/><path d="M21 19.5l9 4.5-9 4.5z" fill="#f00"/></svg>',x3:'<svg viewBox="0 0 48 48"><rect x="12" y="8" width="24" height="32" rx="4" fill="#fff"/><rect x="15.5" y="11.5" width="17" height="6" rx="2" fill="#9aa3b2"/><circle cx="18.5" cy="23" r="2.1" fill="#4b5563"/><circle cx="24" cy="23" r="2.1" fill="#4b5563"/><circle cx="29.5" cy="23" r="2.1" fill="#4b5563"/><circle cx="18.5" cy="29.5" r="2.1" fill="#4b5563"/><circle cx="24" cy="29.5" r="2.1" fill="#4b5563"/><circle cx="29.5" cy="29.5" r="2.1" fill="#f59e0b"/><circle cx="18.5" cy="35.5" r="2.1" fill="#4b5563"/><circle cx="24" cy="35.5" r="2.1" fill="#4b5563"/><circle cx="29.5" cy="35.5" r="2.1" fill="#f59e0b"/></svg>',x4:'<svg viewBox="0 0 48 48"><rect x="6" y="14" width="36" height="22" rx="5" fill="#fff"/><path d="M18 14l2.6-3.6h6.8L30 14z" fill="#fff"/><circle cx="24" cy="25" r="7.4" fill="#2b3240"/><circle cx="24" cy="25" r="4.4" fill="#5b6craw"/><circle cx="24" cy="25" r="4.4" fill="#6b7280"/><circle cx="35" cy="19.5" r="1.6" fill="#f59e0b"/></svg>',x5:'<svg viewBox="0 0 48 48"><rect x="7" y="14" width="34" height="21" rx="4" fill="#fff"/><rect x="7" y="19" width="34" height="4.4" fill="#1f2a44"/><rect x="11" y="28" width="11" height="3" rx="1.5" fill="#9aa3b2"/></svg>',x6:'<svg viewBox="0 0 48 48"><path d="M8 34l10-4 12 5 10-4v12H8z" fill="#9fd49f"/><path d="M8 20l10-4 12 5 10-4v14l-10 4-12-5-10 4z" fill="#cfe8cf"/><path d="M18 16v18M30 21v18" stroke="#fff" stroke-width="2"/><path d="M24 6a7.5 7.5 0 0 0-7.5 7.5C16.5 19 24 29 24 29s7.5-10 7.5-15.5A7.5 7.5 0 0 0 24 6z" fill="#e8574a"/><circle cx="24" cy="13.5" r="2.9" fill="#fff"/></svg>',x7:'<svg viewBox="0 0 48 48"><path d="M11 16h26l-2.3 22a3 3 0 0 1-3 2.7H16.3a3 3 0 0 1-3-2.7z" fill="#fff"/><path d="M18 18v-3.5a6 6 0 0 1 12 0V18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M24 23.5l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z" fill="#1b5fb8"/></svg>'}
 const DOCK=[['calls','Phone','#2fcc5f',0],['chats','','#25d366',0],['sms','','#1a73e8',0],['photos','','#fff',0]];
 const ico=a=>`<button class="icon" data-app="${a[4]?'offline':a[0]}" data-name="${a[1]}"><span class="g" style="background:${a[2]}">${ICO[a[0]]||`<span style="font-size:28px;line-height:1">${a[5]||''}</span>`}</span><span>${a[1]}</span>${a[3]?`<span class="b">${a[3]}</span>`:''}</button>`;
-$('#home').innerHTML=APPS.map(ico).join('')+`<div class="dock">${DOCK.map(ico).join('')}</div>`;
+$('#home').innerHTML=APPS.map(ico).join('');$('#dockEl').innerHTML=DOCK.map(ico).join('');
 /* the call list depends on what has been found since it was last drawn */
 function openApp(id){$$('.app').forEach(a=>a.classList.toggle('on',a.id==='a-'+id));if(id==='calls'&&typeof renderCalls==='function')renderCalls();if(S.start){S.app=id;save()}}
 $('#home').onclick=e=>{const b=e.target.closest('[data-app]');if(!b)return;if(b.dataset.app==='offline'){$('#offTitle').textContent=b.dataset.name||'';openApp('offline');return}openApp(b.dataset.app)};
@@ -2241,9 +2243,9 @@ apply()})();
 /* ---- "Play on TV" → Add to Home Screen walkthrough (hides the browser bars completely) ---- */
 let _installEv=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_installEv=e});
 function castMode(){try{return localStorage.getItem(GAME+'_cast')||''}catch(e){return ''}}
-function a2hs(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function a2hs(view){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const cast=castMode();
-const head='<h3>\u{1F4FA} TV mode is on</h3><div class="h">How will you show it on the TV?</div>'
+const head='<h3>\u{1F4FA} '+(view?'How to show it on the TV':'TV mode is on')+'</h3><div class="h">How will you show it on the TV?</div>'
  +'<div class="castrow"><button class="castb'+(cast==='mirror'?' on':'')+'" data-cast="mirror">\u{1F4F1} The phone screen itself<br><small>Screen Mirroring</small></button>'
  +'<button class="castb'+(cast==='second'?' on':'')+'" data-cast="second">\u{1F4FA} TV as a second screen<br><small>no screen sharing</small></button></div>';
 const SHARE_SVG='<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5V4.2m0 0L8.9 7.3M12 4.2l3.1 3.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.6 10.3H5.2v9.5h13.6v-9.5h-2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -2282,7 +2284,8 @@ window.showShare=()=>$$('[data-share]').forEach(b=>b.hidden=!code())})();
 
 
 /* ---- TV side panel (landscape): timer, evidence checklist, shared notebook ---- */
-function renderSide(){const el=$('#sideEv');if(!el)return;const items=[['unlocked','Unlock phone'],['cams','the camera app'],['torch1','Rear camera'],['plate','Car owner'],['scall','Salem’s call'],['route','Patrol to the park'],['chase','The chase'],['door','The padlock']];let open=true;el.innerHTML=items.map(([k,t])=>{const ok=!!S[k],cur=!ok&&open;if(!ok)open=false;return `<div class="${ok?'ok':cur?'cur':'off'}"><i>${ok?'✓':cur?'›':'🔒'}</i>${ok||cur?t:'···'}</div>`}).join('')}
+function stepsSheet(){const el=document.createElement('div');el.className="sd-ev stepsSheet";el.style.cssText="font-size:16px";renderSide(el);sheet('<h3>\u{1F4CB} Steps</h3>'+el.outerHTML)}
+function renderSide(el){el=el||$('#sideEv');if(!el)return;const items=[['unlocked','Unlock phone'],['cams','the camera app'],['torch1','Rear camera'],['plate','Car owner'],['scall','Salem’s call'],['route','Patrol to the park'],['chase','The chase'],['door','The padlock']];let open=true;el.innerHTML=items.map(([k,t])=>{const ok=!!S[k],cur=!ok&&open;if(!ok)open=false;return `<div class="${ok?'ok':cur?'cur':'off'}"><i>${ok?'✓':cur?'›':'🔒'}</i>${ok||cur?t:'···'}</div>`}).join('')}
 (function(){const t=$('#sideBook');if(!t)return;try{t.value=localStorage.getItem(GAME+'_book')||''}catch(e){}t.oninput=()=>{try{localStorage.setItem(GAME+'_book',t.value)}catch(e){}};document.addEventListener('focusin',()=>{try{const v=localStorage.getItem(GAME+'_book')||'';if(document.activeElement!==t&&t.value!==v)t.value=v}catch(e){}})})();
 
 
