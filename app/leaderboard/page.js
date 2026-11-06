@@ -1,52 +1,55 @@
 import Link from "next/link";
 import { Header, Footer } from "../components/Site";
-import { Podium, topRows, AR, fmt } from "../components/Board";
+import { Podium, topRows, num, fmt } from "../components/Board";
+import { L, GAME_NAMES } from "../../lib/i18n";
+import { getLang } from "../../lib/lang";
 
 export const dynamic = "force-dynamic";
-export const metadata = {
-  title: "لوحة المتصدرين — HYPHEN Cases",
-  description: "أسرع الفرق اللي حلّت قضايا HYPHEN. حطّوا اسمكم عقب ما تحلّون القضية.",
-  alternates: { canonical: "/leaderboard" },
+export function generateMetadata() {
+  return getLang() === "en"
+    ? { title: "Leaderboard — HYPHEN Cases", description: "The fastest teams to solve HYPHEN Cases. Add your name once you crack the case.", alternates: { canonical: "/en/leaderboard" } }
+    : { title: "لوحة المتصدرين — HYPHEN Cases", description: "أسرع الفرق اللي حلّت قضايا HYPHEN. حطّوا اسمكم عقب ما تحلّون القضية.", alternates: { canonical: "/leaderboard" } };
+}
+
+const T = {
+  ar: { h: "🏆 لوحة المتصدرين", p: "أسرع ١٥ فريق حلّوا القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).", empty: "ما فيه أحد على اللوحة بعد — كونوا أول فريق.", start: "ابدأوا التحقيق", cols: ["#", "الفريق", "الوقت", "اتهام غلط", "التاريخ"], foot: "اللوحة تعرض أسرع ١٥ فريق بس — الفرق الأبطأ ما تظهر هنا.", cta: "تبون اسمكم هنا؟ ابدأوا التحقيق", locale: "ar-KW" },
+  en: { h: "🏆 Leaderboard", p: "The 15 fastest teams to solve the case. Times include penalties (hints and wrong accusations).", empty: "Nobody on the board yet — be the first team.", start: "Start investigating", cols: ["#", "Team", "Time", "Wrong", "Date"], foot: "The board shows only the 15 fastest teams — slower teams don’t appear here.", cta: "Want your name here? Start investigating", locale: "en-GB" },
 };
 
-const GAMES = [
-  { id: "khalid", name: "قضية خالد" },
-  { id: "shaleh", name: "قضية الشاليه" },
-  { id: "villa", name: "قضية الفيلا" },
-];
-const day = (iso) => new Date(iso).toLocaleDateString("ar-KW", { day: "numeric", month: "long", timeZone: "Asia/Kuwait" });
-
 export default async function Leaderboard({ searchParams }) {
+  const lang = getLang(), t = T[lang], l = L(lang);
+  const GAMES = ["khalid", "shaleh"].map((id) => ({ id, name: GAME_NAMES[lang][id] }));
+  const day = (iso) => new Date(iso).toLocaleDateString(t.locale, { day: "numeric", month: "long", timeZone: "Asia/Kuwait" });
   const sp = await searchParams;
   const game = GAMES.find((g) => g.id === sp?.game)?.id || "shaleh";
-  const rows = await topRows(game);
+  const TOP = 15;
+  const rows = (await topRows(game, TOP)).slice(0, TOP);
   return (
     <main className="wrap">
-      <Header />
+      <Header lang={lang} />
       <article className="prose" style={{ maxWidth: 760 }}>
-        <h1>🏆 لوحة المتصدرين</h1>
-        <p>أسرع الفرق اللي حلّت القضية. الوقت يشمل الإضافات (التلميحات والاتهامات الغلط).</p>
+        <h1>{t.h}</h1>
+        <p>{t.p}</p>
         <nav className="cta-row" style={{ margin: "14px 0 22px" }}>
           {GAMES.map((g) => (
-            <Link key={g.id} href={`/leaderboard?game=${g.id}`} className={"cta" + (g.id === game ? "" : " lite")} style={{ fontSize: 16, padding: "10px 18px" }}>{g.name}</Link>
+            <Link key={g.id} href={l(`/leaderboard?game=${g.id}`)} className={"cta" + (g.id === game ? "" : " lite")} style={{ fontSize: 16, padding: "10px 18px" }}>{g.name}</Link>
           ))}
         </nav>
         {rows.length === 0 ? (
-          <p className="muted">ما فيه أحد على اللوحة بعد — كونوا أول فريق. <Link href="/buy">ابدأوا التحقيق</Link></p>
+          <p className="muted">{t.empty} <Link href={l("/buy")}>{t.start}</Link></p>
         ) : (
           <>
-            <Podium rows={rows.slice(0, 3)} />
+            <Podium rows={rows.slice(0, 3)} lang={lang} />
             {rows.length > 3 && (
               <table style={{ marginTop: 28 }}>
-                <thead><tr><th>#</th><th>الفريق</th><th>الوقت</th><th>تلميحات</th><th>اتهام غلط</th><th>التاريخ</th></tr></thead>
+                <thead><tr>{t.cols.map((c) => <th key={c}>{c}</th>)}</tr></thead>
                 <tbody>
                   {rows.slice(3).map((r, i) => (
                     <tr key={i}>
-                      <td>{AR(i + 4)}</td>
+                      <td>{num(i + 4, lang)}</td>
                       <td>{r.team}</td>
                       <td className="mono">{fmt(r.total)}</td>
-                      <td>{AR(r.hints)}</td>
-                      <td>{AR(r.wrong)}</td>
+                      <td>{num(r.wrong, lang)}</td>
                       <td className="muted">{day(r.created_at)}</td>
                     </tr>
                   ))}
@@ -55,9 +58,10 @@ export default async function Leaderboard({ searchParams }) {
             )}
           </>
         )}
-        <p style={{ marginTop: 26 }}><Link className="cta" href="/buy">تبون اسمكم هنا؟ ابدأوا التحقيق</Link></p>
+        {rows.length > 0 && <p className="muted" style={{ marginTop: 18, fontSize: 14 }}>{t.foot}</p>}
+        <p style={{ marginTop: 26 }}><Link className="cta" href={l("/buy")}>{t.cta}</Link></p>
       </article>
-      <Footer />
+      <Footer lang={lang} />
     </main>
   );
 }

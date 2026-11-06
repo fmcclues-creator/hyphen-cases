@@ -14,10 +14,12 @@ export async function GET(req) {
   const client = db();
   const { data: order } = await client.from("orders").select("*").eq("id", orderId).maybeSingle();
   if (!order) return Response.redirect(`${site}/buy?err=1`, 302);
+  // the buyer bought in this language: the done page and the emails follow it
+  const pre = order.lang === "en" ? "/en" : "";
 
   // Already handled (user refreshed)? Reuse the existing code.
   const { data: existing } = await client.from("codes").select("code,game").eq("order_id", orderId).order("created_at");
-  if (existing?.length) return Response.redirect(`${site}/buy/done?code=${existing[0].code}${existing[1] ? "&code2=" + existing[1].code : ""}&game=${order.game || "khalid"}`, 302);
+  if (existing?.length) return Response.redirect(`${site}${pre}/buy/done?code=${existing[0].code}${existing[1] ? "&code2=" + existing[1].code : ""}&game=${order.game || "khalid"}`, 302);
 
   let paid = false, ref = null;
 
@@ -42,7 +44,7 @@ export async function GET(req) {
 
   if (!paid) {
     await client.from("orders").update({ status: "failed" }).eq("id", orderId);
-    return Response.redirect(`${site}/buy?err=pay`, 302);
+    return Response.redirect(`${site}${pre}/buy?err=pay`, 302);
   }
   await client.from("orders").update({ status: "paid", gateway_ref: ref || order.gateway_ref }).eq("id", orderId);
   await consumePromo(order.promo);
@@ -63,7 +65,7 @@ export async function GET(req) {
     console.error("order mail threw", orderId, e);
   }
 
-  return Response.redirect(`${site}/buy/done?code=${codes[0]}${codes[1] ? "&code2=" + codes[1] : ""}&game=${game}${order.gift_to_email ? "&gift=1" : ""}`, 302);
+  return Response.redirect(`${site}${pre}/buy/done?code=${codes[0]}${codes[1] ? "&code2=" + codes[1] : ""}&game=${game}${order.gift_to_email ? "&gift=1" : ""}`, 302);
 }
 
 // Hesabe may POST the result instead of GET on some setups.

@@ -1,12 +1,15 @@
 import "./globals.css";
 import MetaPixel from "./components/MetaPixel";
 import { WhatsAppButton } from "./components/Site";
+import { getLang } from "../lib/lang";
 
 const SITE = "https://cases.hyphen-eventskw.com";
 const DESC =
   "ألعاب تحقيق جماعية. موبايل مقفول، ساعة وحدة، وفريق — افتحوا القضية على التلفزيون في البيت أو الشاليه.";
+const DESC_EN =
+  "Co-op detective games. A locked phone, one hour, and your team — crack the case on the TV at home or at the chalet.";
 
-export const metadata = {
+const metadataAr = {
   metadataBase: new URL(SITE),
   title: {
     default: "قضايا HYPHEN · ألعاب تحقيق",
@@ -56,6 +59,20 @@ export const metadata = {
   formatDetection: { telephone: false },
 };
 
+export function generateMetadata() {
+  if (getLang() !== "en") return metadataAr;
+  return {
+    ...metadataAr,
+    title: { default: "HYPHEN Cases · Detective games", template: "%s · HYPHEN Cases" },
+    description: DESC_EN,
+    applicationName: "HYPHEN Cases",
+    keywords: ["detective game", "mystery game", "party game Kuwait", "escape room Kuwait", "co-op game", "play on TV", "HYPHEN Events", "The Khalid Case", "The Chalet Case"],
+    alternates: { canonical: "/en" },
+    openGraph: { ...metadataAr.openGraph, locale: "en_US", url: `${SITE}/en`, title: "HYPHEN Cases · Detective games", description: DESC_EN, images: [{ url: "/og/og.png", width: 1200, height: 630, alt: "HYPHEN Cases" }] },
+    twitter: { ...metadataAr.twitter, title: "HYPHEN Cases · Detective games", description: DESC_EN },
+  };
+}
+
 export const viewport = { themeColor: "#0d1016" };
 
 const ORG = {
@@ -87,8 +104,9 @@ const ORG = {
 };
 
 export default function RootLayout({ children }) {
+  const lang = getLang();
   return (
-    <html lang="ar" dir="rtl">
+    <html lang={lang} dir={lang === "en" ? "ltr" : "rtl"}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -101,7 +119,7 @@ export default function RootLayout({ children }) {
       <body>
         <MetaPixel />
         {children}
-        <WhatsAppButton />
+        <WhatsAppButton lang={lang} />
       </body>
     </html>
   );

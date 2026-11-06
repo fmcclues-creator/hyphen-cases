@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { db } from "../../lib/db";
+import { L, GAME_NAMES } from "../../lib/i18n";
 
 export const AR = (n) => String(n).replace(/[0-9]/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+export const num = (n, lang) => (lang === "en" ? String(n) : AR(n));
 export const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 export const MEDAL = ["🥇", "🥈", "🥉"];
 
@@ -19,7 +21,8 @@ const STEP = [
   { h: 112, bg: "linear-gradient(180deg,#d8dde6,#8f97a6)", ink: "#1b1f27", label: "٢" },
   { h: 88, bg: "linear-gradient(180deg,#d9a06a,#8c5a2b)", ink: "#2a1708", label: "٣" },
 ];
-export function Podium({ rows }) {
+export function Podium({ rows, lang = "ar" }) {
+  const wrongW = lang === "en" ? "wrong accusations" : "اتهام غلط";
   const order = [1, 0, 2].filter((i) => rows[i]);
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10, margin: "26px 0 6px" }}>
@@ -30,8 +33,8 @@ export function Podium({ rows }) {
             <div style={{ fontSize: i === 0 ? 40 : 30, lineHeight: 1 }}>{MEDAL[i]}</div>
             <div style={{ fontWeight: 800, fontSize: i === 0 ? 20 : 17, textAlign: "center", wordBreak: "break-word" }}>{r.team}</div>
             <div className="mono" style={{ fontSize: 15, color: "var(--muted)" }}>{fmt(r.total)}</div>
-            <div style={{ fontSize: 12.5, color: "var(--muted)" }}>تلميحات {AR(r.hints)} · غلط {AR(r.wrong)}</div>
-            <div style={{ width: "100%", height: st.h, background: st.bg, color: st.ink, borderRadius: "12px 12px 0 0", display: "grid", placeItems: "center", fontSize: 44, fontWeight: 900, boxShadow: "0 -6px 24px rgba(0,0,0,.35) inset" }}>{st.label}</div>
+            <div style={{ fontSize: 12.5, color: "var(--muted)" }}>{wrongW} {num(r.wrong, lang)}</div>
+            <div style={{ width: "100%", height: st.h, background: st.bg, color: st.ink, borderRadius: "12px 12px 0 0", display: "grid", placeItems: "center", fontSize: 44, fontWeight: 900, boxShadow: "0 -6px 24px rgba(0,0,0,.35) inset" }}>{lang === "en" ? i + 1 : st.label}</div>
           </div>
         );
       })}
@@ -41,24 +44,25 @@ export function Podium({ rows }) {
 
 
 // the homepage block: one podium per case, side by side, and a link to the full board
-export async function HomeBoard() {
-  const cases = [{ game: "khalid", name: "قضية خالد" }, { game: "shaleh", name: "قضية الشاليه" }];
+export async function HomeBoard({ lang = "ar" }) {
+  const l = L(lang), en = lang === "en";
+  const cases = [{ game: "khalid", name: GAME_NAMES[lang].khalid }, { game: "shaleh", name: GAME_NAMES[lang].shaleh }];
   const boards = await Promise.all(cases.map(async (c) => ({ ...c, rows: await topRows(c.game, 3) })));
   return (
     <section className="cases" id="board">
-      <h2>🏆 لوحة المتصدرين</h2>
-      <p className="muted" style={{ margin: "0 0 4px" }}>أسرع الفرق اللي حلّت كل قضية. الوقت يشمل الإضافات.</p>
+      <h2>{en ? "🏆 Leaderboard" : "🏆 لوحة المتصدرين"}</h2>
+      <p className="muted" style={{ margin: "0 0 4px" }}>{en ? "The three fastest teams on each case — the full board shows the top 15. Times include penalties." : "أسرع ٣ فرق بكل قضية — اللوحة الكاملة تعرض أسرع ١٥. الوقت يشمل الإضافات."}</p>
       <div className="boards">
         {boards.map((b) => (
           <div key={b.game} className="board">
             <h3>{b.name}</h3>
             {b.rows.length === 0
-              ? <p className="muted">اللوحة فاضية بعد — أول فريق يحلّها يحطّ اسمه هنا.</p>
-              : <Podium rows={b.rows} />}
+              ? <p className="muted">{en ? "Nobody on the board yet — the first team to solve it goes here." : "اللوحة فاضية بعد — أول فريق يحلّها يحطّ اسمه هنا."}</p>
+              : <Podium rows={b.rows} lang={lang} />}
           </div>
         ))}
       </div>
-      <p style={{ marginTop: 18 }}><Link className="cta lite" href="/leaderboard" style={{ fontSize: 16, padding: "10px 18px" }}>اللوحة كاملة ←</Link></p>
+      <p style={{ marginTop: 18 }}><Link className="cta lite" href={l("/leaderboard")} style={{ fontSize: 16, padding: "10px 18px" }}>{en ? "Full board →" : "اللوحة كاملة ←"}</Link></p>
     </section>
   );
 }

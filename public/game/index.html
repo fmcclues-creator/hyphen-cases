@@ -361,7 +361,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .rec .wave{height:40px}.rec .wave i{background:#b9ad92}.rec .wave.play i{background:var(--tape)}
 .rec .pl{padding:8px 16px;border-radius:999px;background:var(--paper-ink);color:#fff;font-family:var(--ui);font-size:14px}
 .rec .tx{font-size:17px;line-height:1.8;margin-top:8px;min-height:40px}
-.note-tech{background:#fff;border:2px dashed var(--tape);padding:10px 14px;font-size:16px;color:var(--paper-ink)}
+.note-tech{display:block;margin:8px 0;background:#fff;border:2px dashed var(--tape);padding:10px 14px;font-size:16px;color:var(--paper-ink)}
 
 /* ---------- whatsapp ---------- */
 .wa-h{background:#075e54;color:#fff;border-bottom:0}
@@ -571,7 +571,7 @@ html.tv body{zoom:1.18}
   #side{display:flex;flex-direction:column;gap:10px;flex:0 0 31%;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px}
   .sd-top{display:flex;align-items:baseline;gap:10px}.sd-top .timer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}.sd-lbl{font-size:12px;color:var(--muted);letter-spacing:.06em}
   .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
-  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
+  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}#side .sd-solve{margin-top:auto}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
   .home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px;font-size:22px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin-top:0;grid-template-columns:repeat(4,1fr);max-width:480px;margin-inline:auto;padding:6px 8px;border-radius:18px}
   /* paired apps: list beside the open item */
   .apps{flex-direction:row}
@@ -883,7 +883,6 @@ html.tv body{zoom:1.18}
   <aside id="side" hidden>
     <div class="sd-top"><span class="timer">00:00</span><span class="sd-lbl">الوقت</span></div>
     <div class="sd-ev" id="sideEv"></div>
-    <div class="sd-book"><div class="sd-lbl">📝 دفتر التحقيق</div><textarea id="sideBook" placeholder="اكتبوا ملاحظاتكم هنا…"></textarea></div>
     <button class="chip red sd-solve" id="toSolveSide">🔍 حل القضية</button>
   </aside></div>
 </section>

@@ -400,7 +400,7 @@ button.row.callable:active{background:rgba(47,204,95,.18)}
 .rec .wave{height:40px}.rec .wave i{background:#b9ad92}.rec .wave.play i{background:var(--tape)}
 .rec .pl{padding:8px 16px;border-radius:999px;background:var(--paper-ink);color:#fff;font-family:var(--ui);font-size:14px}
 .rec .tx{font-size:17px;line-height:1.8;margin-top:8px;min-height:40px}
-.note-tech{background:#fff;border:2px dashed var(--tape);padding:12px 16px;font-size:18px;line-height:1.9;color:var(--paper-ink);border-radius:6px}
+.note-tech{display:block;margin:8px 0;background:#fff;border:2px dashed var(--tape);padding:12px 16px;font-size:18px;line-height:1.9;color:var(--paper-ink);border-radius:6px}
 
 /* ---------- whatsapp ---------- */
 .wa-h{background:#075e54;color:#fff;border-bottom:0}
@@ -639,7 +639,7 @@ html.tv body{zoom:1.18}
   #side{display:flex;flex-direction:column;gap:10px;flex:0 0 31%;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px}
   .sd-top{display:flex;align-items:baseline;gap:10px}.sd-top .timer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}.sd-lbl{font-size:12px;color:var(--muted);letter-spacing:.06em}
   .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev div.cur{color:var(--fg)}.sd-ev div.cur i{border-color:var(--red2);color:var(--red2)}.sd-ev div.off{opacity:.45}.sd-ev div.off i{border-style:dashed;font-size:9px}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
-  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
+  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}#side .sd-solve{margin-top:auto}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
   .home,.ez-home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px}.home .icon .g svg{width:27px;height:27px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin-top:0;grid-template-columns:repeat(4,1fr);max-width:480px;margin-inline:auto;padding:6px 8px;border-radius:18px}
   /* paired apps: list beside the open item */
   .apps{flex-direction:row}
@@ -662,7 +662,8 @@ html.tv body{zoom:1.18}
 @media (orientation:landscape) and (min-width:640px){#solve .wrap{grid-template-columns:1fr 1fr}}
 
 /* ---- outgoing call with question choices ---- */
-.callov.rc{justify-content:flex-start;padding:28px 14px 18px;gap:10px}
+.callov.rc{justify-content:flex-start;padding:28px 14px 18px;gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch}.callov.rc>*{flex-shrink:0}
+@media (orientation:landscape) and (max-height:520px){.callov.rc{padding:10px 14px 14px;gap:6px}.callov.rc .av{width:44px;height:44px;font-size:22px;margin:0 auto 2px}.callov.rc .nm{font-size:17px}.callov.rc .tx{min-height:0}}
 .callov.rc .av{width:64px;height:64px;font-size:30px;margin:0 auto 6px}.callov.rc .nm{font-size:20px}
 .rc-log{flex:1;min-height:0;overflow:auto;width:100%;display:flex;flex-direction:column;gap:6px;text-align:right}
 .rc-log .m{max-width:88%;padding:8px 12px;border-radius:14px;font-size:15px;line-height:1.6;background:#232a36;align-self:flex-start}
@@ -809,6 +810,7 @@ html.tv body{zoom:1.18}
 .runvid.on{opacity:1}
 /* the HUD has to stay readable over moving footage */
 .runstage.hasvid .runbg{display:none}
+.runstage.won .runhud{display:none}
 .runstage.hasvid{justify-content:flex-end;padding-bottom:110px;gap:14px}
 .runstage.hasvid .runclock{font-size:60px}
 .runstage.hasvid::after{content:'';position:absolute;inset:0;pointer-events:none;
@@ -904,7 +906,7 @@ html.tv body{zoom:1.18}
         <dt>المسروق</dt><dd>طقم ذهب موروث (عقد، تراچي، ثلاث أساور، خواتم) قيمته التقديرية ٢٥,٠٠٠ د.ك. كان في تجوري غرفة الجدّة. الجدّة واعدت حفيدتها <b>نورة</b> — اللي ربّتها — إنه لها يوم عرسها.</dd>
         <dt>آخر مشاهدة</dt><dd>١٢:٣٠ ظهراً — على الطاولة جدّام العايلة كلها. ١:٠٠ ظهراً — الجدّة رجّعته التجوري وقفّلته <b>بنفسها</b>. ٥:٣٠ مساءً — الغرفة مقلوبة، والتجوري مفتوح وفاضي. <b>لا يوجد كسر</b> لا بالتجوري ولا بالباب ولا بالشبابيك؛ التجوري انفتح بالكود.</dd>
         <dt>الكود</dt><dd>أربع أرقام. الجدّة تقول ما أحد يعرفه غيرها. التجوري اشتراه ابنها الأكبر <b>بوعبدالرزاق</b> وركّبه لها قبل كم سنة.</dd>
-        <dt>عن بوعبدالرزاق</dt><dd>درس الهندسة في بريطانيا ٧ سنين ورجع يدير شركة العايلة. الشاليه سجّله باسم أمه يوم اشتراه، واللوحة اللي على باب غرفتها كتبها بخطه.</dd>
+        <dt>عن بوعبدالرزاق</dt><dd>درس الهندسة في بريطانيا ٧ سنين ورجع يدير شركة العايلة. كل أوراقه وتواقيعه بالإنجليزي. الشاليه سجّله باسم أمه يوم اشتراه، واللوحة اللي على باب غرفتها كتبها بخطه.</dd>
         <dt>الأجهزة</dt><dd>هاتف بوعبدالرزاق (سامسونج، مقفول بنقشة) سلّمه لضابط الدورية بنفسه الساعة ٧:٠٠ م — «يمكن صور العايلة ورسايلهم تفيدكم» — وطلب إن أهله ما يدرون.<br><span class="note-tech">ملاحظة الضابط: بوعبدالرزاق سلّم موبايله من غير ما يقول حق أحد، وما نبي أحد من أهله يدري. والضابط نسى يسأله عن النقشة. دوروا بالملف.</span></dd>
         <dt>الكاميرات</dt><dd>كاميرا البوابة الرئيسية شغّالة وتسجيلاتها بالأدلة. <b>الكاميرا الخلفية</b> (بوابة الخدمة) إضاءتها خربانة من زمان، وتسجيلها ما ينصدّر من الجهاز — يتشاف بس من <b>تطبيق الكاميرات</b> بموبايل المالك، وإهو مقفول بكود.</dd>
         <dt>رأي العايلة</dt><dd>«حرامي من برّه، دشّ وإحنا بالمسبح.»<br><span class="note-tech">ملاحظة المحقّق: ما فيه أثر دخول من برّه. والحرامي اللي يعفّس غرفة وحدة ويفتح التجوري بالكود… يعرف البيت.</span></dd>
@@ -1084,7 +1086,6 @@ html.tv body{zoom:1.18}
   <aside id="side" hidden>
     <div class="sd-top"><span class="timer">00:00</span><span class="sd-lbl">الوقت</span></div>
     <div class="sd-ev" id="sideEv"></div>
-    <div class="sd-book"><div class="sd-lbl">📝 دفتر التحقيق</div><textarea id="sideBook" placeholder="اكتبوا ملاحظاتكم هنا…"></textarea></div>
     <button class="btn sd-solve" id="toSolveSide">🔍 حل القضية</button>
   </aside></div>
 </section>
@@ -1293,7 +1294,7 @@ $$('[data-book]').forEach(b=>b.onclick=notebook);
 function recover(){try{$('#narr').hidden=true;try{$('#scall').classList.remove('on')}catch(e){}$('#modal').classList.remove('on');['au-ring','au-splash','au-narr'].forEach(i=>{const a=$('#'+i);if(a)a.pause()});tvSend('bye',{});torchStop();const t=$('#errToast');if(t)t.remove();if(S.unlocked){openApp('home');show('phone')}else show(S.start?'file':'intro')}catch(e){location.reload()}}
 $$('[data-home]').forEach(b=>b.onclick=recover);
 /* the captions have to say what the narrator says, or the screen argues with the voice */
-const NARR_T=['يانا بلاغ سرقة من شاليه أم عبدالعزيز. العيلة كلها كانت بالشاليه…','الجدّة رجعت غرفتها ولقت كل شي مقلوب، والتجوري مفتوح، والذهب مختفي.','ما في أي أثر كسر — لا بالباب ولا بالتجوري.','مهمتكم تعرفون منو خذ الذهب، شلون فتح التجوري، ووين اختفى الذهب. عندكم ساعة وحدة.'];
+const NARR_T=['يانا بلاغ سرقة من شاليه أم عبدالعزيز. العايلة كلها كانت بالشاليه…','الجدّة رجعت غرفتها ولقت كل شي مقلوب، والتجوري مفتوح، والذهب مختفي.','ما في أي أثر كسر — لا بالباب ولا بالتجوري.','مهمتكم تعرفون منو خذ الذهب، شلون فتح التجوري، ووين اختفى الذهب. عندكم ساعة وحدة.'];
 function narrate(done){const n=$('#narr'),tx=$('#narrTx'),a=$('#au-narr');let fin=false,i=0,iv=null;const end=()=>{if(fin)return;fin=true;clearInterval(iv);try{a.pause()}catch(e){}n.hidden=true;done()};n.hidden=false;tx.innerHTML='';const total=(a&&a.duration&&isFinite(a.duration))?a.duration*1000:NARR_T.length*1900+1800;const step=Math.max(1500,(total-1200)/NARR_T.length);try{a.currentTime=0;a.play().catch(()=>{})}catch(e){}iv=setInterval(()=>{if(i<NARR_T.length){tx.innerHTML+=`<div style="margin:4px 0">${NARR_T[i++]}</div>`}else{clearInterval(iv)}},step);if(a){a.onended=()=>setTimeout(end,1200)}setTimeout(end,total+2500);$('#narrSkip').onclick=end}
 $('#start').onclick=()=>{S.start=Date.now();S.pen=0;S.stageAt={};S.hints={};save();narrate(()=>{show('file');setTimeout(rules,400)})};
 $$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));if(b.dataset.tab==='t7')mpDraw();['t1','t3','t4','t5','t6','t7'].forEach(t=>$('#'+t).hidden=t!==b.dataset.tab);$$('#t5 video').forEach(v=>v.pause());$('.paper').scrollTop=0});
@@ -1994,7 +1995,7 @@ const WRONG={
  joyce:'جويس دشّت غرفة الجدّة ١:٣٠ تاخذ الغسيل والتجوري كان مقفول. بعدها برّا طول العصر تلاحق العيال — الفيديوهات تثبت. ما عندها الكود، ولا سيارة عند البوابة الخلفية.',
  reza:'رضا طلع ٣:١٠ ورجع ٤:٢٥ — كاميرا البوابة وفاتورة الجمعية. الذهب طلع من الشباك ٤:٠٥ وإهو مو بالشاليه أصلاً. وإهو اللي قال لكم عن السيارة الغريبة.',
  bu:'بوعبدالرزاق كان برّا مع العايلة، وإهو اللي سلّم موبايله للشرطة بنفسه. اللي يسرق ما يعطي الشرطة موبايله.',
- salem:'سالم ما دشّ البيت أصلاً — الكاميرا تشوفه عند البوابة الخلفية ياخذ صندوق مقفّل من الشباك. منو اللي حطّه له على الشباك من داخل؟ ومنو اختفى من المسبح ٣:٥٢؟',
+ salem:'سالم ما دشّ البيت أصلاً — الكاميرا تشوفه عند البوابة الخلفية يستلم صندوق مقفّل من الشباك. منو اللي مدّ له الصندوق من داخل؟ ومنو اختفى من المسبح ٣:٥٢؟',
  fahad:'فهد فتح التجوري، صح. بس منو اللي كان بالسيارة عند البوابة الخلفية ٤:٠٥ وخشّ الصندوق بالمخزن؟ المرور قالوا منو صاحب السيارة.'};
 $('#submit').onclick=()=>{const fb=$('#fb');const ok=S.who==='fahad'&&S.why==='salem'&&S.how==='install';if(ok){S.done=1;S.total=elapsed();save();reveal();return}
   S.pen+=120*Math.min(3,S.wrong+1);S.wrong++;save();let msg;
@@ -2115,8 +2116,15 @@ function rvInit(){
   st.insertBefore(v,st.firstChild);
   RV.el=v;
 }
+/* the catch: when they get him the loop gives way to the police car cutting him off */
+function rvCaught(){const st=$('#runstage');if(!st||!st.classList.contains('hasvid'))return;if(RV.caught){try{RV.caught.remove()}catch(e){}}
+  const v=document.createElement('video');v.className='runvid on';v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.preload='auto';
+  [['video/caught.webm','video/webm'],['video/caught.mp4','video/mp4']].forEach(([s,t])=>{const e=document.createElement('source');e.src=s;e.type=t;v.appendChild(e)});
+  v.addEventListener('error',()=>{v.remove();if(RV.caught===v)RV.caught=null});
+  st.insertBefore(v,RV.el?RV.el.nextSibling:st.firstChild);RV.caught=v;try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function rvStart(){
-  rvInit(); if(!RV.el)return;
+  $('#runstage').classList.remove('won');rvInit(); if(!RV.el)return;
+  if(RV.caught){try{RV.caught.remove()}catch(e){}RV.caught=null}
   RV.beats=[];RV.want=0;RV.have=0.07;RV.last=performance.now();
   try{RV.el.currentTime=0}catch(e){}try{RV.el.playbackRate=0.07}catch(e){}try{const p=RV.el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
   cancelAnimationFrame(RV.raf);RV.raf=requestAnimationFrame(rvTick);
@@ -2157,7 +2165,7 @@ $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوه قبل ما يركب… <b>سالم!</b><br>بجيبه ورقة: «مخزن الشاطئ القديم · B3». ويحلف: «صندوق مقفول، إهو قفّله جدّامي… والله ما أعرف كوده» — وما يقول منو.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runWin(){runTv('win');runStop();rvCaught();$('#runstage').classList.add('won');S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوا <b>سالم</b> قبل ما ينحاش!<br>بجيبه ورقة: «مخزن الشاطئ القديم · B3». ويحلف: «صندوق مقفول، إهو قفّله جدّامي… والله ما أعرف كوده» — وما يقول منو.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
 function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ ركب سيارته وطلع. +دقيقتين. الدورية الثانية سدّت عليه الشارع ورجّعته — مرة ثانية، اركضوا أسرع!</div><button class="btn" id="runAgain">🏃 مرة ثانية</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */

@@ -400,7 +400,7 @@ button.row.callable:active{background:rgba(47,204,95,.18)}
 .rec .wave{height:40px}.rec .wave i{background:#b9ad92}.rec .wave.play i{background:var(--tape)}
 .rec .pl{padding:8px 16px;border-radius:999px;background:var(--paper-ink);color:#fff;font-family:var(--ui);font-size:14px}
 .rec .tx{font-size:17px;line-height:1.8;margin-top:8px;min-height:40px}
-.note-tech{background:#fff;border:2px dashed var(--tape);padding:12px 16px;font-size:18px;line-height:1.9;color:var(--paper-ink);border-radius:6px}
+.note-tech{display:block;margin:8px 0;background:#fff;border:2px dashed var(--tape);padding:12px 16px;font-size:18px;line-height:1.9;color:var(--paper-ink);border-radius:6px}
 
 /* ---------- whatsapp ---------- */
 .wa-h{background:#075e54;color:#fff;border-bottom:0}
@@ -639,7 +639,7 @@ html.tv body{zoom:1.18}
   #side{display:flex;flex-direction:column;gap:10px;flex:0 0 31%;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px}
   .sd-top{display:flex;align-items:baseline;gap:10px}.sd-top .timer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}.sd-lbl{font-size:12px;color:var(--muted);letter-spacing:.06em}
   .sd-ev{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px}.sd-ev div{display:flex;align-items:center;gap:8px;color:var(--muted)}.sd-ev div.ok{color:var(--fg)}.sd-ev div.cur{color:var(--fg)}.sd-ev div.cur i{border-color:var(--red2);color:var(--red2)}.sd-ev div.off{opacity:.45}.sd-ev div.off i{border-style:dashed;font-size:9px}.sd-ev i{font-style:normal;flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px}.sd-ev div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
-  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
+  .sd-book{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}#side .sd-solve{margin-top:auto}.sd-book textarea{flex:1;min-height:56px;resize:none;width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:#fff;font:inherit;font-size:15px;line-height:1.6}
   .home,.ez-home{grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px 6px;padding:10px 12px 84px;align-content:start;overflow:auto}.home .icon{font-size:11px;gap:4px}.home .icon .g{width:44px;height:44px;border-radius:12px}.home .icon .g svg{width:27px;height:27px}.home .icon .b{min-width:16px;height:16px;font-size:10px}.home .dock{position:absolute;left:10px;right:10px;bottom:8px;margin-top:0;grid-template-columns:repeat(4,1fr);max-width:480px;margin-inline:auto;padding:6px 8px;border-radius:18px}
   /* paired apps: list beside the open item */
   .apps{flex-direction:row}
@@ -662,7 +662,8 @@ html.tv body{zoom:1.18}
 @media (orientation:landscape) and (min-width:640px){#solve .wrap{grid-template-columns:1fr 1fr}}
 
 /* ---- outgoing call with question choices ---- */
-.callov.rc{justify-content:flex-start;padding:28px 14px 18px;gap:10px}
+.callov.rc{justify-content:flex-start;padding:28px 14px 18px;gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch}.callov.rc>*{flex-shrink:0}
+@media (orientation:landscape) and (max-height:520px){.callov.rc{padding:10px 14px 14px;gap:6px}.callov.rc .av{width:44px;height:44px;font-size:22px;margin:0 auto 2px}.callov.rc .nm{font-size:17px}.callov.rc .tx{min-height:0}}
 .callov.rc .av{width:64px;height:64px;font-size:30px;margin:0 auto 6px}.callov.rc .nm{font-size:20px}
 .rc-log{flex:1;min-height:0;overflow:auto;width:100%;display:flex;flex-direction:column;gap:6px;text-align:left}
 .rc-log .m{max-width:88%;padding:8px 12px;border-radius:14px;font-size:15px;line-height:1.6;background:#232a36;align-self:flex-start}
@@ -809,6 +810,7 @@ html.tv body{zoom:1.18}
 .runvid.on{opacity:1}
 /* the HUD has to stay readable over moving footage */
 .runstage.hasvid .runbg{display:none}
+.runstage.won .runhud{display:none}
 .runstage.hasvid{justify-content:flex-end;padding-bottom:110px;gap:14px}
 .runstage.hasvid .runclock{font-size:60px}
 .runstage.hasvid::after{content:'';position:absolute;inset:0;pointer-events:none;
@@ -1084,7 +1086,6 @@ html.tv body{zoom:1.18}
   <aside id="side" hidden>
     <div class="sd-top"><span class="timer">00:00</span><span class="sd-lbl">Time</span></div>
     <div class="sd-ev" id="sideEv"></div>
-    <div class="sd-book"><div class="sd-lbl">📝 Investigation Notebook</div><textarea id="sideBook" placeholder="Write your notes here…"></textarea></div>
     <button class="btn sd-solve" id="toSolveSide">🔍 Solve the case</button>
   </aside></div>
 </section>
@@ -2115,8 +2116,15 @@ function rvInit(){
   st.insertBefore(v,st.firstChild);
   RV.el=v;
 }
+/* the catch: when they get him the loop gives way to the police car cutting him off */
+function rvCaught(){const st=$('#runstage');if(!st||!st.classList.contains('hasvid'))return;if(RV.caught){try{RV.caught.remove()}catch(e){}}
+  const v=document.createElement('video');v.className='runvid on';v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.preload='auto';
+  [['video/caught.webm','video/webm'],['video/caught.mp4','video/mp4']].forEach(([s,t])=>{const e=document.createElement('source');e.src=s;e.type=t;v.appendChild(e)});
+  v.addEventListener('error',()=>{v.remove();if(RV.caught===v)RV.caught=null});
+  st.insertBefore(v,RV.el?RV.el.nextSibling:st.firstChild);RV.caught=v;try{const p=v.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function rvStart(){
-  rvInit(); if(!RV.el)return;
+  $('#runstage').classList.remove('won');rvInit(); if(!RV.el)return;
+  if(RV.caught){try{RV.caught.remove()}catch(e){}RV.caught=null}
   RV.beats=[];RV.want=0;RV.have=0.07;RV.last=performance.now();
   try{RV.el.currentTime=0}catch(e){}try{RV.el.playbackRate=0.07}catch(e){}try{const p=RV.el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
   cancelAnimationFrame(RV.raf);RV.raf=requestAnimationFrame(rvTick);
@@ -2157,7 +2165,7 @@ $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
-function runWin(){runTv('win');runStop();S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught him before he got in… <b>Salem!</b><br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
+function runWin(){runTv('win');runStop();rvCaught();$('#runstage').classList.add('won');S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught <b>Salem</b> before he got away!<br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
 function runFail(){runTv('fail');runStop();S.pen+=120;save();SFX.bad();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">❌ He got in his car and drove off. +2 minutes. The second patrol blocked the street and brought him back — Again, run faster!</div><button class="btn" id="runAgain">🏃 Again</button>`;$('#runAgain').onclick=()=>{$('#runMsg').innerHTML='';$('#runIntro').hidden=false;RUN.steps=0;RUN.t=60;paintRun()}}
 
 /* ---- hints ---- */
