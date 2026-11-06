@@ -52,6 +52,15 @@ footer{color:var(--muted);font-size:13px;padding-block:30px;border-top:1px solid
 .menu a:hover{color:#fff}
 .hdr .lang{flex:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--fg);white-space:nowrap;text-decoration:none;font-size:14px;margin-inline-start:auto}
 .hdr{justify-content:flex-start}.hdr .menu{margin-inline-start:auto}.hdr .menu+.lang{margin-inline-start:0}
+@media (max-width:760px){
+  .hdr{flex-wrap:wrap;gap:12px 8px;padding-block:14px 12px}
+  .hdr .brand{order:1}.hdr .lang{order:2;margin-inline-start:auto;font-size:12px;padding:3px 9px}
+  .hdr .menu{order:3;flex:1 0 100%;margin:0;display:flex;flex-wrap:wrap;gap:8px;font-size:14px}
+  .hdr .menu a{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:999px;color:var(--fg);background:rgba(255,255,255,.03)}
+  .hdr .menu a:nth-child(4){border-color:var(--paper);color:var(--paper);font-weight:700}
+  .hdr .menu .wa-chip{padding:7px 12px}
+  .brand img{height:18px}.brand span{font-size:12px;letter-spacing:3px}
+}
 html[dir=ltr] body{font-family:Tajawal,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
 html[dir=ltr] .hero h1,html[dir=ltr] .sheet .name{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.01em}
 .kicker{color:var(--red2);font-size:14px;margin-bottom:6px}
@@ -86,9 +95,9 @@ html[dir=ltr] .hero h1,html[dir=ltr] .sheet .name{font-family:Georgia,'Times New
 .total s{color:var(--muted);margin-inline-end:8px}
 .ok{color:var(--ok);font-size:14px;margin-top:6px}
 .btn-sm{padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:13px;cursor:pointer}
-@media (max-width:760px){.menu{gap:14px;font-size:14px}.menu a:nth-child(5){display:none}.ftr{grid-template-columns:1fr}}
+@media (max-width:760px){.ftr{grid-template-columns:1fr}}
 /* on a narrow phone the header keeps القضايا, عندي كود and واتساب */
-@media (max-width:560px){.menu{gap:10px;font-size:13px}.menu a:nth-child(2){display:none}.wa-chip{padding:5px 10px}}
+
 /* the WhatsApp button, pinned through every scroll */
 .wabtn{position:fixed;inset-inline-end:22px;bottom:22px;z-index:60;
   display:inline-flex;align-items:center;gap:12px;
@@ -249,4 +258,4 @@ a.fit:hover{border-color:var(--muted)}
 
 /* the header never pushes the page sideways: on phones the menu scrolls inside itself */
 html,body{overflow-x:hidden}
-@media (max-width:560px){.hdr{gap:8px}.hdr .lang{font-size:12px;padding:3px 8px}.menu{overflow-x:auto;scrollbar-width:none;max-width:44vw;padding-block:4px}.menu::-webkit-scrollbar{display:none}.menu a:nth-child(2){display:inline}.menu a:nth-child(3){display:none}.brand img{height:17px}.brand span{font-size:11px;letter-spacing:3px}}
+
