@@ -2319,17 +2319,23 @@ function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'
  const ar=n=>String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
  let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
  const host=$('#res');if(!host||$('#lbBox'))return;
- const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
- const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">شوفوا اللوحة</a>`};
- if(saved){show(saved);return}
- box.innerHTML=`<button class="btn" id="lbGo">🏆 حطّوا اسمكم على لوحة المتصدرين</button>`;
- $('#lbGo').onclick=()=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">أضيفونا</button><button class="btn lite" data-close>لا، شكراً</button></div>`);
-  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;padding:14px 16px;border:1px solid #3a4456;border-radius:16px;background:rgba(255,255,255,.04);text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:17px;font-weight:700">🏆 لوحة المتصدرين</div><div style="font-size:15px;line-height:1.7;margin-top:6px"><b>${r.team}</b> — المركز <b>${ar(r.rank)}</b> على لوحة المتصدرين</div><div class="acts" style="justify-content:center;margin-top:8px"><a class="btn" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block">شوفوا اللوحة</a><button class="btn lite" id="lbEdit">✏️ غيّروا الاسم</button></div>`;$('#lbEdit').onclick=()=>ask(r.team)};
+ const idle=()=>{box.innerHTML=`<div style="font-size:17px;font-weight:700">🏆 لوحة المتصدرين</div><div style="font-size:14px;color:#aeb6c4;margin-top:4px">وقتكم محسوب — حطّوا اسم فريقكم على لوحة أسرع الفرق.</div><button class="btn" id="lbGo" style="margin-top:10px">🏆 حطّوا اسمكم على اللوحة</button>`;$('#lbGo').onclick=()=>ask('')};
+ const ask=cur=>{sheet(`<h3>🏆 لوحة المتصدرين</h3><div class="h">${cur?'غيّروا اسم الفريق إذا تبون.':'تبون وقتكم يطلع على لوحة أسرع الفرق؟ اكتبوا اسمكم أو اسم الفريق.'}</div><input id="lbName" maxlength="32" placeholder="اسم الفريق" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">${cur?'غيّروا الاسم':'أضيفونا'}</button><button class="btn lite" data-close>${cur?'لا، شكراً':'لاحقاً'}</button></div>`);
+  const inp=$('#lbName');inp.value=cur||'';setTimeout(()=>inp.focus(),100);
   const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='اكتبوا اسم الفريق';return}$('#lbSend').disabled=true;
    try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
     if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'وقتكم ما وصل السيرفر بعد — جرّبوا بعد ثواني':'ما قدرنا نضيفكم، جرّبوا مرة ثانية';$('#lbSend').disabled=false;return}
     try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='تأكدوا من الإنترنت';$('#lbSend').disabled=false}};
-  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})};
+ if(saved){show(saved);return}
+ idle();
+ /* a team that already put its name on the board from another phone sees it here too */
+ fetch(STORE+'/api/leaderboard?game='+GAME+'&code='+encodeURIComponent(code)).then(r=>r.json()).then(d=>{if(d&&d.ok&&d.me){try{localStorage.setItem(GAME+'_lb',JSON.stringify(d.me))}catch(e){}$('#modal').classList.remove('on');show(d.me)}}).catch(()=>{});
+ /* the first time the ending shows, the name box opens by itself; after that it waits behind the button */
+ let asked='';try{asked=localStorage.getItem(GAME+'_lbAsked')||''}catch(e){}
+ if(asked!==code){try{localStorage.setItem(GAME+'_lbAsked',code)}catch(e){}setTimeout(()=>{if(!$('#modal').classList.contains('on'))ask('')},1200)}}catch(e){}}
 
 /* ---- gate ---- */
 const GATE_ON=true;

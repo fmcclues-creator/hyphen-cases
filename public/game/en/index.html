@@ -1823,17 +1823,23 @@ function lbOffer(){try{if(S.gaveUp)return;const p=(typeof savedPass==='function'
  const ar=n=>String(n).replace(/[0-9]/g,d=>'0123456789'[d]);
  let saved=null;try{saved=JSON.parse(localStorage.getItem(GAME+'_lb')||'null')}catch(e){}
  const host=$('#res');if(!host||$('#lbBox'))return;
- const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;text-align:center';host.insertAdjacentElement('afterend',box);
- const show=r=>{box.innerHTML=`<div style="font-size:15px;line-height:1.7">🏆 <b>${r.team}</b> — Rank <b>${ar(r.rank)}</b> on the leaderboard</div><a class="btn lite" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">See the board</a>`};
- if(saved){show(saved);return}
- box.innerHTML=`<button class="btn" id="lbGo">🏆 Put your name on the leaderboard</button>`;
- $('#lbGo').onclick=()=>{sheet(`<h3>🏆 Leaderboard</h3><div class="h">Want your time on the fastest teams board? Enter your name or your team name.</div><input id="lbName" maxlength="32" placeholder="Team name" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">Add us</button><button class="btn lite" data-close>No, thanks</button></div>`);
-  const inp=$('#lbName');setTimeout(()=>inp.focus(),100);
-  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='Enter the team name';return}$('#lbSend').disabled=true;
+ const box=document.createElement('div');box.id='lbBox';box.style.cssText='margin-top:14px;padding:14px 16px;border:1px solid #3a4456;border-radius:16px;background:rgba(255,255,255,.04);text-align:center';host.insertAdjacentElement('afterend',box);
+ const show=r=>{box.innerHTML=`<div style="font-size:17px;font-weight:700">🏆 Leaderboard</div><div style="font-size:15px;line-height:1.7;margin-top:6px"><b>${r.team}</b> — Rank <b>${ar(r.rank)}</b> on the leaderboard</div><div class="acts" style="justify-content:center;margin-top:8px"><a class="btn" href="${STORE}/leaderboard?game=${GAME}" target="_blank" rel="noopener" style="display:inline-block">See the board</a><button class="btn lite" id="lbEdit">✏️ Change name</button></div>`;$('#lbEdit').onclick=()=>ask(r.team)};
+ const idle=()=>{box.innerHTML=`<div style="font-size:17px;font-weight:700">🏆 Leaderboard</div><div style="font-size:14px;color:#aeb6c4;margin-top:4px">Your time is in — put your team’s name on the board of the fastest teams.</div><button class="btn" id="lbGo" style="margin-top:10px">🏆 Put our name on the board</button>`;$('#lbGo').onclick=()=>ask('')};
+ const ask=cur=>{sheet(`<h3>🏆 Leaderboard</h3><div class="h">${cur?'Change your team name if you like.':'Want your time on the board of the fastest teams? Type your name or team name.'}</div><input id="lbName" maxlength="32" placeholder="Team name" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #2a3344;background:#0b0e14;color:#fff;font:inherit;font-size:16px"><div id="lbErr" style="color:#e06a5a;font-size:13px;margin-top:6px;min-height:1.2em"></div><div class="acts"><button class="btn" id="lbSend">${cur?'Change name':'Add us'}</button><button class="btn lite" data-close>${cur?'No, thanks':'Later'}</button></div>`);
+  const inp=$('#lbName');inp.value=cur||'';setTimeout(()=>inp.focus(),100);
+  const send=async()=>{const team=inp.value.trim();if(team.length<2){$('#lbErr').textContent='Type a team name';return}$('#lbSend').disabled=true;
    try{const r=await fetch(STORE+'/api/leaderboard',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code,game:GAME,team})});const d=await r.json();
-    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'Your time hasn’t reached the server yet — Try again in a few seconds':'We couldn’t add you, try again';$('#lbSend').disabled=false;return}
+    if(!d.ok){$('#lbErr').textContent=d.reason==='unfinished'?'Your time hasn’t reached the server yet — try again in a few seconds':'Couldn’t add you, try again';$('#lbSend').disabled=false;return}
     try{localStorage.setItem(GAME+'_lb',JSON.stringify(d))}catch(e){}$('#modal').classList.remove('on');show(d)}catch(e){$('#lbErr').textContent='Check your internet';$('#lbSend').disabled=false}};
-  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})}}catch(e){}}
+  $('#lbSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()})};
+ if(saved){show(saved);return}
+ idle();
+ /* a team that already put its name on the board from another phone sees it here too */
+ fetch(STORE+'/api/leaderboard?game='+GAME+'&code='+encodeURIComponent(code)).then(r=>r.json()).then(d=>{if(d&&d.ok&&d.me){try{localStorage.setItem(GAME+'_lb',JSON.stringify(d.me))}catch(e){}$('#modal').classList.remove('on');show(d.me)}}).catch(()=>{});
+ /* the first time the ending shows, the name box opens by itself; after that it waits behind the button */
+ let asked='';try{asked=localStorage.getItem(GAME+'_lbAsked')||''}catch(e){}
+ if(asked!==code){try{localStorage.setItem(GAME+'_lbAsked',code)}catch(e){}setTimeout(()=>{if(!$('#modal').classList.contains('on'))ask('')},1200)}}catch(e){}}
 
 const GATE_ON=true; // set false to disable the gate while testing
 $('#gateBuy').href=STORE+'/buy';
