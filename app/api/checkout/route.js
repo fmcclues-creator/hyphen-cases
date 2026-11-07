@@ -72,7 +72,7 @@ export async function POST(req) {
 
   if (mode === "hesabe") {
     try {
-      const { paymentUrl, token } = await createCheckout({ orderId: order.id, amount: price, phone: kuwaitLocal(phone), email, site });
+      const { paymentUrl, token } = await createCheckout({ orderId: order.id, amount: price, phone: kuwaitLocal(phone), email, site, cardOnly: !kuwaitLocal(phone) });
       await client.from("orders").update({ gateway_ref: token.slice(0, 120) }).eq("id", order.id);
       return Response.json({ ok: true, paymentUrl });
     } catch (e) {

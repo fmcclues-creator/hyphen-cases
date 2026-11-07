@@ -5,7 +5,7 @@ import { Header, Footer } from "../components/Site";
 import { pixelTrack } from "../components/pixelTrack";
 import { useLang } from "../components/useLang";
 import { L } from "../../lib/i18n";
-import { COUNTRIES } from "../../lib/phone";
+import { COUNTRIES, currencyFor, approx, ccForCountry } from "../../lib/phone";
 
 const fmt = (n) => Number(n).toFixed(3);
 const PRODUCTS = {
@@ -31,7 +31,7 @@ const T = {
     emailGift: "إيميلكم (للإيصال)", email: "الإيميل", emailHintGift: "بنرسل لكم إيصال بنفس الكود — تأكدوا إنه صحيح.", emailHint: "بنرسل لكم الكود على هالإيميل — تأكدوا إنه صحيح.",
     promo: "كود خصم (إذا عندكم)", apply: "تطبيق", total: "الإجمالي", kd: (v) => `${v} د.ك`,
     wait: "ثواني…", getCode: "احصل على الكود", payGift: "ادفعوا وأرسلوا الهدية", pay: "ادفع وابدأ",
-    agree1: "بالشراء توافقون على ", terms: "الشروط والأحكام", agree2: ".", trust1: "الكود يوصلكم على الإيميل خلال دقيقة", trust2: "مساعدة بعد الشراء على الواتساب", trust3: "دفع آمن بـ KNET أو بطاقة",
+    agree1: "بالشراء توافقون على ", terms: "الشروط والأحكام", agree2: ".", trust1: "الكود يوصلكم على الإيميل خلال دقيقة", trust2: "مساعدة بعد الشراء على الواتساب", trust3: "دفع آمن بـ KNET أو بطاقة", trust3card: "دفع آمن بالبطاقة (Visa / Mastercard) — السعر بالدينار الكويتي وبنككم يحوّله", approxNote: "تقريبًا",
     promo_expired: "الكود منتهي", promo_used: "الكود خلصت استخداماته", promo_bad: "الكود غير صحيح", promo_fix: "كود الخصم غير صحيح — امسحوه أو صحّحوه", promo_dead: "كود الخصم ما عاد يشتغل",
     discount: (v) => `خصم ${v} د.ك ✓`,
     e_phone: "اكتبوا رقم موبايل صحيح — ومن برّا الكويت اختاروا الدولة", e_email: "اكتبوا إيميلكم صحيح — بنرسل لكم الإيصال عليه", e_gift: "اكتبوا إيميل صحيح للشخص اللي بتهدونه", e_gen: "صار خطأ، جرّبوا مرة ثانية",
@@ -46,7 +46,7 @@ const T = {
     emailGift: "Your email (for the receipt)", email: "Email", emailHintGift: "We’ll send you a receipt with the same code — make sure it’s correct.", emailHint: "We’ll send the code to this email — make sure it’s correct.",
     promo: "Promo code (if you have one)", apply: "Apply", total: "Total", kd: (v) => `KD ${v}`,
     wait: "One sec…", getCode: "Get the code", payGift: "Pay & send the gift", pay: "Pay & start",
-    agree1: "By purchasing you agree to the ", terms: "Terms & Conditions", agree2: ".", trust1: "Your code arrives by email within a minute", trust2: "After-sale help on WhatsApp", trust3: "Secure payment by KNET or card",
+    agree1: "By purchasing you agree to the ", terms: "Terms & Conditions", agree2: ".", trust1: "Your code arrives by email within a minute", trust2: "After-sale help on WhatsApp", trust3: "Secure payment by KNET or card", trust3card: "Secure card payment (Visa / Mastercard) — charged in KWD, your bank converts it", approxNote: "approx.",
     promo_expired: "This code has expired", promo_used: "This code has been used up", promo_bad: "Invalid code", promo_fix: "Invalid promo code — clear it or fix it", promo_dead: "This promo code no longer works",
     discount: (v) => `KD ${v} off ✓`,
     e_phone: "Enter a valid mobile number — pick the country if you’re outside Kuwait", e_email: "Enter a valid email — the receipt goes there", e_gift: "Enter a valid email for the person you’re gifting", e_gen: "Something went wrong, try again",
@@ -79,6 +79,12 @@ export default function Buy() {
     if (sp.get("gift")) setGift(true);
     const g = sp.get("game");
     if (products.some((p) => p.id === g)) setGame(g);
+    // Visitors outside Kuwait get their own dial code preselected (and an
+    // approximate price in their currency) — unless they already changed it.
+    fetch("/api/geo").then((r) => r.json()).then((j) => {
+      const guess = ccForCountry(j?.country);
+      if (guess && guess !== "965") setCc((cur) => (cur === "965" ? guess : cur));
+    }).catch(() => {});
   }, []);
   useEffect(() => {
     // Funnel step 1: they reached the checkout form (re-quoted whenever the product changes).
@@ -147,6 +153,8 @@ export default function Buy() {
   }
 
   const total = quote ? quote.price : null;
+  const cur = currencyFor(cc);
+  const approxTxt = cur && total ? approx(total, cur, lang) : "";
 
   return (
     <main className="wrap">
@@ -204,7 +212,7 @@ export default function Buy() {
           <button type="button" onClick={checkPromo} disabled={!promo}>{t.apply}</button>
         </div>
         {promoMsg && <div className={quote?.discount ? "ok" : "err"}>{promoMsg}</div>}
-        <div className="total"><span>{t.total}</span><span>{quote && quote.discount > 0 && <s>{fmt(quote.listPrice)}</s>}<b>{t.kd(total === null ? "—" : fmt(total))}</b></span></div>
+        <div className="total"><span>{t.total}</span><span>{quote && quote.discount > 0 && <s>{fmt(quote.listPrice)}</s>}<b>{t.kd(total === null ? "—" : fmt(total))}</b>{approxTxt && <small className="approx">{approxTxt} {t.approxNote}</small>}</span></div>
         {err && <div className="err">{err}</div>}
         <div style={{ marginTop: 20 }}>
           <button className="cta" disabled={busy}>
@@ -214,7 +222,7 @@ export default function Buy() {
         <ul className="trust">
           <li>✉️ {t.trust1}</li>
           <li>💬 {t.trust2}</li>
-          <li>🔒 {t.trust3}</li>
+          <li>🔒 {cur ? t.trust3card : t.trust3}</li>
         </ul>
         <div className="muted" style={{ marginTop: 12 }}>{t.agree1}<Link href={l("/terms")}>{t.terms}</Link>{t.agree2}</div>
       </form>
