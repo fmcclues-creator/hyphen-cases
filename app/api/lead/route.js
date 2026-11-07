@@ -1,4 +1,5 @@
 import { db } from "../../../lib/db";
+import { normPhone } from "../../../lib/phone";
 
 // The WhatsApp number is kept the moment it is typed, before the rest of the
 // form and before payment, so a buyer who leaves can still be helped.
@@ -7,16 +8,10 @@ import { db } from "../../../lib/db";
 
 const cors = { "Cache-Control": "no-store" };
 
-function normPhone(raw) {
-  let d = String(raw || "").replace(/[^\d]/g, "");
-  if (d.startsWith("00")) d = d.slice(2);
-  if (d.startsWith("965") && d.length === 11) d = d.slice(3);
-  return /^\d{8}$/.test(d) ? d : null;
-}
 
 export async function POST(req) {
   let b; try { b = await req.json(); } catch { return Response.json({ ok: false }, { status: 400, headers: cors }); }
-  const phone = normPhone(b.phone);
+  const phone = normPhone(b.phone, b.cc);
   if (!phone) return Response.json({ ok: false, reason: "phone" }, { headers: cors });
   const row = {
     phone,

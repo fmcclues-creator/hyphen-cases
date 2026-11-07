@@ -3,6 +3,7 @@ import { applyPromo, consumePromo } from "../../../lib/promo";
 import { createCheckout } from "../../../lib/hesabe";
 import { sendOrderMails } from "../../../lib/mail";
 import { normGame, listPriceFor } from "../../../lib/pricing";
+import { normPhone, kuwaitLocal } from "../../../lib/phone";
 
 // POST { phone, email, promo } -> creates an order and either:
 //  - total 0 (promo) or PAYMENT_MODE=test: marks paid, issues a code, returns { ok, code }
@@ -10,9 +11,9 @@ import { normGame, listPriceFor } from "../../../lib/pricing";
 //  - PAYMENT_MODE=myfatoorah: returns { ok, paymentUrl }
 export async function POST(req) {
   const body = await req.json().catch(() => ({}));
-  const phone = String(body.phone || "").replace(/\D/g, "").slice(0, 15);
+  const phone = normPhone(body.phone, body.cc);
   const email = String(body.email || "").trim().slice(0, 120);
-  if (phone.length < 8) return Response.json({ ok: false, reason: "phone" }, { status: 400 });
+  if (!phone) return Response.json({ ok: false, reason: "phone" }, { status: 400 });
   // The code is delivered by email, so an order without a usable one strands the buyer.
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return Response.json({ ok: false, reason: "email" }, { status: 400 });
@@ -71,7 +72,7 @@ export async function POST(req) {
 
   if (mode === "hesabe") {
     try {
-      const { paymentUrl, token } = await createCheckout({ orderId: order.id, amount: price, phone, email, site });
+      const { paymentUrl, token } = await createCheckout({ orderId: order.id, amount: price, phone: kuwaitLocal(phone), email, site });
       await client.from("orders").update({ gateway_ref: token.slice(0, 120) }).eq("id", order.id);
       return Response.json({ ok: true, paymentUrl });
     } catch (e) {
@@ -86,7 +87,7 @@ export async function POST(req) {
     headers: { Authorization: `Bearer ${process.env.MYFATOORAH_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       CustomerName: "HYPHEN Cases", NotificationOption: "LNK", InvoiceValue: price, CurrencyIso: "KWD",
-      CustomerMobile: phone, CustomerEmail: email || undefined,
+      CustomerMobile: kuwaitLocal(phone) || undefined, CustomerEmail: email || undefined,
       CallBackUrl: `${site}/api/webhook?order=${order.id}&ok=1`, ErrorUrl: `${site}/api/webhook?order=${order.id}&ok=0`,
       Language: lang, UserDefinedField: order.id,
     }),

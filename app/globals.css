@@ -259,3 +259,8 @@ a.fit:hover{border-color:var(--muted)}
 /* the header never pushes the page sideways: on phones the menu scrolls inside itself */
 html,body{overflow-x:hidden}
 
+
+/* WhatsApp number: country code beside the number */
+.phone-row{display:flex;gap:8px;direction:ltr;margin-bottom:14px}.phone-row select{flex:0 0 auto;width:auto;min-width:118px;padding:0 10px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:var(--fg);font:inherit;font-size:17px;direction:ltr}.phone-row input{flex:1;min-width:0}
+/* trust lines under the pay button */
+.trust{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:6px;font-size:14px;color:var(--muted)}.trust li{display:flex;gap:8px;align-items:center}
