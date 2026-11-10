@@ -1133,8 +1133,8 @@ html.tv body{zoom:1.18}
     </div>
     <div class="runtrack"><div class="runpath"><i class="runman" id="runMan"><img src="img/run_man.png" alt=""></i><span class="runannex"><img src="img/run_car.png" alt=""></span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">٨٠ م</div></div>
     <div class="runtruck" id="runTruck" hidden></div>
-    <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 تبون المطاردة على التلفزيون؟ فتحوا عليه <b dir="ltr">cases.hyphen-eventskw.com/tv</b> واكتبوا الكود:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">بانتظار التلفزيون…</div></div><div class="runintro" id="runIntro"><div class="h">سالم طلع يركض من الباب الخلفي — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. على اللابتوب: اضغطوا الزر بسرعة.</div><button class="btn" id="runGo">🏃 لحقوه!</button></div>
-    <button class="runtap" id="runTap" hidden>اركض! 👟</button>
+    <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 تبون المطاردة على التلفزيون؟ فتحوا عليه <b dir="ltr">cases.hyphen-eventskw.com/tv</b> واكتبوا الكود:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">بانتظار التلفزيون…</div></div><div class="runintro" id="runIntro"><div class="h">سالم طلع يركض من الباب الخلفي — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. وإذا الخطوات ما تنحسب، اضغطوا زر <b>اركض!</b> بسرعة — الضغطات تنحسب خطوات.</div><button class="btn" id="runGo">🏃 لحقوه!</button></div>
+    <button class="runtap" id="runTap" hidden>اركض! 👟 <small style="display:block;font-size:12px;font-weight:400;opacity:.85">اضغطوا بسرعة إذا الخطوات ما تنحسب</small></button>
     <div class="tmsg" id="runMsg"></div>
   </div>
 </section>
@@ -2164,7 +2164,7 @@ function rvTick(now){
   RV.raf=requestAnimationFrame(rvTick);
 }
 function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
-function onMotion(e){if(!RUN.on)return;const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.hypot(a.x||0,a.y||0,a.z||0);const now=Date.now();if(mag>13.5&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>230){RUN.lastStep=now;runStep()}}else if(mag<10.5)RUN.rising=false}
+function onMotion(e){if(!RUN.on)return;const g=e.accelerationIncludingGravity,a=e.acceleration;const now=Date.now();let hi,lo;if(a&&(a.x||a.y||a.z)){const m=Math.hypot(a.x||0,a.y||0,a.z||0);hi=m>3.2;lo=m<1.6}else{if(!g)return;const m=Math.hypot(g.x||0,g.y||0,g.z||0);hi=m>12.6;lo=m<10.8}if(hi&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>200){RUN.lastStep=now;runStep()}}else if(lo)RUN.rising=false}
 function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();rvBeat();paintRun();if(RUN.steps>=RUN.need)runWin()}
 $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(RUN.motionOK){window.addEventListener('devicemotion',onMotion)}else if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted'){RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}else{RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}catch(e){}
   $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
@@ -2416,7 +2416,7 @@ if(S.start&&S.done){restoreUI();reveal();syncStart();return}
 if(S.start){restoreUI();if(!S.screen||['intro','splash','gate','reveal','torch','door','run','station'].includes(S.screen))S.screen=S.unlocked?'phone':'file';if(S.screen==='lock'&&S.unlocked)S.screen='phone';show(S.screen);if(S.unlocked&&S.screen==='phone'){const sub={'chat': 'chats', 'smsc': 'sms', 'photo': 'photos', 'note': 'notes', 'cams': 'cams'};openApp(sub[S.app]||S.app||'home')}}else show('intro');
 syncStart();
 })();
-function restoreUI(){try{renderCams()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
+function restoreUI(){try{if(S.chase&&!RUN.on&&$('.screen.on')&&$('.screen.on').id==='run'&&!$('#runDone')){runStop();$('#runIntro').hidden=true;$('#runTap').hidden=true;$('#runMsg').innerHTML='<div class="h">✅ مسكتوه. سالم — «الصندوق مقفول وما أعرف كوده».</div><button class="btn" id="runDone">متابعة ›</button>';$('#runDone').onclick=runExit}}catch(e){}try{renderCams()}catch(e){}if(typeof renderCalls==='function')renderCalls();renderNotes();renderChatList();renderPhotos();if(typeof renderSms==='function')renderSms();selPick();refreshField();}
 
 
 /* ---- slide-in menu ---- */
