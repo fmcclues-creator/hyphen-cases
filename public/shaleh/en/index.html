@@ -827,6 +827,7 @@ html.tv body{zoom:1.18}
 @media (prefers-reduced-motion:reduce){.runvid{display:none}}
 
 .mapTip{font-family:inherit;font-size:11px;direction:rtl;background:#fff;border:0;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)}.leaflet-container{font:inherit}
+@keyframes mapPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 </style>
 <style id="langpick-css">#langPick{position:fixed;inset:0;z-index:10000;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style><style id="en-overrides">.doc dl{grid-template-columns:1fr;gap:2px 0}.doc dt{margin-top:8px}</style></head>
 <body>
@@ -1429,7 +1430,7 @@ async function geocode(q){const my=++GEO_N;let out=[];
  return my===GEO_N?out:null}
 function renderMap(){const box=$('#mapBox');if(!box)return;
  if(!box.querySelector('#lmap')){box.innerHTML=`<div class="gmap" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid #cfc8b8;background:#e9e5dc">
-  <div style="position:absolute;top:8px;left:8px;right:8px;z-index:1000"><div style="display:flex;gap:6px;align-items:center;background:#fff;border-radius:22px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.22)"><span>🔍</span><input id="mapQ" placeholder="Search for a place…" autocomplete="off" style="flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;color:#222;min-width:0"><span id="mapBusy" style="display:none;font-size:12px;color:#888">…</span></div><div id="mapSug" style="background:#fff;border-radius:12px;margin-top:4px;box-shadow:0 4px 14px rgba(0,0,0,.2);overflow:hidden;display:none"></div></div>
+  <div style="position:absolute;top:8px;left:8px;right:8px;z-index:1000"><div style="display:flex;gap:6px;align-items:center;background:#fff;border-radius:22px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.22)"><span>🔍</span><input id="mapQ" placeholder="Type the place name here…" autocomplete="off" style="flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;color:#222;min-width:0"><span id="mapBusy" style="display:none;font-size:12px;color:#888">…</span></div><div id="mapSug" style="background:#fff;border-radius:12px;margin-top:4px;box-shadow:0 4px 14px rgba(0,0,0,.2);overflow:hidden;display:none"></div></div>
   <div id="lmap" style="height:320px;width:100%;direction:ltr"></div>
   <div id="mapUi" style="padding:8px"></div></div>`;
   const q=box.querySelector('#mapQ'),sug=box.querySelector('#mapSug'),busy=box.querySelector('#mapBusy');
@@ -1440,6 +1441,7 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
     /* places we know appear at once; the online search fills in the rest when it answers */
     const vv=AR2EN(v),loc=MAP_LOCAL.filter(a=>vv.split(' ').every(w=>AR2EN(a.t).includes(w))).map(a=>({t:a.t,full:a.t,ll:a.ll}));if(loc.length)showHits(loc);
     GEO_T=setTimeout(async()=>{const hits=await geocode(v);busy.style.display='none';if(!hits)return;showHits(hits)},550)};
+  clearTimeout(MAPH.nudgeT);MAPH.nudgeT=setTimeout(()=>{if(MAPH.pick||MAPH.routes||!document.body.contains(q))return;const bar=q.parentElement;bar.style.animation='mapPulse 1.2s ease-in-out 6';bar.style.boxShadow='0 0 0 3px #e0b63a';const tip=document.createElement('div');tip.textContent='👆 Type the place name in the search box';tip.style.cssText='margin-top:6px;background:#2a2419;color:#fff;border-radius:10px;padding:7px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.25)';sug.parentElement.appendChild(tip);q.addEventListener('input',()=>{tip.remove();bar.style.boxShadow='';bar.style.animation=''},{once:true})},60000);
   loadLeaflet().then(()=>{LMAP=L.map('lmap',{zoomControl:false,attributionControl:true}).setView([29.167,48.118],15);L.control.zoom({position:'bottomleft'}).addTo(LMAP);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
     L.circleMarker(MAP_STATION,{radius:8,color:'#fff',weight:2,fillColor:'#1b5fb8',fillOpacity:1}).addTo(LMAP).bindTooltip('🚓 Fintas Police Station',{permanent:true,direction:'bottom',className:'mapTip'});
@@ -1447,12 +1449,13 @@ function renderMap(){const box=$('#mapBox');if(!box)return;
     mapDraw()}).catch(()=>{box.querySelector('#lmap').innerHTML='<div style="padding:40px;text-align:center;color:#777">The map didn’t load — Check your internet connection.</div>'})}
  else mapDraw()}
 function mapPick(a){const ok=distM(a.ll,PARK_LL)<=350||PARK_RE.test(a.full||a.t);MAPH.pick={ll:a.ll,t:a.t,ok};MAPH.msg=ok?'📍 Fintas Park — Close to his house, and the patrol won’t look out of place there.':'That’s not near his house. The Traffic Department said: Fintas, next to Fintas Park.';if(!ok)SFX.tap();mapDraw()}
-function mapDraw(){const box=$('#mapBox');if(!box||!LMAP)return;LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
+function mapDraw(){const box=$('#mapBox');if(!box)return;if(!LMAP){try{mapUiDraw(box)}catch(e){}return}LLAYERS.forEach(l=>{try{LMAP.removeLayer(l)}catch(e){}});LLAYERS=[];
  const a=MAPH.pick;
  if(a){const m=L.marker(a.ll,{icon:L.divIcon({className:'',html:`<div style="font-size:28px;line-height:1;transform:translate(-50%,-100%)">${a.ok?'📍':'❓'}</div>`,iconSize:[0,0]})}).addTo(LMAP);LLAYERS.push(m);if(!MAPH.routes)LMAP.setView(a.ll,a.ok?16:15,{animate:true})}
  if(MAPH.routes){MAPH.routes.forEach(r=>{const pl=L.polyline(r.pts,{color:r.color,weight:5,opacity:.85,dashArray:r.dash||null}).addTo(LMAP);LLAYERS.push(pl);if(r.warn){const w=L.marker(r.warn,{icon:L.divIcon({className:'',html:'<div style="font-size:22px;transform:translate(-50%,-50%)">⚠️</div>',iconSize:[0,0]})}).addTo(LMAP).bindTooltip('Roadworks — Road closed',{permanent:true,direction:'top',className:'mapTip'});LLAYERS.push(w)}});
    try{LMAP.fitBounds(L.latLngBounds([MAP_STATION,a.ll]).pad(.25))}catch(e){}}
- const ui=box.querySelector('#mapUi');
+ mapUiDraw(box)}
+function mapUiDraw(box){const a=MAPH.pick,ui=box.querySelector('#mapUi');if(!ui)return;
  if(MAPH.routes){ui.innerHTML=`<div style="display:grid;gap:6px">${MAPH.routes.map(r=>`<button class="btn" data-r="${r.id}" style="justify-content:space-between;gap:12px;font-size:14px;background:#2a2419;color:#fff;box-shadow:none"><span>${r.sw} ${r.name}</span><b>${r.min}</b></button>`).join('')}</div>`;
    ui.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{const r=b.dataset.r;S.route=true;const late=r!=='b';if(late){S.pen+=180;SFX.bad()}else SFX.ok();save();stageAt('chase');refreshField();
      sheet((late?(r==='c'?'<h3>⚠️ Road closed</h3><div class="h">The patrol had to turn around at the roadworks. It reached the park 3 minutes late (+3)… and as soon as it parked, they spotted him coming out of his house, running towards his car!</div>':'<h3>🚓 Arrived… late</h3><div class="h">The ring road is longer. The patrol reached the park 3 minutes late (+3)… and as soon as it parked, they spotted him coming out of his house, running towards his car!</div>')
