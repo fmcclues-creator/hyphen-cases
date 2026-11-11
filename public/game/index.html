@@ -1,4 +1,4 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><base href="/game/"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="قضية خالد"><meta name="theme-color" content="#0d1016"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png">
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><base href="/game/"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="قضية خالد"><meta name="theme-color" content="#0d1016"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png">
 <title>قضية خالد</title>
 <!-- seo:start -->
 <meta name="description" content="اختفى صاحب مجموعة مطاعم قبل أكبر صفقة في حياته بساعات. موبايله بين إيديكم، مقفول — وعندكم ساعة وحدة.">
@@ -592,6 +592,10 @@ html.tv body{zoom:1.18}
   #solve .plot{flex-wrap:wrap;gap:8px}#solve .plot input{width:64px;padding:10px;font-size:18px}#solve .plot select{padding:10px!important}
   #solve .wrap{grid-template-columns:1.25fr 1fr 1fr}
 }
+
+/* iPhone Safari: no zoom on tapping a field (16px minimum) and no zoom on a fast double tap */
+html,body{touch-action:manipulation}button,a,input,select,textarea,[onclick]{touch-action:manipulation}
+input,select,textarea{font-size:max(16px,1em)}
 </style>
 
 <style id="langpick-css">#langPick{position:fixed;inset:0;z-index:10000;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style>

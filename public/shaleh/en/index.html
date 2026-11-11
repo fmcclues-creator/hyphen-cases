@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <base href="/shaleh/">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>The Chalet Case</title>
 <!-- seo:start -->
@@ -838,6 +838,10 @@ html.tv body{zoom:1.18}
 @media (prefers-reduced-motion:reduce){.runtap,#run .btn,.runintro .btn,#runMsg .btn,#fieldChase .btn{animation:none}}
 .runind{position:relative;z-index:2;font-size:14px;color:#e9ecf2;background:rgba(0,0,0,.45);border-radius:999px;padding:6px 14px}
 .runtap:not(.big){padding:12px 26px;font-size:17px;opacity:.85;animation:none}.runtap:not(.big) small{display:none}
+
+/* iPhone Safari: no zoom on tapping a field (16px minimum) and no zoom on a fast double tap */
+html,body{touch-action:manipulation}button,a,input,select,textarea,[onclick]{touch-action:manipulation}
+input,select,textarea{font-size:max(16px,1em)}
 </style>
 <style id="langpick-css">#langPick{position:fixed;inset:0;z-index:10000;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style><style id="en-overrides">.doc dl{grid-template-columns:1fr;gap:2px 0}.doc dt{margin-top:8px}</style></head>
 <body>
