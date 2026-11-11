@@ -70,6 +70,7 @@
 #runScr .track{width:min(88vw,1100px)}
 #runScr .path{position:relative;height:clamp(64px,11vh,124px)}
 #runScr .me{position:absolute;inset-inline-start:0;bottom:0;transition:inset-inline-start .25s}
+#runScr .cop{z-index:1}#runScr .cop img{height:clamp(56px,9.4vh,112px)}
 #runScr .me img{height:clamp(60px,10vh,120px);width:auto;display:block;transform:scaleX(-1);filter:drop-shadow(0 6px 12px rgba(0,0,0,.7))}
 #runScr .goal{position:absolute;inset-inline-end:0;bottom:0}
 #runScr .goal img{height:clamp(46px,8vh,96px);width:auto;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.7))}
@@ -118,7 +119,7 @@
   <div class="ttl" id="runTtl">🏃 المطاردة — واحد يركض للمواقف</div>
   <div class="clock" id="runT">60</div>
   <div class="sub">ثانية قبل ما يوصل سيارته</div>
-  <div class="track"><div class="path"><i class="me" id="runMe"><img src="/shaleh/img/run_man.png" alt=""></i><span class="goal"><img src="/shaleh/img/run_car.png" alt=""></span></div>
+  <div class="track"><div class="path"><i class="me" id="runMe"><img src="/shaleh/img/run_man.png" alt=""></i><i class="me cop" id="runCop"><img src="/shaleh/img/run_cop.png" alt=""></i><span class="goal"><img src="/shaleh/img/run_car.png" alt=""></span></div>
     <div class="bar"><b id="runB"></b></div><div class="dist" id="runD">٨٠ م</div></div>
   <div class="res" id="runR"></div>
 </div>
@@ -201,7 +202,7 @@ function runShow(p){const sc=document.getElementById('runScr');if(!sc)return;
  const need=p.need||70,steps=Math.min(need,p.steps||0),f=steps/need;
  document.getElementById('runT').textContent=Math.max(0,p.t|0);
  document.getElementById('runB').style.width=(f*100)+'%';
- document.getElementById('runMe').style.insetInlineStart=(f*88)+'%';
+ document.getElementById('runCop').style.insetInlineStart=(f*86)+'%';document.getElementById('runMe').style.insetInlineStart=(28+(60-Math.max(0,p.t|0))/60*60)+'%';
  document.getElementById('runD').textContent=AR_(Math.round(80*(1-f)))+' م';
  const r=document.getElementById('runR');
  r.className='res'+(p.state==='win'?' win':p.state==='fail'?' fail':'');

@@ -115,6 +115,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--tape-2);outline
 .runbar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa36a,#ffd978);transition:width .2s}
 .rundist{text-align:center;color:#ffd978;font-size:18px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}
 .runtruck{display:none}
+.runcop{z-index:1}.runcop img{height:60px}
 .runman img{height:64px;width:auto;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
 [dir=rtl] .runman img{transform:scaleX(-1)}
 .runannex img{height:46px;width:auto;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
@@ -1131,7 +1132,7 @@ html.tv body{zoom:1.18}
       <div class="runclock" id="runClock">60</div>
       <div class="runlbl">seconds before he gets in his car</div>
     </div>
-    <div class="runtrack"><div class="runpath"><i class="runman" id="runMan"><img src="img/run_man.png" alt=""></i><span class="runannex"><img src="img/run_car.png" alt=""></span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">80 m</div></div>
+    <div class="runtrack"><div class="runpath"><i class="runman" id="runMan"><img src="img/run_man.png" alt=""></i><i class="runman runcop" id="runCop"><img src="img/run_cop.png" alt=""></i><span class="runannex"><img src="img/run_car.png" alt=""></span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">80 m</div></div>
     <div class="runtruck" id="runTruck" hidden></div>
     <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 Want the chase on the TV? On the TV, open <b dir="ltr">cases.hyphen-eventskw.com/tv</b> and enter the code:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">Waiting for the TV…</div></div><div class="runintro" id="runIntro"><div class="h">Salem ran out the back door — His car is 80 metres away. <b>Run on the spot</b> with the phone in your hand — Every step brings you closer to him. If your steps aren't counting, tap the <b>Run!</b> button fast — taps count as steps.</div><button class="btn" id="runGo">🏃 Chase him!</button></div>
     <button class="runtap" id="runTap" hidden>Run! 👟</button>
@@ -2090,7 +2091,7 @@ function renderScLog(){const el=$('#fieldSc');if(!el)return;const L=S.scLog||[];
   el.innerHTML='<p><b>📞 Transcript of Salem’s call:</b></p>'+L.map(t=>`<p style="margin:2px 0">“${t}”</p>`).join('')}
 /* ---- CHASE: run in place ---- */
 const RUN={on:false,steps:0,need:70,t:60,iv:0,lastStep:0,rising:false};
-function runStart(){show('run');$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();tvCfg().then(c=>{const b=$('#runTvBox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#runTvCode').textContent=tvRoom();$('#runTvSt').textContent=TV.live?'✅ TV connected':'Waiting for the TV…';tvConnect()}});runTv('idle');if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ You caught him. Salem — “The box is locked and I don’t know its code”.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit}}
+function runStart(){show('run');try{rvInit();if(RV.el)RV.el.load()}catch(e){}$('#runIntro').hidden=false;$('#runTap').hidden=true;$('#runMsg').innerHTML='';RUN.steps=0;RUN.t=60;paintRun();tvCfg().then(c=>{const b=$('#runTvBox');if(c&&b&&castMode()!=='mirror'){b.hidden=false;$('#runTvCode').textContent=tvRoom();$('#runTvSt').textContent=TV.live?'✅ TV connected':'Waiting for the TV…';tvConnect()}});runTv('idle');if(S.chase){$('#runIntro').hidden=true;$('#runMsg').innerHTML=`<div class="h">✅ You caught him. Salem — “The box is locked and I don’t know its code”.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit}}
 function runExit(){runTv('bye');runStop();show('file');$('.tabs button[data-tab=t6]').click();refreshField()}
 $('#runBack').onclick=runExit;
 let _runSent=0;
@@ -2115,7 +2116,7 @@ function rvInit(){
      so a short deadline stands in for it */
   const drop=()=>{st.classList.remove('hasvid');v.remove();RV.el=null};
   v.addEventListener('error',drop);
-  const deadline=setTimeout(()=>{if(RV.el===v&&v.readyState<2)drop()},5000);
+  const deadline=setTimeout(()=>{if(RV.el===v&&v.readyState<1)drop()},20000);
   v.addEventListener('loadeddata',()=>clearTimeout(deadline));
   v.addEventListener('loadeddata',()=>{st.classList.add('hasvid');v.classList.add('on')});
   st.insertBefore(v,st.firstChild);
@@ -2163,11 +2164,11 @@ function rvTick(now){
   try{RV.el.playbackRate=RV.have}catch(e){}
   RV.raf=requestAnimationFrame(rvTick);
 }
-function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runMan').style.insetInlineStart=(p*88)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' PM';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
+function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runCop').style.insetInlineStart=(p*86)+'%';$('#runMan').style.insetInlineStart=(28+(60-RUN.t)/60*60)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' PM';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
 function onMotion(e){if(!RUN.on)return;const g=e.accelerationIncludingGravity,a=e.acceleration;const now=Date.now();let hi,lo;if(a&&(a.x||a.y||a.z)){const m=Math.hypot(a.x||0,a.y||0,a.z||0);hi=m>3.2;lo=m<1.6}else{if(!g)return;const m=Math.hypot(g.x||0,g.y||0,g.z||0);hi=m>12.6;lo=m<10.8}if(hi&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>200){RUN.lastStep=now;runStep()}}else if(lo)RUN.rising=false}
 function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();rvBeat();paintRun();if(RUN.steps>=RUN.need)runWin()}
-$('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;try{if(RUN.motionOK){window.addEventListener('devicemotion',onMotion)}else if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted'){RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}else{RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}catch(e){}
-  $('#runTap').hidden=false;$('#runTap').onclick=runStep;rvStart();
+$('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;rvStart();try{if(RUN.motionOK){window.addEventListener('devicemotion',onMotion)}else if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted'){RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}else{RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}catch(e){}
+  $('#runTap').hidden=false;$('#runTap').onclick=runStep;
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
 function runWin(){runTv('win');runStop();rvCaught();$('#runstage').classList.add('won');S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 You caught <b>Salem</b> before he got away!<br>In his pocket, a note: “The old beach storeroom · B3”. He swears: “A locked box, he locked it in front of me… wallah I don’t know its code” — and he won’t say who.</div><button class="btn" id="runDone">Continue ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
