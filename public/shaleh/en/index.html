@@ -829,6 +829,13 @@ html.tv body{zoom:1.18}
 
 .mapTip{font-family:inherit;font-size:11px;direction:rtl;background:#fff;border:0;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)}.leaflet-container{font:inherit}
 @keyframes mapPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+
+/* the chase buttons have to read as buttons on a dark screen */
+#run .btn,.runintro .btn,#runMsg .btn,#fieldChase .btn{display:inline-block;width:min(360px,100%);padding:18px 24px;font:800 22px Tajawal,sans-serif;border-radius:16px;background:var(--tape);color:#fff;border:0;box-shadow:0 10px 28px rgba(196,56,45,.45);animation:glow 2s infinite}
+#fieldChase .btn{margin-top:12px}
+.runtap{animation:taptap 1.1s ease-in-out infinite}
+@keyframes taptap{0%,100%{transform:scale(1)}12%{transform:scale(.94)}24%{transform:scale(1)}36%{transform:scale(.94)}48%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.runtap,#run .btn,.runintro .btn,#runMsg .btn,#fieldChase .btn{animation:none}}
 </style>
 <style id="langpick-css">#langPick{position:fixed;inset:0;z-index:10000;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style><style id="en-overrides">.doc dl{grid-template-columns:1fr;gap:2px 0}.doc dt{margin-top:8px}</style></head>
 <body>
@@ -1134,8 +1141,8 @@ html.tv body{zoom:1.18}
     </div>
     <div class="runtrack"><div class="runpath"><i class="runman" id="runMan"><img src="img/run_man.png" alt=""></i><i class="runman runcop" id="runCop"><img src="img/run_cop.png" alt=""></i><span class="runannex"><img src="img/run_car.png" alt=""></span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">80 m</div></div>
     <div class="runtruck" id="runTruck" hidden></div>
-    <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 Want the chase on the TV? On the TV, open <b dir="ltr">cases.hyphen-eventskw.com/tv</b> and enter the code:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">Waiting for the TV…</div></div><div class="runintro" id="runIntro"><div class="h">Salem ran out the back door — His car is 80 metres away. <b>Run on the spot</b> with the phone in your hand — Every step brings you closer to him. If your steps aren't counting, tap the <b>Run!</b> button fast — taps count as steps.</div><button class="btn" id="runGo">🏃 Chase him!</button></div>
-    <button class="runtap" id="runTap" hidden>Run! 👟</button>
+    <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 Want the chase on the TV? On the TV, open <b dir="ltr">cases.hyphen-eventskw.com/tv</b> and enter the code:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">Waiting for the TV…</div></div><div class="runintro" id="runIntro"><div class="h">Salem ran out the back door — His car is 80 metres away. <b>Run on the spot</b> with the phone in your hand — Every step brings you closer to him. Or tap the <b>Run!</b> button fast, again and again — every tap is a step.</div><button class="btn" id="runGo">🏃 Chase him!</button></div>
+    <button class="runtap" id="runTap" hidden>Run! 👟 <small style="display:block;font-size:13px;font-weight:400;opacity:.9">tap fast, again and again 👆👆</small></button>
     <div class="tmsg" id="runMsg"></div>
   </div>
 </section>
