@@ -808,7 +808,7 @@ html.tv body{zoom:1.18}
 .mp-card .mp-t{flex:none;font-weight:800;color:#b4442e;font-variant-numeric:tabular-nums}
 
 /* ---------- the run, as a shot you are inside of ---------- */
-.runvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+.runvid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 38%;background:#0b0e14;
   opacity:0;transition:opacity .5s;pointer-events:none}
 .runvid.on{opacity:1}
 /* the HUD has to stay readable over moving footage */
@@ -836,6 +836,8 @@ html.tv body{zoom:1.18}
 .runtap{animation:taptap 1.1s ease-in-out infinite}
 @keyframes taptap{0%,100%{transform:scale(1)}12%{transform:scale(.94)}24%{transform:scale(1)}36%{transform:scale(.94)}48%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.runtap,#run .btn,.runintro .btn,#runMsg .btn,#fieldChase .btn{animation:none}}
+.runind{position:relative;z-index:2;font-size:14px;color:#e9ecf2;background:rgba(0,0,0,.45);border-radius:999px;padding:6px 14px}
+.runtap:not(.big){padding:12px 26px;font-size:17px;opacity:.85;animation:none}.runtap:not(.big) small{display:none}
 </style>
 <style id="langpick-css">#langPick{position:fixed;inset:0;z-index:10000;background:rgba(7,9,14,.94);display:grid;place-items:center;padding:24px}#langPick .lp{width:min(420px,100%);background:#161b24;border:1px solid #283040;border-radius:20px;padding:26px 22px;text-align:center;display:flex;flex-direction:column;gap:12px}#langPick .lp-t{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.4}#langPick .lp-t span{display:block;font-size:17px;font-weight:600;color:#aab2c2;direction:ltr}#langPick button{font:inherit;font-size:20px;font-weight:800;padding:16px;border-radius:14px;border:1px solid #283040;background:#0b0e14;color:#fff;cursor:pointer}#langPick button:hover{border-color:#c4382d}#langPick button[data-l=en]{direction:ltr}</style></head>
 <body>
@@ -1142,7 +1144,7 @@ html.tv body{zoom:1.18}
     <div class="runtrack"><div class="runpath"><i class="runman" id="runMan"><img src="img/run_man.png" alt=""></i><i class="runman runcop" id="runCop"><img src="img/run_cop.png" alt=""></i><span class="runannex"><img src="img/run_car.png" alt=""></span></div><div class="runbar"><b id="runFill"></b></div><div class="rundist" id="runDist">٨٠ م</div></div>
     <div class="runtruck" id="runTruck" hidden></div>
     <div class="tvbox" id="runTvBox" hidden style="position:absolute;top:10px;inset-inline-start:10px;inset-inline-end:10px;z-index:4"><div class="tv-l">📺 تبون المطاردة على التلفزيون؟ فتحوا عليه <b dir="ltr">cases.hyphen-eventskw.com/tv</b> واكتبوا الكود:</div><div class="tv-code" id="runTvCode">····</div><div class="tv-st" id="runTvSt">بانتظار التلفزيون…</div></div><div class="runintro" id="runIntro"><div class="h">سالم طلع يركض من الباب الخلفي — سيارته على بعد ٨٠ متر. <b>اركضوا بمكانكم</b> والموبايل بإيدكم — كل خطوة تقرّبكم منه. أو اضغطوا زر <b>اركض!</b> بسرعة ومرات كثيرة — كل ضغطة خطوة.</div><button class="btn" id="runGo">🏃 لحقوه!</button></div>
-    <button class="runtap" id="runTap" hidden>اركض! 👟 <small style="display:block;font-size:13px;font-weight:400;opacity:.9">اضغطوا بسرعة ومرات كثيرة 👆👆</small></button>
+    <div class="runind" id="runInd" hidden></div><button class="runtap" id="runTap" hidden>اركض! 👟 <small style="display:block;font-size:13px;font-weight:400;opacity:.9">اضغطوا بسرعة ومرات كثيرة 👆👆</small></button>
     <div class="tmsg" id="runMsg"></div>
   </div>
 </section>
@@ -2171,11 +2173,11 @@ function rvTick(now){
   try{RV.el.playbackRate=RV.have}catch(e){}
   RV.raf=requestAnimationFrame(rvTick);
 }
-function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';$('#runCop').style.insetInlineStart=(p*86)+'%';$('#runMan').style.insetInlineStart=(28+(60-RUN.t)/60*60)+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
-function onMotion(e){if(!RUN.on)return;const g=e.accelerationIncludingGravity,a=e.acceleration;const now=Date.now();let hi,lo;if(a&&(a.x||a.y||a.z)){const m=Math.hypot(a.x||0,a.y||0,a.z||0);hi=m>3.2;lo=m<1.6}else{if(!g)return;const m=Math.hypot(g.x||0,g.y||0,g.z||0);hi=m>12.6;lo=m<10.8}if(hi&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>200){RUN.lastStep=now;runStep()}}else if(lo)RUN.rising=false}
+function paintRun(){const p=Math.min(1,RUN.steps/RUN.need);$('#runFill').style.width=(p*100)+'%';const sal=56+(60-RUN.t)/60*30;$('#runMan').style.insetInlineStart=sal+'%';$('#runCop').style.insetInlineStart=(p*(sal-9))+'%';$('#runDist').textContent=AR(Math.round(80*(1-p)))+' م';$('#runClock').textContent=AR(RUN.t);runTv(RUN.on?'run':'idle');$('#runTruck').style.insetInlineStart=Math.min(86,(60-RUN.t)/60*88)+'%'}
+function onMotion(e){if(!RUN.on)return;const g=e.accelerationIncludingGravity,a=e.acceleration;let m;if(a&&(a.x||a.y||a.z))m=Math.hypot(a.x||0,a.y||0,a.z||0);else{if(!g)return;m=Math.hypot(g.x||0,g.y||0,g.z||0)}RUN.seen=(RUN.seen||0)+1;if(RUN.avg==null)RUN.avg=m;RUN.avg+=(m-RUN.avg)*0.08;const d=m-RUN.avg;const now=Date.now();const hi=d>(a&&(a.x||a.y||a.z)?1.6:1.4),lo=d<0.3;if(hi&&!RUN.rising){RUN.rising=true;if(now-RUN.lastStep>220){RUN.lastStep=now;runStep()}}else if(lo)RUN.rising=false}
 function runStep(){if(!RUN.on)return;RUN.steps++;SFX.step();rvBeat();paintRun();if(RUN.steps>=RUN.need)runWin()}
 $('#runGo').onclick=async()=>{$('#runIntro').hidden=true;RUN.on=true;RUN.steps=0;RUN.t=60;rvStart();try{if(RUN.motionOK){window.addEventListener('devicemotion',onMotion)}else if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function'){const p=await DeviceMotionEvent.requestPermission();if(p==='granted'){RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}else{RUN.motionOK=true;window.addEventListener('devicemotion',onMotion)}}catch(e){}
-  $('#runTap').hidden=false;$('#runTap').onclick=runStep;
+  $('#runTap').hidden=false;$('#runTap').onclick=runStep;RUN.seen=0;RUN.avg=null;$('#runTap').classList.remove('big');clearTimeout(RUN.indT);RUN.indT=setTimeout(()=>{if(!RUN.on)return;const ok=(RUN.seen||0)>10;$('#runInd').textContent=ok?'🏃 نحس بخطواتكم — اركضوا!':'📵 ما نحس بالحركة — اضغطوا الزر بسرعة';$('#runInd').hidden=false;$('#runTap').classList.toggle('big',!ok)},2500);
   RUN.iv=setInterval(()=>{RUN.t--;paintRun();if(RUN.t%8===0)SFX.horn();if(RUN.t<=0)runFail()},1000)};
 function runStop(){if(!RUN.on&&!RUN.iv)return;RUN.on=false;rvStop();clearInterval(RUN.iv);RUN.iv=0;window.removeEventListener('devicemotion',onMotion)}
 function runWin(){runTv('win');runStop();rvCaught();$('#runstage').classList.add('won');S.chase=true;save();stageAt('door');SFX.ok();$('#runTap').hidden=true;$('#runMsg').innerHTML=`<div class="h">🏁 مسكتوا <b>سالم</b> قبل ما ينحاش!<br>بجيبه ورقة: «مخزن الشاطئ القديم · B3». ويحلف: «صندوق مقفول، إهو قفّله جدّامي… والله ما أعرف كوده» — وما يقول منو.</div><button class="btn" id="runDone">متابعة ›</button>`;$('#runDone').onclick=runExit;if(typeof syncPush==='function')syncPush()}
