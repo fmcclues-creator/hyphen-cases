@@ -19,7 +19,17 @@ export async function POST(req) {
   const client = db();
   const { data: row } = await client.from("codes").select("*").eq("code", norm).maybeSingle();
   if (!row) return Response.json({ ok: false, reason: "not_found" }, { headers: cors });
-  if (game && row.game && row.game !== game) return Response.json({ ok: false, reason: "wrong_game" }, { headers: cors });
+  // The other code of the same purchase (a bundle), if there is one and it is still unused —
+  // so a team that typed their spent خالد code on the الشاليه gate can be pointed at the right one.
+  const sibling = async () => {
+    if (!row.order_id) return null;
+    const { data: sib } = await client.from("codes").select("game,activated_at").eq("order_id", row.order_id).neq("code", norm).maybeSingle();
+    return sib ? { game: sib.game, unused: !sib.activated_at } : null;
+  };
+  if (game && row.game && row.game !== game) {
+    const { data: gs0 } = await client.from("game_state").select("state").eq("code", norm).eq("game", row.game).maybeSingle();
+    return Response.json({ ok: false, reason: "wrong_game", game: row.game, finished: Number(gs0?.state?.done) > 0, sibling: await sibling() }, { headers: cors });
+  }
 
   // An unused code never expires. Once a team opens it they have PLAY_DAYS to finish.
   // activated_at is stamped on the first phone; older codes fall back to their first play.
@@ -45,7 +55,7 @@ export async function POST(req) {
     if (devices.length === 0 && row.uses >= row.max_uses) return Response.json({ ok: false, reason: "used" }, { headers: cors });
     // once the team has solved the case the code is spent: no new phones can join
     const { data: gs } = await client.from("game_state").select("state").eq("code", norm).eq("game", row.game || "khalid").maybeSingle();
-    if (gs?.state && Number(gs.state.done) > 0) return Response.json({ ok: false, reason: "finished" }, { headers: cors });
+    if (gs?.state && Number(gs.state.done) > 0) return Response.json({ ok: false, reason: "finished", game: row.game, sibling: await sibling() }, { headers: cors });
     // and new phones can only join during the first JOIN_HOURS after the team pressed start.
     // codes.join_until overrides that deadline for one team — used to give a team longer
     // without touching the progress they already have.
